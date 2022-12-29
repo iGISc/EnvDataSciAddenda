@@ -1,3 +1,0 @@
-```{r include=F}
-# ![book cover](img/eaRth_anna_trimmed.png)
-```

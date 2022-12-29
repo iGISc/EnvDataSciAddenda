@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>3 Time Series case studies | Environmental Data Science Addenda</title>
+  <meta name="description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="3 Time Series case studies | Environmental Data Science Addenda" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
+  <meta name="github-repo" content="iGISc/EnvDataSciAddenda" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3 Time Series case studies | Environmental Data Science Addenda" />
+  
+  <meta name="twitter:description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
+  
+
+<meta name="author" content="Jerry Davis, SFSU Institute for Geographic Information Science" />
+
+
+<meta name="date" content="2022-12-29" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="air-pollutant-emissions-trends-epa.html"/>
+<link rel="next" href="r-markdown-and-bookdown.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.24/datatables.js"></script>
+<link href="libs/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.11.3/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><img src="img/eaRth_anna296.png"></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Background, Goals and Data</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#structure-of-the-addenda"><i class="fa fa-check"></i><b>1.1</b> Structure of the Addenda</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#software-and-data"><i class="fa fa-check"></i><b>1.2</b> Software and Data</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#data"><i class="fa fa-check"></i><b>1.2.1</b> Data</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.3</b> Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="air-pollutant-emissions-trends-epa.html"><a href="air-pollutant-emissions-trends-epa.html"><i class="fa fa-check"></i><b>2</b> Air pollutant emissions trends (EPA)</a></li>
+<li class="chapter" data-level="3" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html"><i class="fa fa-check"></i><b>3</b> Time Series case studies</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html#loney-meadow-flux-data"><i class="fa fa-check"></i><b>3.1</b> Loney Meadow flux data</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html"><i class="fa fa-check"></i><b>4</b> R Markdown and Bookdown</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#r-markdown"><i class="fa fa-check"></i><b>4.1</b> R Markdown</a></li>
+<li class="chapter" data-level="4.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#bookdown"><i class="fa fa-check"></i><b>4.2</b> Bookdown</a>
+<ul>
+<li class="chapter" data-level="" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#display-options-in-code-chunks"><i class="fa fa-check"></i>Display options in code chunks</a></li>
+<li class="chapter" data-level="4.2.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#numbered-figures-with-text-citations"><i class="fa fa-check"></i><b>4.2.1</b> Numbered figures with text citations</a></li>
+<li class="chapter" data-level="4.2.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#latex-pdf-book-notes"><i class="fa fa-check"></i><b>4.2.2</b> LaTeX / pdf book notes</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html"><i class="fa fa-check"></i><b>5</b> Building a Package on GitHub for Data and Code</a>
+<ul>
+<li class="chapter" data-level="" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#git-and-github"><i class="fa fa-check"></i>Git and GitHub</a></li>
+<li class="chapter" data-level="" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#some-notes-on-the-rstudio-process"><i class="fa fa-check"></i>Some notes on the RStudio process</a></li>
+<li class="chapter" data-level="" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#data-1"><i class="fa fa-check"></i>Data</a>
+<ul>
+<li class="chapter" data-level="" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#raw-data-in-extdata"><i class="fa fa-check"></i>Raw data in extdata</a></li>
+<li class="chapter" data-level="" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#binary-data-as-rda-files"><i class="fa fa-check"></i>Binary data as <code>rda</code> files</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#code-functions"><i class="fa fa-check"></i>Code (functions)</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Environmental Data Science Addenda</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="time-series-case-studies" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">3</span> Time Series case studies<a href="time-series-case-studies.html#time-series-case-studies" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="loney-meadow-flux-data" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Loney Meadow flux data<a href="time-series-case-studies.html#loney-meadow-flux-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>At the beginning of this chapter, we looked at an example of a time series in flux tower measurements of northern Sierra meadows, such as in Loney Meadow where during the 2016 season a flux tower was used to capture CO<sub>2</sub> flux and related micrometeorological data.</p>
+<p>We also captured multispectral imagery using a drone, allowing for creating high-resolution (5-cm pixel) imagery of the meadow in false color (with NIR as red, red as green, green as blue), useful for showing healthy vegetation (as red) and water bodies (as black).</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-10"></span>
+<img src="img/LoneyMapFalseColor.png" alt="Loney Meadow False Color image from drone-mounted multispectral camera, 2017" width="75%" />
+<p class="caption">
+FIGURE 3.1: Loney Meadow False Color image from drone-mounted multispectral camera, 2017
+</p>
+</div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-11"></span>
+<img src="img/LoneyFluxTowerWide.png" alt="Flux tower installed at Loney Meadow, 2016. Photo credit: Darren Blackburn" width="75%" />
+<p class="caption">
+FIGURE 3.2: Flux tower installed at Loney Meadow, 2016. Photo credit: Darren Blackburn
+</p>
+</div>
+<p>The flux tower data were collected at a high frequency for eddy covariance processing where 3D wind speed data are used to model the movement of atmospheric gases, including CO<sub>2</sub> flux driven by photosynthesis and respiration processes. Note that the sign convention of CO<sub>2</sub> flux is that positive flux is release to the atmosphere, which might happen when less photosynthesis is happening but respiration and other CO<sub>2</sub> releases continue, while a negative flux might happen when more photosynthesis is capturing more CO<sub>2</sub>.</p>
+<p>A spreadsheet of 30-minute summaries from 17 May to 6 September can be found in the <code>igisci</code> extdata folder as <code>"meadows/LoneyMeadow_30minCO2fluxes_Geog604.xls"</code>, and includes data on photosynthetically active radiation (PAR), net radiation (Qnet), air temperature, relative humidity, soil temperature at 2 and 10 cm depth, wind direction, wind speed, rainfall, and soil volumetric water content (VWC). There’s clearly a lot more we can do with these data (see <span class="citation">Blackburn, Oliphant, and Davis (<a href="#ref-blackburn2021carbon" role="doc-biblioref">2021</a>)</span>), but we’ll look at CO<sub>2</sub> flux and PAR using some of the same methods we’ve just explored.</p>
+<p>First we’ll test read in the data (I’d encourage you to also look at the spreadsheet in Excel [but don’t change it] to see how it’s organized) …</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="time-series-case-studies.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_xls</span>(<span class="fu">ex</span>(<span class="st">&quot;meadows/LoneyMeadow_30minCO2fluxes_Geog604.xls&quot;</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 5,398 × 14
+##    Decim…¹ Day o…² Hour …³ CO2 F…⁴ PAR   Qnet  Tair  RH    Tsoil…⁵ Tsoil…⁶ wdir 
+##      &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;
+##  1     NA       NA    NA   mgC m-… mmol… W m-2 degC  %     degC    degC    deg  
+##  2    138      138    24   0.2011… 0     -93.… 8.44… 62.9… 10.672… 12.582… 58.8…
+##  3    138.     138     0.5 0.1096… 0     -95.… 8.12… 64.5… 10.364… 12.441… 48.8…
+##  4    138.     138     1   0.1650… 0     -94.… 7.60… 66.9… 10.0718 12.300… 37.7…
+##  5    138.     138     1.5 0.1547… 0     -96.… 7.57… 66.8… 9.7869… 12.159… 42.9…
+##  6    138.     138     2   0.1783… 0     -97.… 7.50… 67.1… 9.5242… 12.018… 49.5…
+##  7    138.     138     2.5 0.1356… 0     -99.… 7.61… 65.3… 9.2895… 11.879… 70.9…
+##  8    138.     138     3   0.1512… 0     -101… 7.73… 63.7… 9.0644… 11.741… 64.9…
+##  9    138.     138     3.5 0.1698… 0     -100… 7.48… 64.8… 8.8473… 11.604… 71.9…
+## 10    138.     138     4   0.1340… 0     -98.… 7.36… 65.4… 8.6596… 11.470… 59.5…
+## # … with 5,388 more rows, 3 more variables: wspd &lt;chr&gt;, Rain &lt;chr&gt;, VWC &lt;chr&gt;,
+## #   and abbreviated variable names ¹​`Decimal time`, ²​`Day of Year`,
+## #   ³​`Hour of Day`, ⁴​`CO2 Flux`, ⁵​`Tsoil 2cm`, ⁶​`Tsoil 10cm`</code></pre>
+<p>… and see that just as with the Bugac and Hungary data, it has half-hour readings and the second line of the file has measurement units. There are multiple ways of dealing with that, but this time we’ll capture the variable names then add them back after removing the first two rows:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="time-series-case-studies.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igisci)</span>
+<span id="cb17-2"><a href="time-series-case-studies.html#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl); <span class="fu">library</span>(tidyverse); <span class="fu">library</span>(lubridate)</span>
+<span id="cb17-3"><a href="time-series-case-studies.html#cb17-3" aria-hidden="true" tabindex="-1"></a>vnames <span class="ot">&lt;-</span> <span class="fu">read_xls</span>(<span class="fu">ex</span>(<span class="st">&quot;meadows/LoneyMeadow_30minCO2fluxes_Geog604.xls&quot;</span>), <span class="at">n_max=</span><span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-4"><a href="time-series-case-studies.html#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">names</span>()</span>
+<span id="cb17-5"><a href="time-series-case-studies.html#cb17-5" aria-hidden="true" tabindex="-1"></a>vunits <span class="ot">&lt;-</span> <span class="fu">read_xls</span>(<span class="fu">ex</span>(<span class="st">&quot;meadows/LoneyMeadow_30minCO2fluxes_Geog604.xls&quot;</span>), <span class="at">n_max=</span><span class="dv">0</span>, <span class="at">skip=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-6"><a href="time-series-case-studies.html#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">names</span>()</span>
+<span id="cb17-7"><a href="time-series-case-studies.html#cb17-7" aria-hidden="true" tabindex="-1"></a>Loney <span class="ot">&lt;-</span> <span class="fu">read_xls</span>(<span class="fu">ex</span>(<span class="st">&quot;meadows/LoneyMeadow_30minCO2fluxes_Geog604.xls&quot;</span>), <span class="at">skip=</span><span class="dv">2</span>, <span class="at">col_names=</span>vnames) <span class="sc">%&gt;%</span></span>
+<span id="cb17-8"><a href="time-series-case-studies.html#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">DecimalDay =</span> <span class="st">`</span><span class="at">Decimal time</span><span class="st">`</span>,</span>
+<span id="cb17-9"><a href="time-series-case-studies.html#cb17-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">YDay =</span> <span class="st">`</span><span class="at">Day of Year</span><span class="st">`</span>,</span>
+<span id="cb17-10"><a href="time-series-case-studies.html#cb17-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">Hour =</span> <span class="st">`</span><span class="at">Hour of Day</span><span class="st">`</span>,</span>
+<span id="cb17-11"><a href="time-series-case-studies.html#cb17-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">CO2flux =</span> <span class="st">`</span><span class="at">CO2 Flux</span><span class="st">`</span>,</span>
+<span id="cb17-12"><a href="time-series-case-studies.html#cb17-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">Tsoil2cm =</span> <span class="st">`</span><span class="at">Tsoil 2cm</span><span class="st">`</span>,</span>
+<span id="cb17-13"><a href="time-series-case-studies.html#cb17-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">Tsoil10cm =</span> <span class="st">`</span><span class="at">Tsoil 10cm</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-14"><a href="time-series-case-studies.html#cb17-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">datetime =</span> <span class="fu">as_date</span>(DecimalDay, <span class="at">origin=</span><span class="st">&quot;2015-12-31&quot;</span>))</span></code></pre></div>
+<p>The time unit we’ll want to use for time series is going to be days, and we can also then look at the data over time, and a group_by-summarize process by days will give us a generalized picture of changes over the collection period reflecting phenological changes from first exposure after snowmelt through the maximum growth period and through the major senescence period of late summer. We’ll look at a faceted graph from a pivot_long table.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="time-series-case-studies.html#cb18-1" aria-hidden="true" tabindex="-1"></a>LoneyDaily <span class="ot">&lt;-</span> Loney <span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="time-series-case-studies.html#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(YDay) <span class="sc">%&gt;%</span></span>
+<span id="cb18-3"><a href="time-series-case-studies.html#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">CO2flux =</span> <span class="fu">mean</span>(CO2flux),</span>
+<span id="cb18-4"><a href="time-series-case-studies.html#cb18-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">PAR =</span> <span class="fu">mean</span>(PAR),</span>
+<span id="cb18-5"><a href="time-series-case-studies.html#cb18-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">Qnet =</span> <span class="fu">mean</span>(Qnet),</span>
+<span id="cb18-6"><a href="time-series-case-studies.html#cb18-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">Tair =</span> <span class="fu">mean</span>(Tair),</span>
+<span id="cb18-7"><a href="time-series-case-studies.html#cb18-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">RH =</span> <span class="fu">mean</span>(RH),</span>
+<span id="cb18-8"><a href="time-series-case-studies.html#cb18-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">Tsoil2cm =</span> <span class="fu">mean</span>(Tsoil2cm),</span>
+<span id="cb18-9"><a href="time-series-case-studies.html#cb18-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">Tsoil10cm =</span> <span class="fu">mean</span>(Tsoil10cm),</span>
+<span id="cb18-10"><a href="time-series-case-studies.html#cb18-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">wdir =</span> <span class="fu">mean</span>(wdir),</span>
+<span id="cb18-11"><a href="time-series-case-studies.html#cb18-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">wspd =</span> <span class="fu">mean</span>(wspd),</span>
+<span id="cb18-12"><a href="time-series-case-studies.html#cb18-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">Rain =</span> <span class="fu">mean</span>(Rain),</span>
+<span id="cb18-13"><a href="time-series-case-studies.html#cb18-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">VWC =</span> <span class="fu">mean</span>(VWC))</span>
+<span id="cb18-14"><a href="time-series-case-studies.html#cb18-14" aria-hidden="true" tabindex="-1"></a>LoneyDailyLong <span class="ot">&lt;-</span> LoneyDaily <span class="sc">%&gt;%</span></span>
+<span id="cb18-15"><a href="time-series-case-studies.html#cb18-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> CO2flux<span class="sc">:</span>VWC,</span>
+<span id="cb18-16"><a href="time-series-case-studies.html#cb18-16" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to=</span><span class="st">&quot;parameter&quot;</span>,</span>
+<span id="cb18-17"><a href="time-series-case-studies.html#cb18-17" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to=</span><span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb18-18"><a href="time-series-case-studies.html#cb18-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(parameter <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;CO2flux&quot;</span>, <span class="st">&quot;Qnet&quot;</span>, <span class="st">&quot;Tair&quot;</span>, <span class="st">&quot;RH&quot;</span>, <span class="st">&quot;Tsoil10cm&quot;</span>, <span class="st">&quot;VWC&quot;</span>))</span>
+<span id="cb18-19"><a href="time-series-case-studies.html#cb18-19" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> LoneyDailyLong, <span class="fu">aes</span>(<span class="at">x=</span>YDay, <span class="at">y=</span>value)) <span class="sc">+</span> </span>
+<span id="cb18-20"><a href="time-series-case-studies.html#cb18-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span>
+<span id="cb18-21"><a href="time-series-case-studies.html#cb18-21" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">facet_grid</span>(parameter <span class="sc">~</span> ., <span class="at">scales =</span> <span class="st">&quot;free_y&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-13"></span>
+<img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-13-1.png" alt="Facet plot with free y scale of Loney flux tower parameters" width="75%" />
+<p class="caption">
+FIGURE 3.3: Facet plot with free y scale of Loney flux tower parameters
+</p>
+</div>
+<p>Now we’ll build a time series for CO<sub>2</sub> for an 8-day period over the summer solstice, using the start time and frequency (there’s also a time stamp, but this was easier, since I knew the data had no gaps):</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="time-series-case-studies.html#cb19-1" aria-hidden="true" tabindex="-1"></a>LoneyCO2 <span class="ot">&lt;-</span> Loney <span class="sc">%&gt;%</span></span>
+<span id="cb19-2"><a href="time-series-case-studies.html#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(YDay <span class="sc">&gt;</span> <span class="dv">167</span> <span class="sc">&amp;</span> YDay <span class="sc">&lt;</span> <span class="dv">176</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb19-3"><a href="time-series-case-studies.html#cb19-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(CO2flux) <span class="sc">%&gt;%</span></span>
+<span id="cb19-4"><a href="time-series-case-studies.html#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ts</span>(<span class="at">start=</span><span class="dv">138</span>,<span class="at">frequency=</span><span class="dv">48</span>)</span>
+<span id="cb19-5"><a href="time-series-case-studies.html#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">decompose</span>(LoneyCO2))</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-14"></span>
+<img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-14-1.png" alt="Loney CO~2~ decomposition by day, 8-day period at summer solstice" width="75%" />
+<p class="caption">
+FIGURE 3.4: Loney CO<sub>2</sub> decomposition by day, 8-day period at summer solstice
+</p>
+</div>
+<p>Finally, we’ll create a couple ensemble average plots from all of the data, with sd error bars similar to what we did for Manaus, and with cowplot used again to compare two ensemble plots:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="time-series-case-studies.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span>
+<span id="cb20-2"><a href="time-series-case-studies.html#cb20-2" aria-hidden="true" tabindex="-1"></a>LoneyCO2sum <span class="ot">&lt;-</span> Loney <span class="sc">%&gt;%</span></span>
+<span id="cb20-3"><a href="time-series-case-studies.html#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Hour) <span class="sc">%&gt;%</span></span>
+<span id="cb20-4"><a href="time-series-case-studies.html#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">meanCO2 =</span> <span class="fu">mean</span>(CO2flux), <span class="at">sdCO2 =</span> <span class="fu">sd</span>(CO2flux))</span>
+<span id="cb20-5"><a href="time-series-case-studies.html#cb20-5" aria-hidden="true" tabindex="-1"></a>LoneyPARsum <span class="ot">&lt;-</span> Loney <span class="sc">%&gt;%</span></span>
+<span id="cb20-6"><a href="time-series-case-studies.html#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Hour) <span class="sc">%&gt;%</span></span>
+<span id="cb20-7"><a href="time-series-case-studies.html#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">meanPAR =</span> <span class="fu">mean</span>(PAR), <span class="at">sdPAR =</span> <span class="fu">sd</span>(PAR))</span>
+<span id="cb20-8"><a href="time-series-case-studies.html#cb20-8" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> LoneyCO2sum <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Hour)) <span class="sc">+</span> <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">24</span>,<span class="dv">3</span>)) <span class="sc">+</span></span>
+<span id="cb20-9"><a href="time-series-case-studies.html#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>meanCO2), <span class="at">col=</span><span class="st">&quot;blue&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb20-10"><a href="time-series-case-studies.html#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymax =</span> meanCO2 <span class="sc">+</span> sdCO2, <span class="at">ymin =</span> meanCO2 <span class="sc">-</span> sdCO2)) <span class="sc">+</span></span>
+<span id="cb20-11"><a href="time-series-case-studies.html#cb20-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Loney ensemble CO2 flux&quot;</span>)</span>
+<span id="cb20-12"><a href="time-series-case-studies.html#cb20-12" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span>  LoneyPARsum <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Hour)) <span class="sc">+</span> <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">24</span>,<span class="dv">3</span>)) <span class="sc">+</span></span>
+<span id="cb20-13"><a href="time-series-case-studies.html#cb20-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>meanPAR), <span class="at">col=</span><span class="st">&quot;red&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb20-14"><a href="time-series-case-studies.html#cb20-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymax =</span> meanPAR <span class="sc">+</span> sdPAR, <span class="at">ymin =</span> meanPAR <span class="sc">-</span> sdPAR)) <span class="sc">+</span></span>
+<span id="cb20-15"><a href="time-series-case-studies.html#cb20-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Loney ensemble PAR&quot;</span>)</span>
+<span id="cb20-16"><a href="time-series-case-studies.html#cb20-16" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_grid</span>(<span class="at">plotlist=</span><span class="fu">list</span>(p1,p2), <span class="at">ncol=</span><span class="dv">1</span>, <span class="at">align=</span><span class="st">&#39;v&#39;</span>) <span class="co"># from cowplot</span></span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-15"></span>
+<img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-15-1.png" alt="Loney meadow CO~2~ and PAR ensemble averages" width="75%" />
+<p class="caption">
+FIGURE 3.5: Loney meadow CO<sub>2</sub> and PAR ensemble averages
+</p>
+</div>
+<p>We can explore the Loney meadow data further, maybe comparing multiple ensemble averages, relating variables (like the example here):</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="time-series-case-studies.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igisci)</span>
+<span id="cb21-2"><a href="time-series-case-studies.html#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl); <span class="fu">library</span>(tidyverse); <span class="fu">library</span>(lubridate)</span>
+<span id="cb21-3"><a href="time-series-case-studies.html#cb21-3" aria-hidden="true" tabindex="-1"></a>vnames <span class="ot">&lt;-</span> <span class="fu">read_xls</span>(<span class="fu">ex</span>(<span class="st">&quot;meadows/LoneyMeadow_30minCO2fluxes_Geog604.xls&quot;</span>), <span class="at">n_max=</span><span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-4"><a href="time-series-case-studies.html#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">names</span>()</span>
+<span id="cb21-5"><a href="time-series-case-studies.html#cb21-5" aria-hidden="true" tabindex="-1"></a>vunits <span class="ot">&lt;-</span> <span class="fu">read_xls</span>(<span class="fu">ex</span>(<span class="st">&quot;meadows/LoneyMeadow_30minCO2fluxes_Geog604.xls&quot;</span>), <span class="at">n_max=</span><span class="dv">0</span>, <span class="at">skip=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-6"><a href="time-series-case-studies.html#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">names</span>()</span>
+<span id="cb21-7"><a href="time-series-case-studies.html#cb21-7" aria-hidden="true" tabindex="-1"></a>Loney <span class="ot">&lt;-</span> <span class="fu">read_xls</span>(<span class="fu">ex</span>(<span class="st">&quot;meadows/LoneyMeadow_30minCO2fluxes_Geog604.xls&quot;</span>), <span class="at">skip=</span><span class="dv">2</span>, <span class="at">col_names=</span>vnames) <span class="sc">%&gt;%</span></span>
+<span id="cb21-8"><a href="time-series-case-studies.html#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">DecimalDay =</span> <span class="st">`</span><span class="at">Decimal time</span><span class="st">`</span>,</span>
+<span id="cb21-9"><a href="time-series-case-studies.html#cb21-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">YDay =</span> <span class="st">`</span><span class="at">Day of Year</span><span class="st">`</span>,</span>
+<span id="cb21-10"><a href="time-series-case-studies.html#cb21-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">Hour =</span> <span class="st">`</span><span class="at">Hour of Day</span><span class="st">`</span>,</span>
+<span id="cb21-11"><a href="time-series-case-studies.html#cb21-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">CO2flux =</span> <span class="st">`</span><span class="at">CO2 Flux</span><span class="st">`</span>,</span>
+<span id="cb21-12"><a href="time-series-case-studies.html#cb21-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">Tsoil2cm =</span> <span class="st">`</span><span class="at">Tsoil 2cm</span><span class="st">`</span>,</span>
+<span id="cb21-13"><a href="time-series-case-studies.html#cb21-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">Tsoil10cm =</span> <span class="st">`</span><span class="at">Tsoil 10cm</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-14"><a href="time-series-case-studies.html#cb21-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">datetime =</span> <span class="fu">as_date</span>(DecimalDay, <span class="at">origin=</span><span class="st">&quot;2015-12-31&quot;</span>))</span>
+<span id="cb21-15"><a href="time-series-case-studies.html#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>Loney) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>Qnet, <span class="at">y=</span>CO2flux, <span class="at">col=</span>YDay), <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span>  </span>
+<span id="cb21-16"><a href="time-series-case-studies.html#cb21-16" aria-hidden="true" tabindex="-1"></a>   <span class="fu">scale_color_gradient2</span>(<span class="at">low=</span><span class="st">&quot;blue&quot;</span>, <span class="at">high=</span><span class="st">&quot;red&quot;</span>, <span class="at">mid=</span><span class="st">&quot;green&quot;</span>, <span class="at">midpoint=</span><span class="dv">200</span>) </span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-16"></span>
+<img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-16-1.png" alt="Loney CO2 flux vs Qnet" width="75%" />
+<p class="caption">
+FIGURE 3.6: Loney CO2 flux vs Qnet
+</p>
+</div>
+
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-blackburn2021carbon" class="csl-entry">
+Blackburn, Darren A, Andrew J Oliphant, and Jerry D Davis. 2021. <span>“Carbon and Water Exchanges in a Mountain Meadow Ecosystem, Sierra Nevada, California.”</span> <em>Wetlands</em> 41 (3): 1–17. <a href="https://doi.org/10.1007/s13157-021-01437-2">https://doi.org/10.1007/s13157-021-01437-2</a>.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="air-pollutant-emissions-trends-epa.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="r-markdown-and-bookdown.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+},
+"book_filename": "envdatasci",
+"toc_depth": 4
+});
+});
+</script>
+
+</body>
+
+</html>

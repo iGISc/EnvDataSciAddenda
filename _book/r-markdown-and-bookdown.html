@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4 R Markdown and Bookdown | Environmental Data Science Addenda</title>
+  <meta name="description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4 R Markdown and Bookdown | Environmental Data Science Addenda" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
+  <meta name="github-repo" content="iGISc/EnvDataSciAddenda" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4 R Markdown and Bookdown | Environmental Data Science Addenda" />
+  
+  <meta name="twitter:description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
+  
+
+<meta name="author" content="Jerry Davis, SFSU Institute for Geographic Information Science" />
+
+
+<meta name="date" content="2022-12-29" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="time-series-case-studies.html"/>
+<link rel="next" href="building-a-package-on-github-for-data-and-code.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.24/datatables.js"></script>
+<link href="libs/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.11.3/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><img src="img/eaRth_anna296.png"></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Background, Goals and Data</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#structure-of-the-addenda"><i class="fa fa-check"></i><b>1.1</b> Structure of the Addenda</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#software-and-data"><i class="fa fa-check"></i><b>1.2</b> Software and Data</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#data"><i class="fa fa-check"></i><b>1.2.1</b> Data</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.3</b> Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="air-pollutant-emissions-trends-epa.html"><a href="air-pollutant-emissions-trends-epa.html"><i class="fa fa-check"></i><b>2</b> Air pollutant emissions trends (EPA)</a></li>
+<li class="chapter" data-level="3" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html"><i class="fa fa-check"></i><b>3</b> Time Series case studies</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html#loney-meadow-flux-data"><i class="fa fa-check"></i><b>3.1</b> Loney Meadow flux data</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html"><i class="fa fa-check"></i><b>4</b> R Markdown and Bookdown</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#r-markdown"><i class="fa fa-check"></i><b>4.1</b> R Markdown</a></li>
+<li class="chapter" data-level="4.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#bookdown"><i class="fa fa-check"></i><b>4.2</b> Bookdown</a>
+<ul>
+<li class="chapter" data-level="" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#display-options-in-code-chunks"><i class="fa fa-check"></i>Display options in code chunks</a></li>
+<li class="chapter" data-level="4.2.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#numbered-figures-with-text-citations"><i class="fa fa-check"></i><b>4.2.1</b> Numbered figures with text citations</a></li>
+<li class="chapter" data-level="4.2.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#latex-pdf-book-notes"><i class="fa fa-check"></i><b>4.2.2</b> LaTeX / pdf book notes</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html"><i class="fa fa-check"></i><b>5</b> Building a Package on GitHub for Data and Code</a>
+<ul>
+<li class="chapter" data-level="" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#git-and-github"><i class="fa fa-check"></i>Git and GitHub</a></li>
+<li class="chapter" data-level="" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#some-notes-on-the-rstudio-process"><i class="fa fa-check"></i>Some notes on the RStudio process</a></li>
+<li class="chapter" data-level="" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#data-1"><i class="fa fa-check"></i>Data</a>
+<ul>
+<li class="chapter" data-level="" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#raw-data-in-extdata"><i class="fa fa-check"></i>Raw data in extdata</a></li>
+<li class="chapter" data-level="" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#binary-data-as-rda-files"><i class="fa fa-check"></i>Binary data as <code>rda</code> files</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#code-functions"><i class="fa fa-check"></i>Code (functions)</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Environmental Data Science Addenda</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="r-markdown-and-bookdown" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">4</span> R Markdown and Bookdown<a href="r-markdown-and-bookdown.html#r-markdown-and-bookdown" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This book is built using R Markdown and bookdown methods, and published at <a href="http://bookdown.org" class="uri">http://bookdown.org</a>. There are some great resources on both of these at <span class="citation">Xie, Allaire, and Grolemund (<a href="#ref-RMarkdown" role="doc-biblioref">2019</a>)</span> and <span class="citation">Xie (<a href="#ref-Bookdown" role="doc-biblioref">2021</a>)</span>, but I thought it might be useful to provide some things I’ve discovered.</p>
+<div id="r-markdown" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> R Markdown<a href="r-markdown-and-bookdown.html#r-markdown" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Markdown isn’t new and isn’t at all restricted to R. It’s the basis for Jupyter Notebooks, which I tend to use for Python but also works with R (the “py” in Jupyter is for Python and the “r” is for R); but I think R Markdown is better developed within RStudio, which provides more of an all-in-one <em>integrated development environment</em> (IDE).</p>
+<p>For most users, what’s covered in the cheat sheet, which should be at <a href="https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf" class="uri">https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf</a> is all you need to be able to format nice R Markdown documents, but the more thorough treatment at <span class="citation">Xie, Allaire, and Grolemund (<a href="#ref-RMarkdown" role="doc-biblioref">2019</a>)</span> is a good resource for going further.</p>
+</div>
+<div id="bookdown" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Bookdown<a href="r-markdown-and-bookdown.html#bookdown" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>While you can build a nice looking document in R Markdown, there are some other things that are useful for building a larger book out of it, like handling chapters and references, so you’ll want to review <span class="citation">Xie (<a href="#ref-Bookdown" role="doc-biblioref">2021</a>)</span> to learn more. Some notes on building a book at github and bookdown.org:</p>
+<ul>
+<li>The book is built in RStudio and all Markdown and other files hosted in a GitHub repository. You’ll need to learn more about that.</li>
+<li>Normally, html is the output format (and a variation on this is gitbook). To also create pdf you need to also specify it in the <code>_output.yml</code> file like I’ve done for this book:</li>
+</ul>
+<pre><code>bookdown::gitbook:
+  css: style.css
+  config:
+    toc:
+      before: |
+        &lt;li&gt;&lt;a href=&quot;./&quot;&gt;Environmental Data Science&lt;/a&gt;&lt;/li&gt;
+      after: |
+        &lt;li&gt;&lt;a href=&quot;https://github.com/rstudio/bookdown&quot; target=&quot;blank&quot;&gt;Published with bookdown&lt;/a&gt;&lt;/li&gt;
+    book_filename: &quot;envdatasci&quot;
+  toc_depth: 4
+bookdown::pdf_book:
+  keep_tex: TRUE</code></pre>
+<ul>
+<li><p>To create pdf however you need latex, so install.packages(“tinytex”), then in the project: tinytex::install_tinytex() to create the requisite files. See <a href="https://yihui.org/tinytex/" class="uri">https://yihui.org/tinytex/</a></p></li>
+<li><p>Use the Build menu in RStudio to specify whether you want to build which type you’ve specified in the <code>_output.yml</code> file. Since building a long book like this one can take a long time (about 35 minutes for both html and pdf for this book), I sometimes just build the HTML version, then build the pdf separately if it works, and since most people will use the HTML version I update that more frequently.</p></li>
+<li><p>Note that pdfs don’t include interactive maps except as a static rendering.</p></li>
+<li><p>It’s useful to list all of your chapters in order with the <code>_bookdown.yml</code> file. For example this book includes the following in that file.</p></li>
+</ul>
+<pre><code>rmd_files: [&quot;index.Rmd&quot;, &quot;introduction.Rmd&quot;, &quot;abstraction.Rmd&quot;, &quot;visualization.Rmd&quot;, &quot;transformation.Rmd&quot;,
+            &quot;spatialDataMaps.Rmd&quot;, &quot;spatialAnalysis.Rmd&quot;, &quot;spatialRaster.Rmd&quot;,
+            &quot;statistics.Rmd&quot;, &quot;modeling.Rmd&quot;, &quot;ImageClassification.Rmd&quot;,
+            &quot;TimeSeries.Rmd&quot;,  &quot;communication.Rmd&quot;,
+            &quot;AppendixPackage.Rmd&quot;, &quot;AppendixRMarkdownBookdown.Rmd&quot;, &quot;references.Rmd&quot;]</code></pre>
+<ul>
+<li>Learn how to organize the book with chapters set aside by <code>#</code> in markdown then subheadings at various levels using <code>##</code>,, <code>###</code>, etc., and don’t forget the space after the last hash.</li>
+<li>The automatic numbering of chapters and subheadings is useful, but if you want a section to not use numbering, like this appendix, including <code>{-}</code> at the end of the every section header line.</li>
+<li>Creating sections, like <strong>Spatial</strong>, is done by including `(PART) before the section name, like the following, which starts off the section with this special heading followed by the first chapter:</li>
+</ul>
+<pre><code># (PART) Spatial {-}
+
+# Spatial Data and Maps
+</code></pre>
+<p>Note that the section is excluded from the automatic numbering with <code>{-}</code>.</p>
+<p>I guess I could have included some text to introduce the section but the above works to include the section name in the table of contents.</p>
+<div id="display-options-in-code-chunks" class="section level3 unnumbered hasAnchor">
+<h3>Display options in code chunks<a href="r-markdown-and-bookdown.html#display-options-in-code-chunks" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The display options for code chunk headers {r …} are very important to figure out in order to avoid unwanted messages in the book. Each option is separated by a comma. See <a href="https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf" class="uri">https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf</a> for a list of these options. I’ve found that some of what’s documented at <a href="https://yihui.org/knitr/options/#code-evaluation" class="uri">https://yihui.org/knitr/options/#code-evaluation</a> isn’t quite right, so here’s what I’ve observed: <code>echo=TRUE</code> won’t display the code if <code>include=FALSE</code> is set, though the above source suggests that the <code>include</code> option only refers to chunk output.</p>
+<p>Display options (useful for exercises):</p>
+<ol style="list-style-type: decimal">
+<li>no code no outputs : <code>include=F</code> [normal for exercises in book]</li>
+<li>code no outputs : <code>include=T,fig.show="hide",results=F</code> (<code>include=T</code> is default) results=“markup” is default (same as T?)</li>
+<li>code and outputs : <code>include=T,echo=T,fig.show=T,results=T</code> (return to defaults)</li>
+<li>no code or no eval : <code>include=F,eval=F</code></li>
+</ol>
+<p>Exceptions like showing figure “goals” under all of these conditions can only be done by using screen shots, then brought in with something like this code and figure reference (Figure <a href="r-markdown-and-bookdown.html#fig:TransectBuffersGoal">4.1</a>)</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:TransectBuffersGoal"></span>
+<img src="img/goal_spanlTransectBuffers.png" alt="Transect Buffers (goal)" width="50%" />
+<p class="caption">
+FIGURE 4.1: Transect Buffers (goal)
+</p>
+</div>
+<p>Note that <a href="https://yihui.org/knitr/options/" class="uri">https://yihui.org/knitr/options/</a> says that results=“asis” should work, but this created errors for me, very frustrating since they only show when it’s a LaTeX error at the end of all of the R markdown compilation.</p>
+<p><strong>Warnings and messages</strong>
+Turning off warnings and messages is so important in a book that I use knitr::opts_chunk$set to set these as defaults at the top of each chapter .Rmd.</p>
+<p>However some things that seem like messages are actually <em>results</em>, for instance:</p>
+<p><code>st_read</code> will create unwanted messages that are actually results, so you can either put it in a code chunk that isn’t displayed at all with <code>include=F</code> or probably better use <code>results = "hide"</code>. For instance, the following code is in a code chunk that has three options <code>{r warning=F, results="hide", message=F}</code> to avoid printing quite a lot of unwanted stuff:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="r-markdown-and-bookdown.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf); <span class="fu">library</span>(igisci)</span>
+<span id="cb25-2"><a href="r-markdown-and-bookdown.html#cb25-2" aria-hidden="true" tabindex="-1"></a>places <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="fu">ex</span>(<span class="st">&quot;sierra/CA_places.shp&quot;</span>))</span></code></pre></div>
+</div>
+<div id="numbered-figures-with-text-citations" class="section level3 hasAnchor" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> Numbered figures with text citations<a href="r-markdown-and-bookdown.html#numbered-figures-with-text-citations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In the text, cite the figure with Figure <a href="r-markdown-and-bookdown.html#fig:visSimpleBarGraph">4.2</a> or (Figure <a href="r-markdown-and-bookdown.html#fig:visSimpleBarGraph">4.2</a>). The <code>fig:</code> is key to that name, followed by the chunk label.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="r-markdown-and-bookdown.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(XSptsNDVI, <span class="fu">aes</span>(vegetation)) <span class="sc">+</span> </span>
+<span id="cb26-2"><a href="r-markdown-and-bookdown.html#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:visSimpleBarGraph"></span>
+<img src="EnvDataSciAddenda_files/figure-html/visSimpleBarGraph-1.png" alt="Simple bar graph of meadow vegetation samples" width="75%" />
+<p class="caption">
+FIGURE 4.2: Simple bar graph of meadow vegetation samples
+</p>
+</div>
+</div>
+<div id="latex-pdf-book-notes" class="section level3 hasAnchor" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> LaTeX / pdf book notes<a href="r-markdown-and-bookdown.html#latex-pdf-book-notes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>As Yihui Xie notes in <a href="https://bookdown.org/yihui/bookdown/" class="uri">https://bookdown.org/yihui/bookdown/</a> you should probably only create an html document, since there are many formatting issues you’ll need to deal with for pdf. There are a lot of challenges in going to pdf, because the process is that:</p>
+<ul>
+<li>RStudio creates a LaTeX .tex document</li>
+<li>Your LaTeX interpreter (probably tinytex, as recommended by Xihui) compiles the .tex to pdf.</li>
+</ul>
+<p>So to debug issues, you’re dealing with both R/RMarkdown &amp; knitr things, you’re also dealing with LaTeX things, and if you’re like me, you don’t really want to learn all about LaTeX; you just want RStudio to take care of it.</p>
+<p>The YAML files _output.yml, _bookdown.yml, and the index.Rmd need to be set up right, and it’s difficult to know what goes in which. Here are some important things I’ve discovered:</p>
+<div id="output.yml" class="section level4 hasAnchor" number="4.2.2.1">
+<h4><span class="header-section-number">4.2.2.1</span> _output.yml<a href="r-markdown-and-bookdown.html#output.yml" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>nly has outputs. See my example:</p>
+<pre><code>bookdown::gitbook:
+  css: style.css
+  config:
+    toc:
+      collapse: none
+      before: |
+        &lt;li&gt;&lt;img src=&quot;img/eaRth_anna296.png&quot;&gt;&lt;/li&gt;
+      after: |
+        &lt;li&gt;&lt;a href=&quot;https://github.com/rstudio/bookdown&quot; target=&quot;blank&quot;&gt;Published with bookdown&lt;/a&gt;&lt;/li&gt;
+    book_filename: &quot;envdatasci&quot;
+  toc_depth: 4
+bookdown::pdf_book:
+  includes:
+    in_header: latex/preamble.tex
+    before_body: latex/before_body.tex
+    after_body: latex/after_body.tex
+  keep_tex: true
+  dev: &quot;cairo_pdf&quot;
+  latex_engine: xelatex
+  template: null
+  pandoc_args: --top-level-division=chapter
+  toc_depth: 3
+  toc_unnumbered: false
+  toc_appendix: true
+  quote_footer: [&quot;\\VA{&quot;, &quot;}{}&quot;]
+  highlight_bw: true</code></pre>
+<ul>
+<li>note the latex_engine: xelatex – that required specifying the xelatex engine, which you can set in RStudio Build/Configure Build Tools in the Sweave section of the Project Options window that will display and choosing XeLaTeX. For CRC, I needed the features this has, but didn’t realize it until after a <em>lot</em> of trial &amp; error.</li>
+</ul>
+</div>
+<div id="index.rmd" class="section level4 hasAnchor" number="4.2.2.2">
+<h4><span class="header-section-number">4.2.2.2</span> index.Rmd<a href="r-markdown-and-bookdown.html#index.rmd" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>These settings are a higher level than what’s in _output.yml, though you could put the things in that file here under an <code>output:</code> line. See examples in <a href="https://bookdown.org/yihui/bookdown/" class="uri">https://bookdown.org/yihui/bookdown/</a>.</p>
+<pre><code>---
+title: &quot;Introduction to Environmental Data Science&quot;
+author: &quot;Jerry Davis, SFSU Institute for Geographic Information Science&quot;
+date: &quot;2022-12-29&quot;
+documentclass: krantz
+classoption: krantz2
+bibliography: [book.bib]
+biblio-style: apalike
+link-citations: yes
+colorlinks: yes
+lot: no
+lof: yes
+site: bookdown::bookdown_site
+description: Background, methods and exercises for using R for environmental data
+  science.  The focus is on applying the R language and various libraries for data
+  abstraction, transformation, data analysis, spatial data/mapping, statistical modeling,
+  and time series, applied to environmental research. Applies exploratory data analysis
+  methods and tidyverse approaches in R, and includes contributed chapters presenting
+  research applications, with associated data and code packages.
+github-repo: iGISc/EnvDataSci
+graphics: yes
+geometry: margin=0.75in
+---</code></pre>
+<p>This includes krantz to specify the krantz.cls file provided by CRC Press, the publisher I’m going with for this book, and why I’m going to the major trouble of getting the LaTeX working. The classoption:krantz2 ends up creating the following in the .tex file, which is needed by the publisher to get the page size right for CRC. The krantz.cls file used was edited for me by the original programmer who wrote it. The classoption: krantz2 then produces the following in the .tex document.</p>
+<pre><code>\documentclass[
+  krantz2]{krantz}</code></pre>
+</div>
+<div id="bookdown.yml" class="section level4 hasAnchor" number="4.2.2.3">
+<h4><span class="header-section-number">4.2.2.3</span> _bookdown.yml<a href="r-markdown-and-bookdown.html#bookdown.yml" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The main thing I use this for is the list of chapters, which is nice to specify instead of letting the RStudio figure out the chapters based on their names by using numbers like 01_introduction, etc., and I can comment out parts – so I’ve set them up one line at a time to make it easy to use Ctrl-Sh-C to toggle commenting.</p>
+<pre><code>book_filename: &quot;EnvDataSci&quot;
+clean: [packages.bib, bookdown.bbl]
+delete_merged_file: true
+rmd_files: [&quot;index.Rmd&quot;,
+            &quot;introduction.Rmd&quot;,
+            &quot;abstraction.Rmd&quot;,
+            &quot;visualization.Rmd&quot;,
+            &quot;transformation.Rmd&quot;,
+            &quot;spatialDataMaps.Rmd&quot;,
+            &quot;spatialAnalysis.Rmd&quot;,
+            &quot;spatialRaster.Rmd&quot;,
+            &quot;spatialInterpolation.Rmd&quot;,
+            &quot;statistics.Rmd&quot;,
+            &quot;modeling.Rmd&quot;,
+            &quot;ImageryAnalysisClassification.Rmd&quot;,
+            &quot;TimeSeries.Rmd&quot;,
+            &quot;communication.Rmd&quot;,
+            &quot;references.Rmd&quot;]
+language:
+  label:
+    fig: &quot;FIGURE &quot;
+    tab: &quot;TABLE &quot;
+  ui:
+    edit: &quot;Edit&quot;
+    chapter_name: &quot;Chapter &quot;</code></pre>
+</div>
+<div id="figure-labels" class="section level4 hasAnchor" number="4.2.2.4">
+<h4><span class="header-section-number">4.2.2.4</span> Figure labels<a href="r-markdown-and-bookdown.html#figure-labels" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<ul>
+<li>Can’t have underscores and other special characters like <code>&amp;</code> and <code>_</code>.</li>
+<li>Subscripts and superscripts can be confusing between html and LaTeX. See <a href="https://www.math.mcgill.ca/yyang/regression/RMarkdown/example.html" class="uri">https://www.math.mcgill.ca/yyang/regression/RMarkdown/example.html</a> .using ~ and _ like CO<sub>2</sub> and X_2_ might work in Rmarkdown and html, but not in LaTeX/pdf.</li>
+</ul>
+<p><a href="https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf" class="uri">https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf</a></p>
+
+</div>
+</div>
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Bookdown" class="csl-entry">
+Xie, Yihui. 2021. <em>Bookdown: Authoring Books and Technical Documents with r Markdown</em>. Boca Raton, Florida: Chapman; Hall/CRC. <a href="https://bookdown.org/yihui/bookdown/">https://bookdown.org/yihui/bookdown/</a>.
+</div>
+<div id="ref-RMarkdown" class="csl-entry">
+Xie, Yihui, JJ Allaire, and Garrett Grolemund. 2019. <em>R Markdown: The Definitive Guide</em>. 1st ed. Boca Raton, Florida: Chapman; Hall/CRC. <a href="https://bookdown.org/yihui/rmarkdown/">https://bookdown.org/yihui/rmarkdown/</a>.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="time-series-case-studies.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="building-a-package-on-github-for-data-and-code.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+},
+"book_filename": "envdatasci",
+"toc_depth": 4
+});
+});
+</script>
+
+</body>
+
+</html>

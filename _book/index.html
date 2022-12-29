@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Environmental Data Science Addenda</title>
+  <meta name="description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Environmental Data Science Addenda" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
+  <meta name="github-repo" content="iGISc/EnvDataSciAddenda" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Environmental Data Science Addenda" />
+  
+  <meta name="twitter:description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
+  
+
+<meta name="author" content="Jerry Davis, SFSU Institute for Geographic Information Science" />
+
+
+<meta name="date" content="2022-12-29" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+
+<link rel="next" href="air-pollutant-emissions-trends-epa.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.24/datatables.js"></script>
+<link href="libs/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.11.3/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><img src="img/eaRth_anna296.png"></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Background, Goals and Data</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#structure-of-the-addenda"><i class="fa fa-check"></i><b>1.1</b> Structure of the Addenda</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#software-and-data"><i class="fa fa-check"></i><b>1.2</b> Software and Data</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#data"><i class="fa fa-check"></i><b>1.2.1</b> Data</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.3</b> Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="air-pollutant-emissions-trends-epa.html"><a href="air-pollutant-emissions-trends-epa.html"><i class="fa fa-check"></i><b>2</b> Air pollutant emissions trends (EPA)</a></li>
+<li class="chapter" data-level="3" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html"><i class="fa fa-check"></i><b>3</b> Time Series case studies</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html#loney-meadow-flux-data"><i class="fa fa-check"></i><b>3.1</b> Loney Meadow flux data</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html"><i class="fa fa-check"></i><b>4</b> R Markdown and Bookdown</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#r-markdown"><i class="fa fa-check"></i><b>4.1</b> R Markdown</a></li>
+<li class="chapter" data-level="4.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#bookdown"><i class="fa fa-check"></i><b>4.2</b> Bookdown</a>
+<ul>
+<li class="chapter" data-level="" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#display-options-in-code-chunks"><i class="fa fa-check"></i>Display options in code chunks</a></li>
+<li class="chapter" data-level="4.2.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#numbered-figures-with-text-citations"><i class="fa fa-check"></i><b>4.2.1</b> Numbered figures with text citations</a></li>
+<li class="chapter" data-level="4.2.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#latex-pdf-book-notes"><i class="fa fa-check"></i><b>4.2.2</b> LaTeX / pdf book notes</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html"><i class="fa fa-check"></i><b>5</b> Building a Package on GitHub for Data and Code</a>
+<ul>
+<li class="chapter" data-level="" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#git-and-github"><i class="fa fa-check"></i>Git and GitHub</a></li>
+<li class="chapter" data-level="" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#some-notes-on-the-rstudio-process"><i class="fa fa-check"></i>Some notes on the RStudio process</a></li>
+<li class="chapter" data-level="" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#data-1"><i class="fa fa-check"></i>Data</a>
+<ul>
+<li class="chapter" data-level="" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#raw-data-in-extdata"><i class="fa fa-check"></i>Raw data in extdata</a></li>
+<li class="chapter" data-level="" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#binary-data-as-rda-files"><i class="fa fa-check"></i>Binary data as <code>rda</code> files</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#code-functions"><i class="fa fa-check"></i>Code (functions)</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Environmental Data Science Addenda</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">Environmental Data Science Addenda</h1>
+<p class="author"><em>Jerry Davis, SFSU Institute for Geographic Information Science</em></p>
+<p class="date"><em>2022-12-29</em></p>
+</div>
+<div id="background-goals-and-data" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">1</span> Background, Goals and Data<a href="index.html#background-goals-and-data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="structure-of-the-addenda" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> Structure of the Addenda<a href="index.html#structure-of-the-addenda" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>As seen in the table of contents, these addenda include:</p>
+<ul>
+<li>Case studies and extended methods, such as
+<ul>
+<li>Air pollutant emission trends</li>
+<li>Spatial data &amp; analysis</li>
+<li>Antarctic penguin research case study with PointBlue</li>
+<li>Seabird model, also related to PointBlue</li>
+<li>Imagery classification</li>
+<li>Time Series</li>
+</ul></li>
+<li>Guides
+<ul>
+<li>RMarkdown</li>
+<li>Building code and data packages on GitHub</li>
+</ul></li>
+</ul>
+</div>
+<div id="software-and-data" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> Software and Data<a href="index.html#software-and-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Some things covered in the main book, but repeated here for convenience.</p>
+<pre><code>## [1] &quot;This book was produced in RStudio using R version 4.2.1 (2022-06-23 ucrt)&quot;</code></pre>
+<p>For a start, you’ll need to have R and RStudio installed, then you’ll need to install various packages to support specific chapters and sections. No instructions are provided here, since you should know how to install packages in RStudio.</p>
+<p>From time to time, you’ll want to update your installed packages, and that usually happens when something doesn’t work and maybe the dependencies of one package on another gets broken with a change in a package. Fortunately, in the R world, especially at the main repository at CRAN, there’s a lot of effort put into making sure packages work together, so usually there are no surprises if you’re using the most current versions.</p>
+<p>Once a package like <code>dplyr</code> is installed, you can access all of its functions and data by adding a library call, like …</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="index.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
+<p>… which you <em>will</em> want to include in your code, or to provide access to multiple libraries in the tidyverse, you can use <code>library(tidyverse)</code>. Alternatively, if you’re only using maybe one function out of an installed package, you can call that function with the <code>::</code> separator, like <code>dplyr::select()</code>. This method has another advantage in avoiding problems with duplicate names – and for instance we’ll generally call <code>dplyr::select()</code> this way.</p>
+<div id="data" class="section level3 hasAnchor" number="1.2.1">
+<h3><span class="header-section-number">1.2.1</span> Data<a href="index.html#data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We’ll be using data from various sources, including data on CRAN like the code packages above which you install the same way – so use <code>install.packages("palmerpenguins")</code>.</p>
+<p>We’ve also created a repository on GitHub that includes data we’ve developed in the Institute for Geographic Information Science (iGISc) at SFSU, and you’ll need to install that package a slightly different way.</p>
+<p><img src="img/IGIScSFSU281200.png" width="33%" style="display: block; margin: auto;" /></p>
+<p>GitHub packages require a bit more work on the user’s part since we need to first install <code>remotes</code><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>, then use that to install the GitHub data package:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="index.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;remotes&quot;</span>)</span>
+<span id="cb3-2"><a href="index.html#cb3-2" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;iGISc/igisci&quot;</span>)</span></code></pre></div>
+<p>Then you can access it just like other built-in data by including:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="index.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igisci)</span></code></pre></div>
+<p>To see what’s in it, you’ll see the various datasets listed in:</p>
+<pre><code>data(package=&quot;igisci&quot;)</code></pre>
+<p>For instance, Figure <a href="index.html#fig:indexCAcounties">1.1</a> is a map of California counties using the CA_counties <code>sf</code> feature data. We’ll be looking at the <code>sf</code> (Simple Features) package later in the Spatial section of the book, but seeing <code>library(sf)</code>, this is one place where you’d need to have installed another package, with <code>install.packages("sf")</code>.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="index.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse); <span class="fu">library</span>(igisci); <span class="fu">library</span>(sf)</span>
+<span id="cb6-2"><a href="index.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>CA_counties) <span class="sc">+</span> <span class="fu">geom_sf</span>()</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:indexCAcounties"></span>
+<img src="EnvDataSciAddenda_files/figure-html/indexCAcounties-1.png" alt="California counties simple features data in igisci package" width="75%" />
+<p class="caption">
+FIGURE 1.1: California counties simple features data in igisci package
+</p>
+</div>
+<p>The package datasets can be used directly as <code>sf</code> data or data frames. And similarly to functions, you can access the (previously installed) data set by prefacing with <code>igisci::</code> this way, without having to load the library. This might be useful in a one-off operation:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="index.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(igisci<span class="sc">::</span>sierraFeb<span class="sc">$</span>LATITUDE)</span></code></pre></div>
+<pre><code>## [1] 38.3192</code></pre>
+<p>Raw data such as <code>.csv</code> files can also be read from the <code>extdata</code> folder that is installed on your computer when you install the package, using code such as:</p>
+<pre><code>csvPath &lt;- system.file(&quot;extdata&quot;,&quot;TRI/TRI_1987_BaySites.csv&quot;, package=&quot;igisci&quot;)
+TRI87 &lt;- read_csv(csvPath)</code></pre>
+<p>or something similar for shapefiles, such as:</p>
+<pre><code>shpPath &lt;- system.file(&quot;extdata&quot;,&quot;marbles/trails.shp&quot;, package=&quot;igisci&quot;)
+trails &lt;- st_read(shpPath)</code></pre>
+<p>And we’ll find that including most of the above arcanity in a function will help. We’ll look at functions later, but here’s a function that we’ll use a lot for setting up reading data from the extdata folder:</p>
+<pre><code>ex &lt;- function(dta){system.file(&quot;extdata&quot;,dta,package=&quot;igisci&quot;)}</code></pre>
+<p>And this <code>ex()</code>function is needed so often that it’s installed in the <code>igisci</code> package, so if you have <code>library(igisci)</code> in effect, you can just use it like this:</p>
+<pre><code>trails &lt;- st_read(ex(&quot;marbles/trails.shp&quot;))</code></pre>
+<p>But how do we see what’s in the <code>extdata</code> folder? We can’t use the <code>data()</code> function, so we would have to dig for the folder where the igisci package gets installed, which is buried pretty deeply in your user profile. So I wrote another function <code>exfiles()</code> that creates a data frame showing all of the files and the paths to use. In RStudio you could access it with <code>View(exfiles())</code> or we could use a datatable (you’ll need to have installed “DT”). You can use the path using the <code>ex()</code> function with any function that needs it to read data, like <code>read.csv(ex('CA/CA_ClimateNormals.csv'))</code>, or just enter that <code>ex()</code> call in the console like <code>ex('CA/CA_ClimateNormals.csv')</code> to display where on your computer the installed data reside.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="index.html#cb13-1" aria-hidden="true" tabindex="-1"></a>DT<span class="sc">::</span><span class="fu">datatable</span>(<span class="fu">exfiles</span>(), <span class="at">options=</span><span class="fu">list</span>(<span class="at">scrollX=</span>T), <span class="at">rownames=</span>F)</span></code></pre></div>
+<div id="htmlwidget-f59d67bef10a43541b14" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f59d67bef10a43541b14">{"x":{"filter":"none","vertical":false,"data":[["airquality","airquality","airquality","BayArea","BayArea","BayArea","CA","CA","CA","CA","CA","CA","CA","CA","CA","eucoak","eucoak","eucoak","eucoak","eucoak","eucoak","eucoak","fish","litter","marbles","marbles","marbles","marbles","marbles","marbles","marbles","marbles","marbles","marbles","marbles","marbles","marbles","marbles","marbles","marbles","marbles","meadows","meadows","meadows","meadows","Nile","penguins","RCVimagery","RCVimagery","RCVimagery","SanPedro","SanPedro","SanPedro","SanPedro","SanPedro","SanPedro","SanPedro","SanPedro","SFmarine","SFmarine","SFmarine","SFmarine","SFmarine","SFmarine","SFmarine","SFmarine","SFmarine","sierra","sierra","sierra","sierra","sierra","sierra","sierra","sierra","sierra","SinkingCove","SinkingCove","SinkingCove","SinkingCove","SinkingCove","streams","TRI","TRI","TRI","TRI","TRI","TRI","TRI","TRI","TRI","TRI","TRI","ts","ts","ts","US","US"],["CES4 Final Shapefile.shp","~$Pollution by type US 1970 to 2016.xlsx","Pollution by type US 1970 to 2016.xlsx","BayAreaCounties.shp","BayAreaTracts.shp","BayArea_hillsh.tif","CA_counties.shp","CAfreeways.shp","ca_elev.tif","ca_elev_WGS84.tif","ca_hillsh_WGS84.tif","CA_ClimateNormals.csv","CA_MdInc.csv","CA_MdInc_Tr_2016.csv","CDC_health_data_by_Tract_CA_2018_release.csv","eucoak_sites.csv","eucoakrainfallrunoffTDR.csv","eucoaksediment.csv","eucoakSites.csv","eucoakSites.csv.xml","REMOVEeucoak_sites.csv","tidy_eucoak.csv","fishdata.csv","ConcentrationReport.csv","co2july95.shp","geology.shp","gps97.shp","samples.shp","streams.shp","trails.shp","elev.tif","bulkdens970901.csv","resurgenceData.csv","resurgenceDataVariables.csv","soilCO2_97.alldata.csv","soilCO2_97.csv","soilCO2_97_site_descriptions.csv","soilCO2_97_variables.csv","soilCO2_sites97_gcs.csv","resurgenceData.xlsx","soilCO2_97.xlsx","SoilVegSamples.csv","XSptsNDVI.csv","XSptsPheno.csv","LoneyMeadow_30minCO2fluxes_Geog604.xls","NilePoints.csv","sat_table_splash.csv","train_points.shp","train_polys7.shp","train_polys9.shp","roads.shp","slideCentroids.shp","SPCWatershed.shp","streams.shp","trails.shp","dem.tif","SI.tif","SanPedroCreekBacterialCounts.csv","cordell_bank.shp","isobath_200.shp","mainland.shp","Sanctuaries.shp","sefi.shp","transects.shp","bd200m_v2i.tif","Transects_Metadata.xls","TransectsData.xls","CA_places.shp","908277.csv","sagehen_dv.csv","Sierra2LassenData.csv","sierraClimate.csv","sierraData.csv","sierraFeb.csv","sierraFebShort.csv","sierraStations.csv","Contour10.shp","DEM_SinkingCoveGCS.tif","DEM_SinkingCoveUTM.tif","SinkingCoveSites.csv","SinkingCoveWaterChem.xlsx","streams.csv","BayAreaCounties.shp","BayAreaTracts.shp","BayArea_hillsh.tif","CA_MdInc.csv","CA_MdInc_Tr_2016.csv","CDC_health_data_by_Tract_CA_2018_release.csv","TRI_1987_BaySites.csv","TRI_1987_CA.csv","TRI_1997_CA.csv","TRI_2007_CA.csv","TRI_2017_CA.csv","LoneyMeadow_30minCO2fluxes_Geog604.xls","SolarRad_Temp.xls","SolarRad_TempOLD.xls","US_states_Simp.shp","USDOE_FuelEfficiency2022.xlsx"],["ex('airquality/CES4 Final Shapefile.shp')","ex('airquality/~$Pollution by type US 1970 to 2016.xlsx')","ex('airquality/Pollution by type US 1970 to 2016.xlsx')","ex('BayArea/BayAreaCounties.shp')","ex('BayArea/BayAreaTracts.shp')","ex('BayArea/BayArea_hillsh.tif')","ex('CA/CA_counties.shp')","ex('CA/CAfreeways.shp')","ex('CA/ca_elev.tif')","ex('CA/ca_elev_WGS84.tif')","ex('CA/ca_hillsh_WGS84.tif')","ex('CA/CA_ClimateNormals.csv')","ex('CA/CA_MdInc.csv')","ex('CA/CA_MdInc_Tr_2016.csv')","ex('CA/CDC_health_data_by_Tract_CA_2018_release.csv')","ex('eucoak/eucoak_sites.csv')","ex('eucoak/eucoakrainfallrunoffTDR.csv')","ex('eucoak/eucoaksediment.csv')","ex('eucoak/eucoakSites.csv')","ex('eucoak/eucoakSites.csv.xml')","ex('eucoak/REMOVEeucoak_sites.csv')","ex('eucoak/tidy_eucoak.csv')","ex('fish/fishdata.csv')","ex('litter/ConcentrationReport.csv')","ex('marbles/co2july95.shp')","ex('marbles/geology.shp')","ex('marbles/gps97.shp')","ex('marbles/samples.shp')","ex('marbles/streams.shp')","ex('marbles/trails.shp')","ex('marbles/elev.tif')","ex('marbles/bulkdens970901.csv')","ex('marbles/resurgenceData.csv')","ex('marbles/resurgenceDataVariables.csv')","ex('marbles/soilCO2_97.alldata.csv')","ex('marbles/soilCO2_97.csv')","ex('marbles/soilCO2_97_site_descriptions.csv')","ex('marbles/soilCO2_97_variables.csv')","ex('marbles/soilCO2_sites97_gcs.csv')","ex('marbles/resurgenceData.xlsx')","ex('marbles/soilCO2_97.xlsx')","ex('meadows/SoilVegSamples.csv')","ex('meadows/XSptsNDVI.csv')","ex('meadows/XSptsPheno.csv')","ex('meadows/LoneyMeadow_30minCO2fluxes_Geog604.xls')","ex('Nile/NilePoints.csv')","ex('penguins/sat_table_splash.csv')","ex('RCVimagery/train_points.shp')","ex('RCVimagery/train_polys7.shp')","ex('RCVimagery/train_polys9.shp')","ex('SanPedro/roads.shp')","ex('SanPedro/slideCentroids.shp')","ex('SanPedro/SPCWatershed.shp')","ex('SanPedro/streams.shp')","ex('SanPedro/trails.shp')","ex('SanPedro/dem.tif')","ex('SanPedro/SI.tif')","ex('SanPedro/SanPedroCreekBacterialCounts.csv')","ex('SFmarine/cordell_bank.shp')","ex('SFmarine/isobath_200.shp')","ex('SFmarine/mainland.shp')","ex('SFmarine/Sanctuaries.shp')","ex('SFmarine/sefi.shp')","ex('SFmarine/transects.shp')","ex('SFmarine/bd200m_v2i.tif')","ex('SFmarine/Transects_Metadata.xls')","ex('SFmarine/TransectsData.xls')","ex('sierra/CA_places.shp')","ex('sierra/908277.csv')","ex('sierra/sagehen_dv.csv')","ex('sierra/Sierra2LassenData.csv')","ex('sierra/sierraClimate.csv')","ex('sierra/sierraData.csv')","ex('sierra/sierraFeb.csv')","ex('sierra/sierraFebShort.csv')","ex('sierra/sierraStations.csv')","ex('SinkingCove/Contour10.shp')","ex('SinkingCove/DEM_SinkingCoveGCS.tif')","ex('SinkingCove/DEM_SinkingCoveUTM.tif')","ex('SinkingCove/SinkingCoveSites.csv')","ex('SinkingCove/SinkingCoveWaterChem.xlsx')","ex('streams/streams.csv')","ex('TRI/BayAreaCounties.shp')","ex('TRI/BayAreaTracts.shp')","ex('TRI/BayArea_hillsh.tif')","ex('TRI/CA_MdInc.csv')","ex('TRI/CA_MdInc_Tr_2016.csv')","ex('TRI/CDC_health_data_by_Tract_CA_2018_release.csv')","ex('TRI/TRI_1987_BaySites.csv')","ex('TRI/TRI_1987_CA.csv')","ex('TRI/TRI_1997_CA.csv')","ex('TRI/TRI_2007_CA.csv')","ex('TRI/TRI_2017_CA.csv')","ex('ts/LoneyMeadow_30minCO2fluxes_Geog604.xls')","ex('ts/SolarRad_Temp.xls')","ex('ts/SolarRad_TempOLD.xls')","ex('US/US_states_Simp.shp')","ex('US/USDOE_FuelEfficiency2022.xlsx')"],["shapefile","xls","xls","shapefile","shapefile","TIFF","shapefile","shapefile","TIFF","TIFF","TIFF","CSV","CSV","CSV","CSV","CSV","CSV","CSV","CSV","CSV","CSV","CSV","CSV","CSV","shapefile","shapefile","shapefile","shapefile","shapefile","shapefile","TIFF","CSV","CSV","CSV","CSV","CSV","CSV","CSV","CSV","xls","xls","CSV","CSV","CSV","xls","CSV","CSV","shapefile","shapefile","shapefile","shapefile","shapefile","shapefile","shapefile","shapefile","TIFF","TIFF","CSV","shapefile","shapefile","shapefile","shapefile","shapefile","shapefile","TIFF","xls","xls","shapefile","CSV","CSV","CSV","CSV","CSV","CSV","CSV","CSV","shapefile","TIFF","TIFF","CSV","xls","CSV","shapefile","shapefile","TIFF","CSV","CSV","CSV","CSV","CSV","CSV","CSV","CSV","xls","xls","xls","shapefile","xls"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>dir<\/th>\n      <th>file<\/th>\n      <th>path<\/th>\n      <th>type<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<hr />
+</div>
+</div>
+<div id="acknowledgements" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> Acknowledgements<a href="index.html#acknowledgements" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>This compilation includes data and methods gathered by students in San Francisco State’s GEOG 604/704 <em>Environmental Data Science</em> class, colleagues in the Department of Geography &amp; Environment and NGOs such as PointBlue.</p>
+<hr />
+<p><em>Environmental Data Science Addenda</em> © Jerry D. Davis, ORCID 0000-0002-5369-1197, Institute for Geographic Information Science, San Francisco State University, all rights reserved.</p>
+<hr />
+
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>Note: you can also use <code>devtools</code> instead of <code>remotes</code> if you have that installed. They do the same thing; <code>remotes</code> is a subset of <code>devtools</code>. If you see a message about Rtools, you can ignore it since that is only needed for building tools from C++ and things like that.<a href="index.html#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+<a href="air-pollutant-emissions-trends-epa.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+},
+"book_filename": "envdatasci",
+"toc_depth": 4
+});
+});
+</script>
+
+</body>
+
+</html>

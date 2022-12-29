@@ -1,20 +1,15 @@
-book_filename: "EnvDataSci"
+book_filename: "EnvDataSciAddenda"
 clean: [packages.bib, bookdown.bbl]
 delete_merged_file: true
 rmd_files: ["index.Rmd",
-            "introduction.Rmd",
-            "abstraction.Rmd",
-            "visualization.Rmd",
-            "transformation.Rmd",
-            "spatialDataMaps.Rmd",
-            "spatialAnalysis.Rmd",
-            "spatialRaster.Rmd",
-            "spatialInterpolation.Rmd",
-            "statistics.Rmd",
-            "modeling.Rmd",
-            "ImageryAnalysisClassification.Rmd",
-            "TimeSeries.Rmd",
-            "communication.Rmd",
+            "AirPollutantEmissionTrends.Rmd",
+            #"SpatialCaseStudies.Rmd",
+            #"PenguinsPointBlue.Rmd",
+            #"SeabirdModel.Rmd",
+            #"ImageryClassificationCaseStudies.Rmd",
+            "TimeSeriesCaseStudies.Rmd",
+            "RMarkdownBookdown.Rmd",
+            "BuildingPackages.Rmd",
             "references.Rmd"]
 language:
   label:
@@ -22,4 +17,4 @@ language:
     tab: "TABLE "
   ui:
     edit: "Edit"
-    chapter_name: "Chapter "
+    chapter_name: ""
