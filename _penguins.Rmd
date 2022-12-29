@@ -1,0 +1,80 @@
+---
+title: "penguins"
+author: "Jerry Davis"
+date: '2022-07-19'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+In a study of spatial foraging patterns by Adélie penguins (*Pygoscelis adeliae*), Ballard et al. (@Ballard2019) collected data over the 2005-2013 period using SPLASH tags that combine Argos satellite tracking with a time-depth recorder.  
+
+```{r}
+library(igisci)
+library(tidyverse)
+sat_table <- read_csv(ex("penguins/sat_table_splash.csv"))
+```
+```{r message=F, warning=F}
+library(sf); library(mapview)
+sat_table <- read.csv(ex("penguins/sat_table_splash.csv"))
+obs <- st_as_sf(filter(sat_table,include==1), coords=c("lon","lat"), crs=4326)
+unique(obs$uniq_id)
+```
+```{r}
+obs1213 <- filter(obs,season==1213)
+obs1213_1 <- filter(obs,day==1)
+uniq_ids <- unique(obs1213_1$uniq_id)
+obs1213_1_3 <- filter(obs1213_1,uniq_id %in% uniq_ids[sample.int(length(uniq_ids), size=3, replace=F)])
+mapView(obs1213_1_3,zcol='uniq_id')
+```
+```{r}
+unique(obs1213_11$uniq_id)
+```
+```{r}
+obs1213_11_1bird <- filter(obs1213_11,uniq_id=="H33CROZ0708")
+mapView(obs1213_11_1bird,zcol='hour')
+```
+```{r}
+mapView(obs, zcol='day')
+```
+
+```{r}
+n <- 2
+for(ssn in unique(obs$season)) {
+  obsSeason <- filter(obs,season==ssn & day==1)
+  #obs1213_1 <- filter(obs,day==1)
+  uniq_ids <- unique(obsSeason$uniq_id)
+  print(uniq_ids)
+  if(length(uniq_ids)>=n){
+     print(length(uniq_ids))
+     obsDay1 <- filter(obsSeason,uniq_id %in% uniq_ids[sample.int(length(uniq_ids), size=n, replace=F)])
+     mapView(obsDay1,zcol='uniq_id')
+  }
+}
+```
+```{r echo=F}
+set.seed(28)
+```
+
+
+```{r message=F, warning=F}
+library(sf); library(tmap); library(dplyr); library(igisci)
+sat_table <- read.csv(ex("penguins/sat_table_splash.csv"))
+obs <- st_as_sf(filter(sat_table,include==1), coords=c("lon","lat"), crs=4326)
+uniq_ids <- unique(obs$uniq_id)
+onebird <- obs %>%
+  filter(uniq_id==uniq_ids[sample.int(length(uniq_ids), size=1)]) %>%
+  mutate(decimalDay = day + hour/24)
+tmap_mode = "view"
+m <- tm_basemap(leaflet::providers$Esri.WorldTerrain) +
+  tm_shape(onebird) + tm_symbols(col="decimalDay",
+  palette="viridis", style="cont",n=8,size=0.4) +
+  tm_credits("uniq_id") +
+  tm_legend() + 
+  tm_layout(title=paste("Penguin id",unique(onebird$uniq_id),"Season",unique(onebird$season)), legend.position=c("RIGHT","TOP"))
+tmap_leaflet(m)
+```
+
+

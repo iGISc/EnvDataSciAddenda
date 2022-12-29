@@ -1,0 +1,139 @@
+# Interpolation Notes
+
+This section is for various explorations of interpolation methods using gstat, terra and other packages, methods that are not necessarily ready for the book. One example is using polynomials, including both global and local methods, so we'll start there.
+
+## Polynomials and trend surfaces
+
+In the Voronoi, nearest-neighbor and IDW methods above, predicted cell values were based on values of nearby input points, in the case of the Voronoi creating a polygon surrounding the input point to assign its value to (and the raster simply being those polygons assigned to raster cells.)  Another approach is to create a polynomial model where values are assigned based on their location defined as x and y values. The simplest is first-order linear trend surface model, as the equation of a plane:
+
+$$
+z = b_0 + b_1x + b_2y
+$$ 
+where z is a variable like `PRECIPITATION`.  Higher order polynomials can model more complex surfaces such as a fold using a second order polynomial which would look like:
+
+$$
+z = b_0 + b_1x + b_2y + b_3x^2 + b_4xy + b_5y^2
+$$ 
+
+... or a third-order polynomial which might model a dome or basin:
+
+$$
+z = b_0 + b_1x + b_2y + b_3x^2 + b_4xy + b_5y^2 + b_6x^3 + b_7x^2y + b_8xy^2 + b_9y^3
+$$ 
+
+... but because of the way R sees * as interaction, we need to create variables like `xx` for `x^2`, `xy` for `x*y`, etc. (you can't just use `x^2` and `x*y` etc. in the formula). Not too difficult to go as far as a 3rd order, as illustrated here:
+
+### Created data:
+
+```{r}
+library(terra)
+x <- c(0,1,2,3,4,0,1,2,3,4,0,1,2,3,4,0,1,2,3,4,0,1,2,3,4)+0.5
+y <- c(4,4,4,4,4,3,3,3,3,3,2,2,2,2,2,1,1,1,1,1,0,0,0,0,0)+0.5
+z <- c(4,2,1,0,0,2,8,5,2,0,1,5,10,5,1,0,2,5,8,2,0,0,1,2,4)
+elevdf <- data.frame(x,y,z)
+elevV <- vect(cbind(x,y))
+elevV$z <- z
+elevV$x <- x
+elevV$y <- y
+elevV$xx <- x*x
+elevV$yy <- y*y
+elevV$xy <- x*y
+elevV$xxx <- x*x*x
+elevV$xxy <- x*x*y
+elevV$xyy <- x*y*y
+elevV$yyy <- y*y*y
+elevdf <- as.data.frame(elevV)
+templateRas <- rast(ncol=5, nrow=5, 
+                    xmin=0, xmax=5, ymin=0, ymax=5,
+                    vals=1:25)
+plot(templateRas)
+elevras <- rasterize(elevV,templateRas,z)
+elevras$xx <- x*x
+elevras$xx <- x*x
+elevras$yy <- y*y
+elevras$xy <- x*y
+elevras$xxx <- x*x*x
+elevras$xxy <- x*x*y
+elevras$xyy <- x*y*y
+elevras$yyy <- y*y*y
+plot(elevras)
+```
+
+
+First order polynomial (should be flat)
+
+```{r}
+library(gstat)
+gs <- gstat(formula=z~x+y, locations=~x+y, data=elevdf)
+interp <- interpolate(templateRas, gs) #, debug.level=0
+plot(interp, 1)
+```
+
+2nd order 
+
+```{r}
+gs2 <- gstat(formula=z~x+y+xx+xy+yy, locations=~x+y, data=elevdf)
+interp2 <- interpolate(elevras, gs2) #, debug.level=0
+plot(interp2, 1)
+```
+
+3rd order 
+
+```{r}
+gs3 <- gstat(formula=z~x+y+xx+xy+yy+xxx+xxy+xyy+yyy, locations=~x+y, data=elevdf)
+interp3 <- interpolate(elevras, gs3) #, debug.level=0
+plot(interp3, 1)
+```
+
+
+
+
+#### local polynomial
+
+The examples above are all global polynomials.  To create a local polynomial, we can limit the neighborhood with nmax, normally set to Inf to use all of the data.
+
+
+```{r}
+gs3loc <- gstat(formula=z~x+y+xx+xy+yy+xxx+xxy+xyy+yyy, locations=~x+y, nmax=12, data=elevdf)
+interp3loc <- interpolate(elevras, gs3loc) #, debug.level=0
+plot(interp3loc$var1.pred)
+```
+
+You might experiment with the number of nearby samples used (nmax), with the lowest number 3 for a linear model, representing then minimum required to define a plane. 
+
+
+
+```{r}
+library(terra)
+x <- c(0,1,2,3,4,0,1,2,3,4,0,1,2,3,4,0,1,2,3,4,0,1,2,3,4)+0.5
+y <- c(4,4,4,4,4,3,3,3,3,3,2,2,2,2,2,1,1,1,1,1,0,0,0,0,0)+0.5
+z <- c(4,2,1,0,0,2,8,5,2,0,1,5,10,5,1,0,2,5,8,2,0,0,1,2,4)
+elevdf <- data.frame(x,y,z)
+elevV <- vect(cbind(x,y))
+
+library(gstat)
+gs <- gstat(formula=z~1, locations=~x+y, degree=1, data=elevdf)
+interp <- interpolate(templateRas, gs) #, debug.level=0
+plot(interp, 1)
+```
+
+
+```{r}
+gs2 <- gstat(formula=z~1, locations=~x+y, degree=2, data=elevdf)
+interp2 <- interpolate(elevras, gs2) #, debug.level=0
+plot(interp2, 1)
+```
+
+3rd order 
+
+```{r}
+gs3 <- gstat(formula=z~1, locations=~x+y, degree=3, data=elevdf)
+interp3 <- interpolate(elevras, gs3) #, debug.level=0
+plot(interp3, 1)
+```
+
+```{r}
+gs3loc <- gstat(formula=z~1, locations=~x+y, degree=3, nmax=12, data=elevdf)
+interp3loc <- interpolate(elevras, gs3loc) #, debug.level=0
+plot(interp3loc$var1.pred)
+```
