@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4 Exploring terrain and water samples in a karst area | Environmental Data Science Addenda</title>
+  <meta name="description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4 Exploring terrain and water samples in a karst area | Environmental Data Science Addenda" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
+  <meta name="github-repo" content="iGISc/EnvDataSciAddenda" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4 Exploring terrain and water samples in a karst area | Environmental Data Science Addenda" />
+  
+  <meta name="twitter:description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
+  
+
+<meta name="author" content="Jerry Davis, SFSU Institute for Geographic Information Science" />
+
+
+<meta name="date" content="2022-12-31" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="distance-from-census-tract-centroid-to-closest-tri-site.html"/>
+<link rel="next" href="pointblue-penguin-study.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.1.1/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.1.1/leaflet-providers-plugin.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><img src="img/eaRth_anna296addenda.png"></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Background, Goals and Data</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#structure-of-the-addenda"><i class="fa fa-check"></i><b>1.1</b> Structure of the Addenda</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#software-and-data"><i class="fa fa-check"></i><b>1.2</b> Software and Data</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#data"><i class="fa fa-check"></i><b>1.2.1</b> Data</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.3</b> Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="air-pollutant-emissions-trends-epa.html"><a href="air-pollutant-emissions-trends-epa.html"><i class="fa fa-check"></i><b>2</b> Air pollutant emissions trends (EPA)</a></li>
+<li class="chapter" data-level="3" data-path="distance-from-census-tract-centroid-to-closest-tri-site.html"><a href="distance-from-census-tract-centroid-to-closest-tri-site.html"><i class="fa fa-check"></i><b>3</b> Distance from census tract centroid to closest TRI site</a></li>
+<li class="chapter" data-level="4" data-path="exploring-terrain-and-water-samples-in-a-karst-area.html"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html"><i class="fa fa-check"></i><b>4</b> Exploring terrain and water samples in a karst area</a></li>
+<li class="chapter" data-level="5" data-path="pointblue-penguin-study.html"><a href="pointblue-penguin-study.html"><i class="fa fa-check"></i><b>5</b> PointBlue Penguin Study</a>
+<ul>
+<li class="chapter" data-level="5.0.1" data-path="pointblue-penguin-study.html"><a href="pointblue-penguin-study.html#interactive-mapping-of-individual-penguins-abstracted-from-a-big-dataset"><i class="fa fa-check"></i><b>5.0.1</b> Interactive mapping of individual penguins abstracted from a big dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="seabird-model.html"><a href="seabird-model.html"><i class="fa fa-check"></i><b>6</b> Seabird Model</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="seabird-model.html"><a href="seabird-model.html#goals-and-basic-methods-of-the-analysis"><i class="fa fa-check"></i><b>6.1</b> Goals and basic methods of the analysis</a></li>
+<li class="chapter" data-level="6.2" data-path="seabird-model.html"><a href="seabird-model.html#exploratory-data-analysis"><i class="fa fa-check"></i><b>6.2</b> Exploratory data analysis</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="seabird-model.html"><a href="seabird-model.html#identifying-the-appropriate-model-using-variance-and-mean-comparisons"><i class="fa fa-check"></i><b>6.2.1</b> Identifying the appropriate model using variance and mean comparisons</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="seabird-model.html"><a href="seabird-model.html#model-black-footed-albatross-counts-for-july-using-a-poisson-family-glm"><i class="fa fa-check"></i><b>6.3</b> Model black-footed albatross counts for July using a poisson-family glm</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="seabird-model.html"><a href="seabird-model.html#map-the-prediction"><i class="fa fa-check"></i><b>6.3.1</b> Map the prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="seabird-model.html"><a href="seabird-model.html#interpolation"><i class="fa fa-check"></i><b>6.4</b> Interpolation</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html"><i class="fa fa-check"></i><b>7</b> Time Series case studies</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html#loney-meadow-flux-data"><i class="fa fa-check"></i><b>7.1</b> Loney Meadow flux data</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html"><i class="fa fa-check"></i><b>8</b> R Markdown and Bookdown</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#r-markdown"><i class="fa fa-check"></i><b>8.1</b> R Markdown</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#markdown-editing"><i class="fa fa-check"></i><b>8.1.1</b> Markdown editing</a></li>
+<li class="chapter" data-level="8.1.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#display-options-in-code-chunks"><i class="fa fa-check"></i><b>8.1.2</b> Display options in code chunks</a></li>
+<li class="chapter" data-level="8.1.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#numbered-figures-with-text-citations"><i class="fa fa-check"></i><b>8.1.3</b> Numbered figures with text citations</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#a-template-for-multiple-output-formats"><i class="fa fa-check"></i><b>8.2</b> A template for multiple output formats</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#the-template"><i class="fa fa-check"></i><b>8.2.1</b> The template</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#building-a-book-with-bookdown-and-yaml-options"><i class="fa fa-check"></i><b>8.3</b> Building a book with bookdown and YAML options</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#building-a-book"><i class="fa fa-check"></i><b>8.3.1</b> Building a book</a></li>
+<li class="chapter" data-level="8.3.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#special-characters-and-formatting-limitations-and-challenges"><i class="fa fa-check"></i><b>8.3.2</b> Special characters and formatting limitations and challenges</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#yaml-files-used-to-configure-the-book"><i class="fa fa-check"></i><b>8.4</b> YAML files used to configure the book</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#output.yml"><i class="fa fa-check"></i><b>8.4.1</b> _output.yml</a></li>
+<li class="chapter" data-level="8.4.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#index.rmd"><i class="fa fa-check"></i><b>8.4.2</b> index.Rmd</a></li>
+<li class="chapter" data-level="8.4.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#bookdown.yml"><i class="fa fa-check"></i><b>8.4.3</b> _bookdown.yml</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html"><i class="fa fa-check"></i><b>9</b> Building a Package on GitHub for Data and Code</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#git-and-github"><i class="fa fa-check"></i><b>9.1</b> Git and GitHub</a></li>
+<li class="chapter" data-level="9.2" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#some-notes-on-the-rstudio-process"><i class="fa fa-check"></i><b>9.2</b> Some notes on the RStudio process</a></li>
+<li class="chapter" data-level="9.3" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#data-1"><i class="fa fa-check"></i><b>9.3</b> Data</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#raw-data-in-extdata"><i class="fa fa-check"></i><b>9.3.1</b> Raw data in extdata</a></li>
+<li class="chapter" data-level="9.3.2" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#binary-data-as-rda-files"><i class="fa fa-check"></i><b>9.3.2</b> Binary data as <code>rda</code> files</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#code-functions"><i class="fa fa-check"></i><b>9.4</b> Code (functions)</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Environmental Data Science Addenda</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="exploring-terrain-and-water-samples-in-a-karst-area" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">4</span> Exploring terrain and water samples in a karst area<a href="exploring-terrain-and-water-samples-in-a-karst-area.html#exploring-terrain-and-water-samples-in-a-karst-area" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><strong>Sinking Cove, Tennessee</strong> is a karst valley system carved into the Cumberland Plateau, a nice place to see the use of a hillshade raster created from a digital elevation model using raster or terra functions for slope, aspect, and hillshade. We’ll look at this area and some results from a hydrologic and geochemical study <span class="citation">(<a href="#ref-davis1993geomorphology" role="doc-biblioref">Davis and Brook 1993</a>)</span>:</p>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-1"></span>
+<img src="img/CaveCoveCaveEntrance.png" alt="Cave Cove Cave Entrance" width="75%" />
+<p class="caption">
+FIGURE 4.1: Cave Cove Cave Entrance
+</p>
+</div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-2"></span>
+<img src="img/SinkingCoveCave.png" alt="Sinking Cove Cave" width="75%" />
+<p class="caption">
+FIGURE 4.2: Sinking Cove Cave
+</p>
+</div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-3"></span>
+<img src="img/SinkingCoveCaveSteephead.png" alt="Sinking Cove Cave spring" width="75%" />
+<p class="caption">
+FIGURE 4.3: Sinking Cove Cave spring
+</p>
+</div>
+<p>We’ll start with a regional view using a hillshade and terrain shading:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">&quot;plot&quot;</span>)</span></code></pre></div>
+<pre><code>## tmap mode set to plotting</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb3-1" aria-hidden="true" tabindex="-1"></a>DEM <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="fu">ex</span>(<span class="st">&quot;SinkingCove/DEM_SinkingCoveUTM.tif&quot;</span>))</span>
+<span id="cb3-2"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb3-2" aria-hidden="true" tabindex="-1"></a>slope <span class="ot">&lt;-</span> <span class="fu">terrain</span>(DEM, <span class="at">v=</span><span class="st">&#39;slope&#39;</span>)</span>
+<span id="cb3-3"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb3-3" aria-hidden="true" tabindex="-1"></a>aspect <span class="ot">&lt;-</span> <span class="fu">terrain</span>(DEM, <span class="at">v=</span><span class="st">&#39;aspect&#39;</span>)</span>
+<span id="cb3-4"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb3-4" aria-hidden="true" tabindex="-1"></a>hillsh <span class="ot">&lt;-</span> <span class="fu">shade</span>(slope<span class="sc">/</span><span class="dv">180</span><span class="sc">*</span>pi, aspect<span class="sc">/</span><span class="dv">180</span><span class="sc">*</span>pi, <span class="at">angle=</span><span class="dv">40</span>, <span class="at">direction=</span><span class="dv">330</span>)</span>
+<span id="cb3-5"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Need to crop a bit since grid north != true north </span></span>
+<span id="cb3-6"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb3-6" aria-hidden="true" tabindex="-1"></a>bbox0 <span class="ot">&lt;-</span> <span class="fu">st_bbox</span>(DEM)</span>
+<span id="cb3-7"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb3-7" aria-hidden="true" tabindex="-1"></a>xrange <span class="ot">&lt;-</span> bbox0<span class="sc">$</span>xmax <span class="sc">-</span> bbox0<span class="sc">$</span>xmin</span>
+<span id="cb3-8"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb3-8" aria-hidden="true" tabindex="-1"></a>yrange <span class="ot">&lt;-</span> bbox0<span class="sc">$</span>ymax <span class="sc">-</span> bbox0<span class="sc">$</span>ymin</span>
+<span id="cb3-9"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb3-9" aria-hidden="true" tabindex="-1"></a>bbox1 <span class="ot">&lt;-</span> bbox0</span>
+<span id="cb3-10"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb3-10" aria-hidden="true" tabindex="-1"></a>crop <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb3-11"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb3-11" aria-hidden="true" tabindex="-1"></a>bbox1[<span class="dv">1</span>] <span class="ot">&lt;-</span> bbox0[<span class="dv">1</span>] <span class="sc">+</span> crop <span class="sc">*</span> xrange <span class="co"># xmin</span></span>
+<span id="cb3-12"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb3-12" aria-hidden="true" tabindex="-1"></a>bbox1[<span class="dv">3</span>] <span class="ot">&lt;-</span> bbox0[<span class="dv">3</span>] <span class="sc">-</span> crop <span class="sc">*</span> xrange <span class="co"># xmax</span></span>
+<span id="cb3-13"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb3-13" aria-hidden="true" tabindex="-1"></a>bbox1[<span class="dv">2</span>] <span class="ot">&lt;-</span> bbox0[<span class="dv">2</span>] <span class="sc">+</span> crop <span class="sc">*</span> yrange <span class="co"># ymin</span></span>
+<span id="cb3-14"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb3-14" aria-hidden="true" tabindex="-1"></a>bbox1[<span class="dv">4</span>] <span class="ot">&lt;-</span> bbox0[<span class="dv">4</span>] <span class="sc">-</span> crop <span class="sc">*</span> yrange <span class="co"># ymax</span></span>
+<span id="cb3-15"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb3-15" aria-hidden="true" tabindex="-1"></a>bboxPoly <span class="ot">&lt;-</span> bbox1 <span class="sc">%&gt;%</span> <span class="fu">st_as_sfc</span>() <span class="co"># makes a polygon</span></span>
+<span id="cb3-16"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb3-17"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(hillsh, <span class="at">bbox=</span>bboxPoly) <span class="sc">+</span></span>
+<span id="cb3-18"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_raster</span>(<span class="at">palette=</span><span class="st">&quot;-Greys&quot;</span>,<span class="at">legend.show=</span>F,<span class="at">n=</span><span class="dv">20</span>) <span class="sc">+</span></span>
+<span id="cb3-19"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(DEM) <span class="sc">+</span></span>
+<span id="cb3-20"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_raster</span>(<span class="at">palette=</span><span class="fu">terrain.colors</span>(<span class="dv">24</span>), <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb3-21"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_graticules</span>(<span class="at">lines=</span>F)</span></code></pre></div>
+<pre><code>## stars object downsampled to 960 by 1041 cells. See tm_shape manual (argument raster.downsample)</code></pre>
+<pre><code>## stars object downsampled to 960 by 1041 cells. See tm_shape manual (argument raster.downsample)</code></pre>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-5"></span>
+<img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-5-1.png" alt="Sinking Cove Area map, using terra rasters in tmap" width="672" />
+<p class="caption">
+FIGURE 4.4: Sinking Cove Area map, using terra rasters in tmap
+</p>
+</div>
+<p>Then zoom into Upper Sinking Cove to look at some water sample results:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igisci)</span>
+<span id="cb6-2"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf); <span class="fu">library</span>(tidyverse); <span class="fu">library</span>(readxl); <span class="fu">library</span>(tmap)</span>
+<span id="cb6-3"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb6-3" aria-hidden="true" tabindex="-1"></a>wChemData <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="fu">ex</span>(<span class="st">&quot;SinkingCove/SinkingCoveWaterChem.xlsx&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-4"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">siteLoc =</span> <span class="fu">str_sub</span>(Site,<span class="at">start=</span>1L, <span class="at">end=</span>1L))</span>
+<span id="cb6-5"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb6-5" aria-hidden="true" tabindex="-1"></a>wChemTrunk <span class="ot">&lt;-</span> wChemData <span class="sc">%&gt;%</span> <span class="fu">filter</span>(siteLoc <span class="sc">==</span> <span class="st">&quot;T&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">siteType =</span> <span class="st">&quot;trunk&quot;</span>)</span>
+<span id="cb6-6"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb6-6" aria-hidden="true" tabindex="-1"></a>wChemDrip <span class="ot">&lt;-</span> wChemData <span class="sc">%&gt;%</span> <span class="fu">filter</span>(siteLoc <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;D&quot;</span>,<span class="st">&quot;S&quot;</span>)) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">siteType =</span> <span class="st">&quot;dripwater&quot;</span>)</span>
+<span id="cb6-7"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb6-7" aria-hidden="true" tabindex="-1"></a>wChemTrib <span class="ot">&lt;-</span> wChemData <span class="sc">%&gt;%</span> <span class="fu">filter</span>(siteLoc <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;B&quot;</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;K&quot;</span>, <span class="st">&quot;W&quot;</span>, <span class="st">&quot;P&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-8"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">siteType =</span> <span class="st">&quot;tributary&quot;</span>)</span>
+<span id="cb6-9"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb6-9" aria-hidden="true" tabindex="-1"></a>wChemData <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(wChemTrunk, wChemDrip, wChemTrib)</span>
+<span id="cb6-10"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb6-10" aria-hidden="true" tabindex="-1"></a>sites <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">ex</span>(<span class="st">&quot;SinkingCove/SinkingCoveSites.csv&quot;</span>))</span>
+<span id="cb6-11"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb6-11" aria-hidden="true" tabindex="-1"></a>wChem <span class="ot">&lt;-</span> wChemData <span class="sc">%&gt;%</span></span>
+<span id="cb6-12"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(sites, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;Site&quot;</span> <span class="ot">=</span> <span class="st">&quot;site&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-13"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;longitude&quot;</span>, <span class="st">&quot;latitude&quot;</span>), <span class="at">crs =</span> <span class="dv">4326</span>)</span>
+<span id="cb6-14"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<span id="cb6-15"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">&quot;plot&quot;</span>)</span>
+<span id="cb6-16"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb6-16" aria-hidden="true" tabindex="-1"></a>DEM <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="fu">ex</span>(<span class="st">&quot;SinkingCove/DEM_SinkingCoveUTM.tif&quot;</span>))   </span>
+<span id="cb6-17"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb6-17" aria-hidden="true" tabindex="-1"></a>slope <span class="ot">&lt;-</span> <span class="fu">terrain</span>(DEM, <span class="at">v=</span><span class="st">&#39;slope&#39;</span>)</span>
+<span id="cb6-18"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb6-18" aria-hidden="true" tabindex="-1"></a>aspect <span class="ot">&lt;-</span> <span class="fu">terrain</span>(DEM, <span class="at">v=</span><span class="st">&#39;aspect&#39;</span>)</span>
+<span id="cb6-19"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb6-19" aria-hidden="true" tabindex="-1"></a>hillsh <span class="ot">&lt;-</span> <span class="fu">shade</span>(slope<span class="sc">/</span><span class="dv">180</span><span class="sc">*</span>pi, aspect<span class="sc">/</span><span class="dv">180</span><span class="sc">*</span>pi, <span class="dv">40</span>, <span class="dv">330</span>) </span>
+<span id="cb6-20"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb6-20" aria-hidden="true" tabindex="-1"></a>bounds <span class="ot">&lt;-</span> <span class="fu">st_bbox</span>(wChem)</span>
+<span id="cb6-21"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb6-21" aria-hidden="true" tabindex="-1"></a>xrange <span class="ot">&lt;-</span> bounds<span class="sc">$</span>xmax <span class="sc">-</span> bounds<span class="sc">$</span>xmin</span>
+<span id="cb6-22"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb6-22" aria-hidden="true" tabindex="-1"></a>yrange <span class="ot">&lt;-</span> bounds<span class="sc">$</span>ymax <span class="sc">-</span> bounds<span class="sc">$</span>ymin</span>
+<span id="cb6-23"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb6-23" aria-hidden="true" tabindex="-1"></a>xMIN <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(bounds<span class="sc">$</span>xmin <span class="sc">-</span> xrange<span class="sc">/</span><span class="dv">10</span>)</span>
+<span id="cb6-24"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb6-24" aria-hidden="true" tabindex="-1"></a>xMAX <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(bounds<span class="sc">$</span>xmax <span class="sc">+</span> xrange<span class="sc">/</span><span class="dv">10</span>)</span>
+<span id="cb6-25"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb6-25" aria-hidden="true" tabindex="-1"></a>yMIN <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(bounds<span class="sc">$</span>ymin <span class="sc">-</span> yrange<span class="sc">/</span><span class="dv">10</span>)</span>
+<span id="cb6-26"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb6-26" aria-hidden="true" tabindex="-1"></a>yMAX <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(bounds<span class="sc">$</span>ymax <span class="sc">+</span> yrange<span class="sc">/</span><span class="dv">10</span>)</span>
+<span id="cb6-27"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb6-27" aria-hidden="true" tabindex="-1"></a>newbounds <span class="ot">&lt;-</span> <span class="fu">st_bbox</span>(<span class="fu">c</span>(<span class="at">xmin=</span>xMIN, <span class="at">xmax=</span>xMAX, <span class="at">ymin=</span>yMIN, <span class="at">ymax=</span>yMAX), <span class="at">crs=</span> <span class="fu">st_crs</span>(<span class="dv">4326</span>))</span>
+<span id="cb6-28"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(hillsh,<span class="at">bbox=</span>newbounds) <span class="sc">+</span></span>
+<span id="cb6-29"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb6-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_raster</span>(<span class="at">palette=</span><span class="st">&quot;-Greys&quot;</span>,<span class="at">legend.show=</span>F,<span class="at">n=</span><span class="dv">20</span>) <span class="sc">+</span></span>
+<span id="cb6-30"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb6-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(DEM) <span class="sc">+</span> <span class="fu">tm_raster</span>(<span class="at">palette=</span><span class="fu">terrain.colors</span>(<span class="dv">24</span>), <span class="at">alpha=</span><span class="fl">0.5</span>,<span class="at">legend.show=</span>F) <span class="sc">+</span></span>
+<span id="cb6-31"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb6-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(wChem) <span class="sc">+</span> <span class="fu">tm_symbols</span>(<span class="at">size=</span><span class="st">&quot;TH&quot;</span>, <span class="at">col=</span><span class="st">&quot;Lithology&quot;</span>, <span class="at">scale=</span><span class="dv">2</span>, <span class="at">shape=</span><span class="st">&quot;siteType&quot;</span>) <span class="sc">+</span></span>
+<span id="cb6-32"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb6-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;bottom&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb6-33"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb6-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_graticules</span>(<span class="at">lines=</span>F)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-6"></span>
+<img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-6-1.png" alt="Upper Sinking Cove water sample results" width="672" />
+<p class="caption">
+FIGURE 4.5: Upper Sinking Cove water sample results
+</p>
+</div>
+<p>An interactive map view of Upper Sinking Cove:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">&quot;view&quot;</span>)</span></code></pre></div>
+<pre><code>## tmap mode set to interactive viewing</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb9-1" aria-hidden="true" tabindex="-1"></a>bounds <span class="ot">&lt;-</span> <span class="fu">st_bbox</span>()</span>
+<span id="cb9-2"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb9-2" aria-hidden="true" tabindex="-1"></a>wChem2map <span class="ot">&lt;-</span> <span class="fu">filter</span>(wChem, Month <span class="sc">==</span> <span class="dv">8</span>)</span>
+<span id="cb9-3"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb9-3" aria-hidden="true" tabindex="-1"></a>minVal <span class="ot">&lt;-</span> <span class="fu">min</span>(wChem2map<span class="sc">$</span>TH); maxVal <span class="ot">&lt;-</span> <span class="fu">max</span>(wChem2map<span class="sc">$</span>TH)</span>
+<span id="cb9-4"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_options</span>(<span class="at">basemaps=</span><span class="fu">c</span>(<span class="at">Topo=</span><span class="st">&quot;OpenTopoMap&quot;</span>, </span>
+<span id="cb9-5"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb9-5" aria-hidden="true" tabindex="-1"></a>                        <span class="at">EsriTopo=</span><span class="st">&quot;Esri.WorldTopoMap&quot;</span>,</span>
+<span id="cb9-6"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb9-6" aria-hidden="true" tabindex="-1"></a>                        <span class="at">USGS=</span><span class="st">&quot;USGS.USTopo&quot;</span>,</span>
+<span id="cb9-7"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb9-7" aria-hidden="true" tabindex="-1"></a>                        <span class="at">Imagery =</span> <span class="st">&quot;Esri.WorldImagery&quot;</span>,</span>
+<span id="cb9-8"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb9-8" aria-hidden="true" tabindex="-1"></a>                        <span class="at">NatGeo=</span><span class="st">&quot;Esri.NatGeoWorldMap&quot;</span>))</span>
+<span id="cb9-9"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_basemap</span>() <span class="sc">+</span> </span>
+<span id="cb9-10"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(wChem2map) <span class="sc">+</span> <span class="fu">tm_symbols</span>(<span class="at">col=</span><span class="st">&quot;siteType&quot;</span>, <span class="at">size=</span><span class="st">&quot;TH&quot;</span>, <span class="at">scale=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb9-11"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">title=</span><span class="fu">paste</span>(<span class="st">&quot;Total Hardness &quot;</span>,<span class="fu">as.character</span>(minVal),<span class="st">&quot;-&quot;</span>,<span class="fu">as.character</span>(maxVal),<span class="st">&quot; mg/L&quot;</span>, <span class="at">sep=</span><span class="st">&quot;&quot;</span>))</span></code></pre></div>
+<pre><code>## Warning: basemap USGS.USTopodoes not exist in the providers list nor does it
+## seem a valid url</code></pre>
+<pre><code>## Legend for symbol sizes not available in view mode.</code></pre>
+<div id="htmlwidget-59835ce4e70c02dd25cd" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-59835ce4e70c02dd25cd">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"createMapPane","args":["tmap401",401]},{"method":"addProviderTiles","args":["OpenTopoMap",null,"Topo",{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["Esri.WorldTopoMap",null,"EsriTopo",{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"pane":"tilePane"}]},{"method":"addTiles","args":["USGS.USTopo",null,"USGS",{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["Esri.WorldImagery",null,"Imagery",{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["Esri.NatGeoWorldMap",null,"NatGeo",{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"pane":"tilePane"}]},{"method":"addCircles","args":[[35.04984497,35.05550831,35.05165428,35.0548464,35.05071159,35.05249625,35.05065137,35.05041618,35.05570091,35.05002313,35.04891244,35.05511924,35.05511924,35.04824914,35.05720511,35.05034814,35.05225242,35.05284356,35.05411424,35.04889576,35.05044697,35.06059962,35.0615126,35.05568202,35.04131459,35.06233771,35.06352676,35.06486428,35.06596295],[-86.01369419,-86.00519017,-86.00700342,-86.00671127,-86.00739887,-85.99817925,-86.00598119,-86.01373594,-86.00024908,-86.0176595,-86.01006991,-85.99990376,-85.99990376,-86.00202304,-86.00732013,-86.01545994,-86.00683137,-86.0067784,-86.00681603,-86.02837249,-86.01581609,-86.04003533,-86.0407566,-86.01856506,-86.02094707,-86.04134997,-86.04253228,-86.04228889,-86.04194144],[91.3592294686117,89.7794118536455,87.3561318301044,87.3561318301044,84.0164372947026,83.4468277622985,82.2957819051666,81.7141789855271,79.9439868343255,79.0440258514889,78.1336996094186,77.5208768174798,76.2804627564812,75.0195418150161,72.4318781043197,71.7703859096149,70.766554850855,70.4287650708649,70.4287650708649,66.957207146708,64.0446164831302,60.206058997009,56.9492304736016,53.494487221764,52.5953561734825,50.7493265650641,50.2772295453472,39.0668498047093,15.4425282988232],["D1","D7","D4","D6","D3","K2","K3","T8","T9","T7","D2","B2.1","B2","K1","K4","W7","S4","D5","D5.1","F1","W6","T6","T5","W2","W8","T4","T3","T2","T1"],"wChem2map",{"interactive":true,"className":"","pane":"tmap401","stroke":true,"color":"#666666","weight":1,"opacity":0.5,"fill":true,"fillColor":["#8DD3C7","#8DD3C7","#8DD3C7","#8DD3C7","#8DD3C7","#FFFFB3","#FFFFB3","#BEBADA","#BEBADA","#BEBADA","#8DD3C7","#FFFFB3","#FFFFB3","#FFFFB3","#FFFFB3","#FFFFB3","#8DD3C7","#8DD3C7","#8DD3C7","#FFFFB3","#FFFFB3","#BEBADA","#BEBADA","#FFFFB3","#FFFFB3","#BEBADA","#BEBADA","#BEBADA","#BEBADA"],"fillOpacity":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]},["<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>D1<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>175<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>siteType<\/nobr><\/td><td align=\"right\"><nobr>dripwater<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>D7<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>169<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>siteType<\/nobr><\/td><td align=\"right\"><nobr>dripwater<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>D4<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>160<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>siteType<\/nobr><\/td><td align=\"right\"><nobr>dripwater<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>D6<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>160<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>siteType<\/nobr><\/td><td align=\"right\"><nobr>dripwater<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>D3<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>148<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>siteType<\/nobr><\/td><td align=\"right\"><nobr>dripwater<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>K2<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>146<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>siteType<\/nobr><\/td><td align=\"right\"><nobr>tributary<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>K3<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>142<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>siteType<\/nobr><\/td><td align=\"right\"><nobr>tributary<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>T8<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>140<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>siteType<\/nobr><\/td><td align=\"right\"><nobr>trunk<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>T9<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>134<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>siteType<\/nobr><\/td><td align=\"right\"><nobr>trunk<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>T7<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>131<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>siteType<\/nobr><\/td><td align=\"right\"><nobr>trunk<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>D2<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>128<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>siteType<\/nobr><\/td><td align=\"right\"><nobr>dripwater<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>B2<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>126<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>siteType<\/nobr><\/td><td align=\"right\"><nobr>tributary<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>B2<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>122<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>siteType<\/nobr><\/td><td align=\"right\"><nobr>tributary<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>K1<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>118<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>siteType<\/nobr><\/td><td align=\"right\"><nobr>tributary<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>K4<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>110<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>siteType<\/nobr><\/td><td align=\"right\"><nobr>tributary<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>W7<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>108<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>siteType<\/nobr><\/td><td align=\"right\"><nobr>tributary<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>S4<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>105<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>siteType<\/nobr><\/td><td align=\"right\"><nobr>dripwater<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>D5<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>104<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>siteType<\/nobr><\/td><td align=\"right\"><nobr>dripwater<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>D5<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>104<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>siteType<\/nobr><\/td><td align=\"right\"><nobr>dripwater<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>F1<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>94<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>siteType<\/nobr><\/td><td align=\"right\"><nobr>tributary<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>W6<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>86<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>siteType<\/nobr><\/td><td align=\"right\"><nobr>tributary<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>T6<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>76<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>siteType<\/nobr><\/td><td align=\"right\"><nobr>trunk<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>T5<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>68<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>siteType<\/nobr><\/td><td align=\"right\"><nobr>trunk<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>W2<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>60<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>siteType<\/nobr><\/td><td align=\"right\"><nobr>tributary<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>W8<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>58<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>siteType<\/nobr><\/td><td align=\"right\"><nobr>tributary<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>T4<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>54<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>siteType<\/nobr><\/td><td align=\"right\"><nobr>trunk<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>T3<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>53<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>siteType<\/nobr><\/td><td align=\"right\"><nobr>trunk<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>T2<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>32<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>siteType<\/nobr><\/td><td align=\"right\"><nobr>trunk<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>T1<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>5<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>siteType<\/nobr><\/td><td align=\"right\"><nobr>trunk<\/nobr><\/td><\/tr><\/table><\/div>"],null,["D1","D7","D4","D6","D3","K2","K3","T8","T9","T7","D2","B2","B2","K1","K4","W7","S4","D5","D5","F1","W6","T6","T5","W2","W8","T4","T3","T2","T1"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null,null]},{"method":"addLegend","args":[{"colors":["#8DD3C7","#FFFFB3","#BEBADA"],"labels":["dripwater","tributary","trunk"],"na_color":null,"na_label":"NA","opacity":1,"position":"topright","type":"unknown","title":"siteType","extra":null,"layerId":"legend401","className":"info legend wChem2map","group":"wChem2map"}]},{"method":"addLayersControl","args":[["Topo","EsriTopo","USGS","Imagery","NatGeo"],"wChem2map",{"collapsed":true,"autoZIndex":true,"position":"topleft"}]}],"limits":{"lat":[35.04131459,35.06596295],"lng":[-86.04253228,-85.99817925]},"fitBounds":[35.04131459,-86.04253228,35.06596295,-85.99817925,[]]},"evals":[],"jsHooks":{"render":[{"code":"function(el, x, data) {\n  return (\n\t\t\t\t\t\tfunction(el, x) {\n\t\t\t\t\t\t\tvar tldiv = document.getElementsByClassName(\"leaflet-top leaflet-left\")[0];\n\t\t\t\t\t\t\tvar titlediv = document.createElement('div');\n\t\t\t\t\t\t\ttitlediv.className = \"info legend leaflet-control\";\n\t\t\t\t\t\t\ttitlediv.innerHTML = \"<b>Total Hardness 5-175 mg/L<\/b>\";\n\t\t\t\t\t\t\ttldiv.insertBefore(titlediv, tldiv.childNodes[0]);\n\t\t\t\t\t\t}).call(this.getMap(), el, x, data);\n}","data":null}]}}</script>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_basemap</span>(leaflet<span class="sc">::</span>providers<span class="sc">$</span>Esri.WorldTopoMap) <span class="sc">+</span> </span>
+<span id="cb12-2"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(wChem2map) <span class="sc">+</span> <span class="fu">tm_symbols</span>(<span class="at">col=</span><span class="st">&quot;Lithology&quot;</span>, <span class="at">size=</span><span class="st">&quot;TH&quot;</span>, <span class="at">scale=</span><span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## Legend for symbol sizes not available in view mode.</code></pre>
+<div id="htmlwidget-7233fc59d476f3a1557e" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7233fc59d476f3a1557e">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"createMapPane","args":["tmap401",401]},{"method":"addProviderTiles","args":["Esri.WorldTopoMap",null,"Esri.WorldTopoMap",{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"pane":"tilePane"}]},{"method":"addCircles","args":[[35.04984497,35.05550831,35.05165428,35.0548464,35.05071159,35.05249625,35.05065137,35.05041618,35.05570091,35.05002313,35.04891244,35.05511924,35.05511924,35.04824914,35.05720511,35.05034814,35.05225242,35.05284356,35.05411424,35.04889576,35.05044697,35.06059962,35.0615126,35.05568202,35.04131459,35.06233771,35.06352676,35.06486428,35.06596295],[-86.01369419,-86.00519017,-86.00700342,-86.00671127,-86.00739887,-85.99817925,-86.00598119,-86.01373594,-86.00024908,-86.0176595,-86.01006991,-85.99990376,-85.99990376,-86.00202304,-86.00732013,-86.01545994,-86.00683137,-86.0067784,-86.00681603,-86.02837249,-86.01581609,-86.04003533,-86.0407566,-86.01856506,-86.02094707,-86.04134997,-86.04253228,-86.04228889,-86.04194144],[91.3592294686117,89.7794118536455,87.3561318301044,87.3561318301044,84.0164372947026,83.4468277622985,82.2957819051666,81.7141789855271,79.9439868343255,79.0440258514889,78.1336996094186,77.5208768174798,76.2804627564812,75.0195418150161,72.4318781043197,71.7703859096149,70.766554850855,70.4287650708649,70.4287650708649,66.957207146708,64.0446164831302,60.206058997009,56.9492304736016,53.494487221764,52.5953561734825,50.7493265650641,50.2772295453472,39.0668498047093,15.4425282988232],["D1","D7","D4","D6","D3","K2","K3","T8","T9","T7","D2","B2.1","B2","K1","K4","W7","S4","D5","D5.1","F1","W6","T6","T5","W2","W8","T4","T3","T2","T1"],"wChem2map",{"interactive":true,"className":"","pane":"tmap401","stroke":true,"color":"#666666","weight":1,"opacity":0.5,"fill":true,"fillColor":["#8DD3C7","#8DD3C7","#8DD3C7","#8DD3C7","#8DD3C7","#8DD3C7","#8DD3C7","#8DD3C7","#8DD3C7","#8DD3C7","#8DD3C7","#8DD3C7","#8DD3C7","#FFFFB3","#FFFFB3","#8DD3C7","#8DD3C7","#8DD3C7","#8DD3C7","#8DD3C7","#8DD3C7","#FFFFB3","#FFFFB3","#FFFFB3","#FFFFB3","#FFFFB3","#FFFFB3","#FFFFB3","#BEBADA"],"fillOpacity":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]},["<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>D1<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>175<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>Lithology<\/nobr><\/td><td align=\"right\"><nobr>limestone<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>D7<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>169<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>Lithology<\/nobr><\/td><td align=\"right\"><nobr>limestone<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>D4<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>160<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>Lithology<\/nobr><\/td><td align=\"right\"><nobr>limestone<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>D6<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>160<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>Lithology<\/nobr><\/td><td align=\"right\"><nobr>limestone<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>D3<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>148<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>Lithology<\/nobr><\/td><td align=\"right\"><nobr>limestone<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>K2<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>146<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>Lithology<\/nobr><\/td><td align=\"right\"><nobr>limestone<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>K3<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>142<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>Lithology<\/nobr><\/td><td align=\"right\"><nobr>limestone<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>T8<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>140<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>Lithology<\/nobr><\/td><td align=\"right\"><nobr>limestone<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>T9<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>134<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>Lithology<\/nobr><\/td><td align=\"right\"><nobr>limestone<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>T7<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>131<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>Lithology<\/nobr><\/td><td align=\"right\"><nobr>limestone<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>D2<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>128<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>Lithology<\/nobr><\/td><td align=\"right\"><nobr>limestone<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>B2<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>126<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>Lithology<\/nobr><\/td><td align=\"right\"><nobr>limestone<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>B2<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>122<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>Lithology<\/nobr><\/td><td align=\"right\"><nobr>limestone<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>K1<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>118<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>Lithology<\/nobr><\/td><td align=\"right\"><nobr>mix<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>K4<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>110<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>Lithology<\/nobr><\/td><td align=\"right\"><nobr>mix<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>W7<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>108<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>Lithology<\/nobr><\/td><td align=\"right\"><nobr>limestone<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>S4<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>105<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>Lithology<\/nobr><\/td><td align=\"right\"><nobr>limestone<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>D5<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>104<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>Lithology<\/nobr><\/td><td align=\"right\"><nobr>limestone<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>D5<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>104<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>Lithology<\/nobr><\/td><td align=\"right\"><nobr>limestone<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>F1<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>94<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>Lithology<\/nobr><\/td><td align=\"right\"><nobr>limestone<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>W6<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>86<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>Lithology<\/nobr><\/td><td align=\"right\"><nobr>limestone<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>T6<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>76<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>Lithology<\/nobr><\/td><td align=\"right\"><nobr>mix<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>T5<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>68<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>Lithology<\/nobr><\/td><td align=\"right\"><nobr>mix<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>W2<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>60<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>Lithology<\/nobr><\/td><td align=\"right\"><nobr>mix<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>W8<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>58<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>Lithology<\/nobr><\/td><td align=\"right\"><nobr>mix<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>T4<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>54<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>Lithology<\/nobr><\/td><td align=\"right\"><nobr>mix<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>T3<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>53<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>Lithology<\/nobr><\/td><td align=\"right\"><nobr>mix<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>T2<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>32<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>Lithology<\/nobr><\/td><td align=\"right\"><nobr>mix<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>T1<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>TH<\/nobr><\/td><td align=\"right\"><nobr>5<\/nobr><\/td><\/tr><tr><td style=\"color: #888888;\"><nobr>Lithology<\/nobr><\/td><td align=\"right\"><nobr>sandstone<\/nobr><\/td><\/tr><\/table><\/div>"],null,["D1","D7","D4","D6","D3","K2","K3","T8","T9","T7","D2","B2","B2","K1","K4","W7","S4","D5","D5","F1","W6","T6","T5","W2","W8","T4","T3","T2","T1"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null,null]},{"method":"addLegend","args":[{"colors":["#8DD3C7","#FFFFB3","#BEBADA"],"labels":["limestone","mix","sandstone"],"na_color":null,"na_label":"NA","opacity":1,"position":"topright","type":"unknown","title":"Lithology","extra":null,"layerId":"legend401","className":"info legend wChem2map","group":"wChem2map"}]},{"method":"addLayersControl","args":[[],"wChem2map",{"collapsed":true,"autoZIndex":true,"position":"topleft"}]}],"limits":{"lat":[35.04131459,35.06596295],"lng":[-86.04253228,-85.99817925]},"fitBounds":[35.04131459,-86.04253228,35.06596295,-85.99817925,[]]},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="exploring-terrain-and-water-samples-in-a-karst-area.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">&quot;plot&quot;</span>)</span></code></pre></div>
+<pre><code>## tmap mode set to plotting</code></pre>
+
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-davis1993geomorphology" class="csl-entry">
+Davis, Jerry D, and George A Brook. 1993. <span>“Geomorphology and Hydrology of Upper Sinking Cove, Cumberland Plateau, Tennessee.”</span> <em>Earth Surface Processes and Landforms</em> 18 (4): 339–62. <a href="https://doi.org/10.1002/esp.3290180404">https://doi.org/10.1002/esp.3290180404</a>.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="distance-from-census-tract-centroid-to-closest-tri-site.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="pointblue-penguin-study.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+},
+"book_filename": "envdatasci",
+"toc_depth": 4
+});
+});
+</script>
+
+</body>
+
+</html>

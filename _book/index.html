@@ -23,7 +23,7 @@
 <meta name="author" content="Jerry Davis, SFSU Institute for Geographic Information Science" />
 
 
-<meta name="date" content="2022-12-29" />
+<meta name="date" content="2022-12-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -60,6 +60,15 @@
 <script src="libs/dt-core-1.11.3/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.1.1/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.1.1/leaflet-providers-plugin.js"></script>
 
 
 <style type="text/css">
@@ -163,7 +172,7 @@ div.csl-indent {
       <nav role="navigation">
 
 <ul class="summary">
-<li><img src="img/eaRth_anna296.png"></li>
+<li><img src="img/eaRth_anna296addenda.png"></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Background, Goals and Data</a>
@@ -176,30 +185,68 @@ div.csl-indent {
 <li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.3</b> Acknowledgements</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="air-pollutant-emissions-trends-epa.html"><a href="air-pollutant-emissions-trends-epa.html"><i class="fa fa-check"></i><b>2</b> Air pollutant emissions trends (EPA)</a></li>
-<li class="chapter" data-level="3" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html"><i class="fa fa-check"></i><b>3</b> Time Series case studies</a>
+<li class="chapter" data-level="3" data-path="distance-from-census-tract-centroid-to-closest-tri-site.html"><a href="distance-from-census-tract-centroid-to-closest-tri-site.html"><i class="fa fa-check"></i><b>3</b> Distance from census tract centroid to closest TRI site</a></li>
+<li class="chapter" data-level="4" data-path="exploring-terrain-mapping-and-water-samples-in-a-karst-area.html"><a href="exploring-terrain-mapping-and-water-samples-in-a-karst-area.html"><i class="fa fa-check"></i><b>4</b> Exploring terrain mapping and water samples in a karst area</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html#loney-meadow-flux-data"><i class="fa fa-check"></i><b>3.1</b> Loney Meadow flux data</a></li>
+<li class="chapter" data-level="4.1" data-path="exploring-terrain-mapping-and-water-samples-in-a-karst-area.html"><a href="exploring-terrain-mapping-and-water-samples-in-a-karst-area.html#creating-a-basemap-from-a-dem-using-hillshade-and-terrain-shading"><i class="fa fa-check"></i><b>4.1</b> Creating a basemap from a DEM, using hillshade and terrain shading</a></li>
+<li class="chapter" data-level="4.2" data-path="exploring-terrain-mapping-and-water-samples-in-a-karst-area.html"><a href="exploring-terrain-mapping-and-water-samples-in-a-karst-area.html#using-maptiles-for-a-topographic-basemap-with-contours"><i class="fa fa-check"></i><b>4.2</b> Using maptiles for a topographic basemap with contours</a></li>
+<li class="chapter" data-level="4.3" data-path="exploring-terrain-mapping-and-water-samples-in-a-karst-area.html"><a href="exploring-terrain-mapping-and-water-samples-in-a-karst-area.html#interactive-maps-with-tmap-view-mode"><i class="fa fa-check"></i><b>4.3</b> Interactive maps with tmap view mode</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html"><i class="fa fa-check"></i><b>4</b> R Markdown and Bookdown</a>
+<li class="chapter" data-level="5" data-path="pointblue-penguin-study.html"><a href="pointblue-penguin-study.html"><i class="fa fa-check"></i><b>5</b> PointBlue Penguin Study</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#r-markdown"><i class="fa fa-check"></i><b>4.1</b> R Markdown</a></li>
-<li class="chapter" data-level="4.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#bookdown"><i class="fa fa-check"></i><b>4.2</b> Bookdown</a>
+<li class="chapter" data-level="5.0.1" data-path="pointblue-penguin-study.html"><a href="pointblue-penguin-study.html#interactive-mapping-of-individual-penguins-abstracted-from-a-big-dataset"><i class="fa fa-check"></i><b>5.0.1</b> Interactive mapping of individual penguins abstracted from a big dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="seabird-model.html"><a href="seabird-model.html"><i class="fa fa-check"></i><b>6</b> Seabird Model</a>
 <ul>
-<li class="chapter" data-level="" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#display-options-in-code-chunks"><i class="fa fa-check"></i>Display options in code chunks</a></li>
-<li class="chapter" data-level="4.2.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#numbered-figures-with-text-citations"><i class="fa fa-check"></i><b>4.2.1</b> Numbered figures with text citations</a></li>
-<li class="chapter" data-level="4.2.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#latex-pdf-book-notes"><i class="fa fa-check"></i><b>4.2.2</b> LaTeX / pdf book notes</a></li>
+<li class="chapter" data-level="6.1" data-path="seabird-model.html"><a href="seabird-model.html#goals-and-basic-methods-of-the-analysis"><i class="fa fa-check"></i><b>6.1</b> Goals and basic methods of the analysis</a></li>
+<li class="chapter" data-level="6.2" data-path="seabird-model.html"><a href="seabird-model.html#exploratory-data-analysis"><i class="fa fa-check"></i><b>6.2</b> Exploratory data analysis</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="seabird-model.html"><a href="seabird-model.html#identifying-the-appropriate-model-using-variance-and-mean-comparisons"><i class="fa fa-check"></i><b>6.2.1</b> Identifying the appropriate model using variance and mean comparisons</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="seabird-model.html"><a href="seabird-model.html#model-black-footed-albatross-counts-for-july-using-a-poisson-family-glm"><i class="fa fa-check"></i><b>6.3</b> Model black-footed albatross counts for July using a poisson-family glm</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="seabird-model.html"><a href="seabird-model.html#map-the-prediction"><i class="fa fa-check"></i><b>6.3.1</b> Map the prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="seabird-model.html"><a href="seabird-model.html#interpolation"><i class="fa fa-check"></i><b>6.4</b> Interpolation</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html"><i class="fa fa-check"></i><b>7</b> Time Series case studies</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html#loney-meadow-flux-data"><i class="fa fa-check"></i><b>7.1</b> Loney Meadow flux data</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html"><i class="fa fa-check"></i><b>8</b> R Markdown and Bookdown</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#r-markdown"><i class="fa fa-check"></i><b>8.1</b> R Markdown</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#markdown-editing"><i class="fa fa-check"></i><b>8.1.1</b> Markdown editing</a></li>
+<li class="chapter" data-level="8.1.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#display-options-in-code-chunks"><i class="fa fa-check"></i><b>8.1.2</b> Display options in code chunks</a></li>
+<li class="chapter" data-level="8.1.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#numbered-figures-with-text-citations"><i class="fa fa-check"></i><b>8.1.3</b> Numbered figures with text citations</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#a-template-for-multiple-output-formats"><i class="fa fa-check"></i><b>8.2</b> A template for multiple output formats</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#the-template"><i class="fa fa-check"></i><b>8.2.1</b> The template</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#building-a-book-with-bookdown-and-yaml-options"><i class="fa fa-check"></i><b>8.3</b> Building a book with bookdown and YAML options</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#building-a-book"><i class="fa fa-check"></i><b>8.3.1</b> Building a book</a></li>
+<li class="chapter" data-level="8.3.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#special-characters-and-formatting-limitations-and-challenges"><i class="fa fa-check"></i><b>8.3.2</b> Special characters and formatting limitations and challenges</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#yaml-files-used-to-configure-the-book"><i class="fa fa-check"></i><b>8.4</b> YAML files used to configure the book</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#output.yml"><i class="fa fa-check"></i><b>8.4.1</b> _output.yml</a></li>
+<li class="chapter" data-level="8.4.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#index.rmd"><i class="fa fa-check"></i><b>8.4.2</b> index.Rmd</a></li>
+<li class="chapter" data-level="8.4.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#bookdown.yml"><i class="fa fa-check"></i><b>8.4.3</b> _bookdown.yml</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html"><i class="fa fa-check"></i><b>5</b> Building a Package on GitHub for Data and Code</a>
+<li class="chapter" data-level="9" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html"><i class="fa fa-check"></i><b>9</b> Building a Package on GitHub for Data and Code</a>
 <ul>
-<li class="chapter" data-level="" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#git-and-github"><i class="fa fa-check"></i>Git and GitHub</a></li>
-<li class="chapter" data-level="" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#some-notes-on-the-rstudio-process"><i class="fa fa-check"></i>Some notes on the RStudio process</a></li>
-<li class="chapter" data-level="" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#data-1"><i class="fa fa-check"></i>Data</a>
+<li class="chapter" data-level="9.1" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#git-and-github"><i class="fa fa-check"></i><b>9.1</b> Git and GitHub</a></li>
+<li class="chapter" data-level="9.2" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#some-notes-on-the-rstudio-process"><i class="fa fa-check"></i><b>9.2</b> Some notes on the RStudio process</a></li>
+<li class="chapter" data-level="9.3" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#data-1"><i class="fa fa-check"></i><b>9.3</b> Data</a>
 <ul>
-<li class="chapter" data-level="" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#raw-data-in-extdata"><i class="fa fa-check"></i>Raw data in extdata</a></li>
-<li class="chapter" data-level="" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#binary-data-as-rda-files"><i class="fa fa-check"></i>Binary data as <code>rda</code> files</a></li>
+<li class="chapter" data-level="9.3.1" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#raw-data-in-extdata"><i class="fa fa-check"></i><b>9.3.1</b> Raw data in extdata</a></li>
+<li class="chapter" data-level="9.3.2" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#binary-data-as-rda-files"><i class="fa fa-check"></i><b>9.3.2</b> Binary data as <code>rda</code> files</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#code-functions"><i class="fa fa-check"></i>Code (functions)</a></li>
+<li class="chapter" data-level="9.4" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#code-functions"><i class="fa fa-check"></i><b>9.4</b> Code (functions)</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -225,22 +272,22 @@ div.csl-indent {
 <div id="header">
 <h1 class="title">Environmental Data Science Addenda</h1>
 <p class="author"><em>Jerry Davis, SFSU Institute for Geographic Information Science</em></p>
-<p class="date"><em>2022-12-29</em></p>
+<p class="date"><em>2022-12-31</em></p>
 </div>
 <div id="background-goals-and-data" class="section level1 hasAnchor" number="1">
 <h1><span class="header-section-number">1</span> Background, Goals and Data<a href="index.html#background-goals-and-data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="structure-of-the-addenda" class="section level2 hasAnchor" number="1.1">
 <h2><span class="header-section-number">1.1</span> Structure of the Addenda<a href="index.html#structure-of-the-addenda" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>As seen in the table of contents, these addenda include:</p>
+<p>These addenda may include:</p>
 <ul>
 <li>Case studies and extended methods, such as
 <ul>
-<li>Air pollutant emission trends</li>
-<li>Spatial data &amp; analysis</li>
-<li>Antarctic penguin research case study with PointBlue</li>
-<li>Seabird model, also related to PointBlue</li>
-<li>Imagery classification</li>
-<li>Time Series</li>
+<li>air pollution studies</li>
+<li>mapping methods</li>
+<li>exploring other interpolation methods</li>
+<li>models, e.g. a more extended seabird model</li>
+<li>meadow research we’re doing, in time and space domains</li>
+<li>other imagery classification methods</li>
 </ul></li>
 <li>Guides
 <ul>
@@ -248,6 +295,8 @@ div.csl-indent {
 <li>Building code and data packages on GitHub</li>
 </ul></li>
 </ul>
+<p>See specifics in the table of contents.</p>
+<p><em>Note: some of these methods have made it into the main book, possibly in reduced form. The intention is in part to allow for a more extensive treatment in this addenda, and for the clearest and most succinct examples to make it to the next edition of the book, possibly replacing methods that might be moved here, as useful though not essential. And that’s a good example of a non-succinct sentence, so it belongs here…</em></p>
 </div>
 <div id="software-and-data" class="section level2 hasAnchor" number="1.2">
 <h2><span class="header-section-number">1.2</span> Software and Data<a href="index.html#software-and-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -294,14 +343,14 @@ trails &lt;- st_read(shpPath)</code></pre>
 <pre><code>trails &lt;- st_read(ex(&quot;marbles/trails.shp&quot;))</code></pre>
 <p>But how do we see what’s in the <code>extdata</code> folder? We can’t use the <code>data()</code> function, so we would have to dig for the folder where the igisci package gets installed, which is buried pretty deeply in your user profile. So I wrote another function <code>exfiles()</code> that creates a data frame showing all of the files and the paths to use. In RStudio you could access it with <code>View(exfiles())</code> or we could use a datatable (you’ll need to have installed “DT”). You can use the path using the <code>ex()</code> function with any function that needs it to read data, like <code>read.csv(ex('CA/CA_ClimateNormals.csv'))</code>, or just enter that <code>ex()</code> call in the console like <code>ex('CA/CA_ClimateNormals.csv')</code> to display where on your computer the installed data reside.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="index.html#cb13-1" aria-hidden="true" tabindex="-1"></a>DT<span class="sc">::</span><span class="fu">datatable</span>(<span class="fu">exfiles</span>(), <span class="at">options=</span><span class="fu">list</span>(<span class="at">scrollX=</span>T), <span class="at">rownames=</span>F)</span></code></pre></div>
-<div id="htmlwidget-f59d67bef10a43541b14" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f59d67bef10a43541b14">{"x":{"filter":"none","vertical":false,"data":[["airquality","airquality","airquality","BayArea","BayArea","BayArea","CA","CA","CA","CA","CA","CA","CA","CA","CA","eucoak","eucoak","eucoak","eucoak","eucoak","eucoak","eucoak","fish","litter","marbles","marbles","marbles","marbles","marbles","marbles","marbles","marbles","marbles","marbles","marbles","marbles","marbles","marbles","marbles","marbles","marbles","meadows","meadows","meadows","meadows","Nile","penguins","RCVimagery","RCVimagery","RCVimagery","SanPedro","SanPedro","SanPedro","SanPedro","SanPedro","SanPedro","SanPedro","SanPedro","SFmarine","SFmarine","SFmarine","SFmarine","SFmarine","SFmarine","SFmarine","SFmarine","SFmarine","sierra","sierra","sierra","sierra","sierra","sierra","sierra","sierra","sierra","SinkingCove","SinkingCove","SinkingCove","SinkingCove","SinkingCove","streams","TRI","TRI","TRI","TRI","TRI","TRI","TRI","TRI","TRI","TRI","TRI","ts","ts","ts","US","US"],["CES4 Final Shapefile.shp","~$Pollution by type US 1970 to 2016.xlsx","Pollution by type US 1970 to 2016.xlsx","BayAreaCounties.shp","BayAreaTracts.shp","BayArea_hillsh.tif","CA_counties.shp","CAfreeways.shp","ca_elev.tif","ca_elev_WGS84.tif","ca_hillsh_WGS84.tif","CA_ClimateNormals.csv","CA_MdInc.csv","CA_MdInc_Tr_2016.csv","CDC_health_data_by_Tract_CA_2018_release.csv","eucoak_sites.csv","eucoakrainfallrunoffTDR.csv","eucoaksediment.csv","eucoakSites.csv","eucoakSites.csv.xml","REMOVEeucoak_sites.csv","tidy_eucoak.csv","fishdata.csv","ConcentrationReport.csv","co2july95.shp","geology.shp","gps97.shp","samples.shp","streams.shp","trails.shp","elev.tif","bulkdens970901.csv","resurgenceData.csv","resurgenceDataVariables.csv","soilCO2_97.alldata.csv","soilCO2_97.csv","soilCO2_97_site_descriptions.csv","soilCO2_97_variables.csv","soilCO2_sites97_gcs.csv","resurgenceData.xlsx","soilCO2_97.xlsx","SoilVegSamples.csv","XSptsNDVI.csv","XSptsPheno.csv","LoneyMeadow_30minCO2fluxes_Geog604.xls","NilePoints.csv","sat_table_splash.csv","train_points.shp","train_polys7.shp","train_polys9.shp","roads.shp","slideCentroids.shp","SPCWatershed.shp","streams.shp","trails.shp","dem.tif","SI.tif","SanPedroCreekBacterialCounts.csv","cordell_bank.shp","isobath_200.shp","mainland.shp","Sanctuaries.shp","sefi.shp","transects.shp","bd200m_v2i.tif","Transects_Metadata.xls","TransectsData.xls","CA_places.shp","908277.csv","sagehen_dv.csv","Sierra2LassenData.csv","sierraClimate.csv","sierraData.csv","sierraFeb.csv","sierraFebShort.csv","sierraStations.csv","Contour10.shp","DEM_SinkingCoveGCS.tif","DEM_SinkingCoveUTM.tif","SinkingCoveSites.csv","SinkingCoveWaterChem.xlsx","streams.csv","BayAreaCounties.shp","BayAreaTracts.shp","BayArea_hillsh.tif","CA_MdInc.csv","CA_MdInc_Tr_2016.csv","CDC_health_data_by_Tract_CA_2018_release.csv","TRI_1987_BaySites.csv","TRI_1987_CA.csv","TRI_1997_CA.csv","TRI_2007_CA.csv","TRI_2017_CA.csv","LoneyMeadow_30minCO2fluxes_Geog604.xls","SolarRad_Temp.xls","SolarRad_TempOLD.xls","US_states_Simp.shp","USDOE_FuelEfficiency2022.xlsx"],["ex('airquality/CES4 Final Shapefile.shp')","ex('airquality/~$Pollution by type US 1970 to 2016.xlsx')","ex('airquality/Pollution by type US 1970 to 2016.xlsx')","ex('BayArea/BayAreaCounties.shp')","ex('BayArea/BayAreaTracts.shp')","ex('BayArea/BayArea_hillsh.tif')","ex('CA/CA_counties.shp')","ex('CA/CAfreeways.shp')","ex('CA/ca_elev.tif')","ex('CA/ca_elev_WGS84.tif')","ex('CA/ca_hillsh_WGS84.tif')","ex('CA/CA_ClimateNormals.csv')","ex('CA/CA_MdInc.csv')","ex('CA/CA_MdInc_Tr_2016.csv')","ex('CA/CDC_health_data_by_Tract_CA_2018_release.csv')","ex('eucoak/eucoak_sites.csv')","ex('eucoak/eucoakrainfallrunoffTDR.csv')","ex('eucoak/eucoaksediment.csv')","ex('eucoak/eucoakSites.csv')","ex('eucoak/eucoakSites.csv.xml')","ex('eucoak/REMOVEeucoak_sites.csv')","ex('eucoak/tidy_eucoak.csv')","ex('fish/fishdata.csv')","ex('litter/ConcentrationReport.csv')","ex('marbles/co2july95.shp')","ex('marbles/geology.shp')","ex('marbles/gps97.shp')","ex('marbles/samples.shp')","ex('marbles/streams.shp')","ex('marbles/trails.shp')","ex('marbles/elev.tif')","ex('marbles/bulkdens970901.csv')","ex('marbles/resurgenceData.csv')","ex('marbles/resurgenceDataVariables.csv')","ex('marbles/soilCO2_97.alldata.csv')","ex('marbles/soilCO2_97.csv')","ex('marbles/soilCO2_97_site_descriptions.csv')","ex('marbles/soilCO2_97_variables.csv')","ex('marbles/soilCO2_sites97_gcs.csv')","ex('marbles/resurgenceData.xlsx')","ex('marbles/soilCO2_97.xlsx')","ex('meadows/SoilVegSamples.csv')","ex('meadows/XSptsNDVI.csv')","ex('meadows/XSptsPheno.csv')","ex('meadows/LoneyMeadow_30minCO2fluxes_Geog604.xls')","ex('Nile/NilePoints.csv')","ex('penguins/sat_table_splash.csv')","ex('RCVimagery/train_points.shp')","ex('RCVimagery/train_polys7.shp')","ex('RCVimagery/train_polys9.shp')","ex('SanPedro/roads.shp')","ex('SanPedro/slideCentroids.shp')","ex('SanPedro/SPCWatershed.shp')","ex('SanPedro/streams.shp')","ex('SanPedro/trails.shp')","ex('SanPedro/dem.tif')","ex('SanPedro/SI.tif')","ex('SanPedro/SanPedroCreekBacterialCounts.csv')","ex('SFmarine/cordell_bank.shp')","ex('SFmarine/isobath_200.shp')","ex('SFmarine/mainland.shp')","ex('SFmarine/Sanctuaries.shp')","ex('SFmarine/sefi.shp')","ex('SFmarine/transects.shp')","ex('SFmarine/bd200m_v2i.tif')","ex('SFmarine/Transects_Metadata.xls')","ex('SFmarine/TransectsData.xls')","ex('sierra/CA_places.shp')","ex('sierra/908277.csv')","ex('sierra/sagehen_dv.csv')","ex('sierra/Sierra2LassenData.csv')","ex('sierra/sierraClimate.csv')","ex('sierra/sierraData.csv')","ex('sierra/sierraFeb.csv')","ex('sierra/sierraFebShort.csv')","ex('sierra/sierraStations.csv')","ex('SinkingCove/Contour10.shp')","ex('SinkingCove/DEM_SinkingCoveGCS.tif')","ex('SinkingCove/DEM_SinkingCoveUTM.tif')","ex('SinkingCove/SinkingCoveSites.csv')","ex('SinkingCove/SinkingCoveWaterChem.xlsx')","ex('streams/streams.csv')","ex('TRI/BayAreaCounties.shp')","ex('TRI/BayAreaTracts.shp')","ex('TRI/BayArea_hillsh.tif')","ex('TRI/CA_MdInc.csv')","ex('TRI/CA_MdInc_Tr_2016.csv')","ex('TRI/CDC_health_data_by_Tract_CA_2018_release.csv')","ex('TRI/TRI_1987_BaySites.csv')","ex('TRI/TRI_1987_CA.csv')","ex('TRI/TRI_1997_CA.csv')","ex('TRI/TRI_2007_CA.csv')","ex('TRI/TRI_2017_CA.csv')","ex('ts/LoneyMeadow_30minCO2fluxes_Geog604.xls')","ex('ts/SolarRad_Temp.xls')","ex('ts/SolarRad_TempOLD.xls')","ex('US/US_states_Simp.shp')","ex('US/USDOE_FuelEfficiency2022.xlsx')"],["shapefile","xls","xls","shapefile","shapefile","TIFF","shapefile","shapefile","TIFF","TIFF","TIFF","CSV","CSV","CSV","CSV","CSV","CSV","CSV","CSV","CSV","CSV","CSV","CSV","CSV","shapefile","shapefile","shapefile","shapefile","shapefile","shapefile","TIFF","CSV","CSV","CSV","CSV","CSV","CSV","CSV","CSV","xls","xls","CSV","CSV","CSV","xls","CSV","CSV","shapefile","shapefile","shapefile","shapefile","shapefile","shapefile","shapefile","shapefile","TIFF","TIFF","CSV","shapefile","shapefile","shapefile","shapefile","shapefile","shapefile","TIFF","xls","xls","shapefile","CSV","CSV","CSV","CSV","CSV","CSV","CSV","CSV","shapefile","TIFF","TIFF","CSV","xls","CSV","shapefile","shapefile","TIFF","CSV","CSV","CSV","CSV","CSV","CSV","CSV","CSV","xls","xls","xls","shapefile","xls"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>dir<\/th>\n      <th>file<\/th>\n      <th>path<\/th>\n      <th>type<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-6e0e865702e277b74049" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6e0e865702e277b74049">{"x":{"filter":"none","vertical":false,"data":[["airquality","airquality","airquality","BayArea","BayArea","BayArea","CA","CA","CA","CA","CA","CA","CA","CA","CA","eucoak","eucoak","eucoak","eucoak","eucoak","eucoak","eucoak","fish","litter","marbles","marbles","marbles","marbles","marbles","marbles","marbles","marbles","marbles","marbles","marbles","marbles","marbles","marbles","marbles","marbles","marbles","meadows","meadows","meadows","meadows","Nile","penguins","RCVimagery","RCVimagery","RCVimagery","SanPedro","SanPedro","SanPedro","SanPedro","SanPedro","SanPedro","SanPedro","SanPedro","SFmarine","SFmarine","SFmarine","SFmarine","SFmarine","SFmarine","SFmarine","SFmarine","SFmarine","sierra","sierra","sierra","sierra","sierra","sierra","sierra","sierra","sierra","SinkingCove","SinkingCove","SinkingCove","SinkingCove","SinkingCove","SinkingCove","SinkingCove","streams","TRI","TRI","TRI","TRI","TRI","TRI","TRI","TRI","TRI","TRI","TRI","ts","ts","ts","US","US"],["CES4 Final Shapefile.shp","~$Pollution by type US 1970 to 2016.xlsx","Pollution by type US 1970 to 2016.xlsx","BayAreaCounties.shp","BayAreaTracts.shp","BayArea_hillsh.tif","CA_counties.shp","CAfreeways.shp","ca_elev.tif","ca_elev_WGS84.tif","ca_hillsh_WGS84.tif","CA_ClimateNormals.csv","CA_MdInc.csv","CA_MdInc_Tr_2016.csv","CDC_health_data_by_Tract_CA_2018_release.csv","eucoak_sites.csv","eucoakrainfallrunoffTDR.csv","eucoaksediment.csv","eucoakSites.csv","eucoakSites.csv.xml","REMOVEeucoak_sites.csv","tidy_eucoak.csv","fishdata.csv","ConcentrationReport.csv","co2july95.shp","geology.shp","gps97.shp","samples.shp","streams.shp","trails.shp","elev.tif","bulkdens970901.csv","resurgenceData.csv","resurgenceDataVariables.csv","soilCO2_97.alldata.csv","soilCO2_97.csv","soilCO2_97_site_descriptions.csv","soilCO2_97_variables.csv","soilCO2_sites97_gcs.csv","resurgenceData.xlsx","soilCO2_97.xlsx","SoilVegSamples.csv","XSptsNDVI.csv","XSptsPheno.csv","LoneyMeadow_30minCO2fluxes_Geog604.xls","NilePoints.csv","sat_table_splash.csv","train_points.shp","train_polys7.shp","train_polys9.shp","roads.shp","slideCentroids.shp","SPCWatershed.shp","streams.shp","trails.shp","dem.tif","SI.tif","SanPedroCreekBacterialCounts.csv","cordell_bank.shp","isobath_200.shp","mainland.shp","Sanctuaries.shp","sefi.shp","transects.shp","bd200m_v2i.tif","Transects_Metadata.xls","TransectsData.xls","CA_places.shp","908277.csv","sagehen_dv.csv","Sierra2LassenData.csv","sierraClimate.csv","sierraData.csv","sierraFeb.csv","sierraFebShort.csv","sierraStations.csv","CaveEntrances.shp","caves.shp","Contour10.shp","DEM_SinkingCoveGCS.tif","DEM_SinkingCoveUTM.tif","SinkingCoveSites.csv","SinkingCoveWaterChem.xlsx","streams.csv","BayAreaCounties.shp","BayAreaTracts.shp","BayArea_hillsh.tif","CA_MdInc.csv","CA_MdInc_Tr_2016.csv","CDC_health_data_by_Tract_CA_2018_release.csv","TRI_1987_BaySites.csv","TRI_1987_CA.csv","TRI_1997_CA.csv","TRI_2007_CA.csv","TRI_2017_CA.csv","LoneyMeadow_30minCO2fluxes_Geog604.xls","SolarRad_Temp.xls","SolarRad_TempOLD.xls","US_states_Simp.shp","USDOE_FuelEfficiency2022.xlsx"],["ex('airquality/CES4 Final Shapefile.shp')","ex('airquality/~$Pollution by type US 1970 to 2016.xlsx')","ex('airquality/Pollution by type US 1970 to 2016.xlsx')","ex('BayArea/BayAreaCounties.shp')","ex('BayArea/BayAreaTracts.shp')","ex('BayArea/BayArea_hillsh.tif')","ex('CA/CA_counties.shp')","ex('CA/CAfreeways.shp')","ex('CA/ca_elev.tif')","ex('CA/ca_elev_WGS84.tif')","ex('CA/ca_hillsh_WGS84.tif')","ex('CA/CA_ClimateNormals.csv')","ex('CA/CA_MdInc.csv')","ex('CA/CA_MdInc_Tr_2016.csv')","ex('CA/CDC_health_data_by_Tract_CA_2018_release.csv')","ex('eucoak/eucoak_sites.csv')","ex('eucoak/eucoakrainfallrunoffTDR.csv')","ex('eucoak/eucoaksediment.csv')","ex('eucoak/eucoakSites.csv')","ex('eucoak/eucoakSites.csv.xml')","ex('eucoak/REMOVEeucoak_sites.csv')","ex('eucoak/tidy_eucoak.csv')","ex('fish/fishdata.csv')","ex('litter/ConcentrationReport.csv')","ex('marbles/co2july95.shp')","ex('marbles/geology.shp')","ex('marbles/gps97.shp')","ex('marbles/samples.shp')","ex('marbles/streams.shp')","ex('marbles/trails.shp')","ex('marbles/elev.tif')","ex('marbles/bulkdens970901.csv')","ex('marbles/resurgenceData.csv')","ex('marbles/resurgenceDataVariables.csv')","ex('marbles/soilCO2_97.alldata.csv')","ex('marbles/soilCO2_97.csv')","ex('marbles/soilCO2_97_site_descriptions.csv')","ex('marbles/soilCO2_97_variables.csv')","ex('marbles/soilCO2_sites97_gcs.csv')","ex('marbles/resurgenceData.xlsx')","ex('marbles/soilCO2_97.xlsx')","ex('meadows/SoilVegSamples.csv')","ex('meadows/XSptsNDVI.csv')","ex('meadows/XSptsPheno.csv')","ex('meadows/LoneyMeadow_30minCO2fluxes_Geog604.xls')","ex('Nile/NilePoints.csv')","ex('penguins/sat_table_splash.csv')","ex('RCVimagery/train_points.shp')","ex('RCVimagery/train_polys7.shp')","ex('RCVimagery/train_polys9.shp')","ex('SanPedro/roads.shp')","ex('SanPedro/slideCentroids.shp')","ex('SanPedro/SPCWatershed.shp')","ex('SanPedro/streams.shp')","ex('SanPedro/trails.shp')","ex('SanPedro/dem.tif')","ex('SanPedro/SI.tif')","ex('SanPedro/SanPedroCreekBacterialCounts.csv')","ex('SFmarine/cordell_bank.shp')","ex('SFmarine/isobath_200.shp')","ex('SFmarine/mainland.shp')","ex('SFmarine/Sanctuaries.shp')","ex('SFmarine/sefi.shp')","ex('SFmarine/transects.shp')","ex('SFmarine/bd200m_v2i.tif')","ex('SFmarine/Transects_Metadata.xls')","ex('SFmarine/TransectsData.xls')","ex('sierra/CA_places.shp')","ex('sierra/908277.csv')","ex('sierra/sagehen_dv.csv')","ex('sierra/Sierra2LassenData.csv')","ex('sierra/sierraClimate.csv')","ex('sierra/sierraData.csv')","ex('sierra/sierraFeb.csv')","ex('sierra/sierraFebShort.csv')","ex('sierra/sierraStations.csv')","ex('SinkingCove/CaveEntrances.shp')","ex('SinkingCove/caves.shp')","ex('SinkingCove/Contour10.shp')","ex('SinkingCove/DEM_SinkingCoveGCS.tif')","ex('SinkingCove/DEM_SinkingCoveUTM.tif')","ex('SinkingCove/SinkingCoveSites.csv')","ex('SinkingCove/SinkingCoveWaterChem.xlsx')","ex('streams/streams.csv')","ex('TRI/BayAreaCounties.shp')","ex('TRI/BayAreaTracts.shp')","ex('TRI/BayArea_hillsh.tif')","ex('TRI/CA_MdInc.csv')","ex('TRI/CA_MdInc_Tr_2016.csv')","ex('TRI/CDC_health_data_by_Tract_CA_2018_release.csv')","ex('TRI/TRI_1987_BaySites.csv')","ex('TRI/TRI_1987_CA.csv')","ex('TRI/TRI_1997_CA.csv')","ex('TRI/TRI_2007_CA.csv')","ex('TRI/TRI_2017_CA.csv')","ex('ts/LoneyMeadow_30minCO2fluxes_Geog604.xls')","ex('ts/SolarRad_Temp.xls')","ex('ts/SolarRad_TempOLD.xls')","ex('US/US_states_Simp.shp')","ex('US/USDOE_FuelEfficiency2022.xlsx')"],["shapefile","xls","xls","shapefile","shapefile","TIFF","shapefile","shapefile","TIFF","TIFF","TIFF","CSV","CSV","CSV","CSV","CSV","CSV","CSV","CSV","CSV","CSV","CSV","CSV","CSV","shapefile","shapefile","shapefile","shapefile","shapefile","shapefile","TIFF","CSV","CSV","CSV","CSV","CSV","CSV","CSV","CSV","xls","xls","CSV","CSV","CSV","xls","CSV","CSV","shapefile","shapefile","shapefile","shapefile","shapefile","shapefile","shapefile","shapefile","TIFF","TIFF","CSV","shapefile","shapefile","shapefile","shapefile","shapefile","shapefile","TIFF","xls","xls","shapefile","CSV","CSV","CSV","CSV","CSV","CSV","CSV","CSV","shapefile","shapefile","shapefile","TIFF","TIFF","CSV","xls","CSV","shapefile","shapefile","TIFF","CSV","CSV","CSV","CSV","CSV","CSV","CSV","CSV","xls","xls","xls","shapefile","xls"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>dir<\/th>\n      <th>file<\/th>\n      <th>path<\/th>\n      <th>type<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <hr />
 </div>
 </div>
 <div id="acknowledgements" class="section level2 hasAnchor" number="1.3">
 <h2><span class="header-section-number">1.3</span> Acknowledgements<a href="index.html#acknowledgements" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>This compilation includes data and methods gathered by students in San Francisco State’s GEOG 604/704 <em>Environmental Data Science</em> class, colleagues in the Department of Geography &amp; Environment and NGOs such as PointBlue.</p>
+<p>This compilation includes data and methods gathered by students in San Francisco State’s GEOG 604/704 <em>Environmental Data Science</em> class, colleagues in the Department of Geography &amp; Environment and NGOs such as PointBlue. And thanks again to Anna Studwell for the nice cover art: “Dandelion fluff – Ephemeral stalk sheds seeds to the universe”.</p>
 <hr />
 <p><em>Environmental Data Science Addenda</em> © Jerry D. Davis, ORCID 0000-0002-5369-1197, Institute for Geographic Information Science, San Francisco State University, all rights reserved.</p>
 <hr />
@@ -376,6 +425,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

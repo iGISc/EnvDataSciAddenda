@@ -1,0 +1,2388 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+]{book}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.33,0.33,0.33}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.61,0.61,0.61}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.06,0.06,0.06}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.5,0.5,0.5}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0,0,0}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.27,0.27,0.27}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.27,0.27,0.27}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.06,0.06,0.06}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.14,0.14,0.14}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.06,0.06,0.06}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0,0,0}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.27,0.27,0.27}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.43,0.43,0.43}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0,0,0}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.5,0.5,0.5}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.5,0.5,0.5}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0,0,0}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.5,0.5,0.5}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage[bf,singlelinecheck=off]{caption}
+\captionsetup[table]{labelsep=space}
+\captionsetup[figure]{labelsep=space}
+\usepackage[scale=.8]{sourcecodepro}
+\usepackage{makeidx}
+\makeindex
+\frontmatter
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Environmental Data Science Addenda},
+  pdfauthor={Jerry Davis, SFSU Institute for Geographic Information Science},
+  colorlinks=true,
+  linkcolor={Maroon},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Environmental Data Science Addenda}
+\author{Jerry Davis, SFSU Institute for Geographic Information Science}
+\date{2022-12-30}
+
+\begin{document}
+\maketitle
+
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\listoffigures
+\mainmatter
+
+\hypertarget{background-goals-and-data}{%
+\chapter{Background, Goals and Data}\label{background-goals-and-data}}
+
+\hypertarget{structure-of-the-addenda}{%
+\section{Structure of the Addenda}\label{structure-of-the-addenda}}
+
+These addenda may include:
+
+\begin{itemize}
+\tightlist
+\item
+  Case studies and extended methods, such as
+
+  \begin{itemize}
+  \tightlist
+  \item
+    air pollution studies
+  \item
+    mapping methods
+  \item
+    exploring other interpolation methods
+  \item
+    models, e.g.~a more extended seabird model
+  \item
+    meadow research we're doing, in time and space domains
+  \item
+    other imagery classification methods
+  \end{itemize}
+\item
+  Guides
+
+  \begin{itemize}
+  \tightlist
+  \item
+    RMarkdown
+  \item
+    Building code and data packages on GitHub
+  \end{itemize}
+\end{itemize}
+
+See specifics in the table of contents.
+
+\emph{Note: some of these methods have made it into the main book, possibly in reduced form. The intention is in part to allow for a more extensive treatment in this addenda, and for the clearest and most succinct examples to make it to the next edition of the book, possibly replacing methods that might be moved here, as useful though not essential. And that's a good example of a non-succinct sentence, so it belongs here\ldots{}}
+
+\hypertarget{software-and-data}{%
+\section{Software and Data}\label{software-and-data}}
+
+Some things covered in the main book, but repeated here for convenience.
+
+\begin{verbatim}
+## [1] "This book was produced in RStudio using R version 4.2.1 (2022-06-23 ucrt)"
+\end{verbatim}
+
+For a start, you'll need to have R and \index{RStudio}RStudio installed, then you'll need to install various \index{packages}packages to support specific chapters and sections. No instructions are provided here, since you should know how to install packages in RStudio.
+
+From time to time, you'll want to update your installed packages, and that usually happens when something doesn't work and maybe the dependencies of one package on another gets broken with a change in a package. Fortunately, in the R world, especially at the main repository at CRAN, there's a lot of effort put into making sure packages work together, so usually there are no surprises if you're using the most current versions.
+
+Once a package like \texttt{dplyr} is installed, you can access all of its functions and data by adding a library call, like \ldots{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\ldots{} which you \emph{will} want to include in your code, or to provide access to multiple libraries in the tidyverse, you can use \texttt{library(tidyverse)}. Alternatively, if you're only using maybe one function out of an installed package, you can call that function with the \texttt{::} separator, like \texttt{dplyr::select()}. This method has another advantage in avoiding problems with duplicate names -- and for instance we'll generally call \texttt{dplyr::select()} this way.
+
+\hypertarget{data}{%
+\subsection{Data}\label{data}}
+
+We'll be using data from various sources, including data on CRAN like the code packages above which you install the same way -- so use \texttt{install.packages("palmerpenguins")}.
+
+\index{data}We've also created a repository on GitHub that includes data we've developed in the Institute for Geographic Information Science (iGISc) at SFSU, and you'll need to install that package a slightly different way.
+
+\begin{center}\includegraphics[width=0.33\linewidth]{img/IGIScSFSU281200} \end{center}
+
+GitHub packages \index{GitHub packages}require a bit more work on the user's part since we need to first install \texttt{remotes}\footnote{Note: you can also use \texttt{devtools} instead of \texttt{remotes} if you have that installed. They do the same thing; \texttt{remotes} is a subset of \texttt{devtools}. If you see a message about Rtools, you can ignore it since that is only needed for building tools from C++ and things like that.}, then use that to install the GitHub data package:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"remotes"}\NormalTok{)}
+\NormalTok{remotes}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"iGISc/igisci"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\index{igisci}Then you can access it just like other built-in data by including:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(igisci)}
+\end{Highlighting}
+\end{Shaded}
+
+To see what's in it, you'll see the various datasets listed in:
+
+\begin{verbatim}
+data(package="igisci")
+\end{verbatim}
+
+For instance, Figure \ref{fig:indexCAcounties} is a map of California counties using the CA\_counties \texttt{sf} feature data. We'll be looking at the \texttt{sf} (Simple Features) package later in the Spatial section of the book, but seeing \texttt{library(sf)}, this is one place where you'd need to have installed another package, with \texttt{install.packages("sf")}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse); }\FunctionTok{library}\NormalTok{(igisci); }\FunctionTok{library}\NormalTok{(sf)}
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{CA\_counties) }\SpecialCharTok{+} \FunctionTok{geom\_sf}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.75\linewidth]{EnvDataSciAddenda_files/figure-latex/indexCAcounties-1} 
+
+}
+
+\caption{California counties simple features data in igisci package}\label{fig:indexCAcounties}
+\end{figure}
+
+The package datasets can be used directly as \texttt{sf} data or data frames. And similarly to functions, you can access the (previously installed) data set by prefacing with \texttt{igisci::} this way, without having to load the library. This might be useful in a one-off operation:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mean}\NormalTok{(igisci}\SpecialCharTok{::}\NormalTok{sierraFeb}\SpecialCharTok{$}\NormalTok{LATITUDE)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 38.3192
+\end{verbatim}
+
+Raw data such as \texttt{.csv} files can also be read from the \texttt{extdata} folder that is installed on your computer when you install the package, using code such as:
+
+\begin{verbatim}
+csvPath <- system.file("extdata","TRI/TRI_1987_BaySites.csv", package="igisci")
+TRI87 <- read_csv(csvPath)
+\end{verbatim}
+
+or something similar for shapefiles, such as:
+
+\begin{verbatim}
+shpPath <- system.file("extdata","marbles/trails.shp", package="igisci")
+trails <- st_read(shpPath)
+\end{verbatim}
+
+And we'll find that including most of the above arcanity in a function will help. We'll look at functions later, but here's a function that we'll use a lot for setting up reading data from the extdata folder:
+
+\begin{verbatim}
+ex <- function(dta){system.file("extdata",dta,package="igisci")}
+\end{verbatim}
+
+And this \texttt{ex()}function is needed so often that it's installed in the \texttt{igisci} package, so if you have \texttt{library(igisci)} in effect, you can just use it like this:
+
+\begin{verbatim}
+trails <- st_read(ex("marbles/trails.shp"))
+\end{verbatim}
+
+But how do we see what's in the \texttt{extdata} folder? We can't use the \texttt{data()} function, so we would have to dig for the folder where the igisci package gets installed, which is buried pretty deeply in your user profile. So I wrote another function \texttt{exfiles()} that creates a data frame showing all of the files and the paths to use. In RStudio you could access it with \texttt{View(exfiles())} or we could use a datatable (you'll need to have installed ``DT''). You can use the path using the \texttt{ex()} function with any function that needs it to read data, like \texttt{read.csv(ex(\textquotesingle{}CA/CA\_ClimateNormals.csv\textquotesingle{}))}, or just enter that \texttt{ex()} call in the console like \texttt{ex(\textquotesingle{}CA/CA\_ClimateNormals.csv\textquotesingle{})} to display where on your computer the installed data reside.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{DT}\SpecialCharTok{::}\FunctionTok{datatable}\NormalTok{(}\FunctionTok{exfiles}\NormalTok{(), }\AttributeTok{options=}\FunctionTok{list}\NormalTok{(}\AttributeTok{scrollX=}\NormalTok{T), }\AttributeTok{rownames=}\NormalTok{F)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{img/exfilesDT} \end{center}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{acknowledgements}{%
+\section{Acknowledgements}\label{acknowledgements}}
+
+This compilation includes data and methods gathered by students in San Francisco State's GEOG 604/704 \emph{Environmental Data Science} class, colleagues in the Department of Geography \& Environment and NGOs such as PointBlue. And thanks again to Anna Studwell for the nice cover art: ``Dandelion fluff -- Ephemeral stalk sheds seeds to the universe''.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\emph{Environmental Data Science Addenda} © Jerry D. Davis, ORCID 0000-0002-5369-1197, Institute for Geographic Information Science, San Francisco State University, all rights reserved.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{air-pollutant-emissions-trends-epa}{%
+\chapter{Air pollutant emissions trends (EPA)}\label{air-pollutant-emissions-trends-epa}}
+
+The National Emissions Inventory (NEI) program of the US EPA is a detailed estimate of air emissions of criteria and hazardous air pollutants from a wide variety of air emissions sources. The inventory is released every three years based primarily upon data provided by state, local, and tribal air resources agencies for pollution sources they monitor, supplemented by data developed by the US EPA.
+
+Air pollutant data were downloaded from \url{https://www.epa.gov/air-emissions-inventories/air-pollutant-emissions-trends-data} and provided in the igisci package.
+
+Processing these data to create a \texttt{free\_y} faceted graph (\ref{fig:USairpollution}) employs several data transformation methods we've looked at, and some we haven't:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{summarize\_all} gets means of all variables, though since we're just using the totals, this just causes worksheets with multiple \texttt{Total} rows to merge into one; they're actually the same value
+\item
+  \texttt{pivot\_longer} is used twice, first to create columns for each pollutant, so the columns can be binded together, then later to create a facet graph where each pollutant becomes a parameter factor
+\item
+  \texttt{bind\_cols} to combine a series of data frames with each having the same years (1990:2016) when data for all parameters were collected
+\item
+  A fix for dealing data not all being read in as numeric, needed for an entry error for the NH3 data, was developed by first reading in the \texttt{Source\ Category} column, then the yearly data values, setting \texttt{col\_types="numeric"}, then binding the columns
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse); }\FunctionTok{library}\NormalTok{(readxl); }\FunctionTok{library}\NormalTok{(igisci)}
+\NormalTok{dtaPath }\OtherTok{\textless{}{-}} \FunctionTok{ex}\NormalTok{(}\StringTok{"airquality/Pollution by type US 1970 to 2016.xlsx"}\NormalTok{)}
+\NormalTok{YearColumn }\OtherTok{\textless{}{-}}\NormalTok{ readxl}\SpecialCharTok{::}\FunctionTok{read\_xlsx}\NormalTok{(dtaPath, }\AttributeTok{sheet =} \StringTok{"SO2"}\NormalTok{, }\AttributeTok{skip=}\DecValTok{2}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols=}\StringTok{\textasciigrave{}}\AttributeTok{1990}\StringTok{\textasciigrave{}}\SpecialCharTok{:}\StringTok{\textasciigrave{}}\AttributeTok{2016}\StringTok{\textasciigrave{}}\NormalTok{, }\AttributeTok{names\_to=}\StringTok{"Year"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Year) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Year=}\FunctionTok{as.numeric}\NormalTok{(Year))}
+\NormalTok{YearCol }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(}\FunctionTok{unique}\NormalTok{(YearColumn}\SpecialCharTok{$}\NormalTok{Year))}
+\FunctionTok{names}\NormalTok{(YearCol) }\OtherTok{=} \StringTok{"Year"}
+
+\NormalTok{getPollutant }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(pollutant)\{}
+\NormalTok{  thedata }\OtherTok{\textless{}{-}}\NormalTok{ readxl}\SpecialCharTok{::}\FunctionTok{read\_xlsx}\NormalTok{(dtaPath,}\AttributeTok{sheet=}\NormalTok{pollutant,}\AttributeTok{skip=}\DecValTok{2}\NormalTok{,}
+                               \AttributeTok{col\_types=}\StringTok{"numeric"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{     dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\StringTok{\textasciigrave{}}\AttributeTok{Source Category}\StringTok{\textasciigrave{}}\NormalTok{)}
+\NormalTok{  rowheaders }\OtherTok{\textless{}{-}}\NormalTok{ readxl}\SpecialCharTok{::}\FunctionTok{read\_xlsx}\NormalTok{(dtaPath,}\AttributeTok{sheet=}\NormalTok{pollutant,}\AttributeTok{skip=}\DecValTok{2}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{     dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Source Category}\StringTok{\textasciigrave{}}\NormalTok{)}
+  \FunctionTok{bind\_cols}\NormalTok{(rowheaders,thedata) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{     dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Source Category}\StringTok{\textasciigrave{}}\NormalTok{,}\StringTok{\textasciigrave{}}\AttributeTok{1990}\StringTok{\textasciigrave{}}\SpecialCharTok{:}\StringTok{\textasciigrave{}}\AttributeTok{2016}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+     \FunctionTok{filter}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Source Category}\StringTok{\textasciigrave{}}\SpecialCharTok{==}\StringTok{"Total"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+     \FunctionTok{group\_by}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Source Category}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+     \FunctionTok{summarize\_all}\NormalTok{(}\FunctionTok{list}\NormalTok{(mean)) }\SpecialCharTok{\%\textgreater{}\%}
+     \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols=}\StringTok{\textasciigrave{}}\AttributeTok{1990}\StringTok{\textasciigrave{}}\SpecialCharTok{:}\StringTok{\textasciigrave{}}\AttributeTok{2016}\StringTok{\textasciigrave{}}\NormalTok{,}\AttributeTok{names\_to=}\StringTok{"Year"}\NormalTok{,}\AttributeTok{values\_to=}\NormalTok{pollutant) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{     dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(pollutant)}
+\NormalTok{\}}
+\NormalTok{SO2  }\OtherTok{\textless{}{-}} \FunctionTok{getPollutant}\NormalTok{(}\StringTok{"SO2"}\NormalTok{)}
+\NormalTok{PM25 }\OtherTok{\textless{}{-}} \FunctionTok{getPollutant}\NormalTok{(}\StringTok{"PM25Primary"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{rename}\NormalTok{(}\AttributeTok{PM25=}\NormalTok{PM25Primary)}
+\NormalTok{PM10 }\OtherTok{\textless{}{-}} \FunctionTok{getPollutant}\NormalTok{(}\StringTok{"PM10Primary"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{rename}\NormalTok{(}\AttributeTok{PM10=}\NormalTok{PM10Primary)}
+\NormalTok{NOX  }\OtherTok{\textless{}{-}} \FunctionTok{getPollutant}\NormalTok{(}\StringTok{"NOX"}\NormalTok{)}
+\NormalTok{CO   }\OtherTok{\textless{}{-}} \FunctionTok{getPollutant}\NormalTok{(}\StringTok{"CO"}\NormalTok{)}
+\NormalTok{VOC  }\OtherTok{\textless{}{-}} \FunctionTok{getPollutant}\NormalTok{(}\StringTok{"VOC"}\NormalTok{)}
+\NormalTok{NH3  }\OtherTok{\textless{}{-}} \FunctionTok{getPollutant}\NormalTok{(}\StringTok{"NH3"}\NormalTok{)}
+\NormalTok{pollutants }\OtherTok{\textless{}{-}} \FunctionTok{bind\_cols}\NormalTok{(YearCol,CO,NOX,SO2,PM25,PM10,VOC,NH3)}\CommentTok{\#}
+
+\NormalTok{pollutant\_long }\OtherTok{\textless{}{-}}\NormalTok{ pollutants }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols =}\NormalTok{ CO}\SpecialCharTok{:}\NormalTok{NH3, }\AttributeTok{names\_to=}\StringTok{"parameter"}\NormalTok{, }\AttributeTok{values\_to=}\StringTok{"value"}\NormalTok{)}
+\NormalTok{p }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ pollutant\_long, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Year, }\AttributeTok{y=}\NormalTok{value)) }\SpecialCharTok{+} \FunctionTok{geom\_line}\NormalTok{()}
+\NormalTok{p }\SpecialCharTok{+} \FunctionTok{facet\_grid}\NormalTok{(parameter }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{scales =} \StringTok{"free\_y"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.75\linewidth]{EnvDataSciAddenda_files/figure-latex/USairpollution-1} 
+
+}
+
+\caption{Facet graph of air pollutants in the US, 1990-2016}\label{fig:USairpollution}
+\end{figure}
+
+\hypertarget{distance-from-census-tract-centroid-to-closest-tri-site}{%
+\chapter{Distance from census tract centroid to closest TRI site}\label{distance-from-census-tract-centroid-to-closest-tri-site}}
+
+In the Spatial Analysis chapter section on Distance and specifically Distance to Closest Feature, we looked at point to closest point distances. Here's another example of this that attempts to find the output of closest TRI facility to a census tract where we might compare health or socioeconomic variables to that value. The \texttt{igisci::BayAreaTracts} data has census data from 2010 by census tracts in the SF Bay area. In addition to the distance functions, the code below includes a few useful \texttt{sf} functions applied to that data.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(igisci); }\FunctionTok{library}\NormalTok{(sf); }\FunctionTok{library}\NormalTok{(tidyverse)}
+\NormalTok{TRI\_CA }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\FunctionTok{ex}\NormalTok{(}\StringTok{"TRI/TRI\_2017\_CA.csv"}\NormalTok{))}
+\NormalTok{TRI\_BySite }\OtherTok{\textless{}{-}}\NormalTok{ TRI\_CA }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{all\_air =} \StringTok{\textasciigrave{}}\AttributeTok{5.1\_FUGITIVE\_AIR}\StringTok{\textasciigrave{}} \SpecialCharTok{+} \StringTok{\textasciigrave{}}\AttributeTok{5.2\_STACK\_AIR}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{carcin\_release =}\NormalTok{ all\_air }\SpecialCharTok{*}\NormalTok{ (CARCINOGEN }\SpecialCharTok{==} \StringTok{"YES"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(TRI\_FACILITY\_ID) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{count =} \FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{air\_releases =} \FunctionTok{sum}\NormalTok{(all\_air, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{fugitive\_air =} \FunctionTok{sum}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{5.1\_FUGITIVE\_AIR}\StringTok{\textasciigrave{}}\NormalTok{, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{stack\_air =} \FunctionTok{sum}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{5.2\_STACK\_AIR}\StringTok{\textasciigrave{}}\NormalTok{, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{FACILITY\_NAME =} \FunctionTok{first}\NormalTok{(FACILITY\_NAME),}
+    \AttributeTok{COUNTY =} \FunctionTok{first}\NormalTok{(COUNTY),}
+    \AttributeTok{LATITUDE =} \FunctionTok{first}\NormalTok{(LATITUDE),}
+    \AttributeTok{LONGITUDE =} \FunctionTok{first}\NormalTok{(LONGITUDE))}
+\NormalTok{co }\OtherTok{\textless{}{-}} \FunctionTok{st\_read}\NormalTok{(}\FunctionTok{ex}\NormalTok{(}\StringTok{"BayArea/BayAreaCounties.shp"}\NormalTok{))        }
+\NormalTok{freeways }\OtherTok{\textless{}{-}} \FunctionTok{st\_read}\NormalTok{(}\FunctionTok{ex}\NormalTok{(}\StringTok{"CA/CAfreeways.shp"}\NormalTok{))          }
+\NormalTok{censusBayArea }\OtherTok{\textless{}{-}} \FunctionTok{st\_make\_valid}\NormalTok{(}\FunctionTok{st\_read}\NormalTok{(}\FunctionTok{ex}\NormalTok{(}\StringTok{"BayArea/BayAreaTracts.shp"}\NormalTok{))) }
+\NormalTok{incomeByTract }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\FunctionTok{ex}\NormalTok{(}\StringTok{"CA/CA\_MdInc.csv"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(trID, HHinc2016) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{HHinc2016 =} \FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{str\_c}\NormalTok{(HHinc2016)),}
+         \AttributeTok{joinid =} \FunctionTok{str\_c}\NormalTok{(}\StringTok{"0"}\NormalTok{, trID))}
+\NormalTok{censusBayArea }\OtherTok{\textless{}{-}}\NormalTok{ censusBayArea }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{whitepct =}\NormalTok{ WHITE }\SpecialCharTok{/}\NormalTok{ POP2010 }\SpecialCharTok{*} \DecValTok{100}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{People\_of\_Color\_pct =} \DecValTok{100} \SpecialCharTok{{-}}\NormalTok{ whitepct) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{left\_join}\NormalTok{(incomeByTract, }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"FIPS"} \OtherTok{=} \StringTok{"joinid"}\NormalTok{))}
+\NormalTok{censusCentroids }\OtherTok{\textless{}{-}} \FunctionTok{st\_centroid}\NormalTok{(censusBayArea)}
+\NormalTok{census }\OtherTok{\textless{}{-}}\NormalTok{ censusBayArea}
+\NormalTok{bnd }\OtherTok{\textless{}{-}} \FunctionTok{st\_bbox}\NormalTok{(co)}
+\NormalTok{TRIdata }\OtherTok{\textless{}{-}}\NormalTok{ TRI\_BySite }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(air\_releases }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{((LONGITUDE }\SpecialCharTok{\textless{}}\NormalTok{ bnd[}\DecValTok{3}\NormalTok{]) }\SpecialCharTok{\&}\NormalTok{ (LONGITUDE }\SpecialCharTok{\textgreater{}}\NormalTok{ bnd[}\DecValTok{1}\NormalTok{]) }\SpecialCharTok{\&}\NormalTok{ (LATITUDE }\SpecialCharTok{\textless{}}\NormalTok{ bnd[}\DecValTok{4}\NormalTok{]) }\SpecialCharTok{\&}\NormalTok{ (LATITUDE }\SpecialCharTok{\textgreater{}}\NormalTok{ bnd[}\DecValTok{2}\NormalTok{]))}
+\NormalTok{BA\_counties }\OtherTok{\textless{}{-}}\NormalTok{ co }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(NAME, CNTY\_FIPS) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{st\_set\_geometry}\NormalTok{(}\ConstantTok{NULL}\NormalTok{)}
+\NormalTok{TRI\_sp }\OtherTok{\textless{}{-}} \FunctionTok{st\_as\_sf}\NormalTok{(TRIdata, }\AttributeTok{coords =} \FunctionTok{c}\NormalTok{(}\StringTok{"LONGITUDE"}\NormalTok{, }\StringTok{"LATITUDE"}\NormalTok{), }\AttributeTok{crs=}\DecValTok{4326}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{st\_join}\NormalTok{(censusBayArea) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(CNTY\_FI }\SpecialCharTok{\%in\%}\NormalTok{ BA\_counties}\SpecialCharTok{$}\NormalTok{CNTY\_FIPS)}
+\NormalTok{TRI2join }\OtherTok{\textless{}{-}}\NormalTok{ TRI\_sp }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{st\_set\_geometry}\NormalTok{(}\ConstantTok{NULL}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rowid\_to\_column}\NormalTok{(}\StringTok{"TRI\_ID"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data =}\NormalTok{ co, }\AttributeTok{fill =} \ConstantTok{NA}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data=}\NormalTok{TRI\_sp) }\SpecialCharTok{+}
+  \FunctionTok{coord\_sf}\NormalTok{(}\AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(bnd[}\DecValTok{1}\NormalTok{], bnd[}\DecValTok{3}\NormalTok{]), }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(bnd[}\DecValTok{2}\NormalTok{], bnd[}\DecValTok{4}\NormalTok{])) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x=}\StringTok{\textquotesingle{}\textquotesingle{}}\NormalTok{,}\AttributeTok{y=}\StringTok{\textquotesingle{}\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.75\linewidth]{EnvDataSciAddenda_files/figure-latex/unnamed-chunk-11-1} 
+
+}
+
+\caption{EPA Toxic Release Inventory (TRI) facilities 2017}\label{fig:unnamed-chunk-11}
+\end{figure}
+
+Asthma model related to distance to nearest TRI facility.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# CDC data}
+\NormalTok{CDCdata }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\FunctionTok{ex}\NormalTok{(}\StringTok{"TRI/CDC\_health\_data\_by\_Tract\_CA\_2018\_release.csv"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{lon =} \FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{str\_sub}\NormalTok{(Geolocation, }\DecValTok{17}\NormalTok{, }\DecValTok{30}\NormalTok{)),}
+    \AttributeTok{lat =} \FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{str\_sub}\NormalTok{(Geolocation, }\DecValTok{2}\NormalTok{, }\DecValTok{14}\NormalTok{)),}
+    \AttributeTok{CDC\_CNTY\_FIPS =} \FunctionTok{str\_sub}\NormalTok{(TractFIPS, }\DecValTok{2}\NormalTok{, }\DecValTok{4}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(CDC\_CNTY\_FIPS }\SpecialCharTok{\%in\%}\NormalTok{ BA\_counties}\SpecialCharTok{$}\NormalTok{CNTY\_FIPS)}
+\NormalTok{CDCbay }\OtherTok{\textless{}{-}} \FunctionTok{st\_as\_sf}\NormalTok{(CDCdata, }\AttributeTok{coords =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}lon\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}lat\textquotesingle{}}\NormalTok{), }\AttributeTok{crs=}\DecValTok{4326}\NormalTok{)}
+
+\CommentTok{\# D to TRI:  create vector of index of nearest TRI facility to each CDC (tract centroid) point}
+\NormalTok{nearest\_TRI\_ids }\OtherTok{\textless{}{-}} \FunctionTok{st\_nearest\_feature}\NormalTok{(CDCbay, TRI\_sp)}
+\CommentTok{\# get locations of each NEAREST TRI facility only}
+\NormalTok{near\_TRI\_loc }\OtherTok{\textless{}{-}}\NormalTok{ TRI\_sp}\SpecialCharTok{$}\NormalTok{geometry[nearest\_TRI\_ids]}
+
+\NormalTok{CDCbay }\OtherTok{\textless{}{-}}\NormalTok{ CDCbay }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{d2TRI =} \FunctionTok{st\_distance}\NormalTok{(CDCbay, near\_TRI\_loc, }\AttributeTok{by\_element=}\ConstantTok{TRUE}\NormalTok{),}
+         \AttributeTok{d2TRI =}\NormalTok{ units}\SpecialCharTok{::}\FunctionTok{drop\_units}\NormalTok{(d2TRI),}
+         \AttributeTok{nearest\_TRI =}\NormalTok{ nearest\_TRI\_ids) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{left\_join}\NormalTok{(BA\_counties, }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"CDC\_CNTY\_FIPS"} \OtherTok{=} \StringTok{"CNTY\_FIPS"}\NormalTok{))}
+
+\NormalTok{CDCTRIbay }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(CDCbay, TRI2join, }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"nearest\_TRI"} \OtherTok{=} \StringTok{"TRI\_ID"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}  
+  \FunctionTok{filter}\NormalTok{(d2TRI }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) }\CommentTok{\# \%\textgreater{}\%}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{CDCTRIbay }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(air\_releases, CASTHMA\_CrudePrev)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{color =}\NormalTok{ NAME)) }\SpecialCharTok{+} \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method=}\StringTok{"lm"}\NormalTok{, }\AttributeTok{se=}\ConstantTok{FALSE}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Air releases at nearest TRI facility"}\NormalTok{, }
+       \AttributeTok{y =} \StringTok{"Asthma Prevalence CDC Model, Adults \textgreater{}= 18, 2016"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.75\linewidth]{EnvDataSciAddenda_files/figure-latex/unnamed-chunk-13-1} 
+
+}
+
+\caption{Asthma prevalence related to nearest TRI total releases}\label{fig:unnamed-chunk-13}
+\end{figure}
+
+This is an admittedly crude analysis, lumping all releases together, and so it's not surprising that there's no clear relationship over the whole Bay Area. There's quite a lot you could explore in the TRI data, and you might want to focus on one county, specific toxins, or probably aggregate releases at the total output in the area. And analyzing health data is very challenging given the wide range of factors influencing patterns. You might also consider looking at earlier TRI data (the \texttt{igisci} extdata \texttt{"TRI"} folder has it back to 1987, for California.)
+
+\hypertarget{exploring-terrain-and-water-samples-in-a-karst-area}{%
+\chapter{Exploring terrain and water samples in a karst area}\label{exploring-terrain-and-water-samples-in-a-karst-area}}
+
+\textbf{Sinking Cove, Tennessee} is a karst valley system carved into the Cumberland Plateau, a nice place to see the use of a hillshade raster created from a digital elevation model using raster or terra functions for slope, aspect, and hillshade. We'll look at this area and some results from a hydrologic and geochemical study (\protect\hyperlink{ref-davis1993geomorphology}{Davis and Brook 1993}):
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.75\linewidth]{img/CaveCoveCaveEntrance} 
+
+}
+
+\caption{Cave Cove Cave Entrance}\label{fig:unnamed-chunk-14}
+\end{figure}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.75\linewidth]{img/SinkingCoveCave} 
+
+}
+
+\caption{Sinking Cove Cave}\label{fig:unnamed-chunk-15}
+\end{figure}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.75\linewidth]{img/SinkingCoveCaveSteephead} 
+
+}
+
+\caption{Sinking Cove Cave spring}\label{fig:unnamed-chunk-16}
+\end{figure}
+
+We'll start with a regional view using a hillshade and terrain shading:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{tmap\_mode}\NormalTok{(}\StringTok{"plot"}\NormalTok{)}
+\NormalTok{DEM }\OtherTok{\textless{}{-}} \FunctionTok{rast}\NormalTok{(}\FunctionTok{ex}\NormalTok{(}\StringTok{"SinkingCove/DEM\_SinkingCoveUTM.tif"}\NormalTok{))}
+\NormalTok{slope }\OtherTok{\textless{}{-}} \FunctionTok{terrain}\NormalTok{(DEM, }\AttributeTok{v=}\StringTok{\textquotesingle{}slope\textquotesingle{}}\NormalTok{)}
+\NormalTok{aspect }\OtherTok{\textless{}{-}} \FunctionTok{terrain}\NormalTok{(DEM, }\AttributeTok{v=}\StringTok{\textquotesingle{}aspect\textquotesingle{}}\NormalTok{)}
+\NormalTok{hillsh }\OtherTok{\textless{}{-}} \FunctionTok{shade}\NormalTok{(slope}\SpecialCharTok{/}\DecValTok{180}\SpecialCharTok{*}\NormalTok{pi, aspect}\SpecialCharTok{/}\DecValTok{180}\SpecialCharTok{*}\NormalTok{pi, }\AttributeTok{angle=}\DecValTok{40}\NormalTok{, }\AttributeTok{direction=}\DecValTok{330}\NormalTok{)}
+\CommentTok{\# Need to crop a bit since grid north != true north }
+\NormalTok{bbox0 }\OtherTok{\textless{}{-}} \FunctionTok{st\_bbox}\NormalTok{(DEM)}
+\NormalTok{xrange }\OtherTok{\textless{}{-}}\NormalTok{ bbox0}\SpecialCharTok{$}\NormalTok{xmax }\SpecialCharTok{{-}}\NormalTok{ bbox0}\SpecialCharTok{$}\NormalTok{xmin}
+\NormalTok{yrange }\OtherTok{\textless{}{-}}\NormalTok{ bbox0}\SpecialCharTok{$}\NormalTok{ymax }\SpecialCharTok{{-}}\NormalTok{ bbox0}\SpecialCharTok{$}\NormalTok{ymin}
+\NormalTok{bbox1 }\OtherTok{\textless{}{-}}\NormalTok{ bbox0}
+\NormalTok{crop }\OtherTok{\textless{}{-}} \FloatTok{0.05}
+\NormalTok{bbox1[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ bbox0[}\DecValTok{1}\NormalTok{] }\SpecialCharTok{+}\NormalTok{ crop }\SpecialCharTok{*}\NormalTok{ xrange }\CommentTok{\# xmin}
+\NormalTok{bbox1[}\DecValTok{3}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ bbox0[}\DecValTok{3}\NormalTok{] }\SpecialCharTok{{-}}\NormalTok{ crop }\SpecialCharTok{*}\NormalTok{ xrange }\CommentTok{\# xmax}
+\NormalTok{bbox1[}\DecValTok{2}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ bbox0[}\DecValTok{2}\NormalTok{] }\SpecialCharTok{+}\NormalTok{ crop }\SpecialCharTok{*}\NormalTok{ yrange }\CommentTok{\# ymin}
+\NormalTok{bbox1[}\DecValTok{4}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ bbox0[}\DecValTok{4}\NormalTok{] }\SpecialCharTok{{-}}\NormalTok{ crop }\SpecialCharTok{*}\NormalTok{ yrange }\CommentTok{\# ymax}
+\NormalTok{bboxPoly }\OtherTok{\textless{}{-}}\NormalTok{ bbox1 }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{st\_as\_sfc}\NormalTok{() }\CommentTok{\# makes a polygon}
+\CommentTok{\#}
+\FunctionTok{tm\_shape}\NormalTok{(hillsh, }\AttributeTok{bbox=}\NormalTok{bboxPoly) }\SpecialCharTok{+}
+  \FunctionTok{tm\_raster}\NormalTok{(}\AttributeTok{palette=}\StringTok{"{-}Greys"}\NormalTok{,}\AttributeTok{legend.show=}\NormalTok{F,}\AttributeTok{n=}\DecValTok{20}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{tm\_shape}\NormalTok{(DEM) }\SpecialCharTok{+}
+  \FunctionTok{tm\_raster}\NormalTok{(}\AttributeTok{palette=}\FunctionTok{terrain.colors}\NormalTok{(}\DecValTok{24}\NormalTok{), }\AttributeTok{alpha=}\FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{tm\_graticules}\NormalTok{(}\AttributeTok{lines=}\NormalTok{F)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.75\linewidth]{EnvDataSciAddenda_files/figure-latex/unnamed-chunk-18-1} 
+
+}
+
+\caption{Sinking Cove Area map, using terra rasters in tmap}\label{fig:unnamed-chunk-18}
+\end{figure}
+
+Then zoom into Upper Sinking Cove to look at some water sample results:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(igisci)}
+\FunctionTok{library}\NormalTok{(sf); }\FunctionTok{library}\NormalTok{(tidyverse); }\FunctionTok{library}\NormalTok{(readxl); }\FunctionTok{library}\NormalTok{(tmap)}
+\NormalTok{wChemData }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\FunctionTok{ex}\NormalTok{(}\StringTok{"SinkingCove/SinkingCoveWaterChem.xlsx"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{siteLoc =} \FunctionTok{str\_sub}\NormalTok{(Site,}\AttributeTok{start=}\NormalTok{1L, }\AttributeTok{end=}\NormalTok{1L))}
+\NormalTok{wChemTrunk }\OtherTok{\textless{}{-}}\NormalTok{ wChemData }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(siteLoc }\SpecialCharTok{==} \StringTok{"T"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{siteType =} \StringTok{"trunk"}\NormalTok{)}
+\NormalTok{wChemDrip }\OtherTok{\textless{}{-}}\NormalTok{ wChemData }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(siteLoc }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"D"}\NormalTok{,}\StringTok{"S"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{siteType =} \StringTok{"dripwater"}\NormalTok{)}
+\NormalTok{wChemTrib }\OtherTok{\textless{}{-}}\NormalTok{ wChemData }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(siteLoc }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"B"}\NormalTok{, }\StringTok{"F"}\NormalTok{, }\StringTok{"K"}\NormalTok{, }\StringTok{"W"}\NormalTok{, }\StringTok{"P"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{siteType =} \StringTok{"tributary"}\NormalTok{)}
+\NormalTok{wChemData }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(wChemTrunk, wChemDrip, wChemTrib)}
+\NormalTok{sites }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\FunctionTok{ex}\NormalTok{(}\StringTok{"SinkingCove/SinkingCoveSites.csv"}\NormalTok{))}
+\NormalTok{wChem }\OtherTok{\textless{}{-}}\NormalTok{ wChemData }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{left\_join}\NormalTok{(sites, }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"Site"} \OtherTok{=} \StringTok{"site"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{st\_as\_sf}\NormalTok{(}\AttributeTok{coords =} \FunctionTok{c}\NormalTok{(}\StringTok{"longitude"}\NormalTok{, }\StringTok{"latitude"}\NormalTok{), }\AttributeTok{crs =} \DecValTok{4326}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(terra)}
+\FunctionTok{tmap\_mode}\NormalTok{(}\StringTok{"plot"}\NormalTok{)}
+\NormalTok{DEM }\OtherTok{\textless{}{-}} \FunctionTok{rast}\NormalTok{(}\FunctionTok{ex}\NormalTok{(}\StringTok{"SinkingCove/DEM\_SinkingCoveUTM.tif"}\NormalTok{))   }
+\NormalTok{slope }\OtherTok{\textless{}{-}} \FunctionTok{terrain}\NormalTok{(DEM, }\AttributeTok{v=}\StringTok{\textquotesingle{}slope\textquotesingle{}}\NormalTok{)}
+\NormalTok{aspect }\OtherTok{\textless{}{-}} \FunctionTok{terrain}\NormalTok{(DEM, }\AttributeTok{v=}\StringTok{\textquotesingle{}aspect\textquotesingle{}}\NormalTok{)}
+\NormalTok{hillsh }\OtherTok{\textless{}{-}} \FunctionTok{shade}\NormalTok{(slope}\SpecialCharTok{/}\DecValTok{180}\SpecialCharTok{*}\NormalTok{pi, aspect}\SpecialCharTok{/}\DecValTok{180}\SpecialCharTok{*}\NormalTok{pi, }\DecValTok{40}\NormalTok{, }\DecValTok{330}\NormalTok{) }
+\NormalTok{bounds }\OtherTok{\textless{}{-}} \FunctionTok{st\_bbox}\NormalTok{(wChem)}
+\NormalTok{xrange }\OtherTok{\textless{}{-}}\NormalTok{ bounds}\SpecialCharTok{$}\NormalTok{xmax }\SpecialCharTok{{-}}\NormalTok{ bounds}\SpecialCharTok{$}\NormalTok{xmin}
+\NormalTok{yrange }\OtherTok{\textless{}{-}}\NormalTok{ bounds}\SpecialCharTok{$}\NormalTok{ymax }\SpecialCharTok{{-}}\NormalTok{ bounds}\SpecialCharTok{$}\NormalTok{ymin}
+\NormalTok{xMIN }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(bounds}\SpecialCharTok{$}\NormalTok{xmin }\SpecialCharTok{{-}}\NormalTok{ xrange}\SpecialCharTok{/}\DecValTok{10}\NormalTok{)}
+\NormalTok{xMAX }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(bounds}\SpecialCharTok{$}\NormalTok{xmax }\SpecialCharTok{+}\NormalTok{ xrange}\SpecialCharTok{/}\DecValTok{10}\NormalTok{)}
+\NormalTok{yMIN }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(bounds}\SpecialCharTok{$}\NormalTok{ymin }\SpecialCharTok{{-}}\NormalTok{ yrange}\SpecialCharTok{/}\DecValTok{10}\NormalTok{)}
+\NormalTok{yMAX }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(bounds}\SpecialCharTok{$}\NormalTok{ymax }\SpecialCharTok{+}\NormalTok{ yrange}\SpecialCharTok{/}\DecValTok{10}\NormalTok{)}
+\NormalTok{newbounds }\OtherTok{\textless{}{-}} \FunctionTok{st\_bbox}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\AttributeTok{xmin=}\NormalTok{xMIN, }\AttributeTok{xmax=}\NormalTok{xMAX, }\AttributeTok{ymin=}\NormalTok{yMIN, }\AttributeTok{ymax=}\NormalTok{yMAX), }\AttributeTok{crs=} \FunctionTok{st\_crs}\NormalTok{(}\DecValTok{4326}\NormalTok{))}
+\FunctionTok{tm\_shape}\NormalTok{(hillsh,}\AttributeTok{bbox=}\NormalTok{newbounds) }\SpecialCharTok{+}
+  \FunctionTok{tm\_raster}\NormalTok{(}\AttributeTok{palette=}\StringTok{"{-}Greys"}\NormalTok{,}\AttributeTok{legend.show=}\NormalTok{F,}\AttributeTok{n=}\DecValTok{20}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{tm\_shape}\NormalTok{(DEM) }\SpecialCharTok{+} \FunctionTok{tm\_raster}\NormalTok{(}\AttributeTok{palette=}\FunctionTok{terrain.colors}\NormalTok{(}\DecValTok{24}\NormalTok{), }\AttributeTok{alpha=}\FloatTok{0.5}\NormalTok{,}\AttributeTok{legend.show=}\NormalTok{F) }\SpecialCharTok{+}
+  \FunctionTok{tm\_shape}\NormalTok{(wChem) }\SpecialCharTok{+} \FunctionTok{tm\_symbols}\NormalTok{(}\AttributeTok{size=}\StringTok{"TH"}\NormalTok{, }\AttributeTok{col=}\StringTok{"Lithology"}\NormalTok{, }\AttributeTok{scale=}\DecValTok{2}\NormalTok{, }\AttributeTok{shape=}\StringTok{"siteType"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{tm\_layout}\NormalTok{(}\AttributeTok{legend.position =} \FunctionTok{c}\NormalTok{(}\StringTok{"left"}\NormalTok{, }\StringTok{"bottom"}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{tm\_graticules}\NormalTok{(}\AttributeTok{lines=}\NormalTok{F)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.75\linewidth]{EnvDataSciAddenda_files/figure-latex/unnamed-chunk-19-1} 
+
+}
+
+\caption{Upper Sinking Cove water sample results}\label{fig:unnamed-chunk-19}
+\end{figure}
+
+An interactive map view of Upper Sinking Cove:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{tmap\_mode}\NormalTok{(}\StringTok{"view"}\NormalTok{)}
+\NormalTok{bounds }\OtherTok{\textless{}{-}} \FunctionTok{st\_bbox}\NormalTok{()}
+\NormalTok{wChem2map }\OtherTok{\textless{}{-}} \FunctionTok{filter}\NormalTok{(wChem, Month }\SpecialCharTok{==} \DecValTok{8}\NormalTok{)}
+\NormalTok{minVal }\OtherTok{\textless{}{-}} \FunctionTok{min}\NormalTok{(wChem2map}\SpecialCharTok{$}\NormalTok{TH); maxVal }\OtherTok{\textless{}{-}} \FunctionTok{max}\NormalTok{(wChem2map}\SpecialCharTok{$}\NormalTok{TH)}
+\FunctionTok{tm\_basemap}\NormalTok{(leaflet}\SpecialCharTok{::}\NormalTok{providers}\SpecialCharTok{$}\NormalTok{Esri.WorldTopoMap) }\SpecialCharTok{+} 
+  \FunctionTok{tm\_shape}\NormalTok{(wChem2map) }\SpecialCharTok{+} \FunctionTok{tm\_symbols}\NormalTok{(}\AttributeTok{col=}\StringTok{"siteType"}\NormalTok{, }\AttributeTok{size=}\StringTok{"TH"}\NormalTok{, }\AttributeTok{scale=}\DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{tm\_layout}\NormalTok{(}\AttributeTok{title=}\FunctionTok{paste}\NormalTok{(}\StringTok{"Total Hardness "}\NormalTok{,}\FunctionTok{as.character}\NormalTok{(minVal),}\StringTok{"{-}"}\NormalTok{,}\FunctionTok{as.character}\NormalTok{(maxVal),}\StringTok{" mg/L"}\NormalTok{, }\AttributeTok{sep=}\StringTok{""}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.75\linewidth]{EnvDataSciAddenda_files/figure-latex/unnamed-chunk-20-1} 
+
+}
+
+\caption{Upper Sinking Cove interactive map}\label{fig:unnamed-chunk-20}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{tm\_basemap}\NormalTok{(leaflet}\SpecialCharTok{::}\NormalTok{providers}\SpecialCharTok{$}\NormalTok{Esri.WorldTopoMap) }\SpecialCharTok{+} 
+  \FunctionTok{tm\_shape}\NormalTok{(wChem2map) }\SpecialCharTok{+} \FunctionTok{tm\_symbols}\NormalTok{(}\AttributeTok{col=}\StringTok{"Lithology"}\NormalTok{, }\AttributeTok{size=}\StringTok{"TH"}\NormalTok{, }\AttributeTok{scale=}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.75\linewidth]{EnvDataSciAddenda_files/figure-latex/unnamed-chunk-20-2} 
+
+}
+
+\caption{Upper Sinking Cove interactive map}\label{fig:unnamed-chunk-20}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{tmap\_mode}\NormalTok{(}\StringTok{"plot"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{other-spatial-methods-data-experiments}{%
+\chapter{Other Spatial Methods \& Data Experiments}\label{other-spatial-methods-data-experiments}}
+
+\hypertarget{plotting-filtered-map-data-using-base-plot-terraplotrgb-and-spatvector-data}{%
+\section{Plotting filtered map data using base plot, terra::plotRGB and SpatVector data}\label{plotting-filtered-map-data-using-base-plot-terraplotrgb-and-spatvector-data}}
+
+In the Spatial Analysis chapter, we've mainly used tmap, but we might also want to see how we'd plot the same thing in the base plot system, which also support's terra's SpatVector data. So in this brief example, we'll create a SpatVector after a data filter, then plot in the base plot system.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse); }\FunctionTok{library}\NormalTok{(sf); }\FunctionTok{library}\NormalTok{(igisci)}
+\NormalTok{sierraFebpts }\OtherTok{\textless{}{-}} \FunctionTok{st\_as\_sf}\NormalTok{(}\FunctionTok{read\_csv}\NormalTok{(}\FunctionTok{ex}\NormalTok{(}\StringTok{"sierra/sierraFeb.csv"}\NormalTok{)), }
+                         \AttributeTok{coords =} \FunctionTok{c}\NormalTok{(}\StringTok{"LONGITUDE"}\NormalTok{, }\StringTok{"LATITUDE"}\NormalTok{), }\AttributeTok{remove=}\ConstantTok{FALSE}\NormalTok{, }\AttributeTok{crs=}\DecValTok{4326}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+We might also look at how we get information about out data to decide what we might want to plot on the map. Since our goal is to filter for a range of elevations and latitudes, we might look at a couple of histograms, and we'll use a base R plot's parameter setting (\texttt{par}) to create a side by side plot (1 row, 2 columns).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))  }\CommentTok{\# lets base plot functions create 2 adjacent plots (1 row, 2 columns)}
+\FunctionTok{hist}\NormalTok{(sierraFebpts}\SpecialCharTok{$}\NormalTok{ELEVATION)}
+\FunctionTok{hist}\NormalTok{(sierraFebpts}\SpecialCharTok{$}\NormalTok{LATITUDE)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.75\linewidth]{EnvDataSciAddenda_files/figure-latex/unnamed-chunk-21-1} 
+
+}
+
+\caption{Histograms of Sierra station elevations and latitudes}\label{fig:unnamed-chunk-21}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{)) }\CommentTok{\# need to reset to defaults}
+\end{Highlighting}
+\end{Shaded}
+
+Now let's continue with that information where we've gotten an idea about what kinds of elevations occur at the stations, and make a map that shows all stations \textgreater{} 2000 m elevation.
+
+We'll briefly use \texttt{terra::plotRGB} to add a basemap to a static map. \emph{Warning: the \texttt{get\_tiles} function goes online to get the basemap data, so if you don't have a good internet connection or the site goes down, this may fail.} We'll also modify the station names and set the text label position as \texttt{pos=3}, which means centered on top (see \texttt{?graphics::text}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(terra); }\FunctionTok{library}\NormalTok{(maptiles)}
+\NormalTok{sierraFebpts2000 }\OtherTok{\textless{}{-}}\NormalTok{ sierraFebpts }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(ELEVATION }\SpecialCharTok{\textgreater{}=} \DecValTok{2000}\NormalTok{)}
+\NormalTok{sierraBase }\OtherTok{\textless{}{-}} \FunctionTok{get\_tiles}\NormalTok{(sierraFebpts2000)}
+\FunctionTok{plotRGB}\NormalTok{(sierraBase)}
+\NormalTok{pts }\OtherTok{\textless{}{-}} \FunctionTok{vect}\NormalTok{(sierraFebpts2000)}
+\FunctionTok{points}\NormalTok{(pts, }\AttributeTok{col=}\StringTok{"red"}\NormalTok{)}
+\FunctionTok{text}\NormalTok{(pts, }\AttributeTok{labels=}\FunctionTok{str\_sub}\NormalTok{(pts}\SpecialCharTok{$}\NormalTok{STATION\_NAME, }\DecValTok{1}\NormalTok{, }\FunctionTok{str\_locate}\NormalTok{(pts}\SpecialCharTok{$}\NormalTok{STATION\_NAME, }\StringTok{","}\NormalTok{)}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{), }\AttributeTok{cex =} \FloatTok{0.7}\NormalTok{, }\AttributeTok{pos=}\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.75\linewidth]{EnvDataSciAddenda_files/figure-latex/unnamed-chunk-22-1} 
+
+}
+
+\caption{Plotting filtered data (ELEVATION >= 2000)}\label{fig:unnamed-chunk-22}
+\end{figure}
+
+Before we continue, let's look at some of the parameters just used for sizing and placing text labels, and figure out what they do:
+
+\texttt{text(pts,\ labels=str\_sub(pts\$STATION\_NAME,\ 1,\ str\_locate(pts\$STATION\_NAME,\ ",")-1),\ cex\ =\ 0.7,\ pos=3)}
+
+\begin{itemize}
+\tightlist
+\item
+  What does \texttt{cex} do? (Use \texttt{?par} or \texttt{?text} then search within that help)
+\item
+  What does \texttt{pos} do? (Use \texttt{?text})
+\item
+  What did the stringr methods do?
+\end{itemize}
+
+\emph{Tweak each of the above to see the effect on the map.}
+
+Maybe there's a way with \texttt{plotRGB}, but it's limited in not apparently having a way to provide a \emph{graticule} of latitude and longitude, so its use as a map is limited, and there are generally better options in tmap.
+
+\hypertarget{pointblue-penguin-study}{%
+\chapter{PointBlue Penguin Study}\label{pointblue-penguin-study}}
+
+\emph{Currently, this is the same as in the book, but will be expanded.}
+
+\hypertarget{interactive-mapping-of-individual-penguins-abstracted-from-a-big-dataset}{%
+\subsection{Interactive mapping of individual penguins abstracted from a big dataset}\label{interactive-mapping-of-individual-penguins-abstracted-from-a-big-dataset}}
+
+\index{big data abstraction}In a study of spatial foraging patterns by Adélie penguins (\emph{Pygoscelis adeliae}), Ballard et al. (\protect\hyperlink{ref-Ballard2019}{2019}) collected data over five austral summer seasons (parts of December and January in 2005-06, 2006-07, 2007-08, 2008-09, 2012-13) period using SPLASH tags that combine Argos satellite tracking with a time-depth recorder, with 11,192 observations. The 24 SPLASH tags were re-used over the period of the project with a total of 162 individual breeding penguins, each active over a single season.
+
+Our code takes advantage of the abstraction capabilities of base R and \texttt{dplyr} to select an individual penguin from the large data set and prepare its variables for useful display. Then the interactive mode of tmap works well for visualizing the penguin data -- both the cloud of all observations and the focused individual -- since we can zoom in to see the locations in context, and basemaps can be chosen. The \texttt{tmap} code colors the individual penguin's locations based on a decimal day derived from day and time. While interactive view is more limited in options, it does at least support a legend and title (Figure \ref{fig:mapsPenguins}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{28}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(sf); }\FunctionTok{library}\NormalTok{(tmap); }\FunctionTok{library}\NormalTok{(tidyverse); }\FunctionTok{library}\NormalTok{(igisci)}
+\NormalTok{sat\_table }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\FunctionTok{ex}\NormalTok{(}\StringTok{"penguins/sat\_table\_splash.csv"}\NormalTok{))}
+\NormalTok{obs }\OtherTok{\textless{}{-}} \FunctionTok{st\_as\_sf}\NormalTok{(}\FunctionTok{filter}\NormalTok{(sat\_table,include}\SpecialCharTok{==}\DecValTok{1}\NormalTok{), }\AttributeTok{coords=}\FunctionTok{c}\NormalTok{(}\StringTok{"lon"}\NormalTok{,}\StringTok{"lat"}\NormalTok{), }\AttributeTok{crs=}\DecValTok{4326}\NormalTok{)}
+\NormalTok{uniq\_ids }\OtherTok{\textless{}{-}} \FunctionTok{unique}\NormalTok{(obs}\SpecialCharTok{$}\NormalTok{uniq\_id) }\CommentTok{\# uniq\_id identifies an individual penguin}
+\NormalTok{onebird }\OtherTok{\textless{}{-}}\NormalTok{ obs }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(uniq\_id}\SpecialCharTok{==}\NormalTok{uniq\_ids[}\FunctionTok{sample.int}\NormalTok{(}\FunctionTok{length}\NormalTok{(uniq\_ids), }\AttributeTok{size=}\DecValTok{1}\NormalTok{)]) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{decimalDay =} \FunctionTok{as.numeric}\NormalTok{(day) }\SpecialCharTok{+} \FunctionTok{as.numeric}\NormalTok{(hour)}\SpecialCharTok{/}\DecValTok{24}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tmap\_mode }\OtherTok{=} \StringTok{"view"}
+\FunctionTok{tmap\_options}\NormalTok{(}\AttributeTok{basemaps=}\FunctionTok{c}\NormalTok{(}\AttributeTok{Terrain =} \StringTok{"Esri.WorldTerrain"}\NormalTok{,}
+                        \AttributeTok{Imagery =} \StringTok{"Esri.WorldImagery"}\NormalTok{, }
+                        \AttributeTok{NatGeo =} \StringTok{"Esri.NatGeoWorldMap"}\NormalTok{, }
+                        \AttributeTok{Topo=}\StringTok{"OpenTopoMap"}\NormalTok{,}
+                        \AttributeTok{Ortho=}\StringTok{"GeoportailFrance.orthos"}\NormalTok{))}
+\NormalTok{penguinMap }\OtherTok{\textless{}{-}} \FunctionTok{tm\_basemap}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{tm\_shape}\NormalTok{(obs) }\SpecialCharTok{+} \FunctionTok{tm\_symbols}\NormalTok{(}\AttributeTok{col=}\StringTok{"black"}\NormalTok{, }\AttributeTok{border.lwd=}\DecValTok{0}\NormalTok{, }\AttributeTok{size=}\FloatTok{0.01}\NormalTok{, }\AttributeTok{alpha=}\FloatTok{0.33}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{tm\_shape}\NormalTok{(onebird) }\SpecialCharTok{+} \FunctionTok{tm\_symbols}\NormalTok{(}\AttributeTok{col=}\StringTok{"decimalDay"}\NormalTok{,}
+  \AttributeTok{palette=}\StringTok{"viridis"}\NormalTok{, }\AttributeTok{style=}\StringTok{"cont"}\NormalTok{,}\AttributeTok{n=}\DecValTok{8}\NormalTok{,}\AttributeTok{size=}\FloatTok{0.6}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{tm\_legend}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{tm\_layout}\NormalTok{() }
+\FunctionTok{tmap\_leaflet}\NormalTok{(penguinMap)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.75\linewidth]{EnvDataSciAddenda_files/figure-latex/unnamed-chunk-25-1} \end{center}
+
+\hypertarget{seabird-model}{%
+\chapter{Seabird Model}\label{seabird-model}}
+
+In this case study, we'll expand upon a \textbf{poisson} family glm applied to seabird counts discussed in the modeling chapter. The Applied California Current Ecosystem Study (ACCESS) \url{https://farallones.noaa.gov/science/access.html} supports marine wildlife conservation in northern and central California, including the Greater Farallones off the Golden Gate and San Francisco (\emph{Applied California Current Ecosystem Studies} (\protect\hyperlink{ref-ACCESS}{n.d.}), Studwell et al. (\protect\hyperlink{ref-Studwell2017}{2017})).
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.75\linewidth]{img/Black-footed_Albatross,_20_miles_offshore_of_Newport,_OR,_16_July_2013_(9322588606)} 
+
+}
+
+\caption{By Caleb Putnam - Black-footed Albatross, 20 miles offshore of Newport, OR, 16 July 2013, CC BY-SA 2.0, https://commons.wikimedia.org/w/index.php?curid=74693160}\label{fig:unnamed-chunk-26}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(igisci); }\FunctionTok{library}\NormalTok{(sf); }\FunctionTok{library}\NormalTok{(tidyverse); }\FunctionTok{library}\NormalTok{(tmap)}
+\FunctionTok{library}\NormalTok{(maptiles); }\FunctionTok{library}\NormalTok{(readxl); }\FunctionTok{library}\NormalTok{(DT)}
+\NormalTok{Sanctuaries }\OtherTok{\textless{}{-}} \FunctionTok{st\_read}\NormalTok{(}\FunctionTok{ex}\NormalTok{(}\StringTok{"SFmarine/Sanctuaries.shp"}\NormalTok{))}
+\NormalTok{transectsXLS }\OtherTok{\textless{}{-}} \FunctionTok{read\_xls}\NormalTok{(}\FunctionTok{ex}\NormalTok{(}\StringTok{"SFmarine/TransectsData.xls"}\NormalTok{))}
+\NormalTok{transects }\OtherTok{\textless{}{-}} \FunctionTok{st\_transform}\NormalTok{(}\FunctionTok{st\_as\_sf}\NormalTok{(transectsXLS, }\AttributeTok{coords=}\FunctionTok{c}\NormalTok{(}\StringTok{"midlon"}\NormalTok{,}\StringTok{"midlat"}\NormalTok{), }\AttributeTok{crs=}\DecValTok{4326}\NormalTok{), }\AttributeTok{crs=}\FunctionTok{st\_crs}\NormalTok{(Sanctuaries))}
+\NormalTok{cordell\_bank }\OtherTok{\textless{}{-}} \FunctionTok{st\_read}\NormalTok{(}\FunctionTok{ex}\NormalTok{(}\StringTok{"SFmarine/cordell\_bank.shp"}\NormalTok{))}
+\NormalTok{isobath\_200 }\OtherTok{\textless{}{-}} \FunctionTok{st\_read}\NormalTok{(}\FunctionTok{ex}\NormalTok{(}\StringTok{"SFmarine/isobath\_200.shp"}\NormalTok{))}
+\NormalTok{mainland }\OtherTok{\textless{}{-}} \FunctionTok{st\_read}\NormalTok{(}\FunctionTok{ex}\NormalTok{(}\StringTok{"SFmarine/mainland.shp"}\NormalTok{))}
+\NormalTok{sefi }\OtherTok{\textless{}{-}} \FunctionTok{st\_read}\NormalTok{(}\FunctionTok{ex}\NormalTok{(}\StringTok{"SFmarine/sefi.shp"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tmap); }\FunctionTok{library}\NormalTok{(maptiles)}
+\FunctionTok{tmap\_mode}\NormalTok{(}\StringTok{"plot"}\NormalTok{)}
+\NormalTok{oceanBase }\OtherTok{\textless{}{-}} \FunctionTok{get\_tiles}\NormalTok{(transects, }\AttributeTok{provider=}\StringTok{"Esri.NatGeoWorldMap"}\NormalTok{)}
+\NormalTok{transJul }\OtherTok{\textless{}{-}}\NormalTok{ transects }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(month}\SpecialCharTok{==}\DecValTok{7}\NormalTok{)}
+\NormalTok{transJulnonegTS }\OtherTok{\textless{}{-}}\NormalTok{ transJul }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(avg\_tem}\SpecialCharTok{\textgreater{}}\DecValTok{0} \SpecialCharTok{\&}\NormalTok{ avg\_sal}\SpecialCharTok{\textgreater{}}\DecValTok{0}\NormalTok{)}
+\NormalTok{transJulnonegTSF }\OtherTok{\textless{}{-}}\NormalTok{ transJulnonegTS }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(avg\_fluo}\SpecialCharTok{\textgreater{}}\DecValTok{0}\NormalTok{)}
+\NormalTok{Jul\_bfal }\OtherTok{\textless{}{-}} \FunctionTok{tm\_shape}\NormalTok{(oceanBase) }\SpecialCharTok{+} \FunctionTok{tm\_rgb}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{tm\_shape}\NormalTok{(transJul) }\SpecialCharTok{+} \FunctionTok{tm\_symbols}\NormalTok{(}\AttributeTok{col=}\StringTok{"bfal"}\NormalTok{, }\AttributeTok{size=}\StringTok{"bfal"}\NormalTok{)}
+\NormalTok{Jul\_all }\OtherTok{\textless{}{-}} \FunctionTok{tm\_shape}\NormalTok{(oceanBase) }\SpecialCharTok{+} \FunctionTok{tm\_rgb}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{tm\_shape}\NormalTok{(transJul) }\SpecialCharTok{+} \FunctionTok{tm\_dots}\NormalTok{(}\AttributeTok{col=}\StringTok{"avg\_fluo"}\NormalTok{, }\AttributeTok{size=}\StringTok{"avg\_fluo"}\NormalTok{)}
+\NormalTok{Jul\_TS }\OtherTok{\textless{}{-}} \FunctionTok{tm\_shape}\NormalTok{(oceanBase) }\SpecialCharTok{+} \FunctionTok{tm\_rgb}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{tm\_shape}\NormalTok{(transJulnonegTS) }\SpecialCharTok{+} \FunctionTok{tm\_dots}\NormalTok{(}\AttributeTok{col=}\StringTok{"avg\_fluo"}\NormalTok{, }\AttributeTok{size=}\StringTok{"avg\_fluo"}\NormalTok{)}
+\NormalTok{Jul\_TSF }\OtherTok{\textless{}{-}} \FunctionTok{tm\_shape}\NormalTok{(oceanBase) }\SpecialCharTok{+} \FunctionTok{tm\_rgb}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{tm\_shape}\NormalTok{(transJulnonegTSF) }\SpecialCharTok{+} \FunctionTok{tm\_dots}\NormalTok{(}\AttributeTok{col=}\StringTok{"avg\_fluo"}\NormalTok{, }\AttributeTok{size=}\StringTok{"avg\_fluo"}\NormalTok{)}
+
+\FunctionTok{tmap\_arrange}\NormalTok{(Jul\_bfal, Jul\_all, Jul\_TS, Jul\_TSF)}
+\end{Highlighting}
+\end{Shaded}
+
+The transects data have 45 variables including:
+
+\begin{itemize}
+\tightlist
+\item
+  date and time variables
+\item
+  seawater measurements of temperature, salinity and fluorescence
+\item
+  ocean climate indices
+\item
+  distance to land, islands, the 200m isobath, and Cordell Bank
+\item
+  depth
+\item
+  oceanic/atmospheric conditions (sea state, visibility, beaufort index, cloudiness, upwelling)
+\item
+  counts of seabirds:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    black-footed albatross (bfal)
+  \item
+    northern fulmar (nofu)
+  \item
+    pink-footed shearwater (pfsh)
+  \item
+    red phalarope (reph)
+  \item
+    red-necked phalarope (rnph)
+  \item
+    sooty shearwater (sosh)
+  \end{itemize}
+\end{itemize}
+
+More specifics are in the metadata:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{transects\_metadata }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\FunctionTok{ex}\NormalTok{(}\StringTok{"SFmarine/Transects\_Metadata.xls"}\NormalTok{))}
+\NormalTok{DT}\SpecialCharTok{::}\FunctionTok{datatable}\NormalTok{(transects\_metadata[}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.75\linewidth]{EnvDataSciAddenda_files/figure-latex/unnamed-chunk-29-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{DT}\SpecialCharTok{::}\FunctionTok{datatable}\NormalTok{(}\FunctionTok{read\_excel}\NormalTok{(}\FunctionTok{ex}\NormalTok{(}\StringTok{"SFmarine/Transects\_Metadata.xls"}\NormalTok{),}\AttributeTok{skip=}\DecValTok{3}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.75\linewidth]{EnvDataSciAddenda_files/figure-latex/unnamed-chunk-29-2} \end{center}
+
+\hypertarget{goals-and-basic-methods-of-the-analysis}{%
+\section{Goals and basic methods of the analysis}\label{goals-and-basic-methods-of-the-analysis}}
+
+Our general goal, inspired by Studwell et al. (\protect\hyperlink{ref-Studwell2017}{2017}), is to look at what variables influence the counts of specific seabirds and develop predictive models and maps illustrating optimal conditions for those seabirds based on the model. We're expecting that some of the various measurements and conditions could be good predictors, though recognizing that no model is perfect and there are going to be many other factors we can't account for.
+
+Our basic method will include:
+
+\begin{itemize}
+\tightlist
+\item
+  Gathering data collected on the cruises as well as GIS and model-derived measurements (e.g.~depth, distance, climate models). \emph{This has been done and all variables we'll use are included in the transects shapefile.}
+\item
+  Explore the data using maps, graphs and tables, filtering for a time frame and complete data.
+\item
+  Select a species, timeframe, and selection of explanatory variables.
+\item
+  Use \texttt{glm} to model the species counts responding to the explanatory variables, using the poisson family.
+\item
+  Map the results.
+\end{itemize}
+
+\hypertarget{exploratory-data-analysis}{%
+\section{Exploratory data analysis}\label{exploratory-data-analysis}}
+
+We'll start by looking at a summary of the bird counts, stored as a series of variables from \texttt{bfal} (black-footed albatross) to \texttt{sosh} (sooty shearwater):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{transectBirdcounts }\OtherTok{\textless{}{-}}\NormalTok{ transects }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(bfal}\SpecialCharTok{:}\NormalTok{sosh)}
+\FunctionTok{summary}\NormalTok{(transectBirdcounts)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       bfal              nofu               pfsh              reph        
+##  Min.   : 0.0000   Min.   :  0.0000   Min.   : 0.0000   Min.   : 0.0000  
+##  1st Qu.: 0.0000   1st Qu.:  0.0000   1st Qu.: 0.0000   1st Qu.: 0.0000  
+##  Median : 0.0000   Median :  0.0000   Median : 0.0000   Median : 0.0000  
+##  Mean   : 0.1169   Mean   :  0.2001   Mean   : 0.1883   Mean   : 0.1638  
+##  3rd Qu.: 0.0000   3rd Qu.:  0.0000   3rd Qu.: 0.0000   3rd Qu.: 0.0000  
+##  Max.   :20.0000   Max.   :109.0000   Max.   :50.0000   Max.   :70.0000  
+##       rnph              sosh                   geometry   
+##  Min.   : 0.0000   Min.   :   0.000   POINT        :4073  
+##  1st Qu.: 0.0000   1st Qu.:   0.000   epsg:6414    :   0  
+##  Median : 0.0000   Median :   0.000   +proj=aea ...:   0  
+##  Mean   : 0.3351   Mean   :   5.737                       
+##  3rd Qu.: 0.0000   3rd Qu.:   0.000                       
+##  Max.   :86.0000   Max.   :1405.000
+\end{verbatim}
+
+We'll use the July data from multiple years (in the modeling chapter we just looked at July 2006) to visualize the spatial patterns of black-footed albatross, which we can see from the above has the lowest counts, displayed in both color and size in order to better see the larger counts. We'll make similar maps of measurements of temperature, salinity and fluorescence from the transect cruises. Note that records with values of zero for any of these 3 measures are excluded, since these represent non-measurements.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{tmap\_mode}\NormalTok{(}\StringTok{"plot"}\NormalTok{)}
+\NormalTok{oceanBase }\OtherTok{\textless{}{-}} \FunctionTok{get\_tiles}\NormalTok{(transects, }\AttributeTok{provider=}\StringTok{"Esri.NatGeoWorldMap"}\NormalTok{)}
+\NormalTok{transJul }\OtherTok{\textless{}{-}}\NormalTok{ transects }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(month}\SpecialCharTok{==}\DecValTok{7} \SpecialCharTok{\&} \SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(avg\_tem) }\SpecialCharTok{\&} \SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(avg\_sal) }\SpecialCharTok{\&} \SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(avg\_fluo))}
+\NormalTok{Jul\_bfal }\OtherTok{\textless{}{-}} \FunctionTok{tm\_shape}\NormalTok{(oceanBase) }\SpecialCharTok{+} \FunctionTok{tm\_rgb}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{tm\_shape}\NormalTok{(transJul) }\SpecialCharTok{+} \FunctionTok{tm\_symbols}\NormalTok{(}\AttributeTok{col=}\StringTok{"bfal"}\NormalTok{, }\AttributeTok{size=}\StringTok{"bfal"}\NormalTok{)}
+\NormalTok{Jul\_tem }\OtherTok{\textless{}{-}} \FunctionTok{tm\_shape}\NormalTok{(oceanBase) }\SpecialCharTok{+} \FunctionTok{tm\_rgb}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{tm\_shape}\NormalTok{(transJul) }\SpecialCharTok{+} \FunctionTok{tm\_dots}\NormalTok{(}\AttributeTok{col=}\StringTok{"avg\_tem"}\NormalTok{, }\AttributeTok{size=}\StringTok{"avg\_tem"}\NormalTok{)}
+\NormalTok{Jul\_sal }\OtherTok{\textless{}{-}} \FunctionTok{tm\_shape}\NormalTok{(oceanBase) }\SpecialCharTok{+} \FunctionTok{tm\_rgb}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{tm\_shape}\NormalTok{(transJul) }\SpecialCharTok{+} \FunctionTok{tm\_dots}\NormalTok{(}\AttributeTok{col=}\StringTok{"avg\_sal"}\NormalTok{, }\AttributeTok{size=}\StringTok{"avg\_sal"}\NormalTok{)}
+\NormalTok{Jul\_fluo }\OtherTok{\textless{}{-}} \FunctionTok{tm\_shape}\NormalTok{(oceanBase) }\SpecialCharTok{+} \FunctionTok{tm\_rgb}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{tm\_shape}\NormalTok{(transJul) }\SpecialCharTok{+} \FunctionTok{tm\_dots}\NormalTok{(}\AttributeTok{col=}\StringTok{"avg\_fluo"}\NormalTok{, }\AttributeTok{size=}\StringTok{"avg\_fluo"}\NormalTok{)}
+\FunctionTok{tmap\_arrange}\NormalTok{(Jul\_bfal, Jul\_tem, Jul\_sal, Jul\_fluo)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.75\linewidth]{EnvDataSciAddenda_files/figure-latex/unnamed-chunk-31-1} 
+
+}
+
+\caption{July black footed albatross, temperature, salinity, fluorescence}\label{fig:unnamed-chunk-31}
+\end{figure}
+
+\hypertarget{identifying-the-appropriate-model-using-variance-and-mean-comparisons}{%
+\subsection{Identifying the appropriate model using variance and mean comparisons}\label{identifying-the-appropriate-model-using-variance-and-mean-comparisons}}
+
+The poisson model uses an assumption that the mean and variance of the response variable is equal, but a quick check shows that this is not really met, and that since the variance is greater than the mean, our data may be \emph{overdispersed}, which in practice is very common.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mean}\NormalTok{(transJul}\SpecialCharTok{$}\NormalTok{bfal)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.08034611
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{var}\NormalTok{(transJul}\SpecialCharTok{$}\NormalTok{bfal)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.1903187
+\end{verbatim}
+
+\hypertarget{model-black-footed-albatross-counts-for-july-using-a-poisson-family-glm}{%
+\section{Model black-footed albatross counts for July using a poisson-family glm}\label{model-black-footed-albatross-counts-for-july-using-a-poisson-family-glm}}
+
+Prior studies have suggested that temperature, salinity, fluorescence, depth and various distances might be good explanatory variables to use to look at spatial patterns, so we'll use these in the model. (Variables such as climate and oceanic conditions such as upwelling might be used in a temporal analysis, but are constant for this July analysis where we're modeling variables with spatial patterns.)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(}\FunctionTok{glm}\NormalTok{(bfal}\SpecialCharTok{\textasciitilde{}}\NormalTok{avg\_tem}\SpecialCharTok{+}\NormalTok{avg\_sal}\SpecialCharTok{+}\NormalTok{avg\_fluo}\SpecialCharTok{+}\NormalTok{avg\_dep}\SpecialCharTok{+}\NormalTok{dist\_land}\SpecialCharTok{+}\NormalTok{dist\_isla}\SpecialCharTok{+}\NormalTok{dist\_200m}\SpecialCharTok{+}\NormalTok{dist\_cord}\SpecialCharTok{+}\NormalTok{year, }\AttributeTok{data=}\NormalTok{transJul,}\AttributeTok{family=}\NormalTok{poisson))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = bfal ~ avg_tem + avg_sal + avg_fluo + avg_dep + 
+##     dist_land + dist_isla + dist_200m + dist_cord + year, family = poisson, 
+##     data = transJul)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.2692  -0.4233  -0.1760  -0.0382   5.5544  
+## 
+## Coefficients:
+##               Estimate Std. Error z value Pr(>|z|)    
+## (Intercept) -6.335e+02  1.955e+02  -3.241  0.00119 ** 
+## avg_tem      1.834e-01  1.217e-01   1.506  0.13199    
+## avg_sal      1.893e+00  7.643e-01   2.476  0.01327 *  
+## avg_fluo    -1.803e-01  6.458e-02  -2.792  0.00524 ** 
+## avg_dep     -2.469e-03  5.085e-04  -4.854 1.21e-06 ***
+## dist_land   -7.343e-05  3.436e-05  -2.137  0.03261 *  
+## dist_isla    8.140e-06  1.129e-05   0.721  0.47107    
+## dist_200m   -3.444e-04  6.478e-05  -5.317 1.05e-07 ***
+## dist_cord   -5.801e-06  9.461e-06  -0.613  0.53975    
+## year         2.836e-01  9.088e-02   3.121  0.00180 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for poisson family taken to be 1)
+## 
+##     Null deviance: 412.03  on 808  degrees of freedom
+## Residual deviance: 295.41  on 799  degrees of freedom
+## AIC: 408.82
+## 
+## Number of Fisher Scoring iterations: 8
+\end{verbatim}
+
+We can see in the model coefficients table several predictive variables that appear to be significant:
+
+\begin{itemize}
+\tightlist
+\item
+  avg\_sal
+\item
+  avg\_fluo
+\item
+  avg\_dep
+\item
+  dist\_land
+\item
+  dist\_200m
+\item
+  year
+\end{itemize}
+
+So in the interest of parsimony, we'll remove non-significant variables to create a new model:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bfal\_poisson }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(bfal}\SpecialCharTok{\textasciitilde{}}\NormalTok{avg\_sal}\SpecialCharTok{+}\NormalTok{avg\_fluo}\SpecialCharTok{+}\NormalTok{avg\_dep}\SpecialCharTok{+}\NormalTok{dist\_land}\SpecialCharTok{+}\NormalTok{dist\_200m}\SpecialCharTok{+}\NormalTok{year, }\AttributeTok{data=}\NormalTok{transJul,}\AttributeTok{family=}\NormalTok{poisson)}
+\FunctionTok{summary}\NormalTok{(bfal\_poisson)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = bfal ~ avg_sal + avg_fluo + avg_dep + dist_land + 
+##     dist_200m + year, family = poisson, data = transJul)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.1781  -0.4238  -0.1848  -0.0421   5.5779  
+## 
+## Coefficients:
+##               Estimate Std. Error z value Pr(>|z|)    
+## (Intercept) -5.029e+02  1.696e+02  -2.965  0.00303 ** 
+## avg_sal      1.360e+00  6.582e-01   2.066  0.03884 *  
+## avg_fluo    -1.623e-01  6.147e-02  -2.640  0.00828 ** 
+## avg_dep     -2.318e-03  4.833e-04  -4.796 1.62e-06 ***
+## dist_land   -5.793e-05  3.228e-05  -1.795  0.07269 .  
+## dist_200m   -3.266e-04  6.200e-05  -5.268 1.38e-07 ***
+## year         2.283e-01  8.047e-02   2.838  0.00455 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for poisson family taken to be 1)
+## 
+##     Null deviance: 412.03  on 808  degrees of freedom
+## Residual deviance: 298.70  on 802  degrees of freedom
+## AIC: 406.11
+## 
+## Number of Fisher Scoring iterations: 7
+\end{verbatim}
+
+So from this we should be able to predict the spatial distribution of counts using the formula for the poisson glm model, which in our case will have 5 explanatory variables avg\_sal (\(X_1\)), avg\_fluo (\(X_2\)), avg\_dep (\(X_3\)), dist\_land (\(X_4\)), dist\_200m (\(X_5\)), and year (\$X\_6), using the coefficient estimates from the summary above and the prediction formula in the form:
+
+\[z = e^{b_0+b_1X_1+b_2X_2+b_3X_3+b_4X_4+b_5X_5+b_6X_6}\]
+
+\hypertarget{map-the-prediction}{%
+\subsection{Map the prediction}\label{map-the-prediction}}
+
+To create a map of the predicted spatial pattern, we'll need rasters for each of the variables. We'll need to create these in various ways:
+
+\begin{itemize}
+\tightlist
+\item
+  Depth raster from bathymetry data source
+\item
+  Derive distance rasters from the mainland and 200 m isobar features
+\item
+  For measurements obtained on the transect cruises like those from the CTD sensor (salinity and temperature), we'll need to interpolate a raster from those points
+\end{itemize}
+
+\hypertarget{depth-and-distance-rasters}{%
+\subsubsection{Depth and distance rasters}\label{depth-and-distance-rasters}}
+
+We have a depth raster at 200-m resolution, but for our purposes and at this scale we only need 1000-m (1-km) resolution. We'll create a 1-km template raster based on a 10 km buffer around data points, and use that to resample the distances and along with mainland and 200-m isobath, derive the distance rasters needed:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(terra)}
+\NormalTok{bathy }\OtherTok{\textless{}{-}} \FunctionTok{project}\NormalTok{(}\FunctionTok{rast}\NormalTok{(}\FunctionTok{ex}\NormalTok{(}\StringTok{"SFmarine/bd200m\_v2i.tif"}\NormalTok{)),}\FunctionTok{crs}\NormalTok{(transects))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{AOI }\OtherTok{\textless{}{-}} \FunctionTok{vect}\NormalTok{(}\FunctionTok{st\_union}\NormalTok{(}\FunctionTok{st\_buffer}\NormalTok{(transJul, }\DecValTok{10000}\NormalTok{)))}
+\NormalTok{rasAOI }\OtherTok{\textless{}{-}} \FunctionTok{rast}\NormalTok{(AOI, }\AttributeTok{res=}\DecValTok{1000}\NormalTok{)}
+\NormalTok{bathy1km }\OtherTok{\textless{}{-}}\NormalTok{ terra}\SpecialCharTok{::}\FunctionTok{resample}\NormalTok{(bathy,rasAOI)}
+\NormalTok{distland }\OtherTok{\textless{}{-}}\NormalTok{ terra}\SpecialCharTok{::}\FunctionTok{distance}\NormalTok{(rasAOI, }\FunctionTok{vect}\NormalTok{(mainland))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## |---------|---------|---------|---------|=========================================                                          
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{names}\NormalTok{(distland) }\OtherTok{\textless{}{-}} \StringTok{"distLand"} 
+\NormalTok{distisobath200 }\OtherTok{\textless{}{-}}\NormalTok{ terra}\SpecialCharTok{::}\FunctionTok{distance}\NormalTok{(rasAOI, }\FunctionTok{vect}\NormalTok{(isobath\_200))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## |---------|---------|---------|---------|=========================================                                          
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{names}\NormalTok{(distisobath200) }\OtherTok{\textless{}{-}} \StringTok{"dist200mD"}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tm\_dep }\OtherTok{\textless{}{-}} \FunctionTok{tm\_shape}\NormalTok{(bathy1km) }\SpecialCharTok{+} \FunctionTok{tm\_raster}\NormalTok{(}\AttributeTok{title=}\StringTok{"depth (m)"}\NormalTok{)}
+\NormalTok{tm\_distland }\OtherTok{\textless{}{-}} \FunctionTok{tm\_shape}\NormalTok{(distland) }\SpecialCharTok{+} \FunctionTok{tm\_raster}\NormalTok{(}\AttributeTok{title=}\StringTok{"Dist to land (m)"}\NormalTok{)}
+\NormalTok{tm\_distisobath200 }\OtherTok{\textless{}{-}} \FunctionTok{tm\_shape}\NormalTok{(distisobath200) }\SpecialCharTok{+} \FunctionTok{tm\_raster}\NormalTok{(}\AttributeTok{title=}\StringTok{"Dist to 200m isobath"}\NormalTok{)}
+\FunctionTok{tmap\_arrange}\NormalTok{(tm\_dep, tm\_distland, tm\_distisobath200)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.75\linewidth]{EnvDataSciAddenda_files/figure-latex/unnamed-chunk-37-1} \end{center}
+
+\hypertarget{interpolation}{%
+\section{Interpolation}\label{interpolation}}
+
+We'll use gstat with an inverse distance weighted (IDW) method applying a inverse distance power of 2 for temperature, salinity and fluorescence, for each year \texttt{2004:2013}, then average the 10.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(gstat)}
+\NormalTok{transJulv }\OtherTok{\textless{}{-}} \FunctionTok{vect}\NormalTok{(transJul)}
+\NormalTok{d }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\FunctionTok{geom}\NormalTok{(transJulv)[,}\FunctionTok{c}\NormalTok{(}\StringTok{"x"}\NormalTok{, }\StringTok{"y"}\NormalTok{)], }\FunctionTok{as.data.frame}\NormalTok{(transJulv))}
+   \CommentTok{\# d is a data.frame with x and y variables from the geom}
+\CommentTok{\# Temperature}
+\ControlFlowTok{for}\NormalTok{ (year }\ControlFlowTok{in} \DecValTok{2004}\SpecialCharTok{:}\DecValTok{2013}\NormalTok{) \{}
+\NormalTok{  gs }\OtherTok{\textless{}{-}} \FunctionTok{gstat}\NormalTok{(}\AttributeTok{formula=}\NormalTok{avg\_tem}\SpecialCharTok{\textasciitilde{}}\DecValTok{1}\NormalTok{, }\AttributeTok{locations=}\SpecialCharTok{\textasciitilde{}}\NormalTok{x}\SpecialCharTok{+}\NormalTok{y, }\AttributeTok{data=}\NormalTok{d, }\AttributeTok{set=}\FunctionTok{list}\NormalTok{(}\AttributeTok{idp=}\DecValTok{2}\NormalTok{))}
+\NormalTok{  temRas }\OtherTok{\textless{}{-}} \FunctionTok{interpolate}\NormalTok{(rasAOI, gs)}\SpecialCharTok{$}\NormalTok{var1.pred}
+  \ControlFlowTok{if}\NormalTok{ (year }\SpecialCharTok{==} \DecValTok{2004}\NormalTok{) temSum }\OtherTok{\textless{}{-}}\NormalTok{ temRas}
+  \ControlFlowTok{if}\NormalTok{ (year }\SpecialCharTok{\textgreater{}} \DecValTok{2004}\NormalTok{) temSum }\OtherTok{\textless{}{-}}\NormalTok{ temSum }\SpecialCharTok{+}\NormalTok{ temRas}
+\NormalTok{\}}
+\NormalTok{temMean }\OtherTok{\textless{}{-}}\NormalTok{ temSum}\SpecialCharTok{/}\DecValTok{10}\NormalTok{; fillval }\OtherTok{\textless{}{-}} \FunctionTok{global}\NormalTok{(temMean, }\StringTok{"mean"}\NormalTok{)[,}\DecValTok{1}\NormalTok{]}
+\NormalTok{tem }\OtherTok{\textless{}{-}} \FunctionTok{focal}\NormalTok{(temMean,}\DecValTok{9}\NormalTok{, }\StringTok{"mean"}\NormalTok{, }\AttributeTok{fillvalue=}\NormalTok{fillval) }
+\FunctionTok{names}\NormalTok{(tem) }\OtherTok{\textless{}{-}} \StringTok{"temperature"}
+\CommentTok{\# Salinity}
+\ControlFlowTok{for}\NormalTok{ (year }\ControlFlowTok{in} \DecValTok{2004}\SpecialCharTok{:}\DecValTok{2013}\NormalTok{) \{}
+\NormalTok{  gs }\OtherTok{\textless{}{-}} \FunctionTok{gstat}\NormalTok{(}\AttributeTok{formula=}\NormalTok{avg\_sal}\SpecialCharTok{\textasciitilde{}}\DecValTok{1}\NormalTok{, }\AttributeTok{locations=}\SpecialCharTok{\textasciitilde{}}\NormalTok{x}\SpecialCharTok{+}\NormalTok{y, }\AttributeTok{data=}\NormalTok{d, }\AttributeTok{set=}\FunctionTok{list}\NormalTok{(}\AttributeTok{idp=}\DecValTok{2}\NormalTok{))}
+\NormalTok{  salRas }\OtherTok{\textless{}{-}} \FunctionTok{interpolate}\NormalTok{(rasAOI, gs)}\SpecialCharTok{$}\NormalTok{var1.pred}
+  \ControlFlowTok{if}\NormalTok{ (year }\SpecialCharTok{==} \DecValTok{2004}\NormalTok{) salSum }\OtherTok{\textless{}{-}}\NormalTok{ salRas}
+  \ControlFlowTok{if}\NormalTok{ (year }\SpecialCharTok{\textgreater{}} \DecValTok{2004}\NormalTok{) salSum }\OtherTok{\textless{}{-}}\NormalTok{ salSum }\SpecialCharTok{+}\NormalTok{ salRas}
+  \CommentTok{\#print(paste(paste(year, "salSum", global(salSum, "max")[,1])))}
+\NormalTok{\}}
+\NormalTok{salMean }\OtherTok{\textless{}{-}}\NormalTok{ salSum}\SpecialCharTok{/}\DecValTok{10}\NormalTok{; fillval }\OtherTok{\textless{}{-}} \FunctionTok{global}\NormalTok{(salMean, }\StringTok{"mean"}\NormalTok{)[,}\DecValTok{1}\NormalTok{]}
+\NormalTok{sal }\OtherTok{\textless{}{-}} \FunctionTok{focal}\NormalTok{(salMean,}\DecValTok{9}\NormalTok{, }\StringTok{"mean"}\NormalTok{, }\AttributeTok{fillvalue=}\NormalTok{fillval) }\CommentTok{\# generalizes the IDW to reduce sample point artifacts}
+\FunctionTok{names}\NormalTok{(sal) }\OtherTok{\textless{}{-}} \StringTok{"salinity"}
+\CommentTok{\# Fluorescence}
+\ControlFlowTok{for}\NormalTok{ (year }\ControlFlowTok{in} \DecValTok{2004}\SpecialCharTok{:}\DecValTok{2013}\NormalTok{) \{}
+\NormalTok{  gs }\OtherTok{\textless{}{-}} \FunctionTok{gstat}\NormalTok{(}\AttributeTok{formula=}\NormalTok{avg\_fluo}\SpecialCharTok{\textasciitilde{}}\DecValTok{1}\NormalTok{, }\AttributeTok{locations=}\SpecialCharTok{\textasciitilde{}}\NormalTok{x}\SpecialCharTok{+}\NormalTok{y, }\AttributeTok{data=}\NormalTok{d, }\AttributeTok{set=}\FunctionTok{list}\NormalTok{(}\AttributeTok{idp=}\DecValTok{2}\NormalTok{))}
+\NormalTok{  fluoRas }\OtherTok{\textless{}{-}} \FunctionTok{interpolate}\NormalTok{(rasAOI, gs)}\SpecialCharTok{$}\NormalTok{var1.pred}
+  \ControlFlowTok{if}\NormalTok{ (year }\SpecialCharTok{==} \DecValTok{2004}\NormalTok{) fluoSum }\OtherTok{\textless{}{-}}\NormalTok{ fluoRas}
+  \ControlFlowTok{if}\NormalTok{ (year }\SpecialCharTok{\textgreater{}} \DecValTok{2004}\NormalTok{) fluoSum }\OtherTok{\textless{}{-}}\NormalTok{ fluoSum }\SpecialCharTok{+}\NormalTok{ fluoRas}
+\NormalTok{\}}
+\NormalTok{fluoMean }\OtherTok{\textless{}{-}}\NormalTok{ fluoSum}\SpecialCharTok{/}\DecValTok{10}\NormalTok{; fillval }\OtherTok{\textless{}{-}} \FunctionTok{global}\NormalTok{(fluoMean, }\StringTok{"mean"}\NormalTok{)[,}\DecValTok{1}\NormalTok{]}
+\NormalTok{fluo }\OtherTok{\textless{}{-}} \FunctionTok{focal}\NormalTok{(fluoMean,}\DecValTok{9}\NormalTok{, }\StringTok{"mean"}\NormalTok{, }\AttributeTok{fillvalue=}\NormalTok{fillval) }\CommentTok{\# generalizes the IDW to reduce sample point artifacts}
+\FunctionTok{names}\NormalTok{(fluo) }\OtherTok{\textless{}{-}} \StringTok{"fluorescence"}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tm\_tem }\OtherTok{\textless{}{-}} \FunctionTok{tm\_shape}\NormalTok{(tem) }\SpecialCharTok{+} \FunctionTok{tm\_raster}\NormalTok{(}\AttributeTok{title=}\StringTok{"temperature"}\NormalTok{)}
+\NormalTok{tm\_sal }\OtherTok{\textless{}{-}} \FunctionTok{tm\_shape}\NormalTok{(sal) }\SpecialCharTok{+} \FunctionTok{tm\_raster}\NormalTok{(}\AttributeTok{title=}\StringTok{"salinity"}\NormalTok{)}
+\NormalTok{tm\_fluo }\OtherTok{\textless{}{-}} \FunctionTok{tm\_shape}\NormalTok{(fluo) }\SpecialCharTok{+} \FunctionTok{tm\_raster}\NormalTok{(}\AttributeTok{title=}\StringTok{"fluorescence"}\NormalTok{)}
+\FunctionTok{tmap\_arrange}\NormalTok{(tm\_dep, tm\_tem, tm\_sal, tm\_fluo)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.75\linewidth]{EnvDataSciAddenda_files/figure-latex/unnamed-chunk-39-1} 
+
+}
+
+\caption{Interpolated depth, salinity and fluorescence, mean of July samples in years 2004:2011}\label{fig:unnamed-chunk-39}
+\end{figure}
+
+Reviewing the results of the glm\ldots{}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = bfal ~ avg_sal + avg_fluo + avg_dep + dist_land + 
+##     dist_200m + year, family = poisson, data = transJul)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.1781  -0.4238  -0.1848  -0.0421   5.5779  
+## 
+## Coefficients:
+##               Estimate Std. Error z value Pr(>|z|)    
+## (Intercept) -5.029e+02  1.696e+02  -2.965  0.00303 ** 
+## avg_sal      1.360e+00  6.582e-01   2.066  0.03884 *  
+## avg_fluo    -1.623e-01  6.147e-02  -2.640  0.00828 ** 
+## avg_dep     -2.318e-03  4.833e-04  -4.796 1.62e-06 ***
+## dist_land   -5.793e-05  3.228e-05  -1.795  0.07269 .  
+## dist_200m   -3.266e-04  6.200e-05  -5.268 1.38e-07 ***
+## year         2.283e-01  8.047e-02   2.838  0.00455 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for poisson family taken to be 1)
+## 
+##     Null deviance: 412.03  on 808  degrees of freedom
+## Residual deviance: 298.70  on 802  degrees of freedom
+## AIC: 406.11
+## 
+## Number of Fisher Scoring iterations: 7
+\end{verbatim}
+
+\ldots{} we can set up and apply the prediction formula to these rasters, using year 2006.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{b }\OtherTok{\textless{}{-}} \FunctionTok{coefficients}\NormalTok{(bfal\_poisson)}
+\NormalTok{bfalpred }\OtherTok{\textless{}{-}} \FunctionTok{exp}\NormalTok{(b[}\DecValTok{1}\NormalTok{] }\SpecialCharTok{+}\NormalTok{ b[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{sal }\SpecialCharTok{+}\NormalTok{ b[}\DecValTok{3}\NormalTok{]}\SpecialCharTok{*}\NormalTok{fluo }\SpecialCharTok{+}\NormalTok{ b[}\DecValTok{4}\NormalTok{]}\SpecialCharTok{*}\NormalTok{bathy1km }\SpecialCharTok{+}\NormalTok{ b[}\DecValTok{5}\NormalTok{]}\SpecialCharTok{*}\NormalTok{distland }\SpecialCharTok{+}\NormalTok{ b[}\DecValTok{6}\NormalTok{]}\SpecialCharTok{*}\NormalTok{distisobath200 }\SpecialCharTok{+}\NormalTok{ b[}\DecValTok{7}\NormalTok{]}\SpecialCharTok{*}\DecValTok{2006}\NormalTok{)}
+\FunctionTok{names}\NormalTok{(bfalpred) }\OtherTok{=} \StringTok{"bfal\_predict"}
+\FunctionTok{plot}\NormalTok{(bfalpred)}
+\FunctionTok{lines}\NormalTok{(}\FunctionTok{vect}\NormalTok{(isobath\_200), }\AttributeTok{add=}\NormalTok{T, }\AttributeTok{col=}\StringTok{"blue"}\NormalTok{)}
+\FunctionTok{contour}\NormalTok{(bathy1km, }\AttributeTok{add=}\NormalTok{T)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.75\linewidth]{EnvDataSciAddenda_files/figure-latex/unnamed-chunk-41-1} 
+
+}
+
+\caption{Black-footed albatross prediction, July 2006}\label{fig:unnamed-chunk-41}
+\end{figure}
+
+It appears that a prominent influence on the resulting spatial pattern is distance to the 200-m isobath, with details provided by the other explanatory variables. Given that the year is a constant in the spatial domain, the pattern on the prediction map does not vary, but the range of counts predicted varies, and we can predict the maximum value with:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Maximum black{-}footed albatross model count predictions, 2004:2013}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Maximum black-footed albatross model count predictions, 2004:2013
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{2004}\SpecialCharTok{:}\DecValTok{2013}\NormalTok{) \{}
+\NormalTok{  maxprd }\OtherTok{\textless{}{-}} \FunctionTok{global}\NormalTok{(}\FunctionTok{exp}\NormalTok{(b[}\DecValTok{1}\NormalTok{] }\SpecialCharTok{+}\NormalTok{ b[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{salRas }\SpecialCharTok{+}\NormalTok{ b[}\DecValTok{3}\NormalTok{]}\SpecialCharTok{*}\NormalTok{fluoRas }\SpecialCharTok{+}\NormalTok{ b[}\DecValTok{4}\NormalTok{]}\SpecialCharTok{*}\NormalTok{bathy1km }\SpecialCharTok{+}\NormalTok{ b[}\DecValTok{5}\NormalTok{]}\SpecialCharTok{*}\NormalTok{distland }\SpecialCharTok{+}\NormalTok{ b[}\DecValTok{6}\NormalTok{]}\SpecialCharTok{*}\NormalTok{distisobath200 }\SpecialCharTok{+}\NormalTok{ b[}\DecValTok{7}\NormalTok{]}\SpecialCharTok{*}\NormalTok{i),max)}
+  \FunctionTok{cat}\NormalTok{(}\FunctionTok{as.character}\NormalTok{(i), }\StringTok{" "}\NormalTok{, }\FunctionTok{as.character}\NormalTok{(}\FunctionTok{format}\NormalTok{(maxprd, }\AttributeTok{digits=}\DecValTok{3}\NormalTok{)), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 2004   0.305 
+## 2005   0.383 
+## 2006   0.481 
+## 2007   0.604 
+## 2008   0.759 
+## 2009   0.954 
+## 2010   1.2 
+## 2011   1.51 
+## 2012   1.89 
+## 2013   2.38
+\end{verbatim}
+
+\hypertarget{time-series-case-studies}{%
+\chapter{Time Series case studies}\label{time-series-case-studies}}
+
+\hypertarget{loney-meadow-flux-data}{%
+\section{Loney Meadow flux data}\label{loney-meadow-flux-data}}
+
+At the beginning of this chapter, we looked at an example of a time series in flux tower measurements of northern Sierra meadows, such as in Loney Meadow where during the 2016 season a flux tower was used to capture CO\textsubscript{2} flux and related micrometeorological data.
+
+We also captured multispectral imagery using a drone, allowing for creating high-resolution (5-cm pixel) imagery of the meadow in false color (with NIR as red, red as green, green as blue), useful for showing healthy vegetation (as red) and water bodies (as black).
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.75\linewidth]{img/LoneyMapFalseColor} 
+
+}
+
+\caption{Loney Meadow False Color image from drone-mounted multispectral camera, 2017}\label{fig:unnamed-chunk-44}
+\end{figure}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.75\linewidth]{img/LoneyFluxTowerWide} 
+
+}
+
+\caption{Flux tower installed at Loney Meadow, 2016. Photo credit: Darren Blackburn}\label{fig:unnamed-chunk-45}
+\end{figure}
+
+The flux tower data were collected at a high frequency for eddy covariance processing where 3D wind speed data are used to model the movement of atmospheric gases, including CO\textsubscript{2} flux driven by photosynthesis and respiration processes. Note that the sign convention of CO\textsubscript{2} flux is that positive flux is release to the atmosphere, which might happen when less photosynthesis is happening but respiration and other CO\textsubscript{2} releases continue, while a negative flux might happen when more photosynthesis is capturing more CO\textsubscript{2}.
+
+A spreadsheet of 30-minute summaries from 17 May to 6 September can be found in the \texttt{igisci} extdata folder as \texttt{"meadows/LoneyMeadow\_30minCO2fluxes\_Geog604.xls"}, and includes data on photosynthetically active radiation (PAR), net radiation (Qnet), air temperature, relative humidity, soil temperature at 2 and 10 cm depth, wind direction, wind speed, rainfall, and soil volumetric water content (VWC). There's clearly a lot more we can do with these data (see Blackburn, Oliphant, and Davis (\protect\hyperlink{ref-blackburn2021carbon}{2021})), but we'll look at CO\textsubscript{2} flux and PAR using some of the same methods we've just explored.
+
+First we'll test read in the data (I'd encourage you to also look at the spreadsheet in Excel {[}but don't change it{]} to see how it's organized) \ldots{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{read\_xls}\NormalTok{(}\FunctionTok{ex}\NormalTok{(}\StringTok{"meadows/LoneyMeadow\_30minCO2fluxes\_Geog604.xls"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5,398 x 14
+##    Decim~1 Day o~2 Hour ~3 CO2 F~4 PAR   Qnet  Tair  RH    Tsoil~5 Tsoil~6 wdir 
+##      <dbl>   <dbl>   <dbl> <chr>   <chr> <chr> <chr> <chr> <chr>   <chr>   <chr>
+##  1     NA       NA    NA   mgC m-~ mmol~ W m-2 degC  %     degC    degC    deg  
+##  2    138      138    24   0.2011~ 0     -93.~ 8.44~ 62.9~ 10.672~ 12.582~ 58.8~
+##  3    138.     138     0.5 0.1096~ 0     -95.~ 8.12~ 64.5~ 10.364~ 12.441~ 48.8~
+##  4    138.     138     1   0.1650~ 0     -94.~ 7.60~ 66.9~ 10.0718 12.300~ 37.7~
+##  5    138.     138     1.5 0.1547~ 0     -96.~ 7.57~ 66.8~ 9.7869~ 12.159~ 42.9~
+##  6    138.     138     2   0.1783~ 0     -97.~ 7.50~ 67.1~ 9.5242~ 12.018~ 49.5~
+##  7    138.     138     2.5 0.1356~ 0     -99.~ 7.61~ 65.3~ 9.2895~ 11.879~ 70.9~
+##  8    138.     138     3   0.1512~ 0     -101~ 7.73~ 63.7~ 9.0644~ 11.741~ 64.9~
+##  9    138.     138     3.5 0.1698~ 0     -100~ 7.48~ 64.8~ 8.8473~ 11.604~ 71.9~
+## 10    138.     138     4   0.1340~ 0     -98.~ 7.36~ 65.4~ 8.6596~ 11.470~ 59.5~
+## # ... with 5,388 more rows, 3 more variables: wspd <chr>, Rain <chr>,
+## #   VWC <chr>, and abbreviated variable names 1: `Decimal time`,
+## #   2: `Day of Year`, 3: `Hour of Day`, 4: `CO2 Flux`, 5: `Tsoil 2cm`,
+## #   6: `Tsoil 10cm`
+\end{verbatim}
+
+\ldots{} and see that just as with the Bugac and Hungary data, it has half-hour readings and the second line of the file has measurement units. There are multiple ways of dealing with that, but this time we'll capture the variable names then add them back after removing the first two rows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(igisci)}
+\FunctionTok{library}\NormalTok{(readxl); }\FunctionTok{library}\NormalTok{(tidyverse); }\FunctionTok{library}\NormalTok{(lubridate)}
+\NormalTok{vnames }\OtherTok{\textless{}{-}} \FunctionTok{read\_xls}\NormalTok{(}\FunctionTok{ex}\NormalTok{(}\StringTok{"meadows/LoneyMeadow\_30minCO2fluxes\_Geog604.xls"}\NormalTok{), }\AttributeTok{n\_max=}\DecValTok{0}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{names}\NormalTok{()}
+\NormalTok{vunits }\OtherTok{\textless{}{-}} \FunctionTok{read\_xls}\NormalTok{(}\FunctionTok{ex}\NormalTok{(}\StringTok{"meadows/LoneyMeadow\_30minCO2fluxes\_Geog604.xls"}\NormalTok{), }\AttributeTok{n\_max=}\DecValTok{0}\NormalTok{, }\AttributeTok{skip=}\DecValTok{1}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{names}\NormalTok{()}
+\NormalTok{Loney }\OtherTok{\textless{}{-}} \FunctionTok{read\_xls}\NormalTok{(}\FunctionTok{ex}\NormalTok{(}\StringTok{"meadows/LoneyMeadow\_30minCO2fluxes\_Geog604.xls"}\NormalTok{), }\AttributeTok{skip=}\DecValTok{2}\NormalTok{, }\AttributeTok{col\_names=}\NormalTok{vnames) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{DecimalDay =} \StringTok{\textasciigrave{}}\AttributeTok{Decimal time}\StringTok{\textasciigrave{}}\NormalTok{,}
+         \AttributeTok{YDay =} \StringTok{\textasciigrave{}}\AttributeTok{Day of Year}\StringTok{\textasciigrave{}}\NormalTok{,}
+         \AttributeTok{Hour =} \StringTok{\textasciigrave{}}\AttributeTok{Hour of Day}\StringTok{\textasciigrave{}}\NormalTok{,}
+         \AttributeTok{CO2flux =} \StringTok{\textasciigrave{}}\AttributeTok{CO2 Flux}\StringTok{\textasciigrave{}}\NormalTok{,}
+         \AttributeTok{Tsoil2cm =} \StringTok{\textasciigrave{}}\AttributeTok{Tsoil 2cm}\StringTok{\textasciigrave{}}\NormalTok{,}
+         \AttributeTok{Tsoil10cm =} \StringTok{\textasciigrave{}}\AttributeTok{Tsoil 10cm}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{datetime =} \FunctionTok{as\_date}\NormalTok{(DecimalDay, }\AttributeTok{origin=}\StringTok{"2015{-}12{-}31"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+The time unit we'll want to use for time series is going to be days, and we can also then look at the data over time, and a group\_by-summarize process by days will give us a generalized picture of changes over the collection period reflecting phenological changes from first exposure after snowmelt through the maximum growth period and through the major senescence period of late summer. We'll look at a faceted graph from a pivot\_long table.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{LoneyDaily }\OtherTok{\textless{}{-}}\NormalTok{ Loney }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(YDay) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{CO2flux =} \FunctionTok{mean}\NormalTok{(CO2flux),}
+            \AttributeTok{PAR =} \FunctionTok{mean}\NormalTok{(PAR),}
+            \AttributeTok{Qnet =} \FunctionTok{mean}\NormalTok{(Qnet),}
+            \AttributeTok{Tair =} \FunctionTok{mean}\NormalTok{(Tair),}
+            \AttributeTok{RH =} \FunctionTok{mean}\NormalTok{(RH),}
+            \AttributeTok{Tsoil2cm =} \FunctionTok{mean}\NormalTok{(Tsoil2cm),}
+            \AttributeTok{Tsoil10cm =} \FunctionTok{mean}\NormalTok{(Tsoil10cm),}
+            \AttributeTok{wdir =} \FunctionTok{mean}\NormalTok{(wdir),}
+            \AttributeTok{wspd =} \FunctionTok{mean}\NormalTok{(wspd),}
+            \AttributeTok{Rain =} \FunctionTok{mean}\NormalTok{(Rain),}
+            \AttributeTok{VWC =} \FunctionTok{mean}\NormalTok{(VWC))}
+\NormalTok{LoneyDailyLong }\OtherTok{\textless{}{-}}\NormalTok{ LoneyDaily }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols =}\NormalTok{ CO2flux}\SpecialCharTok{:}\NormalTok{VWC,}
+               \AttributeTok{names\_to=}\StringTok{"parameter"}\NormalTok{,}
+               \AttributeTok{values\_to=}\StringTok{"value"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(parameter }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"CO2flux"}\NormalTok{, }\StringTok{"Qnet"}\NormalTok{, }\StringTok{"Tair"}\NormalTok{, }\StringTok{"RH"}\NormalTok{, }\StringTok{"Tsoil10cm"}\NormalTok{, }\StringTok{"VWC"}\NormalTok{))}
+\NormalTok{p }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ LoneyDailyLong, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{YDay, }\AttributeTok{y=}\NormalTok{value)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_line}\NormalTok{()}
+\NormalTok{p }\SpecialCharTok{+} \FunctionTok{facet\_grid}\NormalTok{(parameter }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{scales =} \StringTok{"free\_y"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.75\linewidth]{EnvDataSciAddenda_files/figure-latex/unnamed-chunk-47-1} 
+
+}
+
+\caption{Facet plot with free y scale of Loney flux tower parameters}\label{fig:unnamed-chunk-47}
+\end{figure}
+
+Now we'll build a time series for CO\textsubscript{2} for an 8-day period over the summer solstice, using the start time and frequency (there's also a time stamp, but this was easier, since I knew the data had no gaps):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{LoneyCO2 }\OtherTok{\textless{}{-}}\NormalTok{ Loney }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(YDay }\SpecialCharTok{\textgreater{}} \DecValTok{167} \SpecialCharTok{\&}\NormalTok{ YDay }\SpecialCharTok{\textless{}} \DecValTok{176}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(CO2flux) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ts}\NormalTok{(}\AttributeTok{start=}\DecValTok{138}\NormalTok{,}\AttributeTok{frequency=}\DecValTok{48}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{decompose}\NormalTok{(LoneyCO2))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.75\linewidth]{EnvDataSciAddenda_files/figure-latex/unnamed-chunk-48-1} 
+
+}
+
+\caption{Loney CO~2~ decomposition by day, 8-day period at summer solstice}\label{fig:unnamed-chunk-48}
+\end{figure}
+
+Finally, we'll create a couple ensemble average plots from all of the data, with sd error bars similar to what we did for Manaus, and with cowplot used again to compare two ensemble plots:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(cowplot)}
+\NormalTok{LoneyCO2sum }\OtherTok{\textless{}{-}}\NormalTok{ Loney }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Hour) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{meanCO2 =} \FunctionTok{mean}\NormalTok{(CO2flux), }\AttributeTok{sdCO2 =} \FunctionTok{sd}\NormalTok{(CO2flux))}
+\NormalTok{LoneyPARsum }\OtherTok{\textless{}{-}}\NormalTok{ Loney }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Hour) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{meanPAR =} \FunctionTok{mean}\NormalTok{(PAR), }\AttributeTok{sdPAR =} \FunctionTok{sd}\NormalTok{(PAR))}
+\NormalTok{p1 }\OtherTok{\textless{}{-}}\NormalTok{ LoneyCO2sum }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Hour)) }\SpecialCharTok{+} \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks=}\FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{24}\NormalTok{,}\DecValTok{3}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{meanCO2), }\AttributeTok{col=}\StringTok{"blue"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_errorbar}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{ymax =}\NormalTok{ meanCO2 }\SpecialCharTok{+}\NormalTok{ sdCO2, }\AttributeTok{ymin =}\NormalTok{ meanCO2 }\SpecialCharTok{{-}}\NormalTok{ sdCO2)) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Loney ensemble CO2 flux"}\NormalTok{)}
+\NormalTok{p2 }\OtherTok{\textless{}{-}}\NormalTok{  LoneyPARsum }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Hour)) }\SpecialCharTok{+} \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks=}\FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{24}\NormalTok{,}\DecValTok{3}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{meanPAR), }\AttributeTok{col=}\StringTok{"red"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_errorbar}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{ymax =}\NormalTok{ meanPAR }\SpecialCharTok{+}\NormalTok{ sdPAR, }\AttributeTok{ymin =}\NormalTok{ meanPAR }\SpecialCharTok{{-}}\NormalTok{ sdPAR)) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Loney ensemble PAR"}\NormalTok{)}
+\FunctionTok{plot\_grid}\NormalTok{(}\AttributeTok{plotlist=}\FunctionTok{list}\NormalTok{(p1,p2), }\AttributeTok{ncol=}\DecValTok{1}\NormalTok{, }\AttributeTok{align=}\StringTok{\textquotesingle{}v\textquotesingle{}}\NormalTok{) }\CommentTok{\# from cowplot}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.75\linewidth]{EnvDataSciAddenda_files/figure-latex/unnamed-chunk-49-1} 
+
+}
+
+\caption{Loney meadow CO~2~ and PAR ensemble averages}\label{fig:unnamed-chunk-49}
+\end{figure}
+
+We can explore the Loney meadow data further, maybe comparing multiple ensemble averages, relating variables (like the example here):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(igisci)}
+\FunctionTok{library}\NormalTok{(readxl); }\FunctionTok{library}\NormalTok{(tidyverse); }\FunctionTok{library}\NormalTok{(lubridate)}
+\NormalTok{vnames }\OtherTok{\textless{}{-}} \FunctionTok{read\_xls}\NormalTok{(}\FunctionTok{ex}\NormalTok{(}\StringTok{"meadows/LoneyMeadow\_30minCO2fluxes\_Geog604.xls"}\NormalTok{), }\AttributeTok{n\_max=}\DecValTok{0}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{names}\NormalTok{()}
+\NormalTok{vunits }\OtherTok{\textless{}{-}} \FunctionTok{read\_xls}\NormalTok{(}\FunctionTok{ex}\NormalTok{(}\StringTok{"meadows/LoneyMeadow\_30minCO2fluxes\_Geog604.xls"}\NormalTok{), }\AttributeTok{n\_max=}\DecValTok{0}\NormalTok{, }\AttributeTok{skip=}\DecValTok{1}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{names}\NormalTok{()}
+\NormalTok{Loney }\OtherTok{\textless{}{-}} \FunctionTok{read\_xls}\NormalTok{(}\FunctionTok{ex}\NormalTok{(}\StringTok{"meadows/LoneyMeadow\_30minCO2fluxes\_Geog604.xls"}\NormalTok{), }\AttributeTok{skip=}\DecValTok{2}\NormalTok{, }\AttributeTok{col\_names=}\NormalTok{vnames) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{DecimalDay =} \StringTok{\textasciigrave{}}\AttributeTok{Decimal time}\StringTok{\textasciigrave{}}\NormalTok{,}
+         \AttributeTok{YDay =} \StringTok{\textasciigrave{}}\AttributeTok{Day of Year}\StringTok{\textasciigrave{}}\NormalTok{,}
+         \AttributeTok{Hour =} \StringTok{\textasciigrave{}}\AttributeTok{Hour of Day}\StringTok{\textasciigrave{}}\NormalTok{,}
+         \AttributeTok{CO2flux =} \StringTok{\textasciigrave{}}\AttributeTok{CO2 Flux}\StringTok{\textasciigrave{}}\NormalTok{,}
+         \AttributeTok{Tsoil2cm =} \StringTok{\textasciigrave{}}\AttributeTok{Tsoil 2cm}\StringTok{\textasciigrave{}}\NormalTok{,}
+         \AttributeTok{Tsoil10cm =} \StringTok{\textasciigrave{}}\AttributeTok{Tsoil 10cm}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{datetime =} \FunctionTok{as\_date}\NormalTok{(DecimalDay, }\AttributeTok{origin=}\StringTok{"2015{-}12{-}31"}\NormalTok{))}
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{Loney) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Qnet, }\AttributeTok{y=}\NormalTok{CO2flux, }\AttributeTok{col=}\NormalTok{YDay), }\AttributeTok{alpha=}\FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}  
+   \FunctionTok{scale\_color\_gradient2}\NormalTok{(}\AttributeTok{low=}\StringTok{"blue"}\NormalTok{, }\AttributeTok{high=}\StringTok{"red"}\NormalTok{, }\AttributeTok{mid=}\StringTok{"green"}\NormalTok{, }\AttributeTok{midpoint=}\DecValTok{200}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.75\linewidth]{EnvDataSciAddenda_files/figure-latex/unnamed-chunk-50-1} 
+
+}
+
+\caption{Loney CO2 flux vs Qnet}\label{fig:unnamed-chunk-50}
+\end{figure}
+
+\hypertarget{r-markdown-and-bookdown}{%
+\chapter{R Markdown and Bookdown}\label{r-markdown-and-bookdown}}
+
+This book is built using R Markdown and bookdown methods, and published at \url{http://bookdown.org}. There are some more comprehensive resources on both of these at Xie, Allaire, and Grolemund (\protect\hyperlink{ref-RMarkdown}{2019}) and Xie (\protect\hyperlink{ref-Bookdown}{2021}), and also the markdown cheat sheet at \url{https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf} but I thought it might be useful to provide some things I've discovered.
+
+\begin{itemize}
+\tightlist
+\item
+  The first section is about R Markdown, and has the basics for creating a report with Markdown text and code outputs. To keep it simple, you might just go with html output.
+\item
+  Next is a template that provides the basic settings that should work to create a report in either HTML, pdf, or Word formats, using the \texttt{tinytex} LaTeX interpreter you'll need to install if you want to create pdf output.
+\item
+  The next section is more on bookdown extensions to R markdown, including how to build a book with chapters with a referencing system for figures with headings and text citations, indices, and other features.\\
+\item
+  The pdf section describes more about the process for creating pdf via a LaTeX interpreter, with advanced stuff needed for controlling the format, especially if you want to go to a publisher who'll have very specific rules to follow.
+\end{itemize}
+
+\hypertarget{r-markdown}{%
+\section{R Markdown}\label{r-markdown}}
+
+Markdown isn't new and isn't at all restricted to R. It's the basis for Jupyter Notebooks, which I tend to use for Python but also works with R (the ``py'' in Jupyter is for Python and the ``r'' is for R); but I think R Markdown is better developed within RStudio, which provides more of an all-in-one \emph{integrated development environment} (IDE).
+
+For most users, what's covered in the cheat sheet, which should be at \url{https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf} is all you need to be able to format nice R Markdown documents, but the more thorough treatment at Xie, Allaire, and Grolemund (\protect\hyperlink{ref-RMarkdown}{2019}) is a good resource for going further.
+
+\hypertarget{markdown-editing}{%
+\subsection{Markdown editing}\label{markdown-editing}}
+
+The most basic thing to understand is that an R Markdown \texttt{.Rmd} document is divided into three elements:
+
+\begin{itemize}
+\tightlist
+\item
+  Optional header information at the top, marked off by \texttt{-\/-\/-} in the first line, followed by any YAML settings you want to set, and closing with another line of \texttt{-\/-\/-}.
+\item
+  Markdown sections not delimited by anything, but responding to markdown formatting like pairs of \texttt{*} enclosing \emph{text in italics}, pairs of \texttt{**} enclosing \textbf{bold text}, pairs of backticks enclosing \texttt{bits\ of\ code}, and lots of other things. Section headers are created with one or more hash \texttt{\#} characters at the start of a line followed by the header text on that line, and when editing will show up as blue text like the italic and bold text; the top level has a single \texttt{\#}, the next has \texttt{\#\#} (like this \textbf{R Markdown} section), and so on. You can create bulleted lists with each item starting with a dash \texttt{-} after a blank line to get it started (see below), and lots of other things -- see Xie, Allaire, and Grolemund (\protect\hyperlink{ref-RMarkdown}{2019}) and other sources for the multitude of formatting structures that markdown provides. Here's some of the text shown above as you enter it as markdown, though RStudio will wrap the long lines of text, and also provide color coding:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\#\#\# Markdown editing}
+\NormalTok{The most basic thing to understand is that an R Markdown \textasciigrave{}.Rmd\textasciigrave{} document is divided into three elements:}
+
+\NormalTok{{-} Optional header information at the top, marked off by \textasciigrave{}{-}{-}{-}\textasciigrave{} in the first line, followed by any YAML settings you want to set, and closing with another line of \textasciigrave{}{-}{-}{-}\textasciigrave{}.}
+\NormalTok{{-} Markdown sections not delimited by anything, but responding to markdown formatting like pairs of \textasciigrave{}*\textasciigrave{} enclosing *text in italics*, pairs of \textasciigrave{}**\textasciigrave{} enclosing **bold text**, pairs of backticks enclosing \textasciigrave{}bits of code\textasciigrave{}, and lots of other things. Section headers are created with a hash \textasciigrave{}\#\textasciigrave{} character in the first}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Code chunks delimited by triple backticks, the first followed on its line with the code chunk header with \texttt{\{r\ ...\}} identifying R as the language along with other settings. A code chunk typically produces just one output (or maybe none at all, if it's just processing data you might use later). Here's a simple example, with one code chunk label and one setting, then code that creates and then displays a vector:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r chunklabel, include=FALSE\}}
+\NormalTok{a \textless{}{-} c(1, 7, 5)}
+\NormalTok{a}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 7 5
+\end{verbatim}
+
+\hypertarget{display-options-in-code-chunks}{%
+\subsection{Display options in code chunks}\label{display-options-in-code-chunks}}
+
+The display options for code chunk headers \texttt{\{r\ ...\}} are very important to figure out in order to avoid unwanted messages in the rmarkdown document or book, and get figure headings working. Each option is separated by a comma, and follow the code chunk label. See \url{https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf} for a list of these options. I've found that some of what's documented at \url{https://yihui.org/knitr/options/\#code-evaluation} doesn't work for me, so here's what I've observed: \texttt{echo=TRUE} won't display the code if \texttt{include=FALSE} is set, though the above source suggests that the \texttt{include} option only refers to chunk output.
+
+Display options:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  no code no outputs : \texttt{include=F} {[}normal for exercises in book{]}
+\item
+  code no outputs : \texttt{include=T,fig.show="hide",results=F} (\texttt{include=T} is default) \texttt{results="markup"} is default (same as \texttt{TRUE}?)
+\item
+  code and outputs : \texttt{include=T,echo=T,fig.show=T,results=T} (return to defaults)
+\item
+  no code or no eval : \texttt{include=F,eval=F}
+\end{enumerate}
+
+And there are lots of other code options, like including a numbered figure caption with \texttt{fig.cap="my\ figure\ caption"}. The bookdown output extensions add citing and linking to the figure in the text, using the referencing system.
+
+\textbf{Warnings and messages}
+Turning off warnings and messages is so important in a book that I use \texttt{knitr::opts\_chunk\$set} to set these as defaults at the top of each chapter .Rmd.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r echo=F\}}
+\NormalTok{knitr::opts\_chunk$set(echo=T, warning=F, message=F, fig.align=\textquotesingle{}center\textquotesingle{}, out.width="75\%")}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+
+However some things that seem like messages are actually \emph{results}, for instance:
+
+\texttt{st\_read} will create unwanted messages that are actually results, so you can either put it in a code chunk that isn't displayed at all with \texttt{include=F} or probably better use \texttt{results\ =\ "hide"}. For instance, the following code is in a code chunk that has three options \texttt{\{r\ warning=F,\ results="hide",\ message=F\}} to avoid printing quite a lot of unwanted stuff.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r warning=F, results="hide", message=F\}}
+\NormalTok{library(sf); library(igisci)}
+\NormalTok{places \textless{}{-} st\_read(ex("sierra/CA\_places.shp"))}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{quote}
+You could of course have used that \texttt{knitr::opts\_chunk\$set} at the top of your code to avoid the warnings and messages, but you often want to see \emph{results}, so hiding them is best isolated in a code chunk that isn't producing any results you want to see, and this is typically things like \texttt{st\_read} I've found.
+\end{quote}
+
+\hypertarget{numbered-figures-with-text-citations}{%
+\subsection{Numbered figures with text citations}\label{numbered-figures-with-text-citations}}
+
+Most of the your figures are going to be created by code in an individual code chunk, and it's a good idea to create a figure heading. You should organize your code chunk so that it only produces one figure, so you can use the code chunk header to provide the figure heading, and be able to cite the figure in text just before. \emph{Note that the referencing capability requires bookdown output extensions to R Markdown, described below.}
+
+To do this, once you've created a code chunk with an informative but unique chunk label (chunk labels cannot be reused in the document) like ``visGraph'', and also provide a figure caption with \texttt{fig.cap="..."} in the code chunk header, then in the text just above, you can use the referencing function \texttt{\textbackslash{}@ref()} to cite the figure using the \texttt{fig:} key followed by the chunk label, either including parentheses or not:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{Figure\ \textbackslash{}@ref(fig:visGraph)} which produces this citation: Figure \ref{fig:visGraph}, or
+\item
+  \texttt{(Figure\ \textbackslash{}@ref(fig:visGraph))} which produces this citation: (Figure \ref{fig:visGraph}).
+\end{itemize}
+
+Here's what the code chunk and figure would then look like:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r visGraph, fig.cap="Vegetation bar graph"\}}
+\NormalTok{library(ggplot2); library(igisci)}
+\NormalTok{ggplot(XSptsNDVI, aes(vegetation)) + }
+\NormalTok{  geom\_bar()}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.75\linewidth]{EnvDataSciAddenda_files/figure-latex/visGraph-1} 
+
+}
+
+\caption{Vegetation bar graph}\label{fig:visGraph}
+\end{figure}
+
+Or you may want to create a figure from an existing image, like a screen shot or picture, cited as usual as a figure reference \texttt{Figure\ \textbackslash{}@ref(fig:TransectBuffersGoal)} (which produces this citation: Figure \ref{fig:TransectBuffersGoal}) and associated code chunk that uses the \texttt{knitr::include\_graphics} method:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r TransectBuffersGoal,include=T,eval=T,echo=F,out.width=\textquotesingle{}50\%\textquotesingle{},fig.align="center",fig.cap="Transect Buffers (goal)"\}}
+\NormalTok{knitr::include\_graphics(here::here("img","goal\_spanlTransectBuffers.png"))}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.5\linewidth]{img/goal_spanlTransectBuffers} 
+
+}
+
+\caption{Transect Buffers (goal)}\label{fig:TransectBuffersGoal}
+\end{figure}
+
+\hypertarget{a-template-for-multiple-output-formats}{%
+\section{A template for multiple output formats}\label{a-template-for-multiple-output-formats}}
+
+I've provided a basic template below that should work for a basic report that also uses some bookdown tricks such as citing figures using \texttt{\textbackslash{}@ref()}. You'll need to have installed tinytex or other latex interpreter to use the pdf option. It also lets you choose to build HTML or Word outputs, as chosen by the \texttt{Knit} pull-down options in RStudio.
+
+A pdf can be nice in working even when offline (though with no interactivity) and is great for creating a report to turn in to your boss or professor. As Yihui Xie notes in \url{https://bookdown.org/yihui/bookdown/}, however, you might want to stick with the simplicity and interactivity of HTML, as the effort of going to pdf might not be worth it. Creating a pdf does come with challenges, because the process involves two steps, each of which might create an error:
+
+\begin{itemize}
+\tightlist
+\item
+  RStudio creates a LaTeX .tex document
+\item
+  Your LaTeX interpreter (such as tinytex) compiles the .tex to pdf.
+\end{itemize}
+
+Notes:
+
+\begin{itemize}
+\tightlist
+\item
+  While either HTML or Word (if you have Word installed) will automatically display their documents, the pdf choice just saves the pdf in your project folder where you need to open it with a pdf reader like Acrobat.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \emph{You need to close that pdf before trying to create it again.}
+  \end{itemize}
+\item
+  For pdf to work, you'll need to install a LaTeX interpreter like tinytex. See more information at \url{https://yihui.org/tinytex/}, but it's pretty straightforward, and can be done from RStudio:
+\end{itemize}
+
+\begin{verbatim}
+install.packages('tinytex')
+tinytex::install_tinytex()
+\end{verbatim}
+
+\hypertarget{the-template}{%
+\subsection{The template}\label{the-template}}
+
+Copy and paste the following into a blank .Rmd file. Using the Knit button, try it out as is for the different formats, and then modify to provide your own markdown and code, while editing the header carefully. In the code chunk with the \texttt{knitr::opts\_chunk\$set} function, the \texttt{out.width="66\%"} setting I chose is just something that tends to put more than one figure on a page. You might try higher values to get larger figures, or override that setting in a specific figure code chunk by including that parameter setting in its code chunk header.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{{-}{-}{-}}
+\NormalTok{title: "My Report"}
+\NormalTok{author: "Jerry Davis"}
+\NormalTok{date: "2022{-}12{-}30"}
+\NormalTok{output:}
+\NormalTok{  bookdown::pdf\_document2:}
+\NormalTok{    latex\_engine: xelatex}
+\NormalTok{  bookdown::html\_document2: default}
+\NormalTok{  bookdown::word\_document2:}
+\NormalTok{    toc: true}
+\NormalTok{{-}{-}{-}}
+
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r echo=FALSE\}}
+\NormalTok{knitr::opts\_chunk$set(echo=TRUE,warning=FALSE,message=FALSE,}
+\NormalTok{                      fig.align=\textquotesingle{}center\textquotesingle{},out.width="66\%")}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\NormalTok{\# My Report}
+
+\NormalTok{Some built{-}in data, such as Old Faithful eruptions...}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r\}}
+\NormalTok{head(faithful)}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+
+\NormalTok{... and a time series of river flows of the Nile:}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r\}}
+\NormalTok{Nile}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+
+\NormalTok{\#\# Figures}
+
+\NormalTok{Here\textquotesingle{}s a graph of CO2 concentrations recorded at Mauna Loa (Figure \textbackslash{}@ref(fig:co2plot)), then a graph of Old Faithful eruptions (Figure \textbackslash{}@ref(fig:faithfulplot)). }
+
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r co2plot, fig.cap="CO2 time series at Mauna Loa"\}}
+\NormalTok{plot(co2)}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r faithfulplot, fig.cap="Old Faithful eruptions"\}}
+\NormalTok{plot(faithful)}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{building-a-book-with-bookdown-and-yaml-options}{%
+\section{Building a book with bookdown and YAML options}\label{building-a-book-with-bookdown-and-yaml-options}}
+
+While you can build a nice looking document in R Markdown, there are some other things that are useful for building a larger book out of it, like handling chapters, reference citations, and other features, so you'll want to review Xie (\protect\hyperlink{ref-Bookdown}{2021}) to learn more. We've already seen that bookdown output formats provide capabilities like figure headings and citations.
+
+The various files for your book can be hosted as a GitHub repository (more on GitHub in the next Addendum), and published to bookdown.org to share with others. You'll want to spend some time getting it well organized for others to access, and so we will want to learn more about YAML settings to set up our book format the way we want it.
+
+We've already looked at YAML options in the header of our .Rmd file, and for a simple report that's all we need. However, with a more complex document we might call a book, it's good practice to organize YAML settings into various places:
+
+\begin{itemize}
+\tightlist
+\item
+  The header to the \texttt{index.Rmd} file that starts our book off, and is typically the first chapter, which will become \texttt{index.html} following standard web practice.
+\item
+  \texttt{\_output.yml}: which contains the settings for each of our output formats, what in our template we just put in our \texttt{.Rmd} header.
+\item
+  \texttt{\_bookdown.yml}: where we put the bookdown-specific settings, like the order of our chapters.
+\end{itemize}
+
+\hypertarget{building-the-book}{%
+\subsection{Building the book}\label{building-the-book}}
+
+What we've been doing with a single .Rmd file is Knitting it to various formats, however building a book is more complex and involves more files, including chapters, bibliographic references, and other things. Here are some notes:
+
+\begin{itemize}
+\tightlist
+\item
+  Use the Build menu in RStudio to specify whether you want to build which type you've specified in the \texttt{\_output.yml} file. Since building a long book like this one can take a long time (about 35 minutes for both html and pdf for this book), I sometimes just build the HTML version, then build the pdf separately if it works, and since most people will use the HTML version I update that more frequently.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Note that pdfs don't include interactive maps except as a static rendering.
+  \end{itemize}
+\item
+  Learn how to organize the book with chapters set aside by \texttt{\#} in markdown then subheadings at various levels using \texttt{\#\#}, \texttt{\#\#\#}, etc., and don't forget the space after the last hash.
+\item
+  The automatic numbering of chapters and subheadings is useful, but if you want a section to not use numbering, like this appendix, including \texttt{\{-\}} at the end of the unnumbered section header line.
+\item
+  Creating sections, like \textbf{Spatial}, is done by including `(PART) before the section name, like the following, which starts off the section with this special heading followed by the first chapter:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\# (PART) Spatial \{{-}\}}
+
+\NormalTok{\# Spatial Data and Maps}
+
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+
+Note that the section is excluded from the automatic numbering with \texttt{\{-\}}.
+
+I guess I could have included some text to introduce the section but the above works to include the section name in the table of contents.
+
+\hypertarget{special-characters-and-formatting-limitations-and-challenges}{%
+\subsection{Special characters and formatting limitations and challenges}\label{special-characters-and-formatting-limitations-and-challenges}}
+
+Handling special characters and formatting is often a challenge for automated systems that try to build graphics with nicely formatted text from an array of inputs. Code chunk headers allow another level of automation, allowing us to produce figure headings and cite them in the text. In formatting text from markdown sections, we need to turn plain text into nicely formatted text, and markdown has a lot of ways of doing this. However all of this automation runs into limitations, since we run into coding-related rules with multiple systems interacting, and this is especially true when we add LaTeX rules to things. So we need to be aware of some often surprising limitations, such as:
+
+\begin{itemize}
+\tightlist
+\item
+  Code chunk labels can't have underscores and other special characters like \texttt{\&} and \texttt{\_}.
+\item
+  Subscripts and superscripts can be confusing between html and LaTeX. See \url{https://www.math.mcgill.ca/yyang/regression/RMarkdown/example.html} .using \textasciitilde{} and \^{} like CO\textsubscript{2} and X\textsuperscript{2} might work in Rmarkdown and html, but not in LaTeX/pdf.
+\end{itemize}
+
+\hypertarget{yaml-files-i-used-to-create-the-introduction-to-environmental-data-science-book.}{%
+\section{YAML files I used to create the Introduction to Environmental Data Science book.}\label{yaml-files-i-used-to-create-the-introduction-to-environmental-data-science-book.}}
+
+Here are some important things I've discovered in building the book. The YAML files \_output.yml, \_bookdown.yml, and the index.Rmd need to be set up right, and it's difficult to know what goes in which.
+
+However, \emph{don't use these as a model}, unless you're going to a book publisher, and even then the settings will likely differ. But it illustrates some of the things you can do with YAML files.
+
+\hypertarget{output.yml-for-envdatasci}{%
+\subsection{\_output.yml for EnvDataSci}\label{output.yml-for-envdatasci}}
+
+Note that there are two output sections, one the \texttt{gitbook} style of HTML which provides a table of contents panel on the left, along with the cover art, the other the \texttt{pdf\_book} section, which was the most challenging, and required working with the publisher to get the specific settings right. Building something as complex as a book often requires some tricky debugging, and since you're dealing potentially with R, Markdown, and LaTeX issues, can take a lot of effort, and if you need the format to work in a specific way (e.g.~the way a publisher might require it), I needed to learn more about LaTeX, and you can find some tricks below.
+
+\begin{verbatim}
+bookdown::gitbook:
+  css: style.css
+  config:
+    toc:
+      collapse: none
+      before: |
+        <li><img src="img/eaRth_anna296.png"></li>
+      after: |
+        <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+    book_filename: "envdatasci"
+  toc_depth: 4
+bookdown::pdf_book:
+  includes:
+    in_header: latex/preamble.tex
+    before_body: latex/before_body.tex
+    after_body: latex/after_body.tex
+  keep_tex: true
+  dev: "cairo_pdf"
+  latex_engine: xelatex
+  template: null
+  pandoc_args: --top-level-division=chapter
+  toc_depth: 3
+  toc_unnumbered: false
+  toc_appendix: true
+  quote_footer: ["\\VA{", "}{}"]
+  highlight_bw: true
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  note the latex\_engine: xelatex -- that required specifying the xelatex engine, which you can set in RStudio Build/Configure Build Tools in the Sweave section of the Project Options window that will display and choosing XeLaTeX. For CRC, I needed the features this has, but didn't realize it until after a \emph{lot} of trial \& error.
+\end{itemize}
+
+\hypertarget{index.rmd-for-envdatasci}{%
+\subsection{index.Rmd for EnvDataSci}\label{index.rmd-for-envdatasci}}
+
+These settings are a higher level than what's in \_output.yml, though you could put the things in that file here under an \texttt{output:} line. See examples in \url{https://bookdown.org/yihui/bookdown/}. \emph{And, again, you're not going to want to use this as a model, since it has some specific settings for CRC Press.}
+
+\begin{verbatim}
+---
+title: "Introduction to Environmental Data Science"
+author: "Jerry Davis, SFSU Institute for Geographic Information Science"
+date: "2022-12-30"
+documentclass: krantz
+classoption: krantz2
+bibliography: [book.bib]
+biblio-style: apalike
+link-citations: yes
+colorlinks: yes
+lot: no
+lof: yes
+site: bookdown::bookdown_site
+description: Background, methods and exercises for using R for environmental data
+  science.  The focus is on applying the R language and various libraries for data
+  abstraction, transformation, data analysis, spatial data/mapping, statistical modeling,
+  and time series, applied to environmental research. Applies exploratory data analysis
+  methods and tidyverse approaches in R, and includes contributed chapters presenting
+  research applications, with associated data and code packages.
+github-repo: iGISc/EnvDataSci
+graphics: yes
+geometry: margin=0.75in
+---
+\end{verbatim}
+
+This includes krantz to specify the krantz.cls file provided by CRC Press, the publisher I'm going with for the main book, and why I'm going to the major trouble of getting the LaTeX working. The classoption:krantz2 ends up creating the following in the .tex file, which is needed by the publisher to get the page size right for CRC. The krantz.cls file used was edited for me by the original programmer who wrote it. The classoption: krantz2 then produces the following in the .tex document.
+
+\begin{verbatim}
+\documentclass[
+  krantz2]{krantz}
+\end{verbatim}
+
+\hypertarget{bookdown.yml-for-envdatasci}{%
+\subsection{\_bookdown.yml for EnvDataSci}\label{bookdown.yml-for-envdatasci}}
+
+The main thing I use this for is the list of chapters, which is nice to specify instead of letting the RStudio figure out the chapters based on their names by using numbers like 01\_introduction, etc., and I can comment out parts -- so I've set them up one line at a time to make it easy to use Ctrl-Sh-C to toggle commenting.
+
+\begin{verbatim}
+book_filename: "EnvDataSci"
+clean: [packages.bib, bookdown.bbl]
+delete_merged_file: true
+rmd_files: ["index.Rmd",
+            "introduction.Rmd",
+            "abstraction.Rmd",
+            "visualization.Rmd",
+            "transformation.Rmd",
+            "spatialDataMaps.Rmd",
+            "spatialAnalysis.Rmd",
+            "spatialRaster.Rmd",
+            "spatialInterpolation.Rmd",
+            "statistics.Rmd",
+            "modeling.Rmd",
+            "ImageryAnalysisClassification.Rmd",
+            "TimeSeries.Rmd",
+            "communication.Rmd",
+            "references.Rmd"]
+language:
+  label:
+    fig: "FIGURE "
+    tab: "TABLE "
+  ui:
+    edit: "Edit"
+    chapter_name: "Chapter "
+\end{verbatim}
+
+\hypertarget{publishing}{%
+\subsubsection{Publishing}\label{publishing}}
+
+To get it published at bookdown.org, you'll need an account at Posit Connect, and then replacing ``myAccount'' with your account name, use:
+
+\begin{verbatim}
+bookdown::publish_book(account="myAccount", server="bookdown.org")
+\end{verbatim}
+
+the first time, then after that you don't need those two parameters.
+
+\hypertarget{building-a-package-on-github-for-data-and-code}{%
+\chapter{Building a Package on GitHub for Data and Code}\label{building-a-package-on-github-for-data-and-code}}
+
+These are just some notes mostly on building packages, based mostly on a couple of great sources which you should use to learn the process:
+
+\begin{itemize}
+\item
+  \emph{R Packages} \url{https://r-pkgs.org/} (Wickham and Bryan (\protect\hyperlink{ref-r-pkgs}{n.d.}))
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Includes a quick run through in chapter 2 for building a package, with a function
+  \item
+    Chapter 14 ``External data'' goes over how to build data into the package
+  \item
+    Various chapter references below refer to this source
+  \end{itemize}
+\item
+  \emph{Happy Git and GitHub for the useR} \url{https://happygitwithr.com/} (Bryan (\protect\hyperlink{ref-happygitwithr}{n.d.}))
+
+  \begin{itemize}
+  \tightlist
+  \item
+    All about how to get Git and GitHub working
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{git-and-github}{%
+\section*{Git and GitHub}\label{git-and-github}}
+
+
+You'll need to learn about using Git methods to host a package on GitHub (\url{https://github.com}), where you'll also need at least a free account. See \emph{Happy Git and GitHub for the useR} \url{https://happygitwithr.com/} (Bryan (\protect\hyperlink{ref-happygitwithr}{n.d.})) to learn everything you'll need for this. Some key takeaways:
+
+\begin{itemize}
+\item
+  The purpose of Git is version control, and \url{https://github.com} is a place to host package repositories (repos) that use this. Methods include keeping track of all changes in your package, including all files in the folders.
+\item
+  You'll need to use GitHub to create an account and connect with collaborators. And you can use it for setting everything up in your package repository.
+\item
+  You'll need to have the same folders on your local computer, and a method for \emph{committing} and \emph{pushing} up changes to GitHub.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    You can use RStudio for most of this, and you'll be making all of your edits on this anyway. You'll see any changes showing up in the Git tab, where you can stage, commit, and push them to your repo.\\
+  \item
+    GitHub Desktop can also do commits, pushes and pulls, and is very handy for updating changes to GitHub resulting from any package editing done in RStudio (or from any other changes to files and folders in the package folder, such as external data added to \texttt{extdata}). You might also find GitHub Desktop better for dealing with moving external files and folders manually stored in the extdata folder.
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{some-notes-on-the-rstudio-process}{%
+\section*{Some notes on the RStudio process}\label{some-notes-on-the-rstudio-process}}
+
+
+See Chapter 2 in \emph{R Packages} (Wickham and Bryan (\protect\hyperlink{ref-r-pkgs}{n.d.})) for a simple process. Some observations:
+
+\begin{itemize}
+\item
+  You need \texttt{devtools} and \texttt{usethis} packages.
+\item
+  You'll need to specify a folder with \texttt{create\_package}, and you might want to put it in a \texttt{GitHub} folder in \texttt{Documents}. It doesn't matter where, but it's useful to keep GitHub things together. Refer to Chapter 2 \url{https://r-pkgs.org/whole-game.html}.
+\item
+  This will create some essential files and folders:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{DESCRIPTION}: very important for naming and package information, which you'll be editing carefully
+  \item
+    \texttt{NAMESPACE}: where functions are declared, generated by \texttt{roxygen2}
+  \item
+    \texttt{R}: folder where your functions will go.
+  \end{itemize}
+\item
+  Ultimately, other folders and files are created, and there's a diagram in \url{https://r-pkgs.org/package-structure-state.html} that illustrates the structure.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{man}: documentation on all of your functions and data sets
+  \item
+    \texttt{inst}: various things go in here, but I've just used it for \texttt{extdata} where you can store .csv and other files
+  \item
+    \texttt{data}: data (as .rda files) that can be called up like \texttt{co2} in the base R package.
+  \end{itemize}
+\item
+  You might start by following the process in Chapter 2 for creating a simple package containing a simple function, using various \texttt{devtools} and \texttt{usethis} methods. This chapter also describes editing the \texttt{DESCRIPTION} file, using \texttt{roxygen2} to create the \texttt{man} file, how to document the function, and getting things ready to post to GitHub.
+\item
+  On getting things ready for GitHub, it's very useful to use \texttt{check()} from time to time to see if there are any errors in the various setup files, like \texttt{DESCRIPTION}, file \& folder structure, and documentation.
+\item
+  The process can be confusing, but the various RStudio methods and functions provided in \texttt{devtools} and \texttt{usethis} make it at least very easy to do if you follow directions, which are spelled out pretty clearly in the \emph{R Packages} book. We'll look at creating another function later in this appendix, following the method provided in \emph{R Packages}
+\end{itemize}
+
+\hypertarget{data-1}{%
+\section*{Data}\label{data-1}}
+
+
+For our package, \texttt{igisci}, we provided data in two ways:
+
+\begin{itemize}
+\tightlist
+\item
+  raw data as CSVs, shapefiles and TIFFs (useful since rasters don't seem to be supported in rda)
+\item
+  \texttt{rda} files: normal external data that are ready to use as data frames and simple feature (sf) data
+\end{itemize}
+
+\hypertarget{raw-data-in-extdata}{%
+\subsection*{Raw data in extdata}\label{raw-data-in-extdata}}
+
+
+Raw data (e.g.~CSVs, shapefiles, and rasters) can be simply stored in the \texttt{inst/extdata} folder. Just create those folders and put the files there. Make sure to include all the files (like the multiple files that go with a shapefile). Then, to access the data once the data package is installed, the user just needs to use the \texttt{system.file()} function to provide the path and then use that with the appropriate read function; e.g.~for a CSV, something like:
+
+\begin{verbatim}
+csvPath <- system.file("extdata","TRI/TRI_2017_CA.csv")
+TRI_2017_CA <- read_csv(csvPath)
+\end{verbatim}
+
+\ldots{} or by using the \texttt{igisci::ex()} function, can be written as
+
+\begin{verbatim}
+TRI_2017_CA <- read.csv(ex("TRI/TRI_2017_CA.csv"))
+\end{verbatim}
+
+\ldots{} which isn't much different from reading data in your RStudio project folder, so seemed a useful method to include in this book. And adding data to the data package by simply putting them in the \texttt{extdata} folder is very easy and also works for data files like TIFFs that aren't supported as \texttt{rda} files that we'll look at next.
+
+\hypertarget{binary-data-as-rda-files}{%
+\subsection*{\texorpdfstring{Binary data as \texttt{rda} files}{Binary data as rda files}}\label{binary-data-as-rda-files}}
+
+
+For data needed frequently, similar to \texttt{co2} or other provided data in base R, you'll want to create binary data stored as \texttt{rda} files. These files need to be prepared from data in R and go in the data folder. The process is made very easy by using \texttt{usethis::use\_data()} to add data as rda files to the \texttt{data} folder. These data can be data frames, simple features, and I'm sure other things.
+
+I used a script \texttt{addData.R} that I put in the \texttt{inst} folder which built the data from some of the same files included in the extdata folder, with \texttt{usethis::use\_data()} to store it in the data folder. Here's a simple example with just a csv converted directly, and it takes care of storing the result in the \texttt{data} folder as an \texttt{.rda} file:
+
+\begin{verbatim}
+sierraFeb <- read_csv("inst/extdata/sierra/sierraFeb.csv")
+usethis::use_data(sierraFeb)
+\end{verbatim}
+
+\hypertarget{devtoolsdocument}{%
+\subsubsection*{\texorpdfstring{\texttt{devtools::document()}}{devtools::document()}}\label{devtoolsdocument}}
+
+
+This creates documentation on the data sets, using the file \texttt{R/data.R}, which will need to have lines of code similar to the following to document each data set. Note that the name of the data set goes last, in quotes. The formatting of the field names and descriptions is a bit tricky and doesn't follow normal R rules. As a result, sometimes my field names don't exactly match the actual field names. Maybe I'll get around to changing the original field names with \texttt{rename}. Note that the organization is important, with the title of the data first, a blank line, then a description, etc.:
+
+\begin{verbatim}
+#' Sierra February climate data
+#'
+#' Selection from SierraData to only include February data
+#'
+#' @format A data frame with 82 entries and 7 variables selected and renamed \describe{
+#'   \item{STATION_NAME}{Station name}
+#'   \item{COUNTY}{County Name}
+#'   \item{ELEVATION}{Elevation in meters}
+#'   \item{LATITUDE}{Latitude in decimal degrees}
+#'   \item{LONGITUDE}{Longitude in decimal degrees}
+#'   \item{PRECIPITATION}{February Average Precipitation in mm}
+#'   \item{TEMPERATURE}{Febrary Average Temperature in degrees C}
+#' }
+#' @source \url{https://www.ncdc.noaa.gov/}
+"sierraFeb"
+\end{verbatim}
+
+Once these are on GitHub, a user can simply install the package with \texttt{devtools::install\_github("iGISc/igisci")} -- to use the \texttt{igisci} we created. Then to access the data just like built-in data, the user just needs to load that library with \texttt{library(igisci)}
+
+\hypertarget{removing-data}{%
+\subsubsection{Removing data}\label{removing-data}}
+
+There may be a better way, but what worked was removing the \texttt{rda} and corresponding \texttt{man} files. Also edited the \texttt{data.R} file to remove them from the \texttt{man} file maybe being created again.
+
+\hypertarget{code-functions}{%
+\section*{Code (functions)}\label{code-functions}}
+
+
+You can build pretty extensive functions in a package, and you've been using these from a variety of packages. We'll just look at the simple example of a function we'll name \texttt{ex()} for making it easier to read data from the \texttt{extdata} folder of the \texttt{igisci} package. The methods shown here are based on \url{https://r-pkgs.org/} which you should refer to for more thorough documentation.
+
+Here's the function we'll create in the package. However, one caveat is that you want to add this after you've already installed the package with data, or you'll get an error.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ex }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(dta)\{}
+  \FunctionTok{system.file}\NormalTok{(}\StringTok{"extdata"}\NormalTok{,dta,}\AttributeTok{package=}\StringTok{"igisci"}\NormalTok{)}
+\NormalTok{  \}}
+\end{Highlighting}
+\end{Shaded}
+
+We want to use it where in our code we wanted to read a file from \texttt{extdata} but we want cleaner code that doesn't take up much space in code we're writing than just reading it from your workspace. There's a csv file in the \texttt{sierra} folder of \texttt{extdata} named \texttt{Sierra2LassenData.csv} that we could then read with:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{read.csv}\NormalTok{(}\FunctionTok{ex}\NormalTok{(}\StringTok{"sierra/sierraFebShort.csv"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        STATION    COUNTY ELEVATION LATITUDE LONGITUDE PRECIPITATION TEMPERATURE
+## 1     OROVILLE     Butte        52    39.52   -121.55           124        10.7
+## 2       AUBURN    Placer       394    38.91   -121.08           160         9.7
+## 3       SONORA  Tuolumne       511    37.97   -120.39           148         7.7
+## 4  PLACERVILLE El Dorado       564    38.70   -120.82           171         9.2
+## 5       COLFAX    Placer       725    39.09   -120.95           207         7.3
+## 6  NEVADA CITY    Nevada       848    39.25   -121.00           268         6.7
+## 7       QUINCY    Plumas      1042    39.94   -120.95           182         4.0
+## 8     YOSEMITE  Mariposa      1225    37.75   -119.59           169         5.0
+## 9      PORTOLA    Plumas      1478    39.81   -120.47            98         0.5
+## 10     TRUCKEE    Nevada      1775    39.33   -120.17           126        -1.1
+## 11  BRIDGEPORT      Mono      1972    38.26   -119.23            41        -2.2
+## 12  LEE VINING      Mono      2072    37.96   -119.12            72         0.4
+## 13       BODIE      Mono      2551    38.21   -119.01            40        -4.4
+\end{verbatim}
+
+\ldots{} and that doesn't take up much more code real estate than if you had a \texttt{"sierra/sierraFebShort.csv"} in your workspace/RStudio project folder. You just need to remember to also include \texttt{library(igisci)} in your code.
+
+As you can see, this function is already in the igisci package, but how did it get there? Here are the steps for this simple function.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Use \texttt{usethis::use\_r()} to create a script to hold your function(s). We'll just create one function, so we'll just name it the same name as the function, but you might want to have a set of maybe related functions in your script.
+\end{enumerate}
+
+\begin{verbatim}
+usethis::use_r("ex")
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Add the function code to the \texttt{ex.R} script created.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ex }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(dta)\{}
+  \FunctionTok{system.file}\NormalTok{(}\StringTok{"extdata"}\NormalTok{,dta,}\AttributeTok{package=}\StringTok{"igisci"}\NormalTok{)}
+\NormalTok{  \}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\item
+  Create the documentation skeleton while editing the script by using Insert Roxygen Skeleton from the RStudio Code menu.
+\item
+  Then fill in the various elements of the documentation (A title, parameters, what it returns and examples) which shows what you want the user to see with \texttt{?ex} or \texttt{?exfiles}, similar to this, and save the script. If you have more than one function, the documentation will go just above the function definition. See \url{https://r-pkgs.org/man.html}.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#\textquotesingle{} Access external data in package}
+\CommentTok{\#\textquotesingle{}}
+\CommentTok{\#\textquotesingle{} @param dta filename to access from extdata, including folders}
+\CommentTok{\#\textquotesingle{}}
+\CommentTok{\#\textquotesingle{} @return path to the file}
+\CommentTok{\#\textquotesingle{} @export}
+\CommentTok{\#\textquotesingle{}}
+\CommentTok{\#\textquotesingle{} @examples}
+\CommentTok{\#\textquotesingle{} read.csv(ex("sierra/sierraStations.csv"))}
+\NormalTok{ex }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(dta)\{}
+  \FunctionTok{system.file}\NormalTok{(}\StringTok{"extdata"}\NormalTok{,dta,}\AttributeTok{package=}\StringTok{"igisci"}\NormalTok{)}
+\NormalTok{\}}
+\CommentTok{\#\textquotesingle{} Listing contents of extdata from package}
+\CommentTok{\#\textquotesingle{} @param NA}
+\CommentTok{\#\textquotesingle{} @return tibble}
+\CommentTok{\#\textquotesingle{} @export}
+\CommentTok{\#\textquotesingle{}}
+\CommentTok{\#\textquotesingle{} @examples}
+\CommentTok{\#\textquotesingle{} view(exfiles())}
+\NormalTok{exfiles }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{()\{}
+  \FunctionTok{library}\NormalTok{(dplyr)}
+\NormalTok{  exfilesDF }\OtherTok{\textless{}{-}} \FunctionTok{tribble}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{dir,}\SpecialCharTok{\textasciitilde{}}\NormalTok{file,}\SpecialCharTok{\textasciitilde{}}\NormalTok{path,}\SpecialCharTok{\textasciitilde{}}\NormalTok{type)}
+  \ControlFlowTok{for}\NormalTok{(d }\ControlFlowTok{in} \FunctionTok{list.dirs}\NormalTok{(}\FunctionTok{ex}\NormalTok{(}\StringTok{""}\NormalTok{),}\AttributeTok{recursive=}\NormalTok{F))\{}
+    \CommentTok{\#print(d)}
+\NormalTok{    dsplit }\OtherTok{\textless{}{-}} \FunctionTok{strsplit}\NormalTok{(d,}\StringTok{"/"}\NormalTok{)}
+\NormalTok{    len }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(dsplit[[}\DecValTok{1}\NormalTok{]])}
+\NormalTok{    dir }\OtherTok{\textless{}{-}}\NormalTok{ dsplit[[}\DecValTok{1}\NormalTok{]][len]}
+    \ControlFlowTok{for}\NormalTok{(shp }\ControlFlowTok{in} \FunctionTok{list.files}\NormalTok{(d,}\AttributeTok{pattern=}\StringTok{"*.shp$"}\NormalTok{))\{}
+\NormalTok{      exfilesDF }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(exfilesDF,}\FunctionTok{tribble}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{dir,}\SpecialCharTok{\textasciitilde{}}\NormalTok{file,}\SpecialCharTok{\textasciitilde{}}\NormalTok{path,}\SpecialCharTok{\textasciitilde{}}\NormalTok{type,dir,shp,}\FunctionTok{paste0}\NormalTok{(}\StringTok{"ex(}\SpecialCharTok{\textbackslash{}\textquotesingle{}}\StringTok{"}\NormalTok{,dir,}\StringTok{"/"}\NormalTok{,shp,}\StringTok{"}\SpecialCharTok{\textbackslash{}\textquotesingle{}}\StringTok{)"}\NormalTok{),}\StringTok{"shapefile"}\NormalTok{))}
+\NormalTok{    \}}
+    \ControlFlowTok{for}\NormalTok{(tif }\ControlFlowTok{in} \FunctionTok{list.files}\NormalTok{(d,}\AttributeTok{pattern=}\StringTok{"*.tif$"}\NormalTok{))\{}
+\NormalTok{      exfilesDF }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(exfilesDF,}\FunctionTok{tribble}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{dir,}\SpecialCharTok{\textasciitilde{}}\NormalTok{file,}\SpecialCharTok{\textasciitilde{}}\NormalTok{path,}\SpecialCharTok{\textasciitilde{}}\NormalTok{type,dir,tif,}\FunctionTok{paste0}\NormalTok{(}\StringTok{"ex(}\SpecialCharTok{\textbackslash{}\textquotesingle{}}\StringTok{"}\NormalTok{,dir,}\StringTok{"/"}\NormalTok{,tif,}\StringTok{"}\SpecialCharTok{\textbackslash{}\textquotesingle{}}\StringTok{)"}\NormalTok{),}\StringTok{"TIFF"}\NormalTok{))}
+\NormalTok{    \}}
+    \ControlFlowTok{for}\NormalTok{(csv }\ControlFlowTok{in} \FunctionTok{list.files}\NormalTok{(d,}\AttributeTok{pattern=}\StringTok{"*.csv"}\NormalTok{))\{}
+\NormalTok{      exfilesDF }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(exfilesDF,}\FunctionTok{tribble}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{dir,}\SpecialCharTok{\textasciitilde{}}\NormalTok{file,}\SpecialCharTok{\textasciitilde{}}\NormalTok{path,}\SpecialCharTok{\textasciitilde{}}\NormalTok{type,dir,csv,}\FunctionTok{paste0}\NormalTok{(}\StringTok{"ex(}\SpecialCharTok{\textbackslash{}\textquotesingle{}}\StringTok{"}\NormalTok{,dir,}\StringTok{"/"}\NormalTok{,csv,}\StringTok{"}\SpecialCharTok{\textbackslash{}\textquotesingle{}}\StringTok{)"}\NormalTok{),}\StringTok{"CSV"}\NormalTok{))}
+\NormalTok{    \}}
+    \ControlFlowTok{for}\NormalTok{(xls }\ControlFlowTok{in} \FunctionTok{list.files}\NormalTok{(d,}\AttributeTok{pattern=}\StringTok{"*.xls"}\NormalTok{))\{}
+\NormalTok{      exfilesDF }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(exfilesDF,}\FunctionTok{tribble}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{dir,}\SpecialCharTok{\textasciitilde{}}\NormalTok{file,}\SpecialCharTok{\textasciitilde{}}\NormalTok{path,}\SpecialCharTok{\textasciitilde{}}\NormalTok{type,dir,xls,}\FunctionTok{paste0}\NormalTok{(}\StringTok{"ex(}\SpecialCharTok{\textbackslash{}\textquotesingle{}}\StringTok{"}\NormalTok{,dir,}\StringTok{"/"}\NormalTok{,xls,}\StringTok{"}\SpecialCharTok{\textbackslash{}\textquotesingle{}}\StringTok{)"}\NormalTok{),}\StringTok{"xls"}\NormalTok{))}
+\NormalTok{    \}}
+\NormalTok{  \}}
+\NormalTok{  exfilesDF}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  Use \texttt{devtools::document()} to convert the comments to .Rd files.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{devtools}\SpecialCharTok{::}\FunctionTok{document}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{5}
+\item
+  Then preview the documentation with \texttt{?ex}, and maybe use Check in the Build tab.
+\item
+  Then when you commit these changes in GitHub, the package will contain the function, ready to use as long as the user loads the library. You should see the function as \texttt{ex.Rd} in the \texttt{man} folder of your package, similar to what you see for the data described above.
+\end{enumerate}
+
+This example was pretty simple for this simple code with no dependencies other than what's in base R, but you'll probably want to test it thoroughly, and add more documentation to do anything more complicated.
+
+\hypertarget{references}{%
+\chapter*{References}\label{references}}
+
+
+\hypertarget{refs}{}
+\begin{CSLReferences}{1}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-ACCESS}{}}%
+\emph{Applied California Current Ecosystem Studies}. n.d. \url{https://pointblue.org}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Ballard2019}{}}%
+Ballard, Grant, Annie E Schmidt, Viola Toniolo, Sam Veloz, Dennis Jongsomjit, Kevin R Arrigo, and David G Ainley. 2019. {``Fine-Scale Oceanographic Features Characterizing Successful Adélie Penguin Foraging in the SW Ross Sea.''} \emph{Marine Ecology Progress Series}. \url{https://doi.org/10.3354/meps12801}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-blackburn2021carbon}{}}%
+Blackburn, Darren A, Andrew J Oliphant, and Jerry D Davis. 2021. {``Carbon and Water Exchanges in a Mountain Meadow Ecosystem, Sierra Nevada, California.''} \emph{Wetlands} 41 (3): 1--17. \url{https://doi.org/10.1007/s13157-021-01437-2}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-happygitwithr}{}}%
+Bryan, Jenny. n.d. \emph{Happy Git and GitHub for the useR}. \url{https://happygitwithr.com/}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-davis1993geomorphology}{}}%
+Davis, Jerry D, and George A Brook. 1993. {``Geomorphology and Hydrology of Upper Sinking Cove, Cumberland Plateau, Tennessee.''} \emph{Earth Surface Processes and Landforms} 18 (4): 339--62. \url{https://doi.org/10.1002/esp.3290180404}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Studwell2017}{}}%
+Studwell, Anna, Ellen Hines, Meredith L Elliott, Julie Howar, Barbara Holzman, Nadav Nur, and Jaime Jahncke. 2017. {``Modeling Nonresident Seabird Foraging Distributions to Inform Ocean Zoning in Central California.''} \emph{PLoS ONE}. \url{https://doi.org/10.1371/journal.pone.0169517}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-r-pkgs}{}}%
+Wickham, Hadley, and Jenny Bryan. n.d. \emph{R Packages}. O'Reilly. \url{https://r-pkgs.org}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Bookdown}{}}%
+Xie, Yihui. 2021. \emph{Bookdown: Authoring Books and Technical Documents with r Markdown}. Boca Raton, Florida: Chapman; Hall/CRC. \url{https://bookdown.org/yihui/bookdown/}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-RMarkdown}{}}%
+Xie, Yihui, JJ Allaire, and Garrett Grolemund. 2019. \emph{R Markdown: The Definitive Guide}. 1st ed. Boca Raton, Florida: Chapman; Hall/CRC. \url{https://bookdown.org/yihui/rmarkdown/}.
+
+\end{CSLReferences}
+
+\backmatter
+\printindex
+
+\end{document}

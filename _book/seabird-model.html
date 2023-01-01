@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>6 Seabird Model | Environmental Data Science Addenda</title>
+  <meta name="description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="6 Seabird Model | Environmental Data Science Addenda" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
+  <meta name="github-repo" content="iGISc/EnvDataSciAddenda" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="6 Seabird Model | Environmental Data Science Addenda" />
+  
+  <meta name="twitter:description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
+  
+
+<meta name="author" content="Jerry Davis, SFSU Institute for Geographic Information Science" />
+
+
+<meta name="date" content="2022-12-31" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="pointblue-penguin-study.html"/>
+<link rel="next" href="time-series-case-studies.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.24/datatables.js"></script>
+<link href="libs/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.11.3/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.1.1/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.1.1/leaflet-providers-plugin.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><img src="img/eaRth_anna296addenda.png"></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Background, Goals and Data</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#structure-of-the-addenda"><i class="fa fa-check"></i><b>1.1</b> Structure of the Addenda</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#software-and-data"><i class="fa fa-check"></i><b>1.2</b> Software and Data</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#data"><i class="fa fa-check"></i><b>1.2.1</b> Data</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.3</b> Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="air-pollutant-emissions-trends-epa.html"><a href="air-pollutant-emissions-trends-epa.html"><i class="fa fa-check"></i><b>2</b> Air pollutant emissions trends (EPA)</a></li>
+<li class="chapter" data-level="3" data-path="distance-from-census-tract-centroid-to-closest-tri-site.html"><a href="distance-from-census-tract-centroid-to-closest-tri-site.html"><i class="fa fa-check"></i><b>3</b> Distance from census tract centroid to closest TRI site</a></li>
+<li class="chapter" data-level="4" data-path="exploring-terrain-mapping-and-water-samples-in-a-karst-area.html"><a href="exploring-terrain-mapping-and-water-samples-in-a-karst-area.html"><i class="fa fa-check"></i><b>4</b> Exploring terrain mapping and water samples in a karst area</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="exploring-terrain-mapping-and-water-samples-in-a-karst-area.html"><a href="exploring-terrain-mapping-and-water-samples-in-a-karst-area.html#creating-a-basemap-from-a-dem-using-hillshade-and-terrain-shading"><i class="fa fa-check"></i><b>4.1</b> Creating a basemap from a DEM, using hillshade and terrain shading</a></li>
+<li class="chapter" data-level="4.2" data-path="exploring-terrain-mapping-and-water-samples-in-a-karst-area.html"><a href="exploring-terrain-mapping-and-water-samples-in-a-karst-area.html#using-maptiles-for-a-topographic-basemap-with-contours"><i class="fa fa-check"></i><b>4.2</b> Using maptiles for a topographic basemap with contours</a></li>
+<li class="chapter" data-level="4.3" data-path="exploring-terrain-mapping-and-water-samples-in-a-karst-area.html"><a href="exploring-terrain-mapping-and-water-samples-in-a-karst-area.html#interactive-maps-with-tmap-view-mode"><i class="fa fa-check"></i><b>4.3</b> Interactive maps with tmap view mode</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="pointblue-penguin-study.html"><a href="pointblue-penguin-study.html"><i class="fa fa-check"></i><b>5</b> PointBlue Penguin Study</a>
+<ul>
+<li class="chapter" data-level="5.0.1" data-path="pointblue-penguin-study.html"><a href="pointblue-penguin-study.html#interactive-mapping-of-individual-penguins-abstracted-from-a-big-dataset"><i class="fa fa-check"></i><b>5.0.1</b> Interactive mapping of individual penguins abstracted from a big dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="seabird-model.html"><a href="seabird-model.html"><i class="fa fa-check"></i><b>6</b> Seabird Model</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="seabird-model.html"><a href="seabird-model.html#goals-and-basic-methods-of-the-analysis"><i class="fa fa-check"></i><b>6.1</b> Goals and basic methods of the analysis</a></li>
+<li class="chapter" data-level="6.2" data-path="seabird-model.html"><a href="seabird-model.html#exploratory-data-analysis"><i class="fa fa-check"></i><b>6.2</b> Exploratory data analysis</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="seabird-model.html"><a href="seabird-model.html#identifying-the-appropriate-model-using-variance-and-mean-comparisons"><i class="fa fa-check"></i><b>6.2.1</b> Identifying the appropriate model using variance and mean comparisons</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="seabird-model.html"><a href="seabird-model.html#model-black-footed-albatross-counts-for-july-using-a-poisson-family-glm"><i class="fa fa-check"></i><b>6.3</b> Model black-footed albatross counts for July using a poisson-family glm</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="seabird-model.html"><a href="seabird-model.html#map-the-prediction"><i class="fa fa-check"></i><b>6.3.1</b> Map the prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="seabird-model.html"><a href="seabird-model.html#interpolation"><i class="fa fa-check"></i><b>6.4</b> Interpolation</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html"><i class="fa fa-check"></i><b>7</b> Time Series case studies</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html#loney-meadow-flux-data"><i class="fa fa-check"></i><b>7.1</b> Loney Meadow flux data</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html"><i class="fa fa-check"></i><b>8</b> R Markdown and Bookdown</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#r-markdown"><i class="fa fa-check"></i><b>8.1</b> R Markdown</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#markdown-editing"><i class="fa fa-check"></i><b>8.1.1</b> Markdown editing</a></li>
+<li class="chapter" data-level="8.1.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#display-options-in-code-chunks"><i class="fa fa-check"></i><b>8.1.2</b> Display options in code chunks</a></li>
+<li class="chapter" data-level="8.1.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#numbered-figures-with-text-citations"><i class="fa fa-check"></i><b>8.1.3</b> Numbered figures with text citations</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#a-template-for-multiple-output-formats"><i class="fa fa-check"></i><b>8.2</b> A template for multiple output formats</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#the-template"><i class="fa fa-check"></i><b>8.2.1</b> The template</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#building-a-book-with-bookdown-and-yaml-options"><i class="fa fa-check"></i><b>8.3</b> Building a book with bookdown and YAML options</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#building-a-book"><i class="fa fa-check"></i><b>8.3.1</b> Building a book</a></li>
+<li class="chapter" data-level="8.3.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#special-characters-and-formatting-limitations-and-challenges"><i class="fa fa-check"></i><b>8.3.2</b> Special characters and formatting limitations and challenges</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#yaml-files-used-to-configure-the-book"><i class="fa fa-check"></i><b>8.4</b> YAML files used to configure the book</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#output.yml"><i class="fa fa-check"></i><b>8.4.1</b> _output.yml</a></li>
+<li class="chapter" data-level="8.4.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#index.rmd"><i class="fa fa-check"></i><b>8.4.2</b> index.Rmd</a></li>
+<li class="chapter" data-level="8.4.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#bookdown.yml"><i class="fa fa-check"></i><b>8.4.3</b> _bookdown.yml</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html"><i class="fa fa-check"></i><b>9</b> Building a Package on GitHub for Data and Code</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#git-and-github"><i class="fa fa-check"></i><b>9.1</b> Git and GitHub</a></li>
+<li class="chapter" data-level="9.2" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#some-notes-on-the-rstudio-process"><i class="fa fa-check"></i><b>9.2</b> Some notes on the RStudio process</a></li>
+<li class="chapter" data-level="9.3" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#data-1"><i class="fa fa-check"></i><b>9.3</b> Data</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#raw-data-in-extdata"><i class="fa fa-check"></i><b>9.3.1</b> Raw data in extdata</a></li>
+<li class="chapter" data-level="9.3.2" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#binary-data-as-rda-files"><i class="fa fa-check"></i><b>9.3.2</b> Binary data as <code>rda</code> files</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#code-functions"><i class="fa fa-check"></i><b>9.4</b> Code (functions)</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Environmental Data Science Addenda</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="seabird-model" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">6</span> Seabird Model<a href="seabird-model.html#seabird-model" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>In this case study, we’ll expand upon a <strong>poisson</strong> family glm applied to seabird counts discussed in the modeling chapter. The Applied California Current Ecosystem Study (ACCESS) <a href="https://farallones.noaa.gov/science/access.html" class="uri">https://farallones.noaa.gov/science/access.html</a> supports marine wildlife conservation in northern and central California, including the Greater Farallones off the Golden Gate and San Francisco (<span class="citation"><em>Applied California Current Ecosystem Studies</em> (<a href="#ref-ACCESS" role="doc-biblioref">n.d.</a>)</span>, <span class="citation">Studwell et al. (<a href="#ref-Studwell2017" role="doc-biblioref">2017</a>)</span>).</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-19"></span>
+<img src="img/Black-footed_Albatross,_20_miles_offshore_of_Newport,_OR,_16_July_2013_(9322588606).jpg" alt="By Caleb Putnam - Black-footed Albatross, 20 miles offshore of Newport, OR, 16 July 2013, CC BY-SA 2.0, https://commons.wikimedia.org/w/index.php?curid=74693160" width="75%" />
+<p class="caption">
+FIGURE 6.1: By Caleb Putnam - Black-footed Albatross, 20 miles offshore of Newport, OR, 16 July 2013, CC BY-SA 2.0, <a href="https://commons.wikimedia.org/w/index.php?curid=74693160" class="uri">https://commons.wikimedia.org/w/index.php?curid=74693160</a>
+</p>
+</div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="seabird-model.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igisci); <span class="fu">library</span>(sf); <span class="fu">library</span>(tidyverse); <span class="fu">library</span>(tmap)</span>
+<span id="cb29-2"><a href="seabird-model.html#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(maptiles); <span class="fu">library</span>(readxl); <span class="fu">library</span>(DT)</span>
+<span id="cb29-3"><a href="seabird-model.html#cb29-3" aria-hidden="true" tabindex="-1"></a>Sanctuaries <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="fu">ex</span>(<span class="st">&quot;SFmarine/Sanctuaries.shp&quot;</span>))</span>
+<span id="cb29-4"><a href="seabird-model.html#cb29-4" aria-hidden="true" tabindex="-1"></a>transectsXLS <span class="ot">&lt;-</span> <span class="fu">read_xls</span>(<span class="fu">ex</span>(<span class="st">&quot;SFmarine/TransectsData.xls&quot;</span>))</span>
+<span id="cb29-5"><a href="seabird-model.html#cb29-5" aria-hidden="true" tabindex="-1"></a>transects <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(<span class="fu">st_as_sf</span>(transectsXLS, <span class="at">coords=</span><span class="fu">c</span>(<span class="st">&quot;midlon&quot;</span>,<span class="st">&quot;midlat&quot;</span>), <span class="at">crs=</span><span class="dv">4326</span>), <span class="at">crs=</span><span class="fu">st_crs</span>(Sanctuaries))</span>
+<span id="cb29-6"><a href="seabird-model.html#cb29-6" aria-hidden="true" tabindex="-1"></a>cordell_bank <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="fu">ex</span>(<span class="st">&quot;SFmarine/cordell_bank.shp&quot;</span>))</span>
+<span id="cb29-7"><a href="seabird-model.html#cb29-7" aria-hidden="true" tabindex="-1"></a>isobath_200 <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="fu">ex</span>(<span class="st">&quot;SFmarine/isobath_200.shp&quot;</span>))</span>
+<span id="cb29-8"><a href="seabird-model.html#cb29-8" aria-hidden="true" tabindex="-1"></a>mainland <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="fu">ex</span>(<span class="st">&quot;SFmarine/mainland.shp&quot;</span>))</span>
+<span id="cb29-9"><a href="seabird-model.html#cb29-9" aria-hidden="true" tabindex="-1"></a>sefi <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="fu">ex</span>(<span class="st">&quot;SFmarine/sefi.shp&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="seabird-model.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap); <span class="fu">library</span>(maptiles)</span>
+<span id="cb30-2"><a href="seabird-model.html#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">&quot;plot&quot;</span>)</span>
+<span id="cb30-3"><a href="seabird-model.html#cb30-3" aria-hidden="true" tabindex="-1"></a>oceanBase <span class="ot">&lt;-</span> <span class="fu">get_tiles</span>(transects, <span class="at">provider=</span><span class="st">&quot;Esri.NatGeoWorldMap&quot;</span>)</span>
+<span id="cb30-4"><a href="seabird-model.html#cb30-4" aria-hidden="true" tabindex="-1"></a>transJul <span class="ot">&lt;-</span> transects <span class="sc">%&gt;%</span> <span class="fu">filter</span>(month<span class="sc">==</span><span class="dv">7</span>)</span>
+<span id="cb30-5"><a href="seabird-model.html#cb30-5" aria-hidden="true" tabindex="-1"></a>transJulnonegTS <span class="ot">&lt;-</span> transJul <span class="sc">%&gt;%</span> <span class="fu">filter</span>(avg_tem<span class="sc">&gt;</span><span class="dv">0</span> <span class="sc">&amp;</span> avg_sal<span class="sc">&gt;</span><span class="dv">0</span>)</span>
+<span id="cb30-6"><a href="seabird-model.html#cb30-6" aria-hidden="true" tabindex="-1"></a>transJulnonegTSF <span class="ot">&lt;-</span> transJulnonegTS <span class="sc">%&gt;%</span> <span class="fu">filter</span>(avg_fluo<span class="sc">&gt;</span><span class="dv">0</span>)</span>
+<span id="cb30-7"><a href="seabird-model.html#cb30-7" aria-hidden="true" tabindex="-1"></a>Jul_bfal <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(oceanBase) <span class="sc">+</span> <span class="fu">tm_rgb</span>() <span class="sc">+</span></span>
+<span id="cb30-8"><a href="seabird-model.html#cb30-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(transJul) <span class="sc">+</span> <span class="fu">tm_symbols</span>(<span class="at">col=</span><span class="st">&quot;bfal&quot;</span>, <span class="at">size=</span><span class="st">&quot;bfal&quot;</span>)</span>
+<span id="cb30-9"><a href="seabird-model.html#cb30-9" aria-hidden="true" tabindex="-1"></a>Jul_all <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(oceanBase) <span class="sc">+</span> <span class="fu">tm_rgb</span>() <span class="sc">+</span></span>
+<span id="cb30-10"><a href="seabird-model.html#cb30-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(transJul) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">col=</span><span class="st">&quot;avg_fluo&quot;</span>, <span class="at">size=</span><span class="st">&quot;avg_fluo&quot;</span>)</span>
+<span id="cb30-11"><a href="seabird-model.html#cb30-11" aria-hidden="true" tabindex="-1"></a>Jul_TS <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(oceanBase) <span class="sc">+</span> <span class="fu">tm_rgb</span>() <span class="sc">+</span></span>
+<span id="cb30-12"><a href="seabird-model.html#cb30-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(transJulnonegTS) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">col=</span><span class="st">&quot;avg_fluo&quot;</span>, <span class="at">size=</span><span class="st">&quot;avg_fluo&quot;</span>)</span>
+<span id="cb30-13"><a href="seabird-model.html#cb30-13" aria-hidden="true" tabindex="-1"></a>Jul_TSF <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(oceanBase) <span class="sc">+</span> <span class="fu">tm_rgb</span>() <span class="sc">+</span></span>
+<span id="cb30-14"><a href="seabird-model.html#cb30-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(transJulnonegTSF) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">col=</span><span class="st">&quot;avg_fluo&quot;</span>, <span class="at">size=</span><span class="st">&quot;avg_fluo&quot;</span>)</span>
+<span id="cb30-15"><a href="seabird-model.html#cb30-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-16"><a href="seabird-model.html#cb30-16" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_arrange</span>(Jul_bfal, Jul_all, Jul_TS, Jul_TSF)</span></code></pre></div>
+<p>The transects data have 45 variables including:</p>
+<ul>
+<li>date and time variables</li>
+<li>seawater measurements of temperature, salinity and fluorescence</li>
+<li>ocean climate indices</li>
+<li>distance to land, islands, the 200m isobath, and Cordell Bank</li>
+<li>depth</li>
+<li>oceanic/atmospheric conditions (sea state, visibility, beaufort index, cloudiness, upwelling)</li>
+<li>counts of seabirds:
+<ul>
+<li>black-footed albatross (bfal)</li>
+<li>northern fulmar (nofu)</li>
+<li>pink-footed shearwater (pfsh)</li>
+<li>red phalarope (reph)</li>
+<li>red-necked phalarope (rnph)</li>
+<li>sooty shearwater (sosh)</li>
+</ul></li>
+</ul>
+<p>More specifics are in the metadata:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="seabird-model.html#cb31-1" aria-hidden="true" tabindex="-1"></a>transects_metadata <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="fu">ex</span>(<span class="st">&quot;SFmarine/Transects_Metadata.xls&quot;</span>))</span>
+<span id="cb31-2"><a href="seabird-model.html#cb31-2" aria-hidden="true" tabindex="-1"></a>DT<span class="sc">::</span><span class="fu">datatable</span>(transects_metadata[<span class="dv">1</span>,<span class="dv">1</span>])</span></code></pre></div>
+<div id="htmlwidget-c84ebb9d782d40b8b626" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c84ebb9d782d40b8b626">{"x":{"filter":"none","vertical":false,"data":[["1"],["For clarification, questions, or additional data please direct requests to jjahncke@pointblue.org or marinedirector@pointblue.org. Point Blue Conservation Science data included here available for sharing, within the context of a data sharing agreement (http://www.pointblue.org/datasharing)"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Data used in Studwell et al. 2017. \"Modeling nonresident seabird foraging distributions to inform ocean zoning in central California.\" PLoS ONE.https://doi.org/10.1371/journal.pone.0169517<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="seabird-model.html#cb32-1" aria-hidden="true" tabindex="-1"></a>DT<span class="sc">::</span><span class="fu">datatable</span>(<span class="fu">read_excel</span>(<span class="fu">ex</span>(<span class="st">&quot;SFmarine/Transects_Metadata.xls&quot;</span>),<span class="at">skip=</span><span class="dv">3</span>))</span></code></pre></div>
+<div id="htmlwidget-b4bdd218ee7251597124" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b4bdd218ee7251597124">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44"],["year","month","obsdate","time","endtime","midlat","midlon","avg_tem","avg_sal","avg_fluo","pdo","pdo_lag1","pdo_lag2","pdo_lag3","soi","soi_lag1","soi_lag2","soi_lag3","npgo","npgo_lag1","npgo_lag2","npgo_lag3","ui","ui_lag1","ui_lag2","ui_lag3","avg_dep","ctrindex","dist_land","dist_isla","dist_200m","dist_cord","area","viscode","seastate","swell","strip_width","cloud","bfal","nofu","pfsh","reph","rnph","sosh"],["Year data were collected","Month data were collected","Local observation date (YYMMDD)","Local time of bin start (HHMMSS)","Local time of bin end (HHMMSS)","Middle latitude of bin (decimal degrees)","Middle longitude of bin (decimal degrees)","Average surface temperature (øC) using interpolated thermosalinograph and CTD surfaces","Average surface salinity (mg/m^3) using interpolated thermosalinograph and CTD surfaces","Average surface fluorescence (rfu) using interpolated thermosalinograph and CTD surfaces","Pacific Decadal Oscillation (monthly index). Website: http://jisao.washington.edu/pdo/","PDO of previous month","PDO of two months prior","PDO of three months prior","Southern Oscillation Index (monthly index). Website: http://www.cgd.ucar.edu/cas/catalog/climind/soi.html","SOI of previous month","SOI of two months prior","SOI of three months prior","North Pacific Gyre Oscillation (NPGO). Website: http://eros.eas.gatech.edu/npgo/","NPGO of previous month","NPGO of two months prior","NPGO of three months prior","Upwelling index (average of monthly values at 36øN and 39øN). Website: http://www.pfeg.noaa.gov/products/PFEL/modeled/indices/upwelling/NA/upwell_menu_NA.html","UI of previous month","UI of two months prior","UI of three months prior","Average depth (m) in bin","Distance (m) from bin center to mainland","Distance (m) from bin center to islands","Distance (m) from bin center to islands","Distance (m) from bin center to 200m isobath","Distance (m) from bin center to Cordell Bank","Area of bin (km^2)","Visibility: 0=0-50 m, 1= &gt;50 to 250 m, 2= &gt;250 to 500 m, 3= &gt;500 to 1000 m, 4= &gt;1 to 3 km, 5= &gt;3 to 10 km, 6= &gt;10 km","Sea state (Beaufort condition)","Swell height (m)","Observation strip width (m)","Cloud cover:  1 = 1/8, 2 = 2/8, 8 = 8/8","Number of black-footed albatross in 3-km bin","Number of northern fulmar in 3-km bin","Number of pink-footed shearwater in 3-km bin","Number of red phalarope in 3-km bin","Number of red-necked phalarope in 3-km bin","Number of sooty shearwater in 3-km bin"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Variables included<\/th>\n      <th>...2<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="goals-and-basic-methods-of-the-analysis" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Goals and basic methods of the analysis<a href="seabird-model.html#goals-and-basic-methods-of-the-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Our general goal, inspired by <span class="citation">Studwell et al. (<a href="#ref-Studwell2017" role="doc-biblioref">2017</a>)</span>, is to look at what variables influence the counts of specific seabirds and develop predictive models and maps illustrating optimal conditions for those seabirds based on the model. We’re expecting that some of the various measurements and conditions could be good predictors, though recognizing that no model is perfect and there are going to be many other factors we can’t account for.</p>
+<p>Our basic method will include:</p>
+<ul>
+<li>Gathering data collected on the cruises as well as GIS and model-derived measurements (e.g. depth, distance, climate models). <em>This has been done and all variables we’ll use are included in the transects shapefile.</em></li>
+<li>Explore the data using maps, graphs and tables, filtering for a time frame and complete data.</li>
+<li>Select a species, timeframe, and selection of explanatory variables.</li>
+<li>Use <code>glm</code> to model the species counts responding to the explanatory variables, using the poisson family.</li>
+<li>Map the results.</li>
+</ul>
+</div>
+<div id="exploratory-data-analysis" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Exploratory data analysis<a href="seabird-model.html#exploratory-data-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We’ll start by looking at a summary of the bird counts, stored as a series of variables from <code>bfal</code> (black-footed albatross) to <code>sosh</code> (sooty shearwater):</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="seabird-model.html#cb33-1" aria-hidden="true" tabindex="-1"></a>transectBirdcounts <span class="ot">&lt;-</span> transects <span class="sc">%&gt;%</span></span>
+<span id="cb33-2"><a href="seabird-model.html#cb33-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(bfal<span class="sc">:</span>sosh)</span>
+<span id="cb33-3"><a href="seabird-model.html#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(transectBirdcounts)</span></code></pre></div>
+<pre><code>##       bfal              nofu               pfsh              reph        
+##  Min.   : 0.0000   Min.   :  0.0000   Min.   : 0.0000   Min.   : 0.0000  
+##  1st Qu.: 0.0000   1st Qu.:  0.0000   1st Qu.: 0.0000   1st Qu.: 0.0000  
+##  Median : 0.0000   Median :  0.0000   Median : 0.0000   Median : 0.0000  
+##  Mean   : 0.1169   Mean   :  0.2001   Mean   : 0.1883   Mean   : 0.1638  
+##  3rd Qu.: 0.0000   3rd Qu.:  0.0000   3rd Qu.: 0.0000   3rd Qu.: 0.0000  
+##  Max.   :20.0000   Max.   :109.0000   Max.   :50.0000   Max.   :70.0000  
+##       rnph              sosh                   geometry   
+##  Min.   : 0.0000   Min.   :   0.000   POINT        :4073  
+##  1st Qu.: 0.0000   1st Qu.:   0.000   epsg:6414    :   0  
+##  Median : 0.0000   Median :   0.000   +proj=aea ...:   0  
+##  Mean   : 0.3351   Mean   :   5.737                       
+##  3rd Qu.: 0.0000   3rd Qu.:   0.000                       
+##  Max.   :86.0000   Max.   :1405.000</code></pre>
+<p>We’ll use the July data from multiple years (in the modeling chapter we just looked at July 2006) to visualize the spatial patterns of black-footed albatross, which we can see from the above has the lowest counts, displayed in both color and size in order to better see the larger counts. We’ll make similar maps of measurements of temperature, salinity and fluorescence from the transect cruises. Note that records with values of zero for any of these 3 measures are excluded, since these represent non-measurements.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="seabird-model.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">&quot;plot&quot;</span>)</span>
+<span id="cb35-2"><a href="seabird-model.html#cb35-2" aria-hidden="true" tabindex="-1"></a>oceanBase <span class="ot">&lt;-</span> <span class="fu">get_tiles</span>(transects, <span class="at">provider=</span><span class="st">&quot;Esri.NatGeoWorldMap&quot;</span>)</span>
+<span id="cb35-3"><a href="seabird-model.html#cb35-3" aria-hidden="true" tabindex="-1"></a>transJul <span class="ot">&lt;-</span> transects <span class="sc">%&gt;%</span> <span class="fu">filter</span>(month<span class="sc">==</span><span class="dv">7</span> <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(avg_tem) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(avg_sal) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(avg_fluo))</span>
+<span id="cb35-4"><a href="seabird-model.html#cb35-4" aria-hidden="true" tabindex="-1"></a>Jul_bfal <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(oceanBase) <span class="sc">+</span> <span class="fu">tm_rgb</span>() <span class="sc">+</span></span>
+<span id="cb35-5"><a href="seabird-model.html#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(transJul) <span class="sc">+</span> <span class="fu">tm_symbols</span>(<span class="at">col=</span><span class="st">&quot;bfal&quot;</span>, <span class="at">size=</span><span class="st">&quot;bfal&quot;</span>)</span>
+<span id="cb35-6"><a href="seabird-model.html#cb35-6" aria-hidden="true" tabindex="-1"></a>Jul_tem <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(oceanBase) <span class="sc">+</span> <span class="fu">tm_rgb</span>() <span class="sc">+</span></span>
+<span id="cb35-7"><a href="seabird-model.html#cb35-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(transJul) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">col=</span><span class="st">&quot;avg_tem&quot;</span>, <span class="at">size=</span><span class="st">&quot;avg_tem&quot;</span>)</span>
+<span id="cb35-8"><a href="seabird-model.html#cb35-8" aria-hidden="true" tabindex="-1"></a>Jul_sal <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(oceanBase) <span class="sc">+</span> <span class="fu">tm_rgb</span>() <span class="sc">+</span></span>
+<span id="cb35-9"><a href="seabird-model.html#cb35-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(transJul) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">col=</span><span class="st">&quot;avg_sal&quot;</span>, <span class="at">size=</span><span class="st">&quot;avg_sal&quot;</span>)</span>
+<span id="cb35-10"><a href="seabird-model.html#cb35-10" aria-hidden="true" tabindex="-1"></a>Jul_fluo <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(oceanBase) <span class="sc">+</span> <span class="fu">tm_rgb</span>() <span class="sc">+</span></span>
+<span id="cb35-11"><a href="seabird-model.html#cb35-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(transJul) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">col=</span><span class="st">&quot;avg_fluo&quot;</span>, <span class="at">size=</span><span class="st">&quot;avg_fluo&quot;</span>)</span>
+<span id="cb35-12"><a href="seabird-model.html#cb35-12" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_arrange</span>(Jul_bfal, Jul_tem, Jul_sal, Jul_fluo)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-24"></span>
+<img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-24-1.png" alt="July black footed albatross, temperature, salinity, fluorescence" width="75%" />
+<p class="caption">
+FIGURE 6.2: July black footed albatross, temperature, salinity, fluorescence
+</p>
+</div>
+<div id="identifying-the-appropriate-model-using-variance-and-mean-comparisons" class="section level3 hasAnchor" number="6.2.1">
+<h3><span class="header-section-number">6.2.1</span> Identifying the appropriate model using variance and mean comparisons<a href="seabird-model.html#identifying-the-appropriate-model-using-variance-and-mean-comparisons" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The poisson model uses an assumption that the mean and variance of the response variable is equal, but a quick check shows that this is not really met, and that since the variance is greater than the mean, our data may be <em>overdispersed</em>, which in practice is very common.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="seabird-model.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(transJul<span class="sc">$</span>bfal)</span></code></pre></div>
+<pre><code>## [1] 0.08034611</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="seabird-model.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(transJul<span class="sc">$</span>bfal)</span></code></pre></div>
+<pre><code>## [1] 0.1903187</code></pre>
+</div>
+</div>
+<div id="model-black-footed-albatross-counts-for-july-using-a-poisson-family-glm" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Model black-footed albatross counts for July using a poisson-family glm<a href="seabird-model.html#model-black-footed-albatross-counts-for-july-using-a-poisson-family-glm" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Prior studies have suggested that temperature, salinity, fluorescence, depth and various distances might be good explanatory variables to use to look at spatial patterns, so we’ll use these in the model. (Variables such as climate and oceanic conditions such as upwelling might be used in a temporal analysis, but are constant for this July analysis where we’re modeling variables with spatial patterns.)</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="seabird-model.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">glm</span>(bfal<span class="sc">~</span>avg_tem<span class="sc">+</span>avg_sal<span class="sc">+</span>avg_fluo<span class="sc">+</span>avg_dep<span class="sc">+</span>dist_land<span class="sc">+</span>dist_isla<span class="sc">+</span>dist_200m<span class="sc">+</span>dist_cord<span class="sc">+</span>year, <span class="at">data=</span>transJul,<span class="at">family=</span>poisson))</span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = bfal ~ avg_tem + avg_sal + avg_fluo + avg_dep + 
+##     dist_land + dist_isla + dist_200m + dist_cord + year, family = poisson, 
+##     data = transJul)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.2692  -0.4233  -0.1760  -0.0382   5.5544  
+## 
+## Coefficients:
+##               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept) -6.335e+02  1.955e+02  -3.241  0.00119 ** 
+## avg_tem      1.834e-01  1.217e-01   1.506  0.13199    
+## avg_sal      1.893e+00  7.643e-01   2.476  0.01327 *  
+## avg_fluo    -1.803e-01  6.458e-02  -2.792  0.00524 ** 
+## avg_dep     -2.469e-03  5.085e-04  -4.854 1.21e-06 ***
+## dist_land   -7.343e-05  3.436e-05  -2.137  0.03261 *  
+## dist_isla    8.140e-06  1.129e-05   0.721  0.47107    
+## dist_200m   -3.444e-04  6.478e-05  -5.317 1.05e-07 ***
+## dist_cord   -5.801e-06  9.461e-06  -0.613  0.53975    
+## year         2.836e-01  9.088e-02   3.121  0.00180 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for poisson family taken to be 1)
+## 
+##     Null deviance: 412.03  on 808  degrees of freedom
+## Residual deviance: 295.41  on 799  degrees of freedom
+## AIC: 408.82
+## 
+## Number of Fisher Scoring iterations: 8</code></pre>
+<p>We can see in the model coefficients table several predictive variables that appear to be significant:</p>
+<ul>
+<li>avg_sal</li>
+<li>avg_fluo</li>
+<li>avg_dep</li>
+<li>dist_land</li>
+<li>dist_200m</li>
+<li>year</li>
+</ul>
+<p>So in the interest of parsimony, we’ll remove non-significant variables to create a new model:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="seabird-model.html#cb42-1" aria-hidden="true" tabindex="-1"></a>bfal_poisson <span class="ot">&lt;-</span> <span class="fu">glm</span>(bfal<span class="sc">~</span>avg_sal<span class="sc">+</span>avg_fluo<span class="sc">+</span>avg_dep<span class="sc">+</span>dist_land<span class="sc">+</span>dist_200m<span class="sc">+</span>year, <span class="at">data=</span>transJul,<span class="at">family=</span>poisson)</span>
+<span id="cb42-2"><a href="seabird-model.html#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bfal_poisson)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = bfal ~ avg_sal + avg_fluo + avg_dep + dist_land + 
+##     dist_200m + year, family = poisson, data = transJul)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.1781  -0.4238  -0.1848  -0.0421   5.5779  
+## 
+## Coefficients:
+##               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept) -5.029e+02  1.696e+02  -2.965  0.00303 ** 
+## avg_sal      1.360e+00  6.582e-01   2.066  0.03884 *  
+## avg_fluo    -1.623e-01  6.147e-02  -2.640  0.00828 ** 
+## avg_dep     -2.318e-03  4.833e-04  -4.796 1.62e-06 ***
+## dist_land   -5.793e-05  3.228e-05  -1.795  0.07269 .  
+## dist_200m   -3.266e-04  6.200e-05  -5.268 1.38e-07 ***
+## year         2.283e-01  8.047e-02   2.838  0.00455 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for poisson family taken to be 1)
+## 
+##     Null deviance: 412.03  on 808  degrees of freedom
+## Residual deviance: 298.70  on 802  degrees of freedom
+## AIC: 406.11
+## 
+## Number of Fisher Scoring iterations: 7</code></pre>
+<p>So from this we should be able to predict the spatial distribution of counts using the formula for the poisson glm model, which in our case will have 5 explanatory variables avg_sal (<span class="math inline">\(X_1\)</span>), avg_fluo (<span class="math inline">\(X_2\)</span>), avg_dep (<span class="math inline">\(X_3\)</span>), dist_land (<span class="math inline">\(X_4\)</span>), dist_200m (<span class="math inline">\(X_5\)</span>), and year ($X_6), using the coefficient estimates from the summary above and the prediction formula in the form:</p>
+<p><span class="math display">\[z = e^{b_0+b_1X_1+b_2X_2+b_3X_3+b_4X_4+b_5X_5+b_6X_6}\]</span></p>
+<div id="map-the-prediction" class="section level3 hasAnchor" number="6.3.1">
+<h3><span class="header-section-number">6.3.1</span> Map the prediction<a href="seabird-model.html#map-the-prediction" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To create a map of the predicted spatial pattern, we’ll need rasters for each of the variables. We’ll need to create these in various ways:</p>
+<ul>
+<li>Depth raster from bathymetry data source</li>
+<li>Derive distance rasters from the mainland and 200 m isobar features</li>
+<li>For measurements obtained on the transect cruises like those from the CTD sensor (salinity and temperature), we’ll need to interpolate a raster from those points</li>
+</ul>
+<div id="depth-and-distance-rasters" class="section level4 hasAnchor" number="6.3.1.1">
+<h4><span class="header-section-number">6.3.1.1</span> Depth and distance rasters<a href="seabird-model.html#depth-and-distance-rasters" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>We have a depth raster at 200-m resolution, but for our purposes and at this scale we only need 1000-m (1-km) resolution. We’ll create a 1-km template raster based on a 10 km buffer around data points, and use that to resample the distances and along with mainland and 200-m isobath, derive the distance rasters needed:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="seabird-model.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<span id="cb44-2"><a href="seabird-model.html#cb44-2" aria-hidden="true" tabindex="-1"></a>bathy <span class="ot">&lt;-</span> <span class="fu">project</span>(<span class="fu">rast</span>(<span class="fu">ex</span>(<span class="st">&quot;SFmarine/bd200m_v2i.tif&quot;</span>)),<span class="fu">crs</span>(transects))</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="seabird-model.html#cb45-1" aria-hidden="true" tabindex="-1"></a>AOI <span class="ot">&lt;-</span> <span class="fu">vect</span>(<span class="fu">st_union</span>(<span class="fu">st_buffer</span>(transJul, <span class="dv">10000</span>)))</span>
+<span id="cb45-2"><a href="seabird-model.html#cb45-2" aria-hidden="true" tabindex="-1"></a>rasAOI <span class="ot">&lt;-</span> <span class="fu">rast</span>(AOI, <span class="at">res=</span><span class="dv">1000</span>)</span>
+<span id="cb45-3"><a href="seabird-model.html#cb45-3" aria-hidden="true" tabindex="-1"></a>bathy1km <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">resample</span>(bathy,rasAOI)</span>
+<span id="cb45-4"><a href="seabird-model.html#cb45-4" aria-hidden="true" tabindex="-1"></a>distland <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">distance</span>(rasAOI, <span class="fu">vect</span>(mainland))</span></code></pre></div>
+<pre><code>## 
+|---------|---------|---------|---------|
+=========================================
+                                          </code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="seabird-model.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(distland) <span class="ot">&lt;-</span> <span class="st">&quot;distLand&quot;</span> </span>
+<span id="cb47-2"><a href="seabird-model.html#cb47-2" aria-hidden="true" tabindex="-1"></a>distisobath200 <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">distance</span>(rasAOI, <span class="fu">vect</span>(isobath_200))</span></code></pre></div>
+<pre><code>## 
+|---------|---------|---------|---------|
+=========================================
+                                          </code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="seabird-model.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(distisobath200) <span class="ot">&lt;-</span> <span class="st">&quot;dist200mD&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="seabird-model.html#cb50-1" aria-hidden="true" tabindex="-1"></a>tm_dep <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(bathy1km) <span class="sc">+</span> <span class="fu">tm_raster</span>(<span class="at">title=</span><span class="st">&quot;depth (m)&quot;</span>)</span>
+<span id="cb50-2"><a href="seabird-model.html#cb50-2" aria-hidden="true" tabindex="-1"></a>tm_distland <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(distland) <span class="sc">+</span> <span class="fu">tm_raster</span>(<span class="at">title=</span><span class="st">&quot;Dist to land (m)&quot;</span>)</span>
+<span id="cb50-3"><a href="seabird-model.html#cb50-3" aria-hidden="true" tabindex="-1"></a>tm_distisobath200 <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(distisobath200) <span class="sc">+</span> <span class="fu">tm_raster</span>(<span class="at">title=</span><span class="st">&quot;Dist to 200m isobath&quot;</span>)</span>
+<span id="cb50-4"><a href="seabird-model.html#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_arrange</span>(tm_dep, tm_distland, tm_distisobath200)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-30-1.png" width="75%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+</div>
+<div id="interpolation" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> Interpolation<a href="seabird-model.html#interpolation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We’ll use gstat with an inverse distance weighted (IDW) method applying a inverse distance power of 2 for temperature, salinity and fluorescence, for each year <code>2004:2013</code>, then average the 10.</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="seabird-model.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gstat)</span>
+<span id="cb51-2"><a href="seabird-model.html#cb51-2" aria-hidden="true" tabindex="-1"></a>transJulv <span class="ot">&lt;-</span> <span class="fu">vect</span>(transJul)</span>
+<span id="cb51-3"><a href="seabird-model.html#cb51-3" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">geom</span>(transJulv)[,<span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>)], <span class="fu">as.data.frame</span>(transJulv))</span>
+<span id="cb51-4"><a href="seabird-model.html#cb51-4" aria-hidden="true" tabindex="-1"></a>   <span class="co"># d is a data.frame with x and y variables from the geom</span></span>
+<span id="cb51-5"><a href="seabird-model.html#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Temperature</span></span>
+<span id="cb51-6"><a href="seabird-model.html#cb51-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (year <span class="cf">in</span> <span class="dv">2004</span><span class="sc">:</span><span class="dv">2013</span>) {</span>
+<span id="cb51-7"><a href="seabird-model.html#cb51-7" aria-hidden="true" tabindex="-1"></a>  gs <span class="ot">&lt;-</span> <span class="fu">gstat</span>(<span class="at">formula=</span>avg_tem<span class="sc">~</span><span class="dv">1</span>, <span class="at">locations=</span><span class="sc">~</span>x<span class="sc">+</span>y, <span class="at">data=</span>d, <span class="at">set=</span><span class="fu">list</span>(<span class="at">idp=</span><span class="dv">2</span>))</span>
+<span id="cb51-8"><a href="seabird-model.html#cb51-8" aria-hidden="true" tabindex="-1"></a>  temRas <span class="ot">&lt;-</span> <span class="fu">interpolate</span>(rasAOI, gs)<span class="sc">$</span>var1.pred</span>
+<span id="cb51-9"><a href="seabird-model.html#cb51-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (year <span class="sc">==</span> <span class="dv">2004</span>) temSum <span class="ot">&lt;-</span> temRas</span>
+<span id="cb51-10"><a href="seabird-model.html#cb51-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (year <span class="sc">&gt;</span> <span class="dv">2004</span>) temSum <span class="ot">&lt;-</span> temSum <span class="sc">+</span> temRas</span>
+<span id="cb51-11"><a href="seabird-model.html#cb51-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb51-12"><a href="seabird-model.html#cb51-12" aria-hidden="true" tabindex="-1"></a>temMean <span class="ot">&lt;-</span> temSum<span class="sc">/</span><span class="dv">10</span>; fillval <span class="ot">&lt;-</span> <span class="fu">global</span>(temMean, <span class="st">&quot;mean&quot;</span>)[,<span class="dv">1</span>]</span>
+<span id="cb51-13"><a href="seabird-model.html#cb51-13" aria-hidden="true" tabindex="-1"></a>tem <span class="ot">&lt;-</span> <span class="fu">focal</span>(temMean,<span class="dv">9</span>, <span class="st">&quot;mean&quot;</span>, <span class="at">fillvalue=</span>fillval) </span>
+<span id="cb51-14"><a href="seabird-model.html#cb51-14" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(tem) <span class="ot">&lt;-</span> <span class="st">&quot;temperature&quot;</span></span>
+<span id="cb51-15"><a href="seabird-model.html#cb51-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Salinity</span></span>
+<span id="cb51-16"><a href="seabird-model.html#cb51-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (year <span class="cf">in</span> <span class="dv">2004</span><span class="sc">:</span><span class="dv">2013</span>) {</span>
+<span id="cb51-17"><a href="seabird-model.html#cb51-17" aria-hidden="true" tabindex="-1"></a>  gs <span class="ot">&lt;-</span> <span class="fu">gstat</span>(<span class="at">formula=</span>avg_sal<span class="sc">~</span><span class="dv">1</span>, <span class="at">locations=</span><span class="sc">~</span>x<span class="sc">+</span>y, <span class="at">data=</span>d, <span class="at">set=</span><span class="fu">list</span>(<span class="at">idp=</span><span class="dv">2</span>))</span>
+<span id="cb51-18"><a href="seabird-model.html#cb51-18" aria-hidden="true" tabindex="-1"></a>  salRas <span class="ot">&lt;-</span> <span class="fu">interpolate</span>(rasAOI, gs)<span class="sc">$</span>var1.pred</span>
+<span id="cb51-19"><a href="seabird-model.html#cb51-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (year <span class="sc">==</span> <span class="dv">2004</span>) salSum <span class="ot">&lt;-</span> salRas</span>
+<span id="cb51-20"><a href="seabird-model.html#cb51-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (year <span class="sc">&gt;</span> <span class="dv">2004</span>) salSum <span class="ot">&lt;-</span> salSum <span class="sc">+</span> salRas</span>
+<span id="cb51-21"><a href="seabird-model.html#cb51-21" aria-hidden="true" tabindex="-1"></a>  <span class="co">#print(paste(paste(year, &quot;salSum&quot;, global(salSum, &quot;max&quot;)[,1])))</span></span>
+<span id="cb51-22"><a href="seabird-model.html#cb51-22" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb51-23"><a href="seabird-model.html#cb51-23" aria-hidden="true" tabindex="-1"></a>salMean <span class="ot">&lt;-</span> salSum<span class="sc">/</span><span class="dv">10</span>; fillval <span class="ot">&lt;-</span> <span class="fu">global</span>(salMean, <span class="st">&quot;mean&quot;</span>)[,<span class="dv">1</span>]</span>
+<span id="cb51-24"><a href="seabird-model.html#cb51-24" aria-hidden="true" tabindex="-1"></a>sal <span class="ot">&lt;-</span> <span class="fu">focal</span>(salMean,<span class="dv">9</span>, <span class="st">&quot;mean&quot;</span>, <span class="at">fillvalue=</span>fillval) <span class="co"># generalizes the IDW to reduce sample point artifacts</span></span>
+<span id="cb51-25"><a href="seabird-model.html#cb51-25" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(sal) <span class="ot">&lt;-</span> <span class="st">&quot;salinity&quot;</span></span>
+<span id="cb51-26"><a href="seabird-model.html#cb51-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Fluorescence</span></span>
+<span id="cb51-27"><a href="seabird-model.html#cb51-27" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (year <span class="cf">in</span> <span class="dv">2004</span><span class="sc">:</span><span class="dv">2013</span>) {</span>
+<span id="cb51-28"><a href="seabird-model.html#cb51-28" aria-hidden="true" tabindex="-1"></a>  gs <span class="ot">&lt;-</span> <span class="fu">gstat</span>(<span class="at">formula=</span>avg_fluo<span class="sc">~</span><span class="dv">1</span>, <span class="at">locations=</span><span class="sc">~</span>x<span class="sc">+</span>y, <span class="at">data=</span>d, <span class="at">set=</span><span class="fu">list</span>(<span class="at">idp=</span><span class="dv">2</span>))</span>
+<span id="cb51-29"><a href="seabird-model.html#cb51-29" aria-hidden="true" tabindex="-1"></a>  fluoRas <span class="ot">&lt;-</span> <span class="fu">interpolate</span>(rasAOI, gs)<span class="sc">$</span>var1.pred</span>
+<span id="cb51-30"><a href="seabird-model.html#cb51-30" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (year <span class="sc">==</span> <span class="dv">2004</span>) fluoSum <span class="ot">&lt;-</span> fluoRas</span>
+<span id="cb51-31"><a href="seabird-model.html#cb51-31" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (year <span class="sc">&gt;</span> <span class="dv">2004</span>) fluoSum <span class="ot">&lt;-</span> fluoSum <span class="sc">+</span> fluoRas</span>
+<span id="cb51-32"><a href="seabird-model.html#cb51-32" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb51-33"><a href="seabird-model.html#cb51-33" aria-hidden="true" tabindex="-1"></a>fluoMean <span class="ot">&lt;-</span> fluoSum<span class="sc">/</span><span class="dv">10</span>; fillval <span class="ot">&lt;-</span> <span class="fu">global</span>(fluoMean, <span class="st">&quot;mean&quot;</span>)[,<span class="dv">1</span>]</span>
+<span id="cb51-34"><a href="seabird-model.html#cb51-34" aria-hidden="true" tabindex="-1"></a>fluo <span class="ot">&lt;-</span> <span class="fu">focal</span>(fluoMean,<span class="dv">9</span>, <span class="st">&quot;mean&quot;</span>, <span class="at">fillvalue=</span>fillval) <span class="co"># generalizes the IDW to reduce sample point artifacts</span></span>
+<span id="cb51-35"><a href="seabird-model.html#cb51-35" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(fluo) <span class="ot">&lt;-</span> <span class="st">&quot;fluorescence&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="seabird-model.html#cb52-1" aria-hidden="true" tabindex="-1"></a>tm_tem <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(tem) <span class="sc">+</span> <span class="fu">tm_raster</span>(<span class="at">title=</span><span class="st">&quot;temperature&quot;</span>)</span>
+<span id="cb52-2"><a href="seabird-model.html#cb52-2" aria-hidden="true" tabindex="-1"></a>tm_sal <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(sal) <span class="sc">+</span> <span class="fu">tm_raster</span>(<span class="at">title=</span><span class="st">&quot;salinity&quot;</span>)</span>
+<span id="cb52-3"><a href="seabird-model.html#cb52-3" aria-hidden="true" tabindex="-1"></a>tm_fluo <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(fluo) <span class="sc">+</span> <span class="fu">tm_raster</span>(<span class="at">title=</span><span class="st">&quot;fluorescence&quot;</span>)</span>
+<span id="cb52-4"><a href="seabird-model.html#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_arrange</span>(tm_dep, tm_tem, tm_sal, tm_fluo)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-32"></span>
+<img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-32-1.png" alt="Interpolated depth, salinity and fluorescence, mean of July samples in years 2004:2011" width="75%" />
+<p class="caption">
+FIGURE 6.3: Interpolated depth, salinity and fluorescence, mean of July samples in years 2004:2011
+</p>
+</div>
+<p>Reviewing the results of the glm…</p>
+<pre><code>## 
+## Call:
+## glm(formula = bfal ~ avg_sal + avg_fluo + avg_dep + dist_land + 
+##     dist_200m + year, family = poisson, data = transJul)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.1781  -0.4238  -0.1848  -0.0421   5.5779  
+## 
+## Coefficients:
+##               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept) -5.029e+02  1.696e+02  -2.965  0.00303 ** 
+## avg_sal      1.360e+00  6.582e-01   2.066  0.03884 *  
+## avg_fluo    -1.623e-01  6.147e-02  -2.640  0.00828 ** 
+## avg_dep     -2.318e-03  4.833e-04  -4.796 1.62e-06 ***
+## dist_land   -5.793e-05  3.228e-05  -1.795  0.07269 .  
+## dist_200m   -3.266e-04  6.200e-05  -5.268 1.38e-07 ***
+## year         2.283e-01  8.047e-02   2.838  0.00455 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for poisson family taken to be 1)
+## 
+##     Null deviance: 412.03  on 808  degrees of freedom
+## Residual deviance: 298.70  on 802  degrees of freedom
+## AIC: 406.11
+## 
+## Number of Fisher Scoring iterations: 7</code></pre>
+<p>… we can set up and apply the prediction formula to these rasters, using year 2006.</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="seabird-model.html#cb54-1" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">coefficients</span>(bfal_poisson)</span>
+<span id="cb54-2"><a href="seabird-model.html#cb54-2" aria-hidden="true" tabindex="-1"></a>bfalpred <span class="ot">&lt;-</span> <span class="fu">exp</span>(b[<span class="dv">1</span>] <span class="sc">+</span> b[<span class="dv">2</span>]<span class="sc">*</span>sal <span class="sc">+</span> b[<span class="dv">3</span>]<span class="sc">*</span>fluo <span class="sc">+</span> b[<span class="dv">4</span>]<span class="sc">*</span>bathy1km <span class="sc">+</span> b[<span class="dv">5</span>]<span class="sc">*</span>distland <span class="sc">+</span> b[<span class="dv">6</span>]<span class="sc">*</span>distisobath200 <span class="sc">+</span> b[<span class="dv">7</span>]<span class="sc">*</span><span class="dv">2006</span>)</span>
+<span id="cb54-3"><a href="seabird-model.html#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(bfalpred) <span class="ot">=</span> <span class="st">&quot;bfal_predict&quot;</span></span>
+<span id="cb54-4"><a href="seabird-model.html#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(bfalpred)</span>
+<span id="cb54-5"><a href="seabird-model.html#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">vect</span>(isobath_200), <span class="at">add=</span>T, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span>
+<span id="cb54-6"><a href="seabird-model.html#cb54-6" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(bathy1km, <span class="at">add=</span>T)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-34"></span>
+<img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-34-1.png" alt="Black-footed albatross prediction, July 2006" width="75%" />
+<p class="caption">
+FIGURE 6.4: Black-footed albatross prediction, July 2006
+</p>
+</div>
+<p>It appears that a prominent influence on the resulting spatial pattern is distance to the 200-m isobath, with details provided by the other explanatory variables. Given that the year is a constant in the spatial domain, the pattern on the prediction map does not vary, but the range of counts predicted varies, and we can predict the maximum value with:</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="seabird-model.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Maximum black-footed albatross model count predictions, 2004:2013</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## Maximum black-footed albatross model count predictions, 2004:2013</code></pre>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="seabird-model.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2004</span><span class="sc">:</span><span class="dv">2013</span>) {</span>
+<span id="cb57-2"><a href="seabird-model.html#cb57-2" aria-hidden="true" tabindex="-1"></a>  maxprd <span class="ot">&lt;-</span> <span class="fu">global</span>(<span class="fu">exp</span>(b[<span class="dv">1</span>] <span class="sc">+</span> b[<span class="dv">2</span>]<span class="sc">*</span>salRas <span class="sc">+</span> b[<span class="dv">3</span>]<span class="sc">*</span>fluoRas <span class="sc">+</span> b[<span class="dv">4</span>]<span class="sc">*</span>bathy1km <span class="sc">+</span> b[<span class="dv">5</span>]<span class="sc">*</span>distland <span class="sc">+</span> b[<span class="dv">6</span>]<span class="sc">*</span>distisobath200 <span class="sc">+</span> b[<span class="dv">7</span>]<span class="sc">*</span>i),max)</span>
+<span id="cb57-3"><a href="seabird-model.html#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">as.character</span>(i), <span class="st">&quot; &quot;</span>, <span class="fu">as.character</span>(<span class="fu">format</span>(maxprd, <span class="at">digits=</span><span class="dv">3</span>)), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb57-4"><a href="seabird-model.html#cb57-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>## 2004   0.305 
+## 2005   0.383 
+## 2006   0.481 
+## 2007   0.604 
+## 2008   0.759 
+## 2009   0.954 
+## 2010   1.2 
+## 2011   1.51 
+## 2012   1.89 
+## 2013   2.38</code></pre>
+
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-ACCESS" class="csl-entry">
+<em>Applied California Current Ecosystem Studies</em>. n.d. <a href="https://pointblue.org">https://pointblue.org</a>.
+</div>
+<div id="ref-Studwell2017" class="csl-entry">
+Studwell, Anna, Ellen Hines, Meredith L Elliott, Julie Howar, Barbara Holzman, Nadav Nur, and Jaime Jahncke. 2017. <span>“Modeling Nonresident Seabird Foraging Distributions to Inform Ocean Zoning in Central California.”</span> <em>PLoS ONE</em>. <a href="https://doi.org/10.1371/journal.pone.0169517">https://doi.org/10.1371/journal.pone.0169517</a>.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="pointblue-penguin-study.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="time-series-case-studies.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+},
+"book_filename": "envdatasci",
+"toc_depth": 4
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -2,20 +2,21 @@
 title: "Environmental Data Science Addenda"
 author: "Jerry Davis, SFSU Institute for Geographic Information Science"
 date: "`r Sys.Date()`"
-# documentclass: krantz  # KEEP FOR CRC
-# classoption: krantz2   # KEEP FOR CRC
-geometry: margin=1in # REMOVE FOR CRC
-bibliography: [book.bib]
+output: pdf_document
+bibliography: book.bib
 biblio-style: apalike
 link-citations: yes
 colorlinks: yes
 lot: no
 lof: yes
 site: bookdown::bookdown_site
-description: Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources).
+description: Addenda to Introduction to Environmental Data Science, including case
+  studies, extending methods into more experimental areas, and guides for building
+  packages and RMarkdown documents (essentials based on experience and methods from
+  various sources).
 github-repo: iGISc/EnvDataSciAddenda
 graphics: yes
-#header-includes: \AtBeginDocument{\frontmatter}
+geometry: margin=1in
 ---
 
 ```{r echo=FALSE}
@@ -32,18 +33,22 @@ options(tinytex.verbose = TRUE)
 
 ## Structure of the Addenda
 
-As seen in the table of contents, these addenda include:
+These addenda may include:
 
 - Case studies and extended methods, such as
-  - Air pollutant emission trends
-  - Spatial data & analysis
-  - Antarctic penguin research case study with PointBlue
-  - Seabird model, also related to PointBlue
-  - Imagery classification
-  - Time Series
+  - air pollution studies
+  - mapping methods
+  - exploring other interpolation methods
+  - models, e.g. a more extended seabird model
+  - meadow research we're doing, in time and space domains
+  - other imagery classification methods
 - Guides
   - RMarkdown
   - Building code and data packages on GitHub 
+  
+See specifics in the table of contents.
+
+*Note: some of these methods have made it into the main book, possibly in reduced form. The intention is in part to allow for a more extensive treatment in this addenda, and for the clearest and most succinct examples to make it to the next edition of the book, possibly replacing methods that might be moved here, as useful though not essential. And that's a good example of a non-succinct sentence, so it belongs here...*
   
 
 ## Software and Data
@@ -141,7 +146,7 @@ if (knitr::is_latex_output()) {
 
 ## Acknowledgements
 
-This compilation includes data and methods gathered by students in San Francisco State's GEOG 604/704 *Environmental Data Science* class, colleagues in the Department of Geography & Environment and NGOs such as PointBlue.
+This compilation includes data and methods gathered by students in San Francisco State's GEOG 604/704 *Environmental Data Science* class, colleagues in the Department of Geography & Environment and NGOs such as PointBlue. And thanks again to Anna Studwell for the nice cover art: "Dandelion fluff -- Ephemeral stalk sheds seeds to the universe".
 
 ------------------------------------------------------------------------
 
