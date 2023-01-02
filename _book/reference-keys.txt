@@ -7,6 +7,7 @@ fig:SinkingCoveCave
 fig:SCCspring
 fig:areaMap
 fig:upperSinkingCoveCaves
+fig:upperSinkingCoveGeology
 fig:upperSinkingCove
 fig:mapTiles
 fig:unnamed-chunk-19
@@ -28,10 +29,10 @@ data
 acknowledgements
 air-pollutant-emissions-trends-epa
 distance-from-census-tract-centroid-to-closest-tri-site
-exploring-terrain-mapping-and-water-samples-in-a-karst-area
+terrain-mapping-caves-and-water-samples-in-a-karst
 creating-a-basemap-from-a-dem-using-hillshade-and-terrain-shading
 using-maptiles-for-a-topographic-basemap-with-contours
-interactive-maps-with-tmap-view-mode
+interactive-map-with-tmap-view-mode
 pointblue-penguin-study
 interactive-mapping-of-individual-penguins-abstracted-from-a-big-dataset
 seabird-model

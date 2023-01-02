@@ -1,4 +1,4 @@
-# Exploring terrain mapping and water samples in a karst area
+# Terrain mapping, caves and water samples in a karst
 
 ```{r echo=FALSE}
 knitr::opts_chunk$set(include=T,echo=T,fig.show=T,results=T,warning=F,message=F,fig.align='center',out.width="75%")
@@ -64,6 +64,7 @@ library(igisci); library(terra)
 library(sf); library(tidyverse); library(readxl); library(tmap)
 caves <- st_read(ex("SinkingCove/caves.shp"))
 ents <- st_read(ex("SinkingCove/CaveEntrances.shp"))
+geology <- st_read(ex("SinkingCove/geology.shp"))
 wChemData <- read_excel(ex("SinkingCove/SinkingCoveWaterChem.xlsx")) %>%
   mutate(siteLoc = str_sub(Site,start=1L, end=1L))
 wChemTrunk <- wChemData %>% filter(siteLoc == "T") %>% mutate(siteType = "trunk")
@@ -97,9 +98,24 @@ Then we'll zoom into upper Sinking Cove, where we have some significant caves (F
 tm_shape(hillsh,bbox=newbounds) +
   tm_raster(palette="-Greys",legend.show=F,n=20) +
   tm_shape(DEM) + tm_raster(palette=terrain.colors(24), alpha=0.5,legend.show=F) +
-  tm_shape(caves) + tm_lines(lwd=2) +
-  tm_shape(ents) + tm_dots(col="red", shape=16, size=0.33, alpha=0.5) + 
-  #tm_shape(wChem) + tm_symbols(size="TH", col="Lithology", scale=2, shape="siteType", alpha=0.5) +
+  tm_shape(caves) + tm_lines(lwd=2) + tm_text("CaveLabel", size=0.5, just="left", xmod=0.75) +
+  tm_shape(ents) + tm_symbols(col="Formation", shape=24, size=0.33, alpha=.75, title.col ="Geologic unit of entrance") + 
+  #tm_shape(wChem) + tm_symbols(size="TH", col="Lithology", scale=2, shape="siteType", alpha=1) +
+  tm_layout(legend.position = c("left", "bottom")) +
+  tm_graticules(lines=F)
+
+```
+
+Or the same map on Geology (Figure \@ref(fig:upperSinkingCoveGeology))
+```{r upperSinkingCoveGeology, fig.cap="Upper Sinking Cove geology with caves"}
+geol_bounds <- st_bbox(geology)
+tm_shape(hillsh,bbox=geol_bounds) +
+  tm_raster(palette="-Greys",legend.show=F,n=20) +
+  tm_shape(geology) + tm_fill(col="ElevGeol", alpha=0.5, title="Geology by base elevation (m)", legend.reverse=T) +
+  #tm_shape(DEM) + tm_raster(palette=terrain.colors(24), alpha=0.5,legend.show=F) +
+  tm_shape(caves) + tm_lines(lwd=2) + tm_text("CaveLabel", size=0.5, just="left", xmod=0.75) +
+  tm_shape(ents) + tm_symbols(col="Formation", shape=24, size=0.33, alpha=.75, title.col ="Geologic unit of entrance") + 
+  #tm_shape(wChem) + tm_symbols(size="TH", col="Lithology", scale=2, shape="siteType", alpha=1) +
   tm_layout(legend.position = c("left", "bottom")) +
   tm_graticules(lines=F)
 
@@ -108,11 +124,12 @@ tm_shape(hillsh,bbox=newbounds) +
 We've studied the water chemistry in cave passages and surface water features to look at limestone solution processes (Figure \@ref(fig:upperSinkingCove)).
 
 ```{r upperSinkingCove, warning=F, message=F, fig.cap="Upper Sinking Cove water sample results, with major caves as black lines"}
-tm_shape(hillsh,bbox=newbounds) +
+tm_shape(hillsh,bbox=geol_bounds) +
   tm_raster(palette="-Greys",legend.show=F,n=20) +
-  tm_shape(DEM) + tm_raster(palette=terrain.colors(24), alpha=0.5,legend.show=F) +
+  #tm_shape(DEM) + tm_raster(palette=terrain.colors(24), alpha=0.5,legend.show=F) +
   tm_shape(caves) + tm_lines(lwd=2) +
-  tm_shape(wChem) + tm_symbols(size="TH", col="Lithology", scale=2, shape="siteType", alpha=0.5) +
+  tm_shape(wChem) + tm_symbols(size="TH", col="navy", border.col="black", scale=2, shape="siteType", alpha=0.66) +
+  tm_shape(geology) + tm_fill(col="ElevGeol", alpha=0.33, title="Geology by base elevation (m)", legend.reverse=T) +
   tm_layout(legend.position = c("left", "bottom")) +
   tm_graticules(lines=F)
 ```
@@ -133,7 +150,7 @@ tm_shape(upperSinkingCove) +
 ```
 
 
-## Interactive maps with tmap view mode
+## Interactive map with tmap view mode
 
 Interactive map with multiple choices of basemaps, showing water sample site types. This heavily forested area is a good example of why imagery may not be as useful as topographic symbology for a basemap.
 
@@ -153,9 +170,7 @@ tm_basemap() +
   tm_layout(title=paste("Total Hardness ",as.character(minVal),"-",as.character(maxVal)," mg/L", sep=""))
 ```
 
-Interactive map with multiple choices of basemaps (changed the order to set the default), showing lithology:
-
-```{r Lithology, fig.cap="Interactive map with lithology"}
+```{r Lithology, eval=F, include=F, fig.cap="Interactive map with lithology"}
 tmap_options(basemaps=c(Esri.WorldTopoMap="Esri.WorldTopoMap",
                         Esri.WorldImagery = "Esri.WorldImagery",
                         Esri.NatGeoWorldMap="Esri.NatGeoWorldMap",

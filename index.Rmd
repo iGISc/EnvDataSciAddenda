@@ -31,6 +31,9 @@ options(tinytex.verbose = TRUE)
 
 # Background, Goals and Data
 
+The purpose of this bookdown book is to provide Addenda to Introduction to Environmental Data Science, at https://bookdown.org/igisc/EnvDataSci/ to include case studies, extended and experimental methods, and guides for building
+packages and RMarkdown documents.
+
 ## Structure of the Addenda
 
 These addenda may include:
