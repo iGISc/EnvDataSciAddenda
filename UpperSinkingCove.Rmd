@@ -71,7 +71,8 @@ wChemTrunk <- wChemData %>% filter(siteLoc == "T") %>% mutate(siteType = "trunk"
 wChemDrip <- wChemData %>% filter(siteLoc %in% c("D","S")) %>% mutate(siteType = "dripwater")
 wChemTrib <- wChemData %>% filter(siteLoc %in% c("B", "F", "K", "W", "P")) %>% 
   mutate(siteType = "tributary")
-wChemData <- bind_rows(wChemTrunk, wChemDrip, wChemTrib)
+wChemData <- bind_rows(wChemTrunk, wChemDrip, wChemTrib) %>%
+  mutate(carbonate_ppm = TH)
 sites <- read_csv(ex("SinkingCove/SinkingCoveSites.csv"))
 wChem <- wChemData %>%
   left_join(sites, by = c("Site" = "site")) %>%
@@ -123,14 +124,14 @@ tm_shape(hillsh,bbox=geol_bounds) +
 
 We've studied the water chemistry in cave passages and surface water features to look at limestone solution processes (Figure \@ref(fig:upperSinkingCove)).
 
-```{r upperSinkingCove, warning=F, message=F, fig.cap="Upper Sinking Cove water sample results, with major caves as black lines"}
+```{r upperSinkingCove, out.width="100%", warning=F, message=F, fig.cap="Upper Sinking Cove water sample results, with major caves as black lines"}
 tm_shape(hillsh,bbox=geol_bounds) +
   tm_raster(palette="-Greys",legend.show=F,n=20) +
   #tm_shape(DEM) + tm_raster(palette=terrain.colors(24), alpha=0.5,legend.show=F) +
   tm_shape(caves) + tm_lines(lwd=2) +
-  tm_shape(wChem) + tm_symbols(size="TH", col="navy", border.col="black", scale=2, shape="siteType", alpha=0.66) +
-  tm_shape(geology) + tm_fill(col="ElevGeol", alpha=0.33, title="Geology by base elevation (m)", legend.reverse=T) +
-  tm_layout(legend.position = c("left", "bottom")) +
+  tm_shape(geology) + tm_fill(col="ElevGeol", alpha=0.5, title="Geology by base elev(m)", legend.reverse=T) +
+  tm_shape(wChem) + tm_symbols(col="siteType", size="carbonate_ppm", border.col="black", scale=2, alpha=0.66) + #col="navy", 
+  tm_layout(legend.outside=TRUE) +
   tm_graticules(lines=F)
 ```
 
@@ -142,9 +143,9 @@ library(maptiles)
 upperSinkingCove <- get_tiles(wChem, provider="Esri.WorldTopoMap", forceDownload=T)
 tm_shape(upperSinkingCove) + 
   tm_rgb() +
-  tm_shape(caves, bbox=bounds) + tm_lines(lwd=2) +
+  tm_shape(caves, bbox=geol_bounds) + tm_lines(lwd=2) +
   tm_shape(wChem) + 
-  tm_symbols(size="TH", col="Lithology", scale=2, shape="siteType", alpha=0.5) +
+  tm_symbols(size="carbonate_ppm", col="Lithology", scale=2, shape="siteType", alpha=0.5) +
   tm_layout(legend.position = c("left", "bottom")) +
   tm_graticules(lines=F)
 ```
@@ -165,9 +166,9 @@ tmap_options(basemaps=c(OpenTopoMap="OpenTopoMap",
                         Esri.NatGeoWorldMap="Esri.NatGeoWorldMap"))
 bounds <- st_bbox(wChem2map)
 tm_basemap() +
-  tm_shape(caves, bbox=bounds) + tm_lines(lwd=2) +
-  tm_shape(wChem2map) + tm_symbols(col="siteType", size="TH", scale=2, alpha=0.5) +
-  tm_layout(title=paste("Total Hardness ",as.character(minVal),"-",as.character(maxVal)," mg/L", sep=""))
+  tm_shape(caves, bbox=geol_bounds) + tm_lines(lwd=2) +
+  tm_shape(wChem2map) + tm_symbols(col="siteType", size="carbonate_ppm", scale=2, alpha=0.5) +
+  tm_layout(title=paste("Dissolved carbonates ",as.character(minVal),"-",as.character(maxVal)," mg/L", sep=""))
 ```
 
 ```{r Lithology, eval=F, include=F, fig.cap="Interactive map with lithology"}
