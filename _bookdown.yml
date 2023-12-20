@@ -9,6 +9,7 @@ rmd_files: ["index.Rmd",
             "SeabirdModel.Rmd",
             "TimeSeriesCaseStudies.Rmd",
             "RMarkdownBookdown.Rmd",
+            "figuresTables.Rmd",
             "BuildingPackages.Rmd",
             "references.Rmd"]
 language:

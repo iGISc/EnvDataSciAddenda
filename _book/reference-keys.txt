@@ -69,3 +69,12 @@ binary-data-as-rda-files
 devtoolsdocument
 removing-data
 code-functions
+fig:CAmap
+tab:knitrKable
+figures-and-tables
+figures
+tables
+dtdatatable
+knitrkable-tables
+gt-package
+other-tricks
