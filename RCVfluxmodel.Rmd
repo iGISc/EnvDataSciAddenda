@@ -1,0 +1,165 @@
+
+# 1. Initial data read and time series charting
+
+Processing from Mason Kealy
+
+```{r setup, include=FALSE}
+library(readxl)
+library(tidyverse)
+library(lubridate)
+```
+
+### Reading in the Excel File
+
+Mason: "This code is just reading in data from an Excel file I got from the Bioclimatology class last semester. I used sub-setting to remove the first row of the excel table it just had the units for each of the variables, keeping this would just mess up my code later on.
+  This is what the tibble looked like when I first read in the excel data!"
+```{r}
+"RCV_carbon_flux_data.xlsx"
+Carbon_Flux <- read_excel("GPP_PAR_data/Mountain meadow Carbon flux data.xlsx")
+Carbonflux<- Carbon_Flux[-1, ]
+
+print(Carbonflux)
+```
+  
+You can see in the tibble above, that all the columns were in `chr` data type, this prevents the computer from seeing them as numbers.
+  I started preparing the data for analysis by `mutate_all(as.numeric)` then setting the date column as a date with `as.Date` selected the variables I wanted and rounded the 7 digits values to get them looking a little nicer.
+  Then I used `pivot_longer` to send the CO2 Flux Competent values to a new column and the names to a new column. This makes it a lot easier when creating a legend later on in Figure 1 (see next code chunk)
+  *Then Jerry removed the zero GPP_sum values.* 
+```{r}
+
+Mountflux <- Carbonflux %>% 
+mutate_all(as.numeric) %>% 
+mutate(DOY = as.Date(Date,format = "%m-%d")) %>% 
+select(Date:PAR_ave) %>% 
+mutate(NEE = round(NEE_sum, digits = 3), 
+       GPP = round(GPP_sum, digits = 3),
+       RE = round(RE_sum, digits = 3)) %>%
+#select(-NEE_sum, -GPP_sum, -RE_sum) %>% 
+  pivot_longer(cols = c("NEE", "RE", "GPP"), names_to = "CO2_FLUX_COMPONENTS", values_to ="value") %>%
+  filter(GPP_sum != 0, !is.na(PAR_ave))
+
+print(Mountflux)
+
+
+```
+
+## Time series plot 
+  Then I used ggplot to create a visualization of how NEE, GPP, an RE changed over a yearly time scale.
+```{r}
+
+Mountflux %>% 
+ ggplot(aes(x = Date, y= value, color = CO2_FLUX_COMPONENTS))+
+  geom_line()+
+  geom_hline(yintercept = 0, linetype = "longdash", color = "black")+
+  ggtitle(" Red Clover Valley: Interannual Components of Carbon Flux Measurements") +
+  xlab("Day of Year") +
+  ylab("g C/m^2")+
+  labs(caption =
+"Figure 1: Components of Carbon Flux measurements collected in 30 minute intervals in 2021
+and added into ‘sum daily value’ , from flux tower in Red Clover Valley,California. Components included NEE (Net Ecosystem Exchange), RE (Respiration Efficiency), GPP (Gross Primary Productivity) all measured in g C m^2 and are plotted against an annual time scale with days as the unit of measure.")
+  
+```
+ 
+
+# Non-linear model of PAR_ave ~ GPP_sum, using Michaelis-Menten model
+
+*Not the right goal for a model between these variables, since GPP should derive from PAR, not the other way around.  But it does illustrate asymptotic data.*
+
+
+First the scatter plot:
+
+```{r}
+plot(Mountflux$GPP_sum, Mountflux$PAR_ave,xlab="GPP_sum", ylab="PAR_ave")
+```
+
+
+### Try fitting a non-linear model (SSmicmen from base R)
+
+Based on https://www.datacamp.com/tutorial/introduction-to-non-linear-model-and-insights-using-r
+
+Using start values for Vm and K based on interpreting the graph. We'll use nonlinear least squares (`nls`) and starting values of the two coefficients.
+
+```{r}
+micmenMod <- nls(PAR_ave~(Vm)*GPP_sum/(K+GPP_sum), data=Mountflux, start=list(Vm=750,K=1))
+summary(micmenMod)
+```
+**Calculate residual error**
+
+```{r}
+sse <- micmenMod$m$deviance()
+null <- lm(PAR_ave~1, data=Mountflux)
+sst <- data.frame(summary.aov(null)[[1]])$Sum.Sq
+percent_variation_explained <- 100*(sst-sse)/sst
+percent_variation_explained
+```
+```{r}
+plot(Mountflux$GPP_sum, Mountflux$PAR_ave,xlab="GPP_sum", ylab="PAR_ave")
+ lines(Mountflux$GPP_sum, 
+       predict(micmenMod,Mountflux),col=2)
+```
+
+## polynomial models
+
+```{r}
+plot(Mountflux$PAR_ave,Mountflux$GPP_sum, xlab="PAR_ave", ylab="GPP_sum")
+
+```
+
+### poly 1
+
+```{r}
+ord = 1
+summary(lm(GPP_sum ~ poly(PAR_ave, ord, raw=T), data=Mountflux))
+ggplot(Mountflux, aes(PAR_ave, GPP_sum)) + geom_point() +
+  stat_smooth(method=lm, formula=y~poly(x,ord,raw=T))
+
+```
+
+
+
+### poly 2
+
+```{r}
+ord = 2
+summary(lm(GPP_sum ~ poly(PAR_ave, ord, raw=T), data=Mountflux))
+ggplot(Mountflux, aes(PAR_ave, GPP_sum)) + geom_point() +
+  stat_smooth(method=lm, formula=y~poly(x,ord,raw=T))
+
+```
+
+
+### poly 3
+
+
+```{r}
+ord = 3
+summary(lm(GPP_sum ~ poly(PAR_ave, ord, raw=T), data=Mountflux))
+ggplot(Mountflux, aes(PAR_ave, GPP_sum)) + geom_point() +
+  stat_smooth(method=lm, formula=y~poly(x,ord,raw=T))
+```
+
+### poly 4
+```{r}
+ord = 4
+summary(lm(GPP_sum ~ poly(PAR_ave, ord, raw=T), data=Mountflux))
+ggplot(Mountflux, aes(PAR_ave, GPP_sum)) + geom_point() +
+  stat_smooth(method=lm, formula=y~poly(x,ord,raw=T))
+```
+
+### poly 5
+```{r}
+ord = 5
+summary(lm(GPP_sum ~ poly(PAR_ave, ord, raw=T), data=Mountflux))
+ggplot(Mountflux, aes(PAR_ave, GPP_sum)) + geom_point() +
+  stat_smooth(method=lm, formula=y~poly(x,ord,raw=T))
+```
+
+## power regression
+
+```{r}
+summary(lm(log(GPP_sum) ~ log(PAR_ave), data=Mountflux))
+ggplot(Mountflux, aes(log(PAR_ave), log(GPP_sum))) + geom_point() +
+  stat_smooth(method=lm)
+```
+
+

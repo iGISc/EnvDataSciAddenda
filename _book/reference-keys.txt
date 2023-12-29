@@ -78,3 +78,4 @@ dtdatatable
 knitrkable-tables
 gt-package
 other-tricks
+atmospheric-co2-record-from-mauna-loa-hawaii

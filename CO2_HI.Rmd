@@ -1,0 +1,86 @@
+# Atmospheric CO2 record from Mauna Loa, Hawaii 
+
+>Note: this exercise is based on one developed for students in SFSU's Geog 313 class by Andrew Oliphant, using Excel. Most of the text is from that exercise. All of the methods however are coded in R, and text reflects those changes.
+
+**Objectives**: To build on experience in data processing, graphing and analysis. In this lab we particularly focus on data filtering, curve fitting and empirical modeling. The topical focus is on the recent (half century) changes in atmospheric concentrations of our most important greenhouse gas, CO2 as measured at 3.3 km above the central Pacific Ocean, at Mauna Loa observatory on Hawaii.
+Materials: A data record produced by NOAA and the Scripps Institute containing monthly average atmospheric CO2 concentration data measured at the Mauna Loa Observatory.
+For further information on the observations see: http://www.cmdl.noaa.gov/ccgg/  
+
+Use R code to download and prepare the data for plotting. The source file at NOAA  ftp://aftp.cmdl.noaa.gov/products/trends/co2/co2_mm_mlo.txt can be read directly into a data frame.  We'll start by using code to download the text file into the current working directory:  
+
+```{r}
+library(RCurl)
+filepath <- "ftp.cmdl.noaa.gov/products/trends/co2/co2_mm_mlo.txt"
+filename <- "co2_mm_mlo.txt"
+download.file(filepath, paste0(getwd(),"/",filename))
+```
+
+Using the same path to where the file was stored, we'll use `read_table` to allow whitespace to delimit the data.
+
+```{r include=F}
+library(tidyverse)
+```
+```{r}
+CO2_HI <- read_table(paste0(getwd(),"/",filename),
+                     comment="#",
+                     col_names =c("year","month","dec_date",
+                               "monthly_ave","de-seasonalized",
+                               "#days","sd_days","unc.of_mon_mean"))
+```
+
+Notice there are several timestamp columns; year, month and decimal date, which can be used for analysis of the different timescales. The decimal date is produced for use as an effective x-axis value to plot the time-series because it makes a continuous, evenly spaced time series, which includes both the year plus the fraction of the year at the center of the month (i.e. year + (month-0.5)/12). CO2 concentrations are recorded in micromols of carbon per mol of dry air, which is the same thing as parts per million since ‘micro’ means one millionth.  Also, note that there are two CO2 records, ‘average’ and ‘interpolated’. The former are the raw average monthly numbers and contain some missing records, for example when instruments failed. To indicate these missing values without a blank space, the code -99.99 is used. This is a common programming code that means the datum is missing. The ‘interpolated’ record is continuous because these missing values have been replaced by interpolated values, using the trends in the dataset to estimate what the value should be. Since a continuous dataset is needed for our analysis, we will save ourselves some extra work by using the ‘interpolated’ values.
+
+>We'll actually use code to create the moving average in a bit...
+
+**Plot the time-series** of monthly of CO2 concentrations against decimal date. Scale appropriately and use a line rather than markers until the detail is clearly visible.
+ 
+
+```{r}
+ggplot(data=CO2_HI, aes(x=dec_date,y=monthly_ave)) +
+         geom_line()
+```
+
+The record looks like saw teeth because the amount of carbon dioxide in the atmosphere changes over the course of a year. Green plants absorb carbon dioxide during the summer when they are actively growing. There is more land area in the Northern Hemisphere and so carbon dioxide concentration decreases during the summer of the Northern Hemisphere. The carbon dioxide concentration peaks in March, just before the growing season starts in the Northern Hemisphere. If you look closely, you will notice that there is a slight flattening starting in 1991 and lasting a year or so. Mount Pinatubo in the Philippines erupted in 1991 and released a large volume of sulfur dioxide, which combined with water vapor to produce aerosols. This is thought to increase both terrestrial ecosystem photosynthesis and the solubility of carbon dioxide in the oceans, both of which are important carbon sinks.
+ 
+**Detrend the data**: In order to more closely examine the apparent increase in CO2 concentration throughout the record, we ideally want to remove the noisy seasonal signal with the saw-tooth like pattern, since change over this timescale is not associated with the broader (century scale) change. This is called data detrending or filtering (i.e. we want to filter out or remove the trend associated with the seasonal signal). We will employ a 12-period moving average for this. In other words, for each month we will calculate the average CO2 concentrations of the 5 previous, the current and the 6 following months. In this way, you will generate a new column of averages where for each month you should have an annual average concentration for the year centered on the month.
+ 
+We'll use the `ma()` function of the `forecast` package to create a 12-month moving average. Since `ma()` only works with single vectors, we'll need to extract those and bind the columns to create a new data frame.
+```{r}
+library(forecast)
+CO2_date_ma <- ma(CO2_HI$dec_date, 12)
+CO2_CO2_ma <- ma(CO2_HI$monthly_ave, 12)
+CO2_ma <- bind_cols(date=CO2_date_ma,CO2_12mo_avg=CO2_CO2_ma)
+```
+
+Then we'll plot that moving average.
+```{r}
+ggplot(CO2_ma,aes(x=date,y=CO2_12mo_avg)) +
+  geom_line()
+```
+
+**Curve fitting**. If we could write a mathematical description of the CO2 increase curve, we could use it to model future scenarios under business-as-usual emissions increases. There are a variety of linear and non-linear curve forms known mathematically such as logarithmic and exponential to describe various forms in nature. For these data we will use a second order polynomial applied to the decimal year, the independent variable.
+
+```{r}
+ord = 2
+poly2 <- lm(CO2_12mo_avg ~ poly(date, ord, raw=T), data=CO2_ma)
+summary(poly2)
+ggplot(CO2_ma, aes(x=date,y=CO2_12mo_avg)) + geom_point() +
+  stat_smooth(method=lm, formula=y~poly(x,ord,raw=T))
+```
+
+ 
+Modeling future CO2 concentrations: You can use this equation as an empirical model to predict CO2 concentrations for a future date. Just use the equation in a cell and replace x with the year of interest. Under a business-as-usual emissions future, what will the concentrations of CO2 be in 2050? In what year will pre-industrial CO2 levels of ~285 ppm be doubled? You may want to model through time by making a column of years e.g. from 2000-2100 and then writing the equation next to the year equation down, referencing the year in the adjacent cell. Then you can copy the predictive model equation down the cells adjacent to the years.
+
+```{r}
+b0 <- poly2$coefficients[1]
+b1 <- poly2$coefficients[2]
+b2 <- poly2$coefficients[3]
+doubledCO2 <- 285*2
+for (yr in seq(2000,2100)) {CO2 = (b0 + b1*yr + b2*yr^2)
+   if (CO2>doubledCO2) {print(paste0("By the year ",yr,", CO2 levels will have reached ",round(b0 + b1*yr + b2*yr^2)," ppm,"));
+                        print("more than double the pre-industrial levels of 285 ppm.")
+     break
+     }
+}
+
+```
