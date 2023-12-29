@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>9 Building a Package on GitHub for Data and Code | Environmental Data Science Addenda</title>
+  <title>11 Building a Package on GitHub for Data and Code | Environmental Data Science Addenda</title>
   <meta name="description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
-  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="9 Building a Package on GitHub for Data and Code | Environmental Data Science Addenda" />
+  <meta property="og:title" content="11 Building a Package on GitHub for Data and Code | Environmental Data Science Addenda" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
   <meta name="github-repo" content="iGISc/EnvDataSciAddenda" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="9 Building a Package on GitHub for Data and Code | Environmental Data Science Addenda" />
+  <meta name="twitter:title" content="11 Building a Package on GitHub for Data and Code | Environmental Data Science Addenda" />
   
   <meta name="twitter:description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
   
@@ -23,14 +23,14 @@
 <meta name="author" content="Jerry Davis, SFSU Institute for Geographic Information Science" />
 
 
-<meta name="date" content="2023-01-03" />
+<meta name="date" content="2023-12-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="r-markdown-and-bookdown.html"/>
+<link rel="prev" href="figures-and-tables.html"/>
 <link rel="next" href="references.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -52,23 +52,14 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.24/datatables.js"></script>
-<link href="libs/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="libs/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="libs/dt-core-1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="libs/datatables-binding-0.30/datatables.js"></script>
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
-<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-1.3.1/leaflet.js"></script>
-<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
-<script src="libs/proj4-2.6.2/proj4.min.js"></script>
-<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
-<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-binding-2.1.1/leaflet.js"></script>
-<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
-<script src="libs/leaflet-providers-plugin-2.1.1/leaflet-providers-plugin.js"></script>
 
 
 <style type="text/css">
@@ -137,6 +128,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 <style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
 div.csl-entry {
@@ -190,63 +185,82 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="4.1" data-path="terrain-mapping-caves-and-water-samples-in-a-karst.html"><a href="terrain-mapping-caves-and-water-samples-in-a-karst.html#creating-a-basemap-from-a-dem-using-hillshade-and-terrain-shading"><i class="fa fa-check"></i><b>4.1</b> Creating a basemap from a DEM, using hillshade and terrain shading</a></li>
 <li class="chapter" data-level="4.2" data-path="terrain-mapping-caves-and-water-samples-in-a-karst.html"><a href="terrain-mapping-caves-and-water-samples-in-a-karst.html#using-maptiles-for-a-topographic-basemap-with-contours"><i class="fa fa-check"></i><b>4.2</b> Using maptiles for a topographic basemap with contours</a></li>
-<li class="chapter" data-level="4.3" data-path="terrain-mapping-caves-and-water-samples-in-a-karst.html"><a href="terrain-mapping-caves-and-water-samples-in-a-karst.html#interactive-map-with-tmap-view-mode"><i class="fa fa-check"></i><b>4.3</b> Interactive map with tmap view mode</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="pointblue-penguin-study.html"><a href="pointblue-penguin-study.html"><i class="fa fa-check"></i><b>5</b> PointBlue Penguin Study</a>
 <ul>
 <li class="chapter" data-level="5.0.1" data-path="pointblue-penguin-study.html"><a href="pointblue-penguin-study.html#interactive-mapping-of-individual-penguins-abstracted-from-a-big-dataset"><i class="fa fa-check"></i><b>5.0.1</b> Interactive mapping of individual penguins abstracted from a big dataset</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="seabird-model.html"><a href="seabird-model.html"><i class="fa fa-check"></i><b>6</b> Seabird Model</a>
+<li class="chapter" data-level="6" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html"><i class="fa fa-check"></i><b>6</b> Time Series case studies</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="seabird-model.html"><a href="seabird-model.html#goals-and-basic-methods-of-the-analysis"><i class="fa fa-check"></i><b>6.1</b> Goals and basic methods of the analysis</a></li>
-<li class="chapter" data-level="6.2" data-path="seabird-model.html"><a href="seabird-model.html#exploratory-data-analysis"><i class="fa fa-check"></i><b>6.2</b> Exploratory data analysis</a>
-<ul>
-<li class="chapter" data-level="6.2.1" data-path="seabird-model.html"><a href="seabird-model.html#identifying-the-appropriate-model-using-variance-and-mean-comparisons"><i class="fa fa-check"></i><b>6.2.1</b> Identifying the appropriate model using variance and mean comparisons</a></li>
+<li class="chapter" data-level="6.1" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html#loney-meadow-flux-data"><i class="fa fa-check"></i><b>6.1</b> Loney Meadow flux data</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="seabird-model.html"><a href="seabird-model.html#model-black-footed-albatross-counts-for-july-using-a-poisson-family-glm"><i class="fa fa-check"></i><b>6.3</b> Model black-footed albatross counts for July using a poisson-family glm</a>
+<li class="chapter" data-level="7" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html"><i class="fa fa-check"></i><b>7</b> Atmospheric CO2 record from Mauna Loa, Hawaii</a></li>
+<li class="chapter" data-level="8" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html"><i class="fa fa-check"></i><b>8</b> CO2 flux data : Red Clover Valley</a>
 <ul>
-<li class="chapter" data-level="6.3.1" data-path="seabird-model.html"><a href="seabird-model.html#map-the-prediction"><i class="fa fa-check"></i><b>6.3.1</b> Map the prediction</a></li>
-</ul></li>
-<li class="chapter" data-level="6.4" data-path="seabird-model.html"><a href="seabird-model.html#interpolation"><i class="fa fa-check"></i><b>6.4</b> Interpolation</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html"><i class="fa fa-check"></i><b>7</b> Time Series case studies</a>
+<li class="chapter" data-level="8.1" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#initial-data-read-and-time-series-charting"><i class="fa fa-check"></i><b>8.1</b> 1. Initial data read and time series charting</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html#loney-meadow-flux-data"><i class="fa fa-check"></i><b>7.1</b> Loney Meadow flux data</a></li>
+<li class="chapter" data-level="8.1.1" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#reading-in-the-excel-file"><i class="fa fa-check"></i><b>8.1.1</b> Reading in the Excel File</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html"><i class="fa fa-check"></i><b>8</b> R Markdown and Bookdown</a>
+<li class="chapter" data-level="8.2" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#time-series-plot"><i class="fa fa-check"></i><b>8.2</b> Time series plot</a></li>
+<li class="chapter" data-level="8.3" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model"><i class="fa fa-check"></i><b>8.3</b> Non-linear model of PAR_ave ~ GPP_sum, using Michaelis-Menten model</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#r-markdown"><i class="fa fa-check"></i><b>8.1</b> R Markdown</a>
-<ul>
-<li class="chapter" data-level="8.1.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#markdown-editing"><i class="fa fa-check"></i><b>8.1.1</b> Markdown editing</a></li>
-<li class="chapter" data-level="8.1.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#display-options-in-code-chunks"><i class="fa fa-check"></i><b>8.1.2</b> Display options in code chunks</a></li>
-<li class="chapter" data-level="8.1.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#numbered-figures-with-text-citations"><i class="fa fa-check"></i><b>8.1.3</b> Numbered figures with text citations</a></li>
+<li class="chapter" data-level="8.3.1" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#try-fitting-a-non-linear-model-ssmicmen-from-base-r"><i class="fa fa-check"></i><b>8.3.1</b> Try fitting a non-linear model (SSmicmen from base R)</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#a-template-for-multiple-output-formats"><i class="fa fa-check"></i><b>8.2</b> A template for multiple output formats</a>
+<li class="chapter" data-level="8.4" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#polynomial-models"><i class="fa fa-check"></i><b>8.4</b> polynomial models</a>
 <ul>
-<li class="chapter" data-level="8.2.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#the-template"><i class="fa fa-check"></i><b>8.2.1</b> The template</a></li>
+<li class="chapter" data-level="8.4.1" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#poly-1"><i class="fa fa-check"></i><b>8.4.1</b> poly 1</a></li>
+<li class="chapter" data-level="8.4.2" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#poly-2"><i class="fa fa-check"></i><b>8.4.2</b> poly 2</a></li>
+<li class="chapter" data-level="8.4.3" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#poly-3"><i class="fa fa-check"></i><b>8.4.3</b> poly 3</a></li>
+<li class="chapter" data-level="8.4.4" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#poly-4"><i class="fa fa-check"></i><b>8.4.4</b> poly 4</a></li>
+<li class="chapter" data-level="8.4.5" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#poly-5"><i class="fa fa-check"></i><b>8.4.5</b> poly 5</a></li>
 </ul></li>
-<li class="chapter" data-level="8.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#building-a-book-with-bookdown-and-yaml-options"><i class="fa fa-check"></i><b>8.3</b> Building a book with bookdown and YAML options</a>
+<li class="chapter" data-level="8.5" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#power-regression"><i class="fa fa-check"></i><b>8.5</b> power regression</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html"><i class="fa fa-check"></i><b>9</b> R Markdown and Bookdown</a>
 <ul>
-<li class="chapter" data-level="8.3.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#building-a-book"><i class="fa fa-check"></i><b>8.3.1</b> Building a book</a></li>
-<li class="chapter" data-level="8.3.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#special-characters-and-formatting-limitations-and-challenges"><i class="fa fa-check"></i><b>8.3.2</b> Special characters and formatting limitations and challenges</a></li>
-</ul></li>
-<li class="chapter" data-level="8.4" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#yaml-files-used-to-configure-the-book"><i class="fa fa-check"></i><b>8.4</b> YAML files used to configure the book</a>
+<li class="chapter" data-level="9.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#r-markdown"><i class="fa fa-check"></i><b>9.1</b> R Markdown</a>
 <ul>
-<li class="chapter" data-level="8.4.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#output.yml"><i class="fa fa-check"></i><b>8.4.1</b> _output.yml</a></li>
-<li class="chapter" data-level="8.4.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#index.rmd"><i class="fa fa-check"></i><b>8.4.2</b> index.Rmd</a></li>
-<li class="chapter" data-level="8.4.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#bookdown.yml"><i class="fa fa-check"></i><b>8.4.3</b> _bookdown.yml</a></li>
+<li class="chapter" data-level="9.1.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#markdown-editing"><i class="fa fa-check"></i><b>9.1.1</b> Markdown editing</a></li>
+<li class="chapter" data-level="9.1.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#display-options-in-code-chunks"><i class="fa fa-check"></i><b>9.1.2</b> Display options in code chunks</a></li>
+<li class="chapter" data-level="9.1.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#numbered-figures-with-text-citations"><i class="fa fa-check"></i><b>9.1.3</b> Numbered figures with text citations</a></li>
 </ul></li>
-</ul></li>
-<li class="chapter" data-level="9" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html"><i class="fa fa-check"></i><b>9</b> Building a Package on GitHub for Data and Code</a>
+<li class="chapter" data-level="9.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#a-template-for-multiple-output-formats"><i class="fa fa-check"></i><b>9.2</b> A template for multiple output formats</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#git-and-github"><i class="fa fa-check"></i><b>9.1</b> Git and GitHub</a></li>
-<li class="chapter" data-level="9.2" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#some-notes-on-the-rstudio-process"><i class="fa fa-check"></i><b>9.2</b> Some notes on the RStudio process</a></li>
-<li class="chapter" data-level="9.3" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#data-1"><i class="fa fa-check"></i><b>9.3</b> Data</a>
-<ul>
-<li class="chapter" data-level="9.3.1" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#raw-data-in-extdata"><i class="fa fa-check"></i><b>9.3.1</b> Raw data in extdata</a></li>
-<li class="chapter" data-level="9.3.2" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#binary-data-as-rda-files"><i class="fa fa-check"></i><b>9.3.2</b> Binary data as <code>rda</code> files</a></li>
+<li class="chapter" data-level="9.2.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#the-template"><i class="fa fa-check"></i><b>9.2.1</b> The template</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#code-functions"><i class="fa fa-check"></i><b>9.4</b> Code (functions)</a></li>
+<li class="chapter" data-level="9.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#building-a-book-with-bookdown-and-yaml-options"><i class="fa fa-check"></i><b>9.3</b> Building a book with bookdown and YAML options</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#building-a-book"><i class="fa fa-check"></i><b>9.3.1</b> Building a book</a></li>
+<li class="chapter" data-level="9.3.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#special-characters-and-formatting-limitations-and-challenges"><i class="fa fa-check"></i><b>9.3.2</b> Special characters and formatting limitations and challenges</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#yaml-files-used-to-configure-the-book"><i class="fa fa-check"></i><b>9.4</b> YAML files used to configure the book</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#output.yml"><i class="fa fa-check"></i><b>9.4.1</b> _output.yml</a></li>
+<li class="chapter" data-level="9.4.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#index.rmd"><i class="fa fa-check"></i><b>9.4.2</b> index.Rmd</a></li>
+<li class="chapter" data-level="9.4.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#bookdown.yml"><i class="fa fa-check"></i><b>9.4.3</b> _bookdown.yml</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="figures-and-tables.html"><a href="figures-and-tables.html"><i class="fa fa-check"></i><b>10</b> Figures and Tables</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="figures-and-tables.html"><a href="figures-and-tables.html#figures"><i class="fa fa-check"></i><b>10.1</b> Figures</a></li>
+<li class="chapter" data-level="10.2" data-path="figures-and-tables.html"><a href="figures-and-tables.html#tables"><i class="fa fa-check"></i><b>10.2</b> Tables</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="figures-and-tables.html"><a href="figures-and-tables.html#dtdatatable"><i class="fa fa-check"></i><b>10.2.1</b> <code>DT::datatable</code></a></li>
+<li class="chapter" data-level="10.2.2" data-path="figures-and-tables.html"><a href="figures-and-tables.html#knitrkable-tables"><i class="fa fa-check"></i><b>10.2.2</b> <code>knitr::kable</code> tables</a></li>
+<li class="chapter" data-level="10.2.3" data-path="figures-and-tables.html"><a href="figures-and-tables.html#gt-package"><i class="fa fa-check"></i><b>10.2.3</b> <code>gt</code> package</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="figures-and-tables.html"><a href="figures-and-tables.html#other-tricks"><i class="fa fa-check"></i><b>10.3</b> Other tricks</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html"><i class="fa fa-check"></i><b>11</b> Building a Package on GitHub for Data and Code</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#git-and-github"><i class="fa fa-check"></i><b>11.1</b> Git and GitHub</a></li>
+<li class="chapter" data-level="11.2" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#some-notes-on-the-rstudio-process"><i class="fa fa-check"></i><b>11.2</b> Some notes on the RStudio process</a></li>
+<li class="chapter" data-level="11.3" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#data-1"><i class="fa fa-check"></i><b>11.3</b> Data</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#raw-data-in-extdata"><i class="fa fa-check"></i><b>11.3.1</b> Raw data in extdata</a></li>
+<li class="chapter" data-level="11.3.2" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#binary-data-as-rda-files"><i class="fa fa-check"></i><b>11.3.2</b> Binary data as <code>rda</code> files</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#code-functions"><i class="fa fa-check"></i><b>11.4</b> Code (functions)</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -269,24 +283,24 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="building-a-package-on-github-for-data-and-code" class="section level1 hasAnchor" number="9">
-<h1><span class="header-section-number">9</span> Building a Package on GitHub for Data and Code<a href="building-a-package-on-github-for-data-and-code.html#building-a-package-on-github-for-data-and-code" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="building-a-package-on-github-for-data-and-code" class="section level1 hasAnchor" number="11">
+<h1><span class="header-section-number">11</span> Building a Package on GitHub for Data and Code<a href="building-a-package-on-github-for-data-and-code.html#building-a-package-on-github-for-data-and-code" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>These are just some notes mostly on building packages, based mostly on a couple of great sources which you should use to learn the process:</p>
 <ul>
-<li><p><em>R Packages</em> <a href="https://r-pkgs.org/" class="uri">https://r-pkgs.org/</a> (<span class="citation">Wickham and Bryan (<a href="#ref-r-pkgs" role="doc-biblioref">n.d.</a>)</span>)</p>
+<li><p><em>R Packages</em> <a href="https://r-pkgs.org/" class="uri">https://r-pkgs.org/</a> (<span class="citation">Wickham and Bryan (<a href="#ref-r-pkgs">n.d.</a>)</span>)</p>
 <ul>
 <li>Includes a quick run through in chapter 2 for building a package, with a function</li>
 <li>Chapter 14 “External data” goes over how to build data into the package</li>
 <li>Various chapter references below refer to this source</li>
 </ul></li>
-<li><p><em>Happy Git and GitHub for the useR</em> <a href="https://happygitwithr.com/" class="uri">https://happygitwithr.com/</a> (<span class="citation">Bryan (<a href="#ref-happygitwithr" role="doc-biblioref">n.d.</a>)</span>)</p>
+<li><p><em>Happy Git and GitHub for the useR</em> <a href="https://happygitwithr.com/" class="uri">https://happygitwithr.com/</a> (<span class="citation">Bryan (<a href="#ref-happygitwithr">n.d.</a>)</span>)</p>
 <ul>
 <li>All about how to get Git and GitHub working</li>
 </ul></li>
 </ul>
-<div id="git-and-github" class="section level2 hasAnchor" number="9.1">
-<h2><span class="header-section-number">9.1</span> Git and GitHub<a href="building-a-package-on-github-for-data-and-code.html#git-and-github" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>You’ll need to learn about using Git methods to host a package on GitHub (<a href="https://github.com" class="uri">https://github.com</a>), where you’ll also need at least a free account. See <em>Happy Git and GitHub for the useR</em> <a href="https://happygitwithr.com/" class="uri">https://happygitwithr.com/</a> (<span class="citation">Bryan (<a href="#ref-happygitwithr" role="doc-biblioref">n.d.</a>)</span>) to learn everything you’ll need for this. Some key takeaways:</p>
+<div id="git-and-github" class="section level2 hasAnchor" number="11.1">
+<h2><span class="header-section-number">11.1</span> Git and GitHub<a href="building-a-package-on-github-for-data-and-code.html#git-and-github" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>You’ll need to learn about using Git methods to host a package on GitHub (<a href="https://github.com" class="uri">https://github.com</a>), where you’ll also need at least a free account. See <em>Happy Git and GitHub for the useR</em> <a href="https://happygitwithr.com/" class="uri">https://happygitwithr.com/</a> (<span class="citation">Bryan (<a href="#ref-happygitwithr">n.d.</a>)</span>) to learn everything you’ll need for this. Some key takeaways:</p>
 <ul>
 <li><p>The purpose of Git is version control, and <a href="https://github.com" class="uri">https://github.com</a> is a place to host package repositories (repos) that use this. Methods include keeping track of all changes in your package, including all files in the folders.</p></li>
 <li><p>You’ll need to use GitHub to create an account and connect with collaborators. And you can use it for setting everything up in your package repository.</p></li>
@@ -298,9 +312,9 @@ div.csl-indent {
 </ul></li>
 </ul>
 </div>
-<div id="some-notes-on-the-rstudio-process" class="section level2 hasAnchor" number="9.2">
-<h2><span class="header-section-number">9.2</span> Some notes on the RStudio process<a href="building-a-package-on-github-for-data-and-code.html#some-notes-on-the-rstudio-process" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>See Chapter 2 in <em>R Packages</em> (<span class="citation">Wickham and Bryan (<a href="#ref-r-pkgs" role="doc-biblioref">n.d.</a>)</span>) for a simple process. Some observations:</p>
+<div id="some-notes-on-the-rstudio-process" class="section level2 hasAnchor" number="11.2">
+<h2><span class="header-section-number">11.2</span> Some notes on the RStudio process<a href="building-a-package-on-github-for-data-and-code.html#some-notes-on-the-rstudio-process" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>See Chapter 2 in <em>R Packages</em> (<span class="citation">Wickham and Bryan (<a href="#ref-r-pkgs">n.d.</a>)</span>) for a simple process. Some observations:</p>
 <ul>
 <li><p>You need <code>devtools</code> and <code>usethis</code> packages.</p></li>
 <li><p>You’ll need to specify a folder with <code>create_package</code>, and you might want to put it in a <code>GitHub</code> folder in <code>Documents</code>. It doesn’t matter where, but it’s useful to keep GitHub things together. Refer to Chapter 2 <a href="https://r-pkgs.org/whole-game.html" class="uri">https://r-pkgs.org/whole-game.html</a>.</p></li>
@@ -321,15 +335,15 @@ div.csl-indent {
 <li><p>The process can be confusing, but the various RStudio methods and functions provided in <code>devtools</code> and <code>usethis</code> make it at least very easy to do if you follow directions, which are spelled out pretty clearly in the <em>R Packages</em> book. We’ll look at creating another function later in this appendix, following the method provided in <em>R Packages</em></p></li>
 </ul>
 </div>
-<div id="data-1" class="section level2 hasAnchor" number="9.3">
-<h2><span class="header-section-number">9.3</span> Data<a href="building-a-package-on-github-for-data-and-code.html#data-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="data-1" class="section level2 hasAnchor" number="11.3">
+<h2><span class="header-section-number">11.3</span> Data<a href="building-a-package-on-github-for-data-and-code.html#data-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>For our package, <code>igisci</code>, we provided data in two ways:</p>
 <ul>
 <li>raw data as CSVs, shapefiles and TIFFs (useful since rasters don’t seem to be supported in rda)</li>
 <li><code>rda</code> files: normal external data that are ready to use as data frames and simple feature (sf) data</li>
 </ul>
-<div id="raw-data-in-extdata" class="section level3 hasAnchor" number="9.3.1">
-<h3><span class="header-section-number">9.3.1</span> Raw data in extdata<a href="building-a-package-on-github-for-data-and-code.html#raw-data-in-extdata" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="raw-data-in-extdata" class="section level3 hasAnchor" number="11.3.1">
+<h3><span class="header-section-number">11.3.1</span> Raw data in extdata<a href="building-a-package-on-github-for-data-and-code.html#raw-data-in-extdata" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Raw data (e.g. CSVs, shapefiles, and rasters) can be simply stored in the <code>inst/extdata</code> folder. Just create those folders and put the files there. Make sure to include all the files (like the multiple files that go with a shapefile). Then, to access the data once the data package is installed, the user just needs to use the <code>system.file()</code> function to provide the path and then use that with the appropriate read function; e.g. for a CSV, something like:</p>
 <pre><code>csvPath &lt;- system.file(&quot;extdata&quot;,&quot;TRI/TRI_2017_CA.csv&quot;)
 TRI_2017_CA &lt;- read_csv(csvPath)</code></pre>
@@ -337,14 +351,14 @@ TRI_2017_CA &lt;- read_csv(csvPath)</code></pre>
 <pre><code>TRI_2017_CA &lt;- read.csv(ex(&quot;TRI/TRI_2017_CA.csv&quot;))</code></pre>
 <p>… which isn’t much different from reading data in your RStudio project folder, so seemed a useful method to include in this book. And adding data to the data package by simply putting them in the <code>extdata</code> folder is very easy and also works for data files like TIFFs that aren’t supported as <code>rda</code> files that we’ll look at next.</p>
 </div>
-<div id="binary-data-as-rda-files" class="section level3 hasAnchor" number="9.3.2">
-<h3><span class="header-section-number">9.3.2</span> Binary data as <code>rda</code> files<a href="building-a-package-on-github-for-data-and-code.html#binary-data-as-rda-files" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="binary-data-as-rda-files" class="section level3 hasAnchor" number="11.3.2">
+<h3><span class="header-section-number">11.3.2</span> Binary data as <code>rda</code> files<a href="building-a-package-on-github-for-data-and-code.html#binary-data-as-rda-files" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>For data needed frequently, similar to <code>co2</code> or other provided data in base R, you’ll want to create binary data stored as <code>rda</code> files. These files need to be prepared from data in R and go in the data folder. The process is made very easy by using <code>usethis::use_data()</code> to add data as rda files to the <code>data</code> folder. These data can be data frames, simple features, and I’m sure other things.</p>
 <p>I used a script <code>addData.R</code> that I put in the <code>inst</code> folder which built the data from some of the same files included in the extdata folder, with <code>usethis::use_data()</code> to store it in the data folder. Here’s a simple example with just a csv converted directly, and it takes care of storing the result in the <code>data</code> folder as an <code>.rda</code> file:</p>
 <pre><code>sierraFeb &lt;- read_csv(&quot;inst/extdata/sierra/sierraFeb.csv&quot;)
 usethis::use_data(sierraFeb)</code></pre>
-<div id="devtoolsdocument" class="section level4 hasAnchor" number="9.3.2.1">
-<h4><span class="header-section-number">9.3.2.1</span> <code>devtools::document()</code><a href="building-a-package-on-github-for-data-and-code.html#devtoolsdocument" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="devtoolsdocument" class="section level4 hasAnchor" number="11.3.2.1">
+<h4><span class="header-section-number">11.3.2.1</span> <code>devtools::document()</code><a href="building-a-package-on-github-for-data-and-code.html#devtoolsdocument" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>This creates documentation on the data sets, using the file <code>R/data.R</code>, which will need to have lines of code similar to the following to document each data set. Note that the name of the data set goes last, in quotes. The formatting of the field names and descriptions is a bit tricky and doesn’t follow normal R rules. As a result, sometimes my field names don’t exactly match the actual field names. Maybe I’ll get around to changing the original field names with <code>rename</code>. Note that the organization is important, with the title of the data first, a blank line, then a description, etc.:</p>
 <pre><code>#&#39; Sierra February climate data
 #&#39;
@@ -363,21 +377,21 @@ usethis::use_data(sierraFeb)</code></pre>
 &quot;sierraFeb&quot;</code></pre>
 <p>Once these are on GitHub, a user can simply install the package with <code>devtools::install_github("iGISc/igisci")</code> – to use the <code>igisci</code> we created. Then to access the data just like built-in data, the user just needs to load that library with <code>library(igisci)</code></p>
 </div>
-<div id="removing-data" class="section level4 hasAnchor" number="9.3.2.2">
-<h4><span class="header-section-number">9.3.2.2</span> Removing data<a href="building-a-package-on-github-for-data-and-code.html#removing-data" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="removing-data" class="section level4 hasAnchor" number="11.3.2.2">
+<h4><span class="header-section-number">11.3.2.2</span> Removing data<a href="building-a-package-on-github-for-data-and-code.html#removing-data" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>There may be a better way, but what worked was removing the <code>rda</code> and corresponding <code>man</code> files. Also edited the <code>data.R</code> file to remove them from the <code>man</code> file maybe being created again.</p>
 </div>
 </div>
 </div>
-<div id="code-functions" class="section level2 hasAnchor" number="9.4">
-<h2><span class="header-section-number">9.4</span> Code (functions)<a href="building-a-package-on-github-for-data-and-code.html#code-functions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="code-functions" class="section level2 hasAnchor" number="11.4">
+<h2><span class="header-section-number">11.4</span> Code (functions)<a href="building-a-package-on-github-for-data-and-code.html#code-functions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>You can build pretty extensive functions in a package, and you’ve been using these from a variety of packages. We’ll just look at the simple example of a function we’ll name <code>ex()</code> for making it easier to read data from the <code>extdata</code> folder of the <code>igisci</code> package. The methods shown here are based on <a href="https://r-pkgs.org/" class="uri">https://r-pkgs.org/</a> which you should refer to for more thorough documentation.</p>
 <p>Here’s the function we’ll create in the package. However, one caveat is that you want to add this after you’ve already installed the package with data, or you’ll get an error.</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="building-a-package-on-github-for-data-and-code.html#cb84-1" aria-hidden="true" tabindex="-1"></a>ex <span class="ot">&lt;-</span> <span class="cf">function</span>(dta){</span>
-<span id="cb84-2"><a href="building-a-package-on-github-for-data-and-code.html#cb84-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">system.file</span>(<span class="st">&quot;extdata&quot;</span>,dta,<span class="at">package=</span><span class="st">&quot;igisci&quot;</span>)</span>
-<span id="cb84-3"><a href="building-a-package-on-github-for-data-and-code.html#cb84-3" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="building-a-package-on-github-for-data-and-code.html#cb102-1" tabindex="-1"></a>ex <span class="ot">&lt;-</span> <span class="cf">function</span>(dta){</span>
+<span id="cb102-2"><a href="building-a-package-on-github-for-data-and-code.html#cb102-2" tabindex="-1"></a>  <span class="fu">system.file</span>(<span class="st">&quot;extdata&quot;</span>,dta,<span class="at">package=</span><span class="st">&quot;igisci&quot;</span>)</span>
+<span id="cb102-3"><a href="building-a-package-on-github-for-data-and-code.html#cb102-3" tabindex="-1"></a>  }</span></code></pre></div>
 <p>We want to use it where in our code we wanted to read a file from <code>extdata</code> but we want cleaner code that doesn’t take up much space in code we’re writing than just reading it from your workspace. There’s a csv file in the <code>sierra</code> folder of <code>extdata</code> named <code>Sierra2LassenData.csv</code> that we could then read with:</p>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="building-a-package-on-github-for-data-and-code.html#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read.csv</span>(<span class="fu">ex</span>(<span class="st">&quot;sierra/sierraFebShort.csv&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="building-a-package-on-github-for-data-and-code.html#cb103-1" tabindex="-1"></a><span class="fu">read.csv</span>(<span class="fu">ex</span>(<span class="st">&quot;sierra/sierraFebShort.csv&quot;</span>))</span></code></pre></div>
 <pre><code>##        STATION    COUNTY ELEVATION LATITUDE LONGITUDE PRECIPITATION TEMPERATURE
 ## 1     OROVILLE     Butte        52    39.52   -121.55           124        10.7
 ## 2       AUBURN    Placer       394    38.91   -121.08           160         9.7
@@ -402,59 +416,59 @@ usethis::use_data(sierraFeb)</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>Add the function code to the <code>ex.R</code> script created.</li>
 </ol>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="building-a-package-on-github-for-data-and-code.html#cb88-1" aria-hidden="true" tabindex="-1"></a>ex <span class="ot">&lt;-</span> <span class="cf">function</span>(dta){</span>
-<span id="cb88-2"><a href="building-a-package-on-github-for-data-and-code.html#cb88-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">system.file</span>(<span class="st">&quot;extdata&quot;</span>,dta,<span class="at">package=</span><span class="st">&quot;igisci&quot;</span>)</span>
-<span id="cb88-3"><a href="building-a-package-on-github-for-data-and-code.html#cb88-3" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="building-a-package-on-github-for-data-and-code.html#cb106-1" tabindex="-1"></a>ex <span class="ot">&lt;-</span> <span class="cf">function</span>(dta){</span>
+<span id="cb106-2"><a href="building-a-package-on-github-for-data-and-code.html#cb106-2" tabindex="-1"></a>  <span class="fu">system.file</span>(<span class="st">&quot;extdata&quot;</span>,dta,<span class="at">package=</span><span class="st">&quot;igisci&quot;</span>)</span>
+<span id="cb106-3"><a href="building-a-package-on-github-for-data-and-code.html#cb106-3" tabindex="-1"></a>  }</span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
 <li><p>Create the documentation skeleton while editing the script by using Insert Roxygen Skeleton from the RStudio Code menu.</p></li>
 <li><p>Then fill in the various elements of the documentation (A title, parameters, what it returns and examples) which shows what you want the user to see with <code>?ex</code> or <code>?exfiles</code>, similar to this, and save the script. If you have more than one function, the documentation will go just above the function definition. See <a href="https://r-pkgs.org/man.html" class="uri">https://r-pkgs.org/man.html</a>.</p></li>
 </ol>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="building-a-package-on-github-for-data-and-code.html#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; Access external data in package</span></span>
-<span id="cb89-2"><a href="building-a-package-on-github-for-data-and-code.html#cb89-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;</span></span>
-<span id="cb89-3"><a href="building-a-package-on-github-for-data-and-code.html#cb89-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param dta filename to access from extdata, including folders</span></span>
-<span id="cb89-4"><a href="building-a-package-on-github-for-data-and-code.html#cb89-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;</span></span>
-<span id="cb89-5"><a href="building-a-package-on-github-for-data-and-code.html#cb89-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @return path to the file</span></span>
-<span id="cb89-6"><a href="building-a-package-on-github-for-data-and-code.html#cb89-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @export</span></span>
-<span id="cb89-7"><a href="building-a-package-on-github-for-data-and-code.html#cb89-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;</span></span>
-<span id="cb89-8"><a href="building-a-package-on-github-for-data-and-code.html#cb89-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @examples</span></span>
-<span id="cb89-9"><a href="building-a-package-on-github-for-data-and-code.html#cb89-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; read.csv(ex(&quot;sierra/sierraStations.csv&quot;))</span></span>
-<span id="cb89-10"><a href="building-a-package-on-github-for-data-and-code.html#cb89-10" aria-hidden="true" tabindex="-1"></a>ex <span class="ot">&lt;-</span> <span class="cf">function</span>(dta){</span>
-<span id="cb89-11"><a href="building-a-package-on-github-for-data-and-code.html#cb89-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">system.file</span>(<span class="st">&quot;extdata&quot;</span>,dta,<span class="at">package=</span><span class="st">&quot;igisci&quot;</span>)</span>
-<span id="cb89-12"><a href="building-a-package-on-github-for-data-and-code.html#cb89-12" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb89-13"><a href="building-a-package-on-github-for-data-and-code.html#cb89-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; Listing contents of extdata from package</span></span>
-<span id="cb89-14"><a href="building-a-package-on-github-for-data-and-code.html#cb89-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param NA</span></span>
-<span id="cb89-15"><a href="building-a-package-on-github-for-data-and-code.html#cb89-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @return tibble</span></span>
-<span id="cb89-16"><a href="building-a-package-on-github-for-data-and-code.html#cb89-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @export</span></span>
-<span id="cb89-17"><a href="building-a-package-on-github-for-data-and-code.html#cb89-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;</span></span>
-<span id="cb89-18"><a href="building-a-package-on-github-for-data-and-code.html#cb89-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @examples</span></span>
-<span id="cb89-19"><a href="building-a-package-on-github-for-data-and-code.html#cb89-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; view(exfiles())</span></span>
-<span id="cb89-20"><a href="building-a-package-on-github-for-data-and-code.html#cb89-20" aria-hidden="true" tabindex="-1"></a>exfiles <span class="ot">&lt;-</span> <span class="cf">function</span>(){</span>
-<span id="cb89-21"><a href="building-a-package-on-github-for-data-and-code.html#cb89-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(dplyr)</span>
-<span id="cb89-22"><a href="building-a-package-on-github-for-data-and-code.html#cb89-22" aria-hidden="true" tabindex="-1"></a>  exfilesDF <span class="ot">&lt;-</span> <span class="fu">tribble</span>(<span class="sc">~</span>dir,<span class="sc">~</span>file,<span class="sc">~</span>path,<span class="sc">~</span>type)</span>
-<span id="cb89-23"><a href="building-a-package-on-github-for-data-and-code.html#cb89-23" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(d <span class="cf">in</span> <span class="fu">list.dirs</span>(<span class="fu">ex</span>(<span class="st">&quot;&quot;</span>),<span class="at">recursive=</span>F)){</span>
-<span id="cb89-24"><a href="building-a-package-on-github-for-data-and-code.html#cb89-24" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(d)</span></span>
-<span id="cb89-25"><a href="building-a-package-on-github-for-data-and-code.html#cb89-25" aria-hidden="true" tabindex="-1"></a>    dsplit <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(d,<span class="st">&quot;/&quot;</span>)</span>
-<span id="cb89-26"><a href="building-a-package-on-github-for-data-and-code.html#cb89-26" aria-hidden="true" tabindex="-1"></a>    len <span class="ot">&lt;-</span> <span class="fu">length</span>(dsplit[[<span class="dv">1</span>]])</span>
-<span id="cb89-27"><a href="building-a-package-on-github-for-data-and-code.html#cb89-27" aria-hidden="true" tabindex="-1"></a>    dir <span class="ot">&lt;-</span> dsplit[[<span class="dv">1</span>]][len]</span>
-<span id="cb89-28"><a href="building-a-package-on-github-for-data-and-code.html#cb89-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(shp <span class="cf">in</span> <span class="fu">list.files</span>(d,<span class="at">pattern=</span><span class="st">&quot;*.shp$&quot;</span>)){</span>
-<span id="cb89-29"><a href="building-a-package-on-github-for-data-and-code.html#cb89-29" aria-hidden="true" tabindex="-1"></a>      exfilesDF <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(exfilesDF,<span class="fu">tribble</span>(<span class="sc">~</span>dir,<span class="sc">~</span>file,<span class="sc">~</span>path,<span class="sc">~</span>type,dir,shp,<span class="fu">paste0</span>(<span class="st">&quot;ex(</span><span class="sc">\&#39;</span><span class="st">&quot;</span>,dir,<span class="st">&quot;/&quot;</span>,shp,<span class="st">&quot;</span><span class="sc">\&#39;</span><span class="st">)&quot;</span>),<span class="st">&quot;shapefile&quot;</span>))</span>
-<span id="cb89-30"><a href="building-a-package-on-github-for-data-and-code.html#cb89-30" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb89-31"><a href="building-a-package-on-github-for-data-and-code.html#cb89-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(tif <span class="cf">in</span> <span class="fu">list.files</span>(d,<span class="at">pattern=</span><span class="st">&quot;*.tif$&quot;</span>)){</span>
-<span id="cb89-32"><a href="building-a-package-on-github-for-data-and-code.html#cb89-32" aria-hidden="true" tabindex="-1"></a>      exfilesDF <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(exfilesDF,<span class="fu">tribble</span>(<span class="sc">~</span>dir,<span class="sc">~</span>file,<span class="sc">~</span>path,<span class="sc">~</span>type,dir,tif,<span class="fu">paste0</span>(<span class="st">&quot;ex(</span><span class="sc">\&#39;</span><span class="st">&quot;</span>,dir,<span class="st">&quot;/&quot;</span>,tif,<span class="st">&quot;</span><span class="sc">\&#39;</span><span class="st">)&quot;</span>),<span class="st">&quot;TIFF&quot;</span>))</span>
-<span id="cb89-33"><a href="building-a-package-on-github-for-data-and-code.html#cb89-33" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb89-34"><a href="building-a-package-on-github-for-data-and-code.html#cb89-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(csv <span class="cf">in</span> <span class="fu">list.files</span>(d,<span class="at">pattern=</span><span class="st">&quot;*.csv&quot;</span>)){</span>
-<span id="cb89-35"><a href="building-a-package-on-github-for-data-and-code.html#cb89-35" aria-hidden="true" tabindex="-1"></a>      exfilesDF <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(exfilesDF,<span class="fu">tribble</span>(<span class="sc">~</span>dir,<span class="sc">~</span>file,<span class="sc">~</span>path,<span class="sc">~</span>type,dir,csv,<span class="fu">paste0</span>(<span class="st">&quot;ex(</span><span class="sc">\&#39;</span><span class="st">&quot;</span>,dir,<span class="st">&quot;/&quot;</span>,csv,<span class="st">&quot;</span><span class="sc">\&#39;</span><span class="st">)&quot;</span>),<span class="st">&quot;CSV&quot;</span>))</span>
-<span id="cb89-36"><a href="building-a-package-on-github-for-data-and-code.html#cb89-36" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb89-37"><a href="building-a-package-on-github-for-data-and-code.html#cb89-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(xls <span class="cf">in</span> <span class="fu">list.files</span>(d,<span class="at">pattern=</span><span class="st">&quot;*.xls&quot;</span>)){</span>
-<span id="cb89-38"><a href="building-a-package-on-github-for-data-and-code.html#cb89-38" aria-hidden="true" tabindex="-1"></a>      exfilesDF <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(exfilesDF,<span class="fu">tribble</span>(<span class="sc">~</span>dir,<span class="sc">~</span>file,<span class="sc">~</span>path,<span class="sc">~</span>type,dir,xls,<span class="fu">paste0</span>(<span class="st">&quot;ex(</span><span class="sc">\&#39;</span><span class="st">&quot;</span>,dir,<span class="st">&quot;/&quot;</span>,xls,<span class="st">&quot;</span><span class="sc">\&#39;</span><span class="st">)&quot;</span>),<span class="st">&quot;xls&quot;</span>))</span>
-<span id="cb89-39"><a href="building-a-package-on-github-for-data-and-code.html#cb89-39" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb89-40"><a href="building-a-package-on-github-for-data-and-code.html#cb89-40" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb89-41"><a href="building-a-package-on-github-for-data-and-code.html#cb89-41" aria-hidden="true" tabindex="-1"></a>  exfilesDF</span>
-<span id="cb89-42"><a href="building-a-package-on-github-for-data-and-code.html#cb89-42" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="building-a-package-on-github-for-data-and-code.html#cb107-1" tabindex="-1"></a><span class="co">#&#39; Access external data in package</span></span>
+<span id="cb107-2"><a href="building-a-package-on-github-for-data-and-code.html#cb107-2" tabindex="-1"></a><span class="co">#&#39;</span></span>
+<span id="cb107-3"><a href="building-a-package-on-github-for-data-and-code.html#cb107-3" tabindex="-1"></a><span class="co">#&#39; @param dta filename to access from extdata, including folders</span></span>
+<span id="cb107-4"><a href="building-a-package-on-github-for-data-and-code.html#cb107-4" tabindex="-1"></a><span class="co">#&#39;</span></span>
+<span id="cb107-5"><a href="building-a-package-on-github-for-data-and-code.html#cb107-5" tabindex="-1"></a><span class="co">#&#39; @return path to the file</span></span>
+<span id="cb107-6"><a href="building-a-package-on-github-for-data-and-code.html#cb107-6" tabindex="-1"></a><span class="co">#&#39; @export</span></span>
+<span id="cb107-7"><a href="building-a-package-on-github-for-data-and-code.html#cb107-7" tabindex="-1"></a><span class="co">#&#39;</span></span>
+<span id="cb107-8"><a href="building-a-package-on-github-for-data-and-code.html#cb107-8" tabindex="-1"></a><span class="co">#&#39; @examples</span></span>
+<span id="cb107-9"><a href="building-a-package-on-github-for-data-and-code.html#cb107-9" tabindex="-1"></a><span class="co">#&#39; read.csv(ex(&quot;sierra/sierraStations.csv&quot;))</span></span>
+<span id="cb107-10"><a href="building-a-package-on-github-for-data-and-code.html#cb107-10" tabindex="-1"></a>ex <span class="ot">&lt;-</span> <span class="cf">function</span>(dta){</span>
+<span id="cb107-11"><a href="building-a-package-on-github-for-data-and-code.html#cb107-11" tabindex="-1"></a>  <span class="fu">system.file</span>(<span class="st">&quot;extdata&quot;</span>,dta,<span class="at">package=</span><span class="st">&quot;igisci&quot;</span>)</span>
+<span id="cb107-12"><a href="building-a-package-on-github-for-data-and-code.html#cb107-12" tabindex="-1"></a>}</span>
+<span id="cb107-13"><a href="building-a-package-on-github-for-data-and-code.html#cb107-13" tabindex="-1"></a><span class="co">#&#39; Listing contents of extdata from package</span></span>
+<span id="cb107-14"><a href="building-a-package-on-github-for-data-and-code.html#cb107-14" tabindex="-1"></a><span class="co">#&#39; @param NA</span></span>
+<span id="cb107-15"><a href="building-a-package-on-github-for-data-and-code.html#cb107-15" tabindex="-1"></a><span class="co">#&#39; @return tibble</span></span>
+<span id="cb107-16"><a href="building-a-package-on-github-for-data-and-code.html#cb107-16" tabindex="-1"></a><span class="co">#&#39; @export</span></span>
+<span id="cb107-17"><a href="building-a-package-on-github-for-data-and-code.html#cb107-17" tabindex="-1"></a><span class="co">#&#39;</span></span>
+<span id="cb107-18"><a href="building-a-package-on-github-for-data-and-code.html#cb107-18" tabindex="-1"></a><span class="co">#&#39; @examples</span></span>
+<span id="cb107-19"><a href="building-a-package-on-github-for-data-and-code.html#cb107-19" tabindex="-1"></a><span class="co">#&#39; view(exfiles())</span></span>
+<span id="cb107-20"><a href="building-a-package-on-github-for-data-and-code.html#cb107-20" tabindex="-1"></a>exfiles <span class="ot">&lt;-</span> <span class="cf">function</span>(){</span>
+<span id="cb107-21"><a href="building-a-package-on-github-for-data-and-code.html#cb107-21" tabindex="-1"></a>  <span class="fu">library</span>(dplyr)</span>
+<span id="cb107-22"><a href="building-a-package-on-github-for-data-and-code.html#cb107-22" tabindex="-1"></a>  exfilesDF <span class="ot">&lt;-</span> <span class="fu">tribble</span>(<span class="sc">~</span>dir,<span class="sc">~</span>file,<span class="sc">~</span>path,<span class="sc">~</span>type)</span>
+<span id="cb107-23"><a href="building-a-package-on-github-for-data-and-code.html#cb107-23" tabindex="-1"></a>  <span class="cf">for</span>(d <span class="cf">in</span> <span class="fu">list.dirs</span>(<span class="fu">ex</span>(<span class="st">&quot;&quot;</span>),<span class="at">recursive=</span>F)){</span>
+<span id="cb107-24"><a href="building-a-package-on-github-for-data-and-code.html#cb107-24" tabindex="-1"></a>    <span class="co">#print(d)</span></span>
+<span id="cb107-25"><a href="building-a-package-on-github-for-data-and-code.html#cb107-25" tabindex="-1"></a>    dsplit <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(d,<span class="st">&quot;/&quot;</span>)</span>
+<span id="cb107-26"><a href="building-a-package-on-github-for-data-and-code.html#cb107-26" tabindex="-1"></a>    len <span class="ot">&lt;-</span> <span class="fu">length</span>(dsplit[[<span class="dv">1</span>]])</span>
+<span id="cb107-27"><a href="building-a-package-on-github-for-data-and-code.html#cb107-27" tabindex="-1"></a>    dir <span class="ot">&lt;-</span> dsplit[[<span class="dv">1</span>]][len]</span>
+<span id="cb107-28"><a href="building-a-package-on-github-for-data-and-code.html#cb107-28" tabindex="-1"></a>    <span class="cf">for</span>(shp <span class="cf">in</span> <span class="fu">list.files</span>(d,<span class="at">pattern=</span><span class="st">&quot;*.shp$&quot;</span>)){</span>
+<span id="cb107-29"><a href="building-a-package-on-github-for-data-and-code.html#cb107-29" tabindex="-1"></a>      exfilesDF <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(exfilesDF,<span class="fu">tribble</span>(<span class="sc">~</span>dir,<span class="sc">~</span>file,<span class="sc">~</span>path,<span class="sc">~</span>type,dir,shp,<span class="fu">paste0</span>(<span class="st">&quot;ex(</span><span class="sc">\&#39;</span><span class="st">&quot;</span>,dir,<span class="st">&quot;/&quot;</span>,shp,<span class="st">&quot;</span><span class="sc">\&#39;</span><span class="st">)&quot;</span>),<span class="st">&quot;shapefile&quot;</span>))</span>
+<span id="cb107-30"><a href="building-a-package-on-github-for-data-and-code.html#cb107-30" tabindex="-1"></a>    }</span>
+<span id="cb107-31"><a href="building-a-package-on-github-for-data-and-code.html#cb107-31" tabindex="-1"></a>    <span class="cf">for</span>(tif <span class="cf">in</span> <span class="fu">list.files</span>(d,<span class="at">pattern=</span><span class="st">&quot;*.tif$&quot;</span>)){</span>
+<span id="cb107-32"><a href="building-a-package-on-github-for-data-and-code.html#cb107-32" tabindex="-1"></a>      exfilesDF <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(exfilesDF,<span class="fu">tribble</span>(<span class="sc">~</span>dir,<span class="sc">~</span>file,<span class="sc">~</span>path,<span class="sc">~</span>type,dir,tif,<span class="fu">paste0</span>(<span class="st">&quot;ex(</span><span class="sc">\&#39;</span><span class="st">&quot;</span>,dir,<span class="st">&quot;/&quot;</span>,tif,<span class="st">&quot;</span><span class="sc">\&#39;</span><span class="st">)&quot;</span>),<span class="st">&quot;TIFF&quot;</span>))</span>
+<span id="cb107-33"><a href="building-a-package-on-github-for-data-and-code.html#cb107-33" tabindex="-1"></a>    }</span>
+<span id="cb107-34"><a href="building-a-package-on-github-for-data-and-code.html#cb107-34" tabindex="-1"></a>    <span class="cf">for</span>(csv <span class="cf">in</span> <span class="fu">list.files</span>(d,<span class="at">pattern=</span><span class="st">&quot;*.csv&quot;</span>)){</span>
+<span id="cb107-35"><a href="building-a-package-on-github-for-data-and-code.html#cb107-35" tabindex="-1"></a>      exfilesDF <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(exfilesDF,<span class="fu">tribble</span>(<span class="sc">~</span>dir,<span class="sc">~</span>file,<span class="sc">~</span>path,<span class="sc">~</span>type,dir,csv,<span class="fu">paste0</span>(<span class="st">&quot;ex(</span><span class="sc">\&#39;</span><span class="st">&quot;</span>,dir,<span class="st">&quot;/&quot;</span>,csv,<span class="st">&quot;</span><span class="sc">\&#39;</span><span class="st">)&quot;</span>),<span class="st">&quot;CSV&quot;</span>))</span>
+<span id="cb107-36"><a href="building-a-package-on-github-for-data-and-code.html#cb107-36" tabindex="-1"></a>    }</span>
+<span id="cb107-37"><a href="building-a-package-on-github-for-data-and-code.html#cb107-37" tabindex="-1"></a>    <span class="cf">for</span>(xls <span class="cf">in</span> <span class="fu">list.files</span>(d,<span class="at">pattern=</span><span class="st">&quot;*.xls&quot;</span>)){</span>
+<span id="cb107-38"><a href="building-a-package-on-github-for-data-and-code.html#cb107-38" tabindex="-1"></a>      exfilesDF <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(exfilesDF,<span class="fu">tribble</span>(<span class="sc">~</span>dir,<span class="sc">~</span>file,<span class="sc">~</span>path,<span class="sc">~</span>type,dir,xls,<span class="fu">paste0</span>(<span class="st">&quot;ex(</span><span class="sc">\&#39;</span><span class="st">&quot;</span>,dir,<span class="st">&quot;/&quot;</span>,xls,<span class="st">&quot;</span><span class="sc">\&#39;</span><span class="st">)&quot;</span>),<span class="st">&quot;xls&quot;</span>))</span>
+<span id="cb107-39"><a href="building-a-package-on-github-for-data-and-code.html#cb107-39" tabindex="-1"></a>    }</span>
+<span id="cb107-40"><a href="building-a-package-on-github-for-data-and-code.html#cb107-40" tabindex="-1"></a>  }</span>
+<span id="cb107-41"><a href="building-a-package-on-github-for-data-and-code.html#cb107-41" tabindex="-1"></a>  exfilesDF</span>
+<span id="cb107-42"><a href="building-a-package-on-github-for-data-and-code.html#cb107-42" tabindex="-1"></a>}</span></code></pre></div>
 <ol start="5" style="list-style-type: decimal">
 <li>Use <code>devtools::document()</code> to convert the comments to .Rd files.</li>
 </ol>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="building-a-package-on-github-for-data-and-code.html#cb90-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">document</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="building-a-package-on-github-for-data-and-code.html#cb108-1" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">document</span>()</span></code></pre></div>
 <ol start="6" style="list-style-type: decimal">
 <li><p>Then preview the documentation with <code>?ex</code>, and maybe use Check in the Build tab.</p></li>
 <li><p>Then when you commit these changes in GitHub, the package will contain the function, ready to use as long as the user loads the library. You should see the function as <code>ex.Rd</code> in the <code>man</code> folder of your package, similar to what you see for the data described above.</p></li>
@@ -477,7 +491,7 @@ Wickham, Hadley, and Jenny Bryan. n.d. <em>R Packages</em>. O’Reilly. <a href=
           </div>
         </div>
       </div>
-<a href="r-markdown-and-bookdown.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="figures-and-tables.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
@@ -534,20 +548,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>

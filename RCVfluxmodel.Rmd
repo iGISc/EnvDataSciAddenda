@@ -1,9 +1,10 @@
+# CO2 flux data : Red Clover Valley
 
-# 1. Initial data read and time series charting
+## 1. Initial data read and time series charting
 
-Processing from Mason Kealy
+Some ideas for processing are from Mason Kealy.  Data are from Andrew Oliphant.
 
-```{r setup, include=FALSE}
+```{r include=FALSE}
 library(readxl)
 library(tidyverse)
 library(lubridate)
@@ -11,14 +12,22 @@ library(lubridate)
 
 ### Reading in the Excel File
 
-Mason: "This code is just reading in data from an Excel file I got from the Bioclimatology class last semester. I used sub-setting to remove the first row of the excel table it just had the units for each of the variables, keeping this would just mess up my code later on.
-  This is what the tibble looked like when I first read in the excel data!"
-```{r}
-"RCV_carbon_flux_data.xlsx"
-Carbon_Flux <- read_excel("GPP_PAR_data/Mountain meadow Carbon flux data.xlsx")
-Carbonflux<- Carbon_Flux[-1, ]
+First create a function to convert the first two rows into individual variables. We won't include the units.
 
-print(Carbonflux)
+```{r}
+library(igisci); library(tidyverse); library(readxl)
+```
+```{r}
+read_excel2 <- function(xl){
+  vnames <- read_excel(xl, n_max=0) |> names()
+  vunits <- read_excel(xl, n_max=0, skip=1) |> names()
+  read_excel(xl, skip=2, col_names=vnames)
+}
+```
+
+
+```{r}
+Carbon_Flux <- read_excel2(ex("meadows/RCV_carbon_flux_data.xlsx"))
 ```
   
 You can see in the tibble above, that all the columns were in `chr` data type, this prevents the computer from seeing them as numbers.
@@ -27,7 +36,7 @@ You can see in the tibble above, that all the columns were in `chr` data type, t
   *Then Jerry removed the zero GPP_sum values.* 
 ```{r}
 
-Mountflux <- Carbonflux %>% 
+Mountflux <- Carbon_Flux %>% 
 mutate_all(as.numeric) %>% 
 mutate(DOY = as.Date(Date,format = "%m-%d")) %>% 
 select(Date:PAR_ave) %>% 
@@ -61,7 +70,7 @@ and added into ‘sum daily value’ , from flux tower in Red Clover Valley,Cali
 ```
  
 
-# Non-linear model of PAR_ave ~ GPP_sum, using Michaelis-Menten model
+## Non-linear model of PAR_ave ~ GPP_sum, using Michaelis-Menten model
 
 *Not the right goal for a model between these variables, since GPP should derive from PAR, not the other way around.  But it does illustrate asymptotic data.*
 
@@ -157,9 +166,29 @@ ggplot(Mountflux, aes(PAR_ave, GPP_sum)) + geom_point() +
 ## power regression
 
 ```{r}
-summary(lm(log(GPP_sum) ~ log(PAR_ave), data=Mountflux))
+powerModel <- lm(log(GPP_sum) ~ log(PAR_ave), data=Mountflux)
+summary(powerModel)
 ggplot(Mountflux, aes(log(PAR_ave), log(GPP_sum))) + geom_point() +
   stat_smooth(method=lm)
 ```
+Now plot without the log transformed axes, we'll need to create the curve with the model, using the coefficients.
 
+```{r}
+coeff = exp(powerModel$coefficients[1])
+power = powerModel$coefficients[2]
+fit_func <- function(x) coeff*x^power
+
+fluxPlot <- ggplot(Mountflux) +
+  geom_point(aes(x=PAR_ave,y=GPP_sum))
+fluxPlot <- fluxPlot +
+  stat_function(fun=fit_func, color="orange",lwd=2, alpha=0.5)
+fluxPlot
+```
+
+```{r}
+fit_eq = paste("y = ", round(coeff,4), " x^", round(power,3))
+fluxPlot <- fluxPlot +
+  annotate("text",x=200,y=40,label=fit_eq,size=6)
+fluxPlot
+```
 

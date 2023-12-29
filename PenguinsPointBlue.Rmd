@@ -1,6 +1,6 @@
 # PointBlue Penguin Study
 
-```{r setup, include=FALSE}
+```{r include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
@@ -8,35 +8,43 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Interactive mapping of individual penguins abstracted from a big dataset
 
-\index{big data abstraction}In a study of spatial foraging patterns by Adélie penguins (*Pygoscelis adeliae*), @Ballard2019 collected data over five austral summer seasons (parts of December and January in 2005-06, 2006-07, 2007-08, 2008-09, 2012-13) period using SPLASH tags that combine Argos satellite tracking with a time-depth recorder, with 11,192 observations. The 24 SPLASH tags were re-used over the period of the project with a total of 162 individual breeding penguins, each active over a single season. 
+#### Seabird Poisson Model
 
-Our code takes advantage of the abstraction capabilities of base R and `dplyr` to select an individual penguin from the large data set and prepare its variables for useful display. Then the interactive mode of tmap works well for visualizing the penguin data -- both the cloud of all observations and the focused individual -- since we can zoom in to see the locations in context, and basemaps can be chosen. The `tmap` code colors the individual penguin's locations based on a decimal day derived from day and time. While interactive view is more limited in options, it does at least support a legend and title (Figure \@ref(fig:mapsPenguins)).
+This \index{seabird poisson model}model is further developed in a separate case study where we'll map a prediction, but we'll look at the basics for applying a poisson family model in glm: *seabird observations*.  The data is potentially suitable since its counts with known time intervals of observation effort and initial review of the data suggests that the mean of counts is reasonably similar to the variance. The data were collected through the ACCESS program (@ACCESS) and a thorough analysis is provided by @Studwell2017.
 
-```{r echo=T}
-set.seed(28)
+```{r message=F, results='hide'}
+library(igisci); library(sf); library(tidyverse); library(tmap)
+library(maptiles)
+transects <- st_read(ex("SFmarine/transects.shp"))
 ```
-```{r warning=F, message=F}
-library(sf); library(tmap); library(tidyverse); library(igisci)
-sat_table <- read_csv(ex("penguins/sat_table_splash.csv"))
-obs <- st_as_sf(filter(sat_table,include==1), coords=c("lon","lat"), crs=4326)
-uniq_ids <- unique(obs$uniq_id) # uniq_id identifies an individual penguin
-onebird <- obs %>%
-  filter(uniq_id==uniq_ids[sample.int(length(uniq_ids), size=1)]) %>%
-  mutate(decimalDay = as.numeric(day) + as.numeric(hour)/24)
+
+One of the seabirds studies, the black-footed albatross\index{black-footed albatross}, has the lowest counts (so a relatively rare bird\index{bird}), and studies of its distribution may be informative. We'll look at counts collected during transect cruises\index{bird transects} in July 2006 (Figure \@ref(fig:modAlbatrossCounts)).
+
+```{r modAlbatrossCounts, message=F, warning=F, fig.cap="Black-footed albatross counts, July 2006"}
+tmap_mode("plot")
+transJul2006 <- transects %>%
+  filter(month==7 & year==2006 & avg_tem>0 & avg_sal>0 & avg_fluo>0)
+tm_basemap("Esri.NatGeoWorldMap") +
+  tm_shape(transJul2006) + tm_symbols(fill="bfal", size="bfal",
+                                      fill.scale=tm_scale_continuous(values="Greens"))
 ```
-```{r eval=T}
-tmap_mode = "view"
-tmap_options(basemaps=c(Terrain = "Esri.WorldTerrain",
-                        Imagery = "Esri.WorldImagery", 
-                        NatGeo = "Esri.NatGeoWorldMap", 
-                        Topo="OpenTopoMap",
-                        Ortho="GeoportailFrance.orthos"))
-penguinMap <- tm_basemap() +
-  tm_shape(obs) + tm_symbols(col="black", border.lwd=0, size=0.01, alpha=0.33) + 
-  tm_shape(onebird) + tm_symbols(col="decimalDay",
-  palette="viridis", style="cont",n=8,size=0.6) +
-  tm_legend() + 
-  tm_layout() 
-tmap_leaflet(penguinMap)
+
+Prior studies have suggested that temperature\index{temperature}, salinity\index{salinity}, fluorescence\index{fluorescence}, depth\index{depth}, and various distances\index{distance (as explanatory variable)} might be good explanatory variables to use to look at spatial patterns, so we'll use these in the model. 
+
+```{r}
+summary(glm(bfal~avg_tem + avg_sal + avg_fluo + avg_dep +
+            dist_land + dist_isla + dist_200m + dist_cord, 
+            data=transJul2006, family=poisson))
 ```
+
+We can see in the model coefficients\index{model coefficients} table several predictive variables that appear to be significant, which we'll want to explore further, and also map the results as we did with Sierra temperature data.
+
+- avg_tem
+- avg_sal
+- avg_dep
+- dist_land
+- dist_200m
+
+
+**Note** R will allow you to run glm on any family, but it's up to you to make sure it's appropriate. For example, if you provide a response variable that is *not* count data or doesn't fit the requirements for a poisson model, R will create a result but it's bogus. 
 

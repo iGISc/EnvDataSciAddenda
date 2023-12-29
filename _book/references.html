@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>References | Environmental Data Science Addenda</title>
   <meta name="description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
-  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
 
   <meta property="og:title" content="References | Environmental Data Science Addenda" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Jerry Davis, SFSU Institute for Geographic Information Science" />
 
 
-<meta name="date" content="2023-01-03" />
+<meta name="date" content="2023-12-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,23 +52,14 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.24/datatables.js"></script>
-<link href="libs/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="libs/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="libs/dt-core-1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="libs/datatables-binding-0.30/datatables.js"></script>
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
-<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-1.3.1/leaflet.js"></script>
-<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
-<script src="libs/proj4-2.6.2/proj4.min.js"></script>
-<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
-<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-binding-2.1.1/leaflet.js"></script>
-<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
-<script src="libs/leaflet-providers-plugin-2.1.1/leaflet-providers-plugin.js"></script>
 
 
 <style type="text/css">
@@ -137,6 +128,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 <style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
 div.csl-entry {
@@ -190,63 +185,82 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="4.1" data-path="terrain-mapping-caves-and-water-samples-in-a-karst.html"><a href="terrain-mapping-caves-and-water-samples-in-a-karst.html#creating-a-basemap-from-a-dem-using-hillshade-and-terrain-shading"><i class="fa fa-check"></i><b>4.1</b> Creating a basemap from a DEM, using hillshade and terrain shading</a></li>
 <li class="chapter" data-level="4.2" data-path="terrain-mapping-caves-and-water-samples-in-a-karst.html"><a href="terrain-mapping-caves-and-water-samples-in-a-karst.html#using-maptiles-for-a-topographic-basemap-with-contours"><i class="fa fa-check"></i><b>4.2</b> Using maptiles for a topographic basemap with contours</a></li>
-<li class="chapter" data-level="4.3" data-path="terrain-mapping-caves-and-water-samples-in-a-karst.html"><a href="terrain-mapping-caves-and-water-samples-in-a-karst.html#interactive-map-with-tmap-view-mode"><i class="fa fa-check"></i><b>4.3</b> Interactive map with tmap view mode</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="pointblue-penguin-study.html"><a href="pointblue-penguin-study.html"><i class="fa fa-check"></i><b>5</b> PointBlue Penguin Study</a>
 <ul>
 <li class="chapter" data-level="5.0.1" data-path="pointblue-penguin-study.html"><a href="pointblue-penguin-study.html#interactive-mapping-of-individual-penguins-abstracted-from-a-big-dataset"><i class="fa fa-check"></i><b>5.0.1</b> Interactive mapping of individual penguins abstracted from a big dataset</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="seabird-model.html"><a href="seabird-model.html"><i class="fa fa-check"></i><b>6</b> Seabird Model</a>
+<li class="chapter" data-level="6" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html"><i class="fa fa-check"></i><b>6</b> Time Series case studies</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="seabird-model.html"><a href="seabird-model.html#goals-and-basic-methods-of-the-analysis"><i class="fa fa-check"></i><b>6.1</b> Goals and basic methods of the analysis</a></li>
-<li class="chapter" data-level="6.2" data-path="seabird-model.html"><a href="seabird-model.html#exploratory-data-analysis"><i class="fa fa-check"></i><b>6.2</b> Exploratory data analysis</a>
-<ul>
-<li class="chapter" data-level="6.2.1" data-path="seabird-model.html"><a href="seabird-model.html#identifying-the-appropriate-model-using-variance-and-mean-comparisons"><i class="fa fa-check"></i><b>6.2.1</b> Identifying the appropriate model using variance and mean comparisons</a></li>
+<li class="chapter" data-level="6.1" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html#loney-meadow-flux-data"><i class="fa fa-check"></i><b>6.1</b> Loney Meadow flux data</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="seabird-model.html"><a href="seabird-model.html#model-black-footed-albatross-counts-for-july-using-a-poisson-family-glm"><i class="fa fa-check"></i><b>6.3</b> Model black-footed albatross counts for July using a poisson-family glm</a>
+<li class="chapter" data-level="7" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html"><i class="fa fa-check"></i><b>7</b> Atmospheric CO2 record from Mauna Loa, Hawaii</a></li>
+<li class="chapter" data-level="8" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html"><i class="fa fa-check"></i><b>8</b> CO2 flux data : Red Clover Valley</a>
 <ul>
-<li class="chapter" data-level="6.3.1" data-path="seabird-model.html"><a href="seabird-model.html#map-the-prediction"><i class="fa fa-check"></i><b>6.3.1</b> Map the prediction</a></li>
-</ul></li>
-<li class="chapter" data-level="6.4" data-path="seabird-model.html"><a href="seabird-model.html#interpolation"><i class="fa fa-check"></i><b>6.4</b> Interpolation</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html"><i class="fa fa-check"></i><b>7</b> Time Series case studies</a>
+<li class="chapter" data-level="8.1" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#initial-data-read-and-time-series-charting"><i class="fa fa-check"></i><b>8.1</b> 1. Initial data read and time series charting</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html#loney-meadow-flux-data"><i class="fa fa-check"></i><b>7.1</b> Loney Meadow flux data</a></li>
+<li class="chapter" data-level="8.1.1" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#reading-in-the-excel-file"><i class="fa fa-check"></i><b>8.1.1</b> Reading in the Excel File</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html"><i class="fa fa-check"></i><b>8</b> R Markdown and Bookdown</a>
+<li class="chapter" data-level="8.2" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#time-series-plot"><i class="fa fa-check"></i><b>8.2</b> Time series plot</a></li>
+<li class="chapter" data-level="8.3" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model"><i class="fa fa-check"></i><b>8.3</b> Non-linear model of PAR_ave ~ GPP_sum, using Michaelis-Menten model</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#r-markdown"><i class="fa fa-check"></i><b>8.1</b> R Markdown</a>
-<ul>
-<li class="chapter" data-level="8.1.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#markdown-editing"><i class="fa fa-check"></i><b>8.1.1</b> Markdown editing</a></li>
-<li class="chapter" data-level="8.1.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#display-options-in-code-chunks"><i class="fa fa-check"></i><b>8.1.2</b> Display options in code chunks</a></li>
-<li class="chapter" data-level="8.1.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#numbered-figures-with-text-citations"><i class="fa fa-check"></i><b>8.1.3</b> Numbered figures with text citations</a></li>
+<li class="chapter" data-level="8.3.1" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#try-fitting-a-non-linear-model-ssmicmen-from-base-r"><i class="fa fa-check"></i><b>8.3.1</b> Try fitting a non-linear model (SSmicmen from base R)</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#a-template-for-multiple-output-formats"><i class="fa fa-check"></i><b>8.2</b> A template for multiple output formats</a>
+<li class="chapter" data-level="8.4" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#polynomial-models"><i class="fa fa-check"></i><b>8.4</b> polynomial models</a>
 <ul>
-<li class="chapter" data-level="8.2.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#the-template"><i class="fa fa-check"></i><b>8.2.1</b> The template</a></li>
+<li class="chapter" data-level="8.4.1" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#poly-1"><i class="fa fa-check"></i><b>8.4.1</b> poly 1</a></li>
+<li class="chapter" data-level="8.4.2" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#poly-2"><i class="fa fa-check"></i><b>8.4.2</b> poly 2</a></li>
+<li class="chapter" data-level="8.4.3" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#poly-3"><i class="fa fa-check"></i><b>8.4.3</b> poly 3</a></li>
+<li class="chapter" data-level="8.4.4" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#poly-4"><i class="fa fa-check"></i><b>8.4.4</b> poly 4</a></li>
+<li class="chapter" data-level="8.4.5" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#poly-5"><i class="fa fa-check"></i><b>8.4.5</b> poly 5</a></li>
 </ul></li>
-<li class="chapter" data-level="8.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#building-a-book-with-bookdown-and-yaml-options"><i class="fa fa-check"></i><b>8.3</b> Building a book with bookdown and YAML options</a>
+<li class="chapter" data-level="8.5" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#power-regression"><i class="fa fa-check"></i><b>8.5</b> power regression</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html"><i class="fa fa-check"></i><b>9</b> R Markdown and Bookdown</a>
 <ul>
-<li class="chapter" data-level="8.3.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#building-a-book"><i class="fa fa-check"></i><b>8.3.1</b> Building a book</a></li>
-<li class="chapter" data-level="8.3.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#special-characters-and-formatting-limitations-and-challenges"><i class="fa fa-check"></i><b>8.3.2</b> Special characters and formatting limitations and challenges</a></li>
-</ul></li>
-<li class="chapter" data-level="8.4" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#yaml-files-used-to-configure-the-book"><i class="fa fa-check"></i><b>8.4</b> YAML files used to configure the book</a>
+<li class="chapter" data-level="9.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#r-markdown"><i class="fa fa-check"></i><b>9.1</b> R Markdown</a>
 <ul>
-<li class="chapter" data-level="8.4.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#output.yml"><i class="fa fa-check"></i><b>8.4.1</b> _output.yml</a></li>
-<li class="chapter" data-level="8.4.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#index.rmd"><i class="fa fa-check"></i><b>8.4.2</b> index.Rmd</a></li>
-<li class="chapter" data-level="8.4.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#bookdown.yml"><i class="fa fa-check"></i><b>8.4.3</b> _bookdown.yml</a></li>
+<li class="chapter" data-level="9.1.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#markdown-editing"><i class="fa fa-check"></i><b>9.1.1</b> Markdown editing</a></li>
+<li class="chapter" data-level="9.1.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#display-options-in-code-chunks"><i class="fa fa-check"></i><b>9.1.2</b> Display options in code chunks</a></li>
+<li class="chapter" data-level="9.1.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#numbered-figures-with-text-citations"><i class="fa fa-check"></i><b>9.1.3</b> Numbered figures with text citations</a></li>
 </ul></li>
-</ul></li>
-<li class="chapter" data-level="9" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html"><i class="fa fa-check"></i><b>9</b> Building a Package on GitHub for Data and Code</a>
+<li class="chapter" data-level="9.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#a-template-for-multiple-output-formats"><i class="fa fa-check"></i><b>9.2</b> A template for multiple output formats</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#git-and-github"><i class="fa fa-check"></i><b>9.1</b> Git and GitHub</a></li>
-<li class="chapter" data-level="9.2" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#some-notes-on-the-rstudio-process"><i class="fa fa-check"></i><b>9.2</b> Some notes on the RStudio process</a></li>
-<li class="chapter" data-level="9.3" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#data-1"><i class="fa fa-check"></i><b>9.3</b> Data</a>
-<ul>
-<li class="chapter" data-level="9.3.1" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#raw-data-in-extdata"><i class="fa fa-check"></i><b>9.3.1</b> Raw data in extdata</a></li>
-<li class="chapter" data-level="9.3.2" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#binary-data-as-rda-files"><i class="fa fa-check"></i><b>9.3.2</b> Binary data as <code>rda</code> files</a></li>
+<li class="chapter" data-level="9.2.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#the-template"><i class="fa fa-check"></i><b>9.2.1</b> The template</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#code-functions"><i class="fa fa-check"></i><b>9.4</b> Code (functions)</a></li>
+<li class="chapter" data-level="9.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#building-a-book-with-bookdown-and-yaml-options"><i class="fa fa-check"></i><b>9.3</b> Building a book with bookdown and YAML options</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#building-a-book"><i class="fa fa-check"></i><b>9.3.1</b> Building a book</a></li>
+<li class="chapter" data-level="9.3.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#special-characters-and-formatting-limitations-and-challenges"><i class="fa fa-check"></i><b>9.3.2</b> Special characters and formatting limitations and challenges</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#yaml-files-used-to-configure-the-book"><i class="fa fa-check"></i><b>9.4</b> YAML files used to configure the book</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#output.yml"><i class="fa fa-check"></i><b>9.4.1</b> _output.yml</a></li>
+<li class="chapter" data-level="9.4.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#index.rmd"><i class="fa fa-check"></i><b>9.4.2</b> index.Rmd</a></li>
+<li class="chapter" data-level="9.4.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#bookdown.yml"><i class="fa fa-check"></i><b>9.4.3</b> _bookdown.yml</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="figures-and-tables.html"><a href="figures-and-tables.html"><i class="fa fa-check"></i><b>10</b> Figures and Tables</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="figures-and-tables.html"><a href="figures-and-tables.html#figures"><i class="fa fa-check"></i><b>10.1</b> Figures</a></li>
+<li class="chapter" data-level="10.2" data-path="figures-and-tables.html"><a href="figures-and-tables.html#tables"><i class="fa fa-check"></i><b>10.2</b> Tables</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="figures-and-tables.html"><a href="figures-and-tables.html#dtdatatable"><i class="fa fa-check"></i><b>10.2.1</b> <code>DT::datatable</code></a></li>
+<li class="chapter" data-level="10.2.2" data-path="figures-and-tables.html"><a href="figures-and-tables.html#knitrkable-tables"><i class="fa fa-check"></i><b>10.2.2</b> <code>knitr::kable</code> tables</a></li>
+<li class="chapter" data-level="10.2.3" data-path="figures-and-tables.html"><a href="figures-and-tables.html#gt-package"><i class="fa fa-check"></i><b>10.2.3</b> <code>gt</code> package</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="figures-and-tables.html"><a href="figures-and-tables.html#other-tricks"><i class="fa fa-check"></i><b>10.3</b> Other tricks</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html"><i class="fa fa-check"></i><b>11</b> Building a Package on GitHub for Data and Code</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#git-and-github"><i class="fa fa-check"></i><b>11.1</b> Git and GitHub</a></li>
+<li class="chapter" data-level="11.2" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#some-notes-on-the-rstudio-process"><i class="fa fa-check"></i><b>11.2</b> Some notes on the RStudio process</a></li>
+<li class="chapter" data-level="11.3" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#data-1"><i class="fa fa-check"></i><b>11.3</b> Data</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#raw-data-in-extdata"><i class="fa fa-check"></i><b>11.3.1</b> Raw data in extdata</a></li>
+<li class="chapter" data-level="11.3.2" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#binary-data-as-rda-files"><i class="fa fa-check"></i><b>11.3.2</b> Binary data as <code>rda</code> files</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#code-functions"><i class="fa fa-check"></i><b>11.4</b> Code (functions)</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -275,9 +289,6 @@ div.csl-indent {
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div class="csl-entry">
 <em>Applied California Current Ecosystem Studies</em>. n.d. <a href="https://pointblue.org">https://pointblue.org</a>.
-</div>
-<div class="csl-entry">
-Ballard, Grant, Annie E Schmidt, Viola Toniolo, Sam Veloz, Dennis Jongsomjit, Kevin R Arrigo, and David G Ainley. 2019. <span>“Fine-Scale Oceanographic Features Characterizing Successful Adélie Penguin Foraging in the SW Ross Sea.”</span> <em>Marine Ecology Progress Series</em>. <a href="https://doi.org/10.3354/meps12801">https://doi.org/10.3354/meps12801</a>.
 </div>
 <div class="csl-entry">
 Blackburn, Darren A, Andrew J Oliphant, and Jerry D Davis. 2021. <span>“Carbon and Water Exchanges in a Mountain Meadow Ecosystem, Sierra Nevada, California.”</span> <em>Wetlands</em> 41 (3): 1–17. <a href="https://doi.org/10.1007/s13157-021-01437-2">https://doi.org/10.1007/s13157-021-01437-2</a>.
@@ -370,20 +381,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>

@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>8 R Markdown and Bookdown | Environmental Data Science Addenda</title>
+  <title>9 R Markdown and Bookdown | Environmental Data Science Addenda</title>
   <meta name="description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
-  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="8 R Markdown and Bookdown | Environmental Data Science Addenda" />
+  <meta property="og:title" content="9 R Markdown and Bookdown | Environmental Data Science Addenda" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
   <meta name="github-repo" content="iGISc/EnvDataSciAddenda" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="8 R Markdown and Bookdown | Environmental Data Science Addenda" />
+  <meta name="twitter:title" content="9 R Markdown and Bookdown | Environmental Data Science Addenda" />
   
   <meta name="twitter:description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
   
@@ -23,15 +23,15 @@
 <meta name="author" content="Jerry Davis, SFSU Institute for Geographic Information Science" />
 
 
-<meta name="date" content="2023-01-03" />
+<meta name="date" content="2023-12-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="time-series-case-studies.html"/>
-<link rel="next" href="building-a-package-on-github-for-data-and-code.html"/>
+<link rel="prev" href="co2-flux-data-red-clover-valley.html"/>
+<link rel="next" href="figures-and-tables.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -52,23 +52,14 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.24/datatables.js"></script>
-<link href="libs/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="libs/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="libs/dt-core-1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="libs/datatables-binding-0.30/datatables.js"></script>
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
-<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-1.3.1/leaflet.js"></script>
-<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
-<script src="libs/proj4-2.6.2/proj4.min.js"></script>
-<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
-<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-binding-2.1.1/leaflet.js"></script>
-<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
-<script src="libs/leaflet-providers-plugin-2.1.1/leaflet-providers-plugin.js"></script>
 
 
 <style type="text/css">
@@ -137,6 +128,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 <style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
 div.csl-entry {
@@ -190,63 +185,82 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="4.1" data-path="terrain-mapping-caves-and-water-samples-in-a-karst.html"><a href="terrain-mapping-caves-and-water-samples-in-a-karst.html#creating-a-basemap-from-a-dem-using-hillshade-and-terrain-shading"><i class="fa fa-check"></i><b>4.1</b> Creating a basemap from a DEM, using hillshade and terrain shading</a></li>
 <li class="chapter" data-level="4.2" data-path="terrain-mapping-caves-and-water-samples-in-a-karst.html"><a href="terrain-mapping-caves-and-water-samples-in-a-karst.html#using-maptiles-for-a-topographic-basemap-with-contours"><i class="fa fa-check"></i><b>4.2</b> Using maptiles for a topographic basemap with contours</a></li>
-<li class="chapter" data-level="4.3" data-path="terrain-mapping-caves-and-water-samples-in-a-karst.html"><a href="terrain-mapping-caves-and-water-samples-in-a-karst.html#interactive-map-with-tmap-view-mode"><i class="fa fa-check"></i><b>4.3</b> Interactive map with tmap view mode</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="pointblue-penguin-study.html"><a href="pointblue-penguin-study.html"><i class="fa fa-check"></i><b>5</b> PointBlue Penguin Study</a>
 <ul>
 <li class="chapter" data-level="5.0.1" data-path="pointblue-penguin-study.html"><a href="pointblue-penguin-study.html#interactive-mapping-of-individual-penguins-abstracted-from-a-big-dataset"><i class="fa fa-check"></i><b>5.0.1</b> Interactive mapping of individual penguins abstracted from a big dataset</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="seabird-model.html"><a href="seabird-model.html"><i class="fa fa-check"></i><b>6</b> Seabird Model</a>
+<li class="chapter" data-level="6" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html"><i class="fa fa-check"></i><b>6</b> Time Series case studies</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="seabird-model.html"><a href="seabird-model.html#goals-and-basic-methods-of-the-analysis"><i class="fa fa-check"></i><b>6.1</b> Goals and basic methods of the analysis</a></li>
-<li class="chapter" data-level="6.2" data-path="seabird-model.html"><a href="seabird-model.html#exploratory-data-analysis"><i class="fa fa-check"></i><b>6.2</b> Exploratory data analysis</a>
-<ul>
-<li class="chapter" data-level="6.2.1" data-path="seabird-model.html"><a href="seabird-model.html#identifying-the-appropriate-model-using-variance-and-mean-comparisons"><i class="fa fa-check"></i><b>6.2.1</b> Identifying the appropriate model using variance and mean comparisons</a></li>
+<li class="chapter" data-level="6.1" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html#loney-meadow-flux-data"><i class="fa fa-check"></i><b>6.1</b> Loney Meadow flux data</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="seabird-model.html"><a href="seabird-model.html#model-black-footed-albatross-counts-for-july-using-a-poisson-family-glm"><i class="fa fa-check"></i><b>6.3</b> Model black-footed albatross counts for July using a poisson-family glm</a>
+<li class="chapter" data-level="7" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html"><i class="fa fa-check"></i><b>7</b> Atmospheric CO2 record from Mauna Loa, Hawaii</a></li>
+<li class="chapter" data-level="8" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html"><i class="fa fa-check"></i><b>8</b> CO2 flux data : Red Clover Valley</a>
 <ul>
-<li class="chapter" data-level="6.3.1" data-path="seabird-model.html"><a href="seabird-model.html#map-the-prediction"><i class="fa fa-check"></i><b>6.3.1</b> Map the prediction</a></li>
-</ul></li>
-<li class="chapter" data-level="6.4" data-path="seabird-model.html"><a href="seabird-model.html#interpolation"><i class="fa fa-check"></i><b>6.4</b> Interpolation</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html"><i class="fa fa-check"></i><b>7</b> Time Series case studies</a>
+<li class="chapter" data-level="8.1" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#initial-data-read-and-time-series-charting"><i class="fa fa-check"></i><b>8.1</b> 1. Initial data read and time series charting</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html#loney-meadow-flux-data"><i class="fa fa-check"></i><b>7.1</b> Loney Meadow flux data</a></li>
+<li class="chapter" data-level="8.1.1" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#reading-in-the-excel-file"><i class="fa fa-check"></i><b>8.1.1</b> Reading in the Excel File</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html"><i class="fa fa-check"></i><b>8</b> R Markdown and Bookdown</a>
+<li class="chapter" data-level="8.2" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#time-series-plot"><i class="fa fa-check"></i><b>8.2</b> Time series plot</a></li>
+<li class="chapter" data-level="8.3" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model"><i class="fa fa-check"></i><b>8.3</b> Non-linear model of PAR_ave ~ GPP_sum, using Michaelis-Menten model</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#r-markdown"><i class="fa fa-check"></i><b>8.1</b> R Markdown</a>
-<ul>
-<li class="chapter" data-level="8.1.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#markdown-editing"><i class="fa fa-check"></i><b>8.1.1</b> Markdown editing</a></li>
-<li class="chapter" data-level="8.1.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#display-options-in-code-chunks"><i class="fa fa-check"></i><b>8.1.2</b> Display options in code chunks</a></li>
-<li class="chapter" data-level="8.1.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#numbered-figures-with-text-citations"><i class="fa fa-check"></i><b>8.1.3</b> Numbered figures with text citations</a></li>
+<li class="chapter" data-level="8.3.1" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#try-fitting-a-non-linear-model-ssmicmen-from-base-r"><i class="fa fa-check"></i><b>8.3.1</b> Try fitting a non-linear model (SSmicmen from base R)</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#a-template-for-multiple-output-formats"><i class="fa fa-check"></i><b>8.2</b> A template for multiple output formats</a>
+<li class="chapter" data-level="8.4" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#polynomial-models"><i class="fa fa-check"></i><b>8.4</b> polynomial models</a>
 <ul>
-<li class="chapter" data-level="8.2.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#the-template"><i class="fa fa-check"></i><b>8.2.1</b> The template</a></li>
+<li class="chapter" data-level="8.4.1" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#poly-1"><i class="fa fa-check"></i><b>8.4.1</b> poly 1</a></li>
+<li class="chapter" data-level="8.4.2" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#poly-2"><i class="fa fa-check"></i><b>8.4.2</b> poly 2</a></li>
+<li class="chapter" data-level="8.4.3" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#poly-3"><i class="fa fa-check"></i><b>8.4.3</b> poly 3</a></li>
+<li class="chapter" data-level="8.4.4" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#poly-4"><i class="fa fa-check"></i><b>8.4.4</b> poly 4</a></li>
+<li class="chapter" data-level="8.4.5" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#poly-5"><i class="fa fa-check"></i><b>8.4.5</b> poly 5</a></li>
 </ul></li>
-<li class="chapter" data-level="8.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#building-a-book-with-bookdown-and-yaml-options"><i class="fa fa-check"></i><b>8.3</b> Building a book with bookdown and YAML options</a>
+<li class="chapter" data-level="8.5" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#power-regression"><i class="fa fa-check"></i><b>8.5</b> power regression</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html"><i class="fa fa-check"></i><b>9</b> R Markdown and Bookdown</a>
 <ul>
-<li class="chapter" data-level="8.3.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#building-a-book"><i class="fa fa-check"></i><b>8.3.1</b> Building a book</a></li>
-<li class="chapter" data-level="8.3.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#special-characters-and-formatting-limitations-and-challenges"><i class="fa fa-check"></i><b>8.3.2</b> Special characters and formatting limitations and challenges</a></li>
-</ul></li>
-<li class="chapter" data-level="8.4" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#yaml-files-used-to-configure-the-book"><i class="fa fa-check"></i><b>8.4</b> YAML files used to configure the book</a>
+<li class="chapter" data-level="9.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#r-markdown"><i class="fa fa-check"></i><b>9.1</b> R Markdown</a>
 <ul>
-<li class="chapter" data-level="8.4.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#output.yml"><i class="fa fa-check"></i><b>8.4.1</b> _output.yml</a></li>
-<li class="chapter" data-level="8.4.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#index.rmd"><i class="fa fa-check"></i><b>8.4.2</b> index.Rmd</a></li>
-<li class="chapter" data-level="8.4.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#bookdown.yml"><i class="fa fa-check"></i><b>8.4.3</b> _bookdown.yml</a></li>
+<li class="chapter" data-level="9.1.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#markdown-editing"><i class="fa fa-check"></i><b>9.1.1</b> Markdown editing</a></li>
+<li class="chapter" data-level="9.1.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#display-options-in-code-chunks"><i class="fa fa-check"></i><b>9.1.2</b> Display options in code chunks</a></li>
+<li class="chapter" data-level="9.1.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#numbered-figures-with-text-citations"><i class="fa fa-check"></i><b>9.1.3</b> Numbered figures with text citations</a></li>
 </ul></li>
-</ul></li>
-<li class="chapter" data-level="9" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html"><i class="fa fa-check"></i><b>9</b> Building a Package on GitHub for Data and Code</a>
+<li class="chapter" data-level="9.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#a-template-for-multiple-output-formats"><i class="fa fa-check"></i><b>9.2</b> A template for multiple output formats</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#git-and-github"><i class="fa fa-check"></i><b>9.1</b> Git and GitHub</a></li>
-<li class="chapter" data-level="9.2" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#some-notes-on-the-rstudio-process"><i class="fa fa-check"></i><b>9.2</b> Some notes on the RStudio process</a></li>
-<li class="chapter" data-level="9.3" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#data-1"><i class="fa fa-check"></i><b>9.3</b> Data</a>
-<ul>
-<li class="chapter" data-level="9.3.1" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#raw-data-in-extdata"><i class="fa fa-check"></i><b>9.3.1</b> Raw data in extdata</a></li>
-<li class="chapter" data-level="9.3.2" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#binary-data-as-rda-files"><i class="fa fa-check"></i><b>9.3.2</b> Binary data as <code>rda</code> files</a></li>
+<li class="chapter" data-level="9.2.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#the-template"><i class="fa fa-check"></i><b>9.2.1</b> The template</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#code-functions"><i class="fa fa-check"></i><b>9.4</b> Code (functions)</a></li>
+<li class="chapter" data-level="9.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#building-a-book-with-bookdown-and-yaml-options"><i class="fa fa-check"></i><b>9.3</b> Building a book with bookdown and YAML options</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#building-a-book"><i class="fa fa-check"></i><b>9.3.1</b> Building a book</a></li>
+<li class="chapter" data-level="9.3.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#special-characters-and-formatting-limitations-and-challenges"><i class="fa fa-check"></i><b>9.3.2</b> Special characters and formatting limitations and challenges</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#yaml-files-used-to-configure-the-book"><i class="fa fa-check"></i><b>9.4</b> YAML files used to configure the book</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#output.yml"><i class="fa fa-check"></i><b>9.4.1</b> _output.yml</a></li>
+<li class="chapter" data-level="9.4.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#index.rmd"><i class="fa fa-check"></i><b>9.4.2</b> index.Rmd</a></li>
+<li class="chapter" data-level="9.4.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#bookdown.yml"><i class="fa fa-check"></i><b>9.4.3</b> _bookdown.yml</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="figures-and-tables.html"><a href="figures-and-tables.html"><i class="fa fa-check"></i><b>10</b> Figures and Tables</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="figures-and-tables.html"><a href="figures-and-tables.html#figures"><i class="fa fa-check"></i><b>10.1</b> Figures</a></li>
+<li class="chapter" data-level="10.2" data-path="figures-and-tables.html"><a href="figures-and-tables.html#tables"><i class="fa fa-check"></i><b>10.2</b> Tables</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="figures-and-tables.html"><a href="figures-and-tables.html#dtdatatable"><i class="fa fa-check"></i><b>10.2.1</b> <code>DT::datatable</code></a></li>
+<li class="chapter" data-level="10.2.2" data-path="figures-and-tables.html"><a href="figures-and-tables.html#knitrkable-tables"><i class="fa fa-check"></i><b>10.2.2</b> <code>knitr::kable</code> tables</a></li>
+<li class="chapter" data-level="10.2.3" data-path="figures-and-tables.html"><a href="figures-and-tables.html#gt-package"><i class="fa fa-check"></i><b>10.2.3</b> <code>gt</code> package</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="figures-and-tables.html"><a href="figures-and-tables.html#other-tricks"><i class="fa fa-check"></i><b>10.3</b> Other tricks</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html"><i class="fa fa-check"></i><b>11</b> Building a Package on GitHub for Data and Code</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#git-and-github"><i class="fa fa-check"></i><b>11.1</b> Git and GitHub</a></li>
+<li class="chapter" data-level="11.2" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#some-notes-on-the-rstudio-process"><i class="fa fa-check"></i><b>11.2</b> Some notes on the RStudio process</a></li>
+<li class="chapter" data-level="11.3" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#data-1"><i class="fa fa-check"></i><b>11.3</b> Data</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#raw-data-in-extdata"><i class="fa fa-check"></i><b>11.3.1</b> Raw data in extdata</a></li>
+<li class="chapter" data-level="11.3.2" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#binary-data-as-rda-files"><i class="fa fa-check"></i><b>11.3.2</b> Binary data as <code>rda</code> files</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#code-functions"><i class="fa fa-check"></i><b>11.4</b> Code (functions)</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -269,9 +283,9 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="r-markdown-and-bookdown" class="section level1 hasAnchor" number="8">
-<h1><span class="header-section-number">8</span> R Markdown and Bookdown<a href="r-markdown-and-bookdown.html#r-markdown-and-bookdown" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>This book is built using R Markdown and bookdown methods, and published at <a href="http://bookdown.org" class="uri">http://bookdown.org</a>. There are some more comprehensive resources on both of these at <span class="citation">Xie, Allaire, and Grolemund (<a href="#ref-RMarkdown" role="doc-biblioref">2019</a>)</span> and <span class="citation">Xie (<a href="#ref-Bookdown" role="doc-biblioref">2021</a>)</span>, and also the markdown cheat sheet at <a href="https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf" class="uri">https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf</a> but I thought it might be useful to provide some things I’ve discovered.</p>
+<div id="r-markdown-and-bookdown" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">9</span> R Markdown and Bookdown<a href="r-markdown-and-bookdown.html#r-markdown-and-bookdown" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This book is built using R Markdown and bookdown methods, and published at <a href="http://bookdown.org" class="uri">http://bookdown.org</a>. There are some more comprehensive resources on both of these at <span class="citation">Xie, Allaire, and Grolemund (<a href="#ref-RMarkdown">2019</a>)</span> and <span class="citation">Xie (<a href="#ref-Bookdown">2021</a>)</span>, and also the markdown cheat sheet at <a href="https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf" class="uri">https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf</a> but I thought it might be useful to provide some things I’ve discovered.</p>
 <ul>
 <li>The first section is about R Markdown, and has the basics for creating a report with Markdown text and code outputs. To keep it simple, you might just go with html output.</li>
 <li>Next is a template that provides the basic settings that should work to create a report in either HTML, pdf, or Word formats, using the <code>tinytex</code> LaTeX interpreter you’ll need to install if you want to create pdf output.</li>
@@ -279,33 +293,33 @@ div.csl-indent {
 </li>
 <li>The pdf section describes more about the process for creating pdf via a LaTeX interpreter, with advanced stuff needed for controlling the format, especially if you want to go to a publisher who’ll have very specific rules to follow.</li>
 </ul>
-<div id="r-markdown" class="section level2 hasAnchor" number="8.1">
-<h2><span class="header-section-number">8.1</span> R Markdown<a href="r-markdown-and-bookdown.html#r-markdown" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="r-markdown" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> R Markdown<a href="r-markdown-and-bookdown.html#r-markdown" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Markdown isn’t new and isn’t at all restricted to R. It’s the basis for Jupyter Notebooks, which I tend to use for Python but also works with R (the “py” in Jupyter is for Python and the “r” is for R); but I think R Markdown is better developed within RStudio, which provides more of an all-in-one <em>integrated development environment</em> (IDE).</p>
-<p>For most users, what’s covered in the cheat sheet, which should be at <a href="https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf" class="uri">https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf</a> is all you need to be able to format nice R Markdown documents, but the more thorough treatment at <span class="citation">Xie, Allaire, and Grolemund (<a href="#ref-RMarkdown" role="doc-biblioref">2019</a>)</span> is a good resource for going further.</p>
-<div id="markdown-editing" class="section level3 hasAnchor" number="8.1.1">
-<h3><span class="header-section-number">8.1.1</span> Markdown editing<a href="r-markdown-and-bookdown.html#markdown-editing" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For most users, what’s covered in the cheat sheet, which should be at <a href="https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf" class="uri">https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf</a> is all you need to be able to format nice R Markdown documents, but the more thorough treatment at <span class="citation">Xie, Allaire, and Grolemund (<a href="#ref-RMarkdown">2019</a>)</span> is a good resource for going further.</p>
+<div id="markdown-editing" class="section level3 hasAnchor" number="9.1.1">
+<h3><span class="header-section-number">9.1.1</span> Markdown editing<a href="r-markdown-and-bookdown.html#markdown-editing" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The most basic thing to understand is that an R Markdown <code>.Rmd</code> document is divided into three elements:</p>
 <ul>
 <li>Optional header information at the top, marked off by <code>---</code> in the first line, followed by any YAML settings you want to set, and closing with another line of <code>---</code>.</li>
-<li>Markdown sections not delimited by anything, but responding to markdown formatting like pairs of <code>*</code> enclosing <em>text in italics</em>, pairs of <code>**</code> enclosing <strong>bold text</strong>, pairs of backticks enclosing <code>bits of code</code>, and lots of other things. Section headers are created with one or more hash <code>#</code> characters at the start of a line followed by the header text on that line, and when editing will show up as blue text like the italic and bold text; the top level has a single <code>#</code>, the next has <code>##</code> (like this <strong>R Markdown</strong> section), and so on. You can create bulleted lists with each item starting with a dash <code>-</code> after a blank line to get it started (see below), and lots of other things – see <span class="citation">Xie, Allaire, and Grolemund (<a href="#ref-RMarkdown" role="doc-biblioref">2019</a>)</span> and other sources for the multitude of formatting structures that markdown provides. Here’s some of the text shown above as you enter it as markdown, though RStudio will wrap the long lines of text, and also provide color coding:</li>
+<li>Markdown sections not delimited by anything, but responding to markdown formatting like pairs of <code>*</code> enclosing <em>text in italics</em>, pairs of <code>**</code> enclosing <strong>bold text</strong>, pairs of backticks enclosing <code>bits of code</code>, and lots of other things. Section headers are created with one or more hash <code>#</code> characters at the start of a line followed by the header text on that line, and when editing will show up as blue text like the italic and bold text; the top level has a single <code>#</code>, the next has <code>##</code> (like this <strong>R Markdown</strong> section), and so on. You can create bulleted lists with each item starting with a dash <code>-</code> after a blank line to get it started (see below), and lots of other things – see <span class="citation">Xie, Allaire, and Grolemund (<a href="#ref-RMarkdown">2019</a>)</span> and other sources for the multitude of formatting structures that markdown provides. Here’s some of the text shown above as you enter it as markdown, though RStudio will wrap the long lines of text, and also provide color coding:</li>
 </ul>
-<div class="sourceCode" id="cb66"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb66-1"><a href="r-markdown-and-bookdown.html#cb66-1" aria-hidden="true" tabindex="-1"></a>### Markdown editing</span>
-<span id="cb66-2"><a href="r-markdown-and-bookdown.html#cb66-2" aria-hidden="true" tabindex="-1"></a>The most basic thing to understand is that an R Markdown `.Rmd` document is divided into three elements:</span>
-<span id="cb66-3"><a href="r-markdown-and-bookdown.html#cb66-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb66-4"><a href="r-markdown-and-bookdown.html#cb66-4" aria-hidden="true" tabindex="-1"></a>- Optional header information at the top, marked off by `---` in the first line, followed by any YAML settings you want to set, and closing with another line of `---`.</span>
-<span id="cb66-5"><a href="r-markdown-and-bookdown.html#cb66-5" aria-hidden="true" tabindex="-1"></a>- Markdown sections not delimited by anything, but responding to markdown formatting like pairs of `*` enclosing *text in italics*, pairs of `**` enclosing **bold text**, pairs of backticks enclosing `bits of code`, and lots of other things. Section headers are created with a hash `#` character in the first</span></code></pre></div>
+<div class="sourceCode" id="cb80"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb80-1"><a href="r-markdown-and-bookdown.html#cb80-1" tabindex="-1"></a>### Markdown editing</span>
+<span id="cb80-2"><a href="r-markdown-and-bookdown.html#cb80-2" tabindex="-1"></a>The most basic thing to understand is that an R Markdown `.Rmd` document is divided into three elements:</span>
+<span id="cb80-3"><a href="r-markdown-and-bookdown.html#cb80-3" tabindex="-1"></a></span>
+<span id="cb80-4"><a href="r-markdown-and-bookdown.html#cb80-4" tabindex="-1"></a>- Optional header information at the top, marked off by `---` in the first line, followed by any YAML settings you want to set, and closing with another line of `---`.</span>
+<span id="cb80-5"><a href="r-markdown-and-bookdown.html#cb80-5" tabindex="-1"></a>- Markdown sections not delimited by anything, but responding to markdown formatting like pairs of `*` enclosing *text in italics*, pairs of `**` enclosing **bold text**, pairs of backticks enclosing `bits of code`, and lots of other things. Section headers are created with a hash `#` character in the first</span></code></pre></div>
 <ul>
 <li>Code chunks delimited by triple backticks, the first followed on its line with the code chunk header with <code>{r ...}</code> identifying R as the language along with other settings. A code chunk typically produces just one output (or maybe none at all, if it’s just processing data you might use later). Here’s a simple example, with one code chunk label and one setting, then code that creates and then displays a vector:</li>
 </ul>
-<div class="sourceCode" id="cb67"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb67-1"><a href="r-markdown-and-bookdown.html#cb67-1" aria-hidden="true" tabindex="-1"></a>```{r chunklabel, include=FALSE}</span>
-<span id="cb67-2"><a href="r-markdown-and-bookdown.html#cb67-2" aria-hidden="true" tabindex="-1"></a>a &lt;- c(1, 7, 5)</span>
-<span id="cb67-3"><a href="r-markdown-and-bookdown.html#cb67-3" aria-hidden="true" tabindex="-1"></a>a</span>
-<span id="cb67-4"><a href="r-markdown-and-bookdown.html#cb67-4" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb81-1"><a href="r-markdown-and-bookdown.html#cb81-1" tabindex="-1"></a>```{r chunklabel, include=FALSE}</span>
+<span id="cb81-2"><a href="r-markdown-and-bookdown.html#cb81-2" tabindex="-1"></a>a &lt;- c(1, 7, 5)</span>
+<span id="cb81-3"><a href="r-markdown-and-bookdown.html#cb81-3" tabindex="-1"></a>a</span>
+<span id="cb81-4"><a href="r-markdown-and-bookdown.html#cb81-4" tabindex="-1"></a>```</span></code></pre></div>
 <pre><code>## [1] 1 7 5</code></pre>
 </div>
-<div id="display-options-in-code-chunks" class="section level3 hasAnchor" number="8.1.2">
-<h3><span class="header-section-number">8.1.2</span> Display options in code chunks<a href="r-markdown-and-bookdown.html#display-options-in-code-chunks" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="display-options-in-code-chunks" class="section level3 hasAnchor" number="9.1.2">
+<h3><span class="header-section-number">9.1.2</span> Display options in code chunks<a href="r-markdown-and-bookdown.html#display-options-in-code-chunks" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The display options for code chunk headers <code>{r ...}</code> are very important to figure out in order to avoid unwanted messages in the rmarkdown document or book, and get figure headings working. Each option is separated by a comma, and follow the code chunk label. See <a href="https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf" class="uri">https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf</a> for a list of these options. I’ve found that some of what’s documented at <a href="https://yihui.org/knitr/options/#code-evaluation" class="uri">https://yihui.org/knitr/options/#code-evaluation</a> doesn’t work for me, so here’s what I’ve observed: <code>echo=TRUE</code> won’t display the code if <code>include=FALSE</code> is set, though the above source suggests that the <code>include</code> option only refers to chunk output.</p>
 <p>Display options:</p>
 <ol style="list-style-type: decimal">
@@ -317,53 +331,53 @@ div.csl-indent {
 <p>And there are lots of other code options, like including a numbered figure caption with <code>fig.cap="my figure caption"</code>. The bookdown output extensions add citing and linking to the figure in the text, using the referencing system.</p>
 <p><strong>Warnings and messages</strong>
 Turning off warnings and messages is so important in a book that I use <code>knitr::opts_chunk$set</code> to set these as defaults at the top of each chapter .Rmd.</p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb69-1"><a href="r-markdown-and-bookdown.html#cb69-1" aria-hidden="true" tabindex="-1"></a>```{r echo=F}</span>
-<span id="cb69-2"><a href="r-markdown-and-bookdown.html#cb69-2" aria-hidden="true" tabindex="-1"></a>knitr::opts_chunk$set(echo=T, warning=F, message=F, fig.align=&#39;center&#39;, out.width=&quot;75%&quot;)</span>
-<span id="cb69-3"><a href="r-markdown-and-bookdown.html#cb69-3" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb83-1"><a href="r-markdown-and-bookdown.html#cb83-1" tabindex="-1"></a>```{r echo=F}</span>
+<span id="cb83-2"><a href="r-markdown-and-bookdown.html#cb83-2" tabindex="-1"></a>knitr::opts_chunk$set(echo=T, warning=F, message=F, fig.align=&#39;center&#39;, out.width=&quot;75%&quot;)</span>
+<span id="cb83-3"><a href="r-markdown-and-bookdown.html#cb83-3" tabindex="-1"></a>```</span></code></pre></div>
 <p>However some things that seem like messages are actually <em>results</em>, for instance:</p>
 <p><code>st_read</code> will create unwanted messages that are actually results, so you can either put it in a code chunk that isn’t displayed at all with <code>include=F</code> or probably better use <code>results = "hide"</code>. For instance, the following code is in a code chunk that has three options <code>{r warning=F, results="hide", message=F}</code> to avoid printing quite a lot of unwanted stuff.</p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb70-1"><a href="r-markdown-and-bookdown.html#cb70-1" aria-hidden="true" tabindex="-1"></a>```{r warning=F, results=&quot;hide&quot;, message=F}</span>
-<span id="cb70-2"><a href="r-markdown-and-bookdown.html#cb70-2" aria-hidden="true" tabindex="-1"></a>library(sf); library(igisci)</span>
-<span id="cb70-3"><a href="r-markdown-and-bookdown.html#cb70-3" aria-hidden="true" tabindex="-1"></a>places &lt;- st_read(ex(&quot;sierra/CA_places.shp&quot;))</span>
-<span id="cb70-4"><a href="r-markdown-and-bookdown.html#cb70-4" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb84-1"><a href="r-markdown-and-bookdown.html#cb84-1" tabindex="-1"></a>```{r warning=F, results=&quot;hide&quot;, message=F}</span>
+<span id="cb84-2"><a href="r-markdown-and-bookdown.html#cb84-2" tabindex="-1"></a>library(sf); library(igisci)</span>
+<span id="cb84-3"><a href="r-markdown-and-bookdown.html#cb84-3" tabindex="-1"></a>places &lt;- st_read(ex(&quot;sierra/CA_places.shp&quot;))</span>
+<span id="cb84-4"><a href="r-markdown-and-bookdown.html#cb84-4" tabindex="-1"></a>```</span></code></pre></div>
 <blockquote>
 <p>You could of course have used that <code>knitr::opts_chunk$set</code> at the top of your code to avoid the warnings and messages, but you often want to see <em>results</em>, so hiding them is best isolated in a code chunk that isn’t producing any results you want to see, and this is typically things like <code>st_read</code> I’ve found.</p>
 </blockquote>
 </div>
-<div id="numbered-figures-with-text-citations" class="section level3 hasAnchor" number="8.1.3">
-<h3><span class="header-section-number">8.1.3</span> Numbered figures with text citations<a href="r-markdown-and-bookdown.html#numbered-figures-with-text-citations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="numbered-figures-with-text-citations" class="section level3 hasAnchor" number="9.1.3">
+<h3><span class="header-section-number">9.1.3</span> Numbered figures with text citations<a href="r-markdown-and-bookdown.html#numbered-figures-with-text-citations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Most of the your figures are going to be created by code in an individual code chunk, and it’s a good idea to create a figure heading. You should organize your code chunk so that it only produces one figure, so you can use the code chunk header to provide the figure heading, and be able to cite the figure in text just before. <em>Note that the referencing capability requires bookdown output extensions to R Markdown, described below.</em></p>
 <p>To do this, once you’ve created a code chunk with an informative but unique chunk label (chunk labels cannot be reused in the document) like “visGraph”, and also provide a figure caption with <code>fig.cap="..."</code> in the code chunk header, then in the text just above, you can use the referencing function <code>\@ref()</code> to cite the figure using the <code>fig:</code> key followed by the chunk label, either including parentheses or not:</p>
 <ul>
-<li><code>Figure \@ref(fig:visGraph)</code> which produces this citation: Figure <a href="r-markdown-and-bookdown.html#fig:visGraph">8.1</a>, or</li>
-<li><code>(Figure \@ref(fig:visGraph))</code> which produces this citation: (Figure <a href="r-markdown-and-bookdown.html#fig:visGraph">8.1</a>).</li>
+<li><code>Figure \@ref(fig:visGraph)</code> which produces this citation: Figure <a href="r-markdown-and-bookdown.html#fig:visGraph">9.1</a>, or</li>
+<li><code>(Figure \@ref(fig:visGraph))</code> which produces this citation: (Figure <a href="r-markdown-and-bookdown.html#fig:visGraph">9.1</a>).</li>
 </ul>
 <p>Here’s what the code chunk and figure would then look like:</p>
-<div class="sourceCode" id="cb71"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb71-1"><a href="r-markdown-and-bookdown.html#cb71-1" aria-hidden="true" tabindex="-1"></a>```{r visGraph, fig.cap=&quot;Vegetation bar graph&quot;}</span>
-<span id="cb71-2"><a href="r-markdown-and-bookdown.html#cb71-2" aria-hidden="true" tabindex="-1"></a>library(ggplot2); library(igisci)</span>
-<span id="cb71-3"><a href="r-markdown-and-bookdown.html#cb71-3" aria-hidden="true" tabindex="-1"></a>ggplot(XSptsNDVI, aes(vegetation)) + </span>
-<span id="cb71-4"><a href="r-markdown-and-bookdown.html#cb71-4" aria-hidden="true" tabindex="-1"></a>  geom_bar()</span>
-<span id="cb71-5"><a href="r-markdown-and-bookdown.html#cb71-5" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb85-1"><a href="r-markdown-and-bookdown.html#cb85-1" tabindex="-1"></a>```{r visGraph, fig.cap=&quot;Vegetation bar graph&quot;}</span>
+<span id="cb85-2"><a href="r-markdown-and-bookdown.html#cb85-2" tabindex="-1"></a>library(ggplot2); library(igisci)</span>
+<span id="cb85-3"><a href="r-markdown-and-bookdown.html#cb85-3" tabindex="-1"></a>ggplot(XSptsNDVI, aes(vegetation)) + </span>
+<span id="cb85-4"><a href="r-markdown-and-bookdown.html#cb85-4" tabindex="-1"></a>  geom_bar()</span>
+<span id="cb85-5"><a href="r-markdown-and-bookdown.html#cb85-5" tabindex="-1"></a>```</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:visGraph"></span>
 <img src="EnvDataSciAddenda_files/figure-html/visGraph-1.png" alt="Vegetation bar graph" width="75%" />
 <p class="caption">
-FIGURE 8.1: Vegetation bar graph
+FIGURE 9.1: Vegetation bar graph
 </p>
 </div>
-<p>Or you may want to create a figure from an existing image, like a screen shot or picture, cited as usual as a figure reference <code>Figure \@ref(fig:TransectBuffersGoal)</code> (which produces this citation: Figure <a href="r-markdown-and-bookdown.html#fig:TransectBuffersGoal">8.2</a>) and associated code chunk that uses the <code>knitr::include_graphics</code> method:</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb72-1"><a href="r-markdown-and-bookdown.html#cb72-1" aria-hidden="true" tabindex="-1"></a>```{r TransectBuffersGoal,include=T,eval=T,echo=F,out.width=&#39;50%&#39;,fig.align=&quot;center&quot;,fig.cap=&quot;Transect Buffers (goal)&quot;}</span>
-<span id="cb72-2"><a href="r-markdown-and-bookdown.html#cb72-2" aria-hidden="true" tabindex="-1"></a>knitr::include_graphics(here::here(&quot;img&quot;,&quot;goal_spanlTransectBuffers.png&quot;))</span>
-<span id="cb72-3"><a href="r-markdown-and-bookdown.html#cb72-3" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
+<p>Or you may want to create a figure from an existing image, like a screen shot or picture, cited as usual as a figure reference <code>Figure \@ref(fig:TransectBuffersGoal)</code> (which produces this citation: Figure <a href="r-markdown-and-bookdown.html#fig:TransectBuffersGoal">9.2</a>) and associated code chunk that uses the <code>knitr::include_graphics</code> method:</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb86-1"><a href="r-markdown-and-bookdown.html#cb86-1" tabindex="-1"></a>```{r TransectBuffersGoal,include=T,eval=T,echo=F,out.width=&#39;50%&#39;,fig.align=&quot;center&quot;,fig.cap=&quot;Transect Buffers (goal)&quot;}</span>
+<span id="cb86-2"><a href="r-markdown-and-bookdown.html#cb86-2" tabindex="-1"></a>knitr::include_graphics(here::here(&quot;img&quot;,&quot;goal_spanlTransectBuffers.png&quot;))</span>
+<span id="cb86-3"><a href="r-markdown-and-bookdown.html#cb86-3" tabindex="-1"></a>```</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:TransectBuffersGoal"></span>
 <img src="img/goal_spanlTransectBuffers.png" alt="Transect Buffers (goal)" width="50%" />
 <p class="caption">
-FIGURE 8.2: Transect Buffers (goal)
+FIGURE 9.2: Transect Buffers (goal)
 </p>
 </div>
 </div>
 </div>
-<div id="a-template-for-multiple-output-formats" class="section level2 hasAnchor" number="8.2">
-<h2><span class="header-section-number">8.2</span> A template for multiple output formats<a href="r-markdown-and-bookdown.html#a-template-for-multiple-output-formats" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="a-template-for-multiple-output-formats" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> A template for multiple output formats<a href="r-markdown-and-bookdown.html#a-template-for-multiple-output-formats" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>I’ve provided a basic template below that should work for a basic report that also uses some bookdown tricks such as citing figures using <code>\@ref()</code>. You’ll need to have installed tinytex or other latex interpreter to use the pdf option. It also lets you choose to build HTML or Word outputs, as chosen by the <code>Knit</code> pull-down options in RStudio.</p>
 <p>A pdf can be nice in working even when offline (though with no interactivity) and is great for creating a report to turn in to your boss or professor. As Yihui Xie notes in <a href="https://bookdown.org/yihui/bookdown/" class="uri">https://bookdown.org/yihui/bookdown/</a>, however, you might want to stick with the simplicity and interactivity of HTML, as the effort of going to pdf might not be worth it. Creating a pdf does come with challenges, because the process involves two steps, each of which might create an error:</p>
 <ul>
@@ -380,53 +394,53 @@ FIGURE 8.2: Transect Buffers (goal)
 </ul>
 <pre><code>install.packages(&#39;tinytex&#39;)
 tinytex::install_tinytex()</code></pre>
-<div id="the-template" class="section level3 hasAnchor" number="8.2.1">
-<h3><span class="header-section-number">8.2.1</span> The template<a href="r-markdown-and-bookdown.html#the-template" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="the-template" class="section level3 hasAnchor" number="9.2.1">
+<h3><span class="header-section-number">9.2.1</span> The template<a href="r-markdown-and-bookdown.html#the-template" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Copy and paste the following into a blank .Rmd file. Using the Knit button, try it out as is for the different formats, and then modify to provide your own markdown and code, while editing the header carefully. In the code chunk with the <code>knitr::opts_chunk$set</code> function, the <code>out.width="66%"</code> setting I chose is just something that tends to put more than one figure on a page. You might try higher values to get larger figures, or override that setting in a specific figure code chunk by including that parameter setting in its code chunk header.</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb74-1"><a href="r-markdown-and-bookdown.html#cb74-1" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb74-2"><a href="r-markdown-and-bookdown.html#cb74-2" aria-hidden="true" tabindex="-1"></a>title: &quot;My Report&quot;</span>
-<span id="cb74-3"><a href="r-markdown-and-bookdown.html#cb74-3" aria-hidden="true" tabindex="-1"></a>author: &quot;Jerry Davis&quot;</span>
-<span id="cb74-4"><a href="r-markdown-and-bookdown.html#cb74-4" aria-hidden="true" tabindex="-1"></a>date: &quot;2022-12-30&quot;</span>
-<span id="cb74-5"><a href="r-markdown-and-bookdown.html#cb74-5" aria-hidden="true" tabindex="-1"></a>output:</span>
-<span id="cb74-6"><a href="r-markdown-and-bookdown.html#cb74-6" aria-hidden="true" tabindex="-1"></a>  bookdown::pdf_document2:</span>
-<span id="cb74-7"><a href="r-markdown-and-bookdown.html#cb74-7" aria-hidden="true" tabindex="-1"></a>    latex_engine: xelatex</span>
-<span id="cb74-8"><a href="r-markdown-and-bookdown.html#cb74-8" aria-hidden="true" tabindex="-1"></a>  bookdown::html_document2: default</span>
-<span id="cb74-9"><a href="r-markdown-and-bookdown.html#cb74-9" aria-hidden="true" tabindex="-1"></a>  bookdown::word_document2:</span>
-<span id="cb74-10"><a href="r-markdown-and-bookdown.html#cb74-10" aria-hidden="true" tabindex="-1"></a>    toc: true</span>
-<span id="cb74-11"><a href="r-markdown-and-bookdown.html#cb74-11" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb74-12"><a href="r-markdown-and-bookdown.html#cb74-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb74-13"><a href="r-markdown-and-bookdown.html#cb74-13" aria-hidden="true" tabindex="-1"></a>```{r echo=FALSE}</span>
-<span id="cb74-14"><a href="r-markdown-and-bookdown.html#cb74-14" aria-hidden="true" tabindex="-1"></a>knitr::opts_chunk$set(echo=TRUE,warning=FALSE,message=FALSE,</span>
-<span id="cb74-15"><a href="r-markdown-and-bookdown.html#cb74-15" aria-hidden="true" tabindex="-1"></a>                      fig.align=&#39;center&#39;,out.width=&quot;66%&quot;)</span>
-<span id="cb74-16"><a href="r-markdown-and-bookdown.html#cb74-16" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb74-17"><a href="r-markdown-and-bookdown.html#cb74-17" aria-hidden="true" tabindex="-1"></a># My Report</span>
-<span id="cb74-18"><a href="r-markdown-and-bookdown.html#cb74-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb74-19"><a href="r-markdown-and-bookdown.html#cb74-19" aria-hidden="true" tabindex="-1"></a>Some built-in data, such as Old Faithful eruptions...</span>
-<span id="cb74-20"><a href="r-markdown-and-bookdown.html#cb74-20" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb74-21"><a href="r-markdown-and-bookdown.html#cb74-21" aria-hidden="true" tabindex="-1"></a>head(faithful)</span>
-<span id="cb74-22"><a href="r-markdown-and-bookdown.html#cb74-22" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb74-23"><a href="r-markdown-and-bookdown.html#cb74-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb74-24"><a href="r-markdown-and-bookdown.html#cb74-24" aria-hidden="true" tabindex="-1"></a>... and a time series of river flows of the Nile:</span>
-<span id="cb74-25"><a href="r-markdown-and-bookdown.html#cb74-25" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb74-26"><a href="r-markdown-and-bookdown.html#cb74-26" aria-hidden="true" tabindex="-1"></a>Nile</span>
-<span id="cb74-27"><a href="r-markdown-and-bookdown.html#cb74-27" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb74-28"><a href="r-markdown-and-bookdown.html#cb74-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb74-29"><a href="r-markdown-and-bookdown.html#cb74-29" aria-hidden="true" tabindex="-1"></a>## Figures</span>
-<span id="cb74-30"><a href="r-markdown-and-bookdown.html#cb74-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb74-31"><a href="r-markdown-and-bookdown.html#cb74-31" aria-hidden="true" tabindex="-1"></a>Here&#39;s a graph of CO2 concentrations recorded at Mauna Loa (Figure \@ref(fig:co2plot)), then a graph of Old Faithful eruptions (Figure \@ref(fig:faithfulplot)). </span>
-<span id="cb74-32"><a href="r-markdown-and-bookdown.html#cb74-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb74-33"><a href="r-markdown-and-bookdown.html#cb74-33" aria-hidden="true" tabindex="-1"></a>```{r co2plot, fig.cap=&quot;CO2 time series at Mauna Loa&quot;}</span>
-<span id="cb74-34"><a href="r-markdown-and-bookdown.html#cb74-34" aria-hidden="true" tabindex="-1"></a>plot(co2)</span>
-<span id="cb74-35"><a href="r-markdown-and-bookdown.html#cb74-35" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb74-36"><a href="r-markdown-and-bookdown.html#cb74-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb74-37"><a href="r-markdown-and-bookdown.html#cb74-37" aria-hidden="true" tabindex="-1"></a>```{r faithfulplot, fig.cap=&quot;Old Faithful eruptions&quot;}</span>
-<span id="cb74-38"><a href="r-markdown-and-bookdown.html#cb74-38" aria-hidden="true" tabindex="-1"></a>plot(faithful)</span>
-<span id="cb74-39"><a href="r-markdown-and-bookdown.html#cb74-39" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb88-1"><a href="r-markdown-and-bookdown.html#cb88-1" tabindex="-1"></a>---</span>
+<span id="cb88-2"><a href="r-markdown-and-bookdown.html#cb88-2" tabindex="-1"></a>title: &quot;My Report&quot;</span>
+<span id="cb88-3"><a href="r-markdown-and-bookdown.html#cb88-3" tabindex="-1"></a>author: &quot;Jerry Davis&quot;</span>
+<span id="cb88-4"><a href="r-markdown-and-bookdown.html#cb88-4" tabindex="-1"></a>date: &quot;2022-12-30&quot;</span>
+<span id="cb88-5"><a href="r-markdown-and-bookdown.html#cb88-5" tabindex="-1"></a>output:</span>
+<span id="cb88-6"><a href="r-markdown-and-bookdown.html#cb88-6" tabindex="-1"></a>  bookdown::pdf_document2:</span>
+<span id="cb88-7"><a href="r-markdown-and-bookdown.html#cb88-7" tabindex="-1"></a>    latex_engine: xelatex</span>
+<span id="cb88-8"><a href="r-markdown-and-bookdown.html#cb88-8" tabindex="-1"></a>  bookdown::html_document2: default</span>
+<span id="cb88-9"><a href="r-markdown-and-bookdown.html#cb88-9" tabindex="-1"></a>  bookdown::word_document2:</span>
+<span id="cb88-10"><a href="r-markdown-and-bookdown.html#cb88-10" tabindex="-1"></a>    toc: true</span>
+<span id="cb88-11"><a href="r-markdown-and-bookdown.html#cb88-11" tabindex="-1"></a>---</span>
+<span id="cb88-12"><a href="r-markdown-and-bookdown.html#cb88-12" tabindex="-1"></a></span>
+<span id="cb88-13"><a href="r-markdown-and-bookdown.html#cb88-13" tabindex="-1"></a>```{r echo=FALSE}</span>
+<span id="cb88-14"><a href="r-markdown-and-bookdown.html#cb88-14" tabindex="-1"></a>knitr::opts_chunk$set(echo=TRUE,warning=FALSE,message=FALSE,</span>
+<span id="cb88-15"><a href="r-markdown-and-bookdown.html#cb88-15" tabindex="-1"></a>                      fig.align=&#39;center&#39;,out.width=&quot;66%&quot;)</span>
+<span id="cb88-16"><a href="r-markdown-and-bookdown.html#cb88-16" tabindex="-1"></a>```</span>
+<span id="cb88-17"><a href="r-markdown-and-bookdown.html#cb88-17" tabindex="-1"></a># My Report</span>
+<span id="cb88-18"><a href="r-markdown-and-bookdown.html#cb88-18" tabindex="-1"></a></span>
+<span id="cb88-19"><a href="r-markdown-and-bookdown.html#cb88-19" tabindex="-1"></a>Some built-in data, such as Old Faithful eruptions...</span>
+<span id="cb88-20"><a href="r-markdown-and-bookdown.html#cb88-20" tabindex="-1"></a>```{r}</span>
+<span id="cb88-21"><a href="r-markdown-and-bookdown.html#cb88-21" tabindex="-1"></a>head(faithful)</span>
+<span id="cb88-22"><a href="r-markdown-and-bookdown.html#cb88-22" tabindex="-1"></a>```</span>
+<span id="cb88-23"><a href="r-markdown-and-bookdown.html#cb88-23" tabindex="-1"></a></span>
+<span id="cb88-24"><a href="r-markdown-and-bookdown.html#cb88-24" tabindex="-1"></a>... and a time series of river flows of the Nile:</span>
+<span id="cb88-25"><a href="r-markdown-and-bookdown.html#cb88-25" tabindex="-1"></a>```{r}</span>
+<span id="cb88-26"><a href="r-markdown-and-bookdown.html#cb88-26" tabindex="-1"></a>Nile</span>
+<span id="cb88-27"><a href="r-markdown-and-bookdown.html#cb88-27" tabindex="-1"></a>```</span>
+<span id="cb88-28"><a href="r-markdown-and-bookdown.html#cb88-28" tabindex="-1"></a></span>
+<span id="cb88-29"><a href="r-markdown-and-bookdown.html#cb88-29" tabindex="-1"></a>## Figures</span>
+<span id="cb88-30"><a href="r-markdown-and-bookdown.html#cb88-30" tabindex="-1"></a></span>
+<span id="cb88-31"><a href="r-markdown-and-bookdown.html#cb88-31" tabindex="-1"></a>Here&#39;s a graph of CO2 concentrations recorded at Mauna Loa (Figure \@ref(fig:co2plot)), then a graph of Old Faithful eruptions (Figure \@ref(fig:faithfulplot)). </span>
+<span id="cb88-32"><a href="r-markdown-and-bookdown.html#cb88-32" tabindex="-1"></a></span>
+<span id="cb88-33"><a href="r-markdown-and-bookdown.html#cb88-33" tabindex="-1"></a>```{r co2plot, fig.cap=&quot;CO2 time series at Mauna Loa&quot;}</span>
+<span id="cb88-34"><a href="r-markdown-and-bookdown.html#cb88-34" tabindex="-1"></a>plot(co2)</span>
+<span id="cb88-35"><a href="r-markdown-and-bookdown.html#cb88-35" tabindex="-1"></a>```</span>
+<span id="cb88-36"><a href="r-markdown-and-bookdown.html#cb88-36" tabindex="-1"></a></span>
+<span id="cb88-37"><a href="r-markdown-and-bookdown.html#cb88-37" tabindex="-1"></a>```{r faithfulplot, fig.cap=&quot;Old Faithful eruptions&quot;}</span>
+<span id="cb88-38"><a href="r-markdown-and-bookdown.html#cb88-38" tabindex="-1"></a>plot(faithful)</span>
+<span id="cb88-39"><a href="r-markdown-and-bookdown.html#cb88-39" tabindex="-1"></a>```</span></code></pre></div>
 </div>
 </div>
-<div id="building-a-book-with-bookdown-and-yaml-options" class="section level2 hasAnchor" number="8.3">
-<h2><span class="header-section-number">8.3</span> Building a book with bookdown and YAML options<a href="r-markdown-and-bookdown.html#building-a-book-with-bookdown-and-yaml-options" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>While you can build a nice looking document in R Markdown, there are some other things that are useful for building a larger book out of it, like handling chapters, reference citations, and other features, so you’ll want to review <span class="citation">Xie (<a href="#ref-Bookdown" role="doc-biblioref">2021</a>)</span> to learn more. We’ve already seen that bookdown output formats provide capabilities like figure headings and citations.</p>
+<div id="building-a-book-with-bookdown-and-yaml-options" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> Building a book with bookdown and YAML options<a href="r-markdown-and-bookdown.html#building-a-book-with-bookdown-and-yaml-options" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>While you can build a nice looking document in R Markdown, there are some other things that are useful for building a larger book out of it, like handling chapters, reference citations, and other features, so you’ll want to review <span class="citation">Xie (<a href="#ref-Bookdown">2021</a>)</span> to learn more. We’ve already seen that bookdown output formats provide capabilities like figure headings and citations.</p>
 <p>The various files for your book can be hosted as a GitHub repository (more on GitHub in the next Addendum), and published to bookdown.org to share with others. You’ll want to spend some time getting it well organized for others to access, and so we will want to learn more about YAML settings to set up our book format the way we want it.</p>
 <p>We’ve already looked at YAML options in the header of our .Rmd file, and for a simple report that’s all we need. However, with a more complex document we might call a book, it’s good practice to organize YAML settings into various places:</p>
 <ul>
@@ -434,8 +448,8 @@ tinytex::install_tinytex()</code></pre>
 <li><code>_output.yml</code>: which contains the settings for each of our output formats, what in our template we just put in our <code>.Rmd</code> header.</li>
 <li><code>_bookdown.yml</code>: where we put the bookdown-specific settings, like the order of our chapters.</li>
 </ul>
-<div id="building-a-book" class="section level3 hasAnchor" number="8.3.1">
-<h3><span class="header-section-number">8.3.1</span> Building a book<a href="r-markdown-and-bookdown.html#building-a-book" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="building-a-book" class="section level3 hasAnchor" number="9.3.1">
+<h3><span class="header-section-number">9.3.1</span> Building a book<a href="r-markdown-and-bookdown.html#building-a-book" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>What we’ve been doing with a single .Rmd file is Knitting it to various formats, however building a book is more complex and involves more files, including chapters, bibliographic references, and other things. Here are some notes:</p>
 <ul>
 <li>Use the Build menu in RStudio to specify whether you want to build which type you’ve specified in the <code>_output.yml</code> file. Since building a long book like this one can take a long time (about 35 minutes for both html and pdf for this book), I sometimes just build the HTML version, then build the pdf separately if it works, and since most people will use the HTML version I update that more frequently.
@@ -446,16 +460,16 @@ tinytex::install_tinytex()</code></pre>
 <li>The automatic numbering of chapters and subheadings is useful, but if you want a section to not use numbering, like this appendix, including <code>{-}</code> at the end of the unnumbered section header line.</li>
 <li>Creating sections, like <strong>Spatial</strong>, is done by including `(PART) before the section name, like the following, which starts off the section with this special heading followed by the first chapter:</li>
 </ul>
-<div class="sourceCode" id="cb75"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb75-1"><a href="r-markdown-and-bookdown.html#cb75-1" aria-hidden="true" tabindex="-1"></a># (PART) Spatial {-}</span>
-<span id="cb75-2"><a href="r-markdown-and-bookdown.html#cb75-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb75-3"><a href="r-markdown-and-bookdown.html#cb75-3" aria-hidden="true" tabindex="-1"></a># Spatial Data and Maps</span>
-<span id="cb75-4"><a href="r-markdown-and-bookdown.html#cb75-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb75-5"><a href="r-markdown-and-bookdown.html#cb75-5" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb89-1"><a href="r-markdown-and-bookdown.html#cb89-1" tabindex="-1"></a># (PART) Spatial {-}</span>
+<span id="cb89-2"><a href="r-markdown-and-bookdown.html#cb89-2" tabindex="-1"></a></span>
+<span id="cb89-3"><a href="r-markdown-and-bookdown.html#cb89-3" tabindex="-1"></a># Spatial Data and Maps</span>
+<span id="cb89-4"><a href="r-markdown-and-bookdown.html#cb89-4" tabindex="-1"></a></span>
+<span id="cb89-5"><a href="r-markdown-and-bookdown.html#cb89-5" tabindex="-1"></a>```</span></code></pre></div>
 <p>Note that the section is excluded from the automatic numbering with <code>{-}</code>.</p>
 <p>I guess I could have included some text to introduce the section but the above works to include the section name in the table of contents.</p>
 </div>
-<div id="special-characters-and-formatting-limitations-and-challenges" class="section level3 hasAnchor" number="8.3.2">
-<h3><span class="header-section-number">8.3.2</span> Special characters and formatting limitations and challenges<a href="r-markdown-and-bookdown.html#special-characters-and-formatting-limitations-and-challenges" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="special-characters-and-formatting-limitations-and-challenges" class="section level3 hasAnchor" number="9.3.2">
+<h3><span class="header-section-number">9.3.2</span> Special characters and formatting limitations and challenges<a href="r-markdown-and-bookdown.html#special-characters-and-formatting-limitations-and-challenges" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Handling special characters and formatting is often a challenge for automated systems that try to build graphics with nicely formatted text from an array of inputs. Code chunk headers allow another level of automation, allowing us to produce figure headings and cite them in the text. In formatting text from markdown sections, we need to turn plain text into nicely formatted text, and markdown has a lot of ways of doing this. However all of this automation runs into limitations, since we run into coding-related rules with multiple systems interacting, and this is especially true when we add LaTeX rules to things. So we need to be aware of some often surprising limitations, such as:</p>
 <ul>
 <li>Code chunk labels can’t have underscores and other special characters like <code>&amp;</code> and <code>_</code>.</li>
@@ -463,12 +477,12 @@ tinytex::install_tinytex()</code></pre>
 </ul>
 </div>
 </div>
-<div id="yaml-files-used-to-configure-the-book" class="section level2 hasAnchor" number="8.4">
-<h2><span class="header-section-number">8.4</span> YAML files used to configure the book<a href="r-markdown-and-bookdown.html#yaml-files-used-to-configure-the-book" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>A shortened version of the YAML files used to format the book might be worth seeing (I’ve taken out the publisher-specific things.) These files are explained much more thoroughly in <span class="citation">Xie (<a href="#ref-Bookdown" role="doc-biblioref">2021</a>)</span>, but you can probably get a sense from these of how they might be set up for a book. The YAML files <code>_output.yml</code> and <code>_bookdown.yml</code>, as well as the header of <code>index.Rmd</code> all contribute to the book configuration, along as support files like <code>book.bib</code> where your references are entered.</p>
+<div id="yaml-files-used-to-configure-the-book" class="section level2 hasAnchor" number="9.4">
+<h2><span class="header-section-number">9.4</span> YAML files used to configure the book<a href="r-markdown-and-bookdown.html#yaml-files-used-to-configure-the-book" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A shortened version of the YAML files used to format the book might be worth seeing (I’ve taken out the publisher-specific things.) These files are explained much more thoroughly in <span class="citation">Xie (<a href="#ref-Bookdown">2021</a>)</span>, but you can probably get a sense from these of how they might be set up for a book. The YAML files <code>_output.yml</code> and <code>_bookdown.yml</code>, as well as the header of <code>index.Rmd</code> all contribute to the book configuration, along as support files like <code>book.bib</code> where your references are entered.</p>
 <p>However, <em>don’t use these as a model</em>, since there are some important things missing that wouldn’t work for another purpose anyway, these configurations having been tweaked to work with the publisher, and there are some missing customized LaTeX and configuration files.</p>
-<div id="output.yml" class="section level3 hasAnchor" number="8.4.1">
-<h3><span class="header-section-number">8.4.1</span> _output.yml<a href="r-markdown-and-bookdown.html#output.yml" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="output.yml" class="section level3 hasAnchor" number="9.4.1">
+<h3><span class="header-section-number">9.4.1</span> _output.yml<a href="r-markdown-and-bookdown.html#output.yml" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Note that there are two output sections in this file, one the <code>gitbook</code> style of HTML which provides a table of contents panel on the left, along with the cover art, the other the <code>pdf_book</code> section, which was the most challenging, and required working with the publisher to get the specific settings right. Building something as complex as a book often requires some tricky debugging, and since you’re dealing potentially with R, Markdown, and LaTeX issues, can take a lot of effort. To get the format working right for the publisher, for instance, I needed to learn more about LaTeX.</p>
 <pre><code>bookdown::gitbook:
   css: style.css
@@ -500,13 +514,13 @@ bookdown::pdf_book:
 <li>note the latex_engine: xelatex – that is supported by tinytex, and which you can set in RStudio Build/Configure Build Tools in the Sweave section of the Project Options window that will display and choosing XeLaTeX.</li>
 </ul>
 </div>
-<div id="index.rmd" class="section level3 hasAnchor" number="8.4.2">
-<h3><span class="header-section-number">8.4.2</span> index.Rmd<a href="r-markdown-and-bookdown.html#index.rmd" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="index.rmd" class="section level3 hasAnchor" number="9.4.2">
+<h3><span class="header-section-number">9.4.2</span> index.Rmd<a href="r-markdown-and-bookdown.html#index.rmd" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>These settings are a higher level than what’s in <code>_output.yml</code>, though you could put the things in that file here under an <code>output:</code> line. See examples in <a href="https://bookdown.org/yihui/bookdown/" class="uri">https://bookdown.org/yihui/bookdown/</a>.</p>
 <pre><code>---
 title: &quot;Introduction to Environmental Data Science&quot;
 author: &quot;Jerry Davis, SFSU Institute for Geographic Information Science&quot;
-date: &quot;2023-01-03&quot;
+date: &quot;2023-12-28&quot;
 bibliography: [book.bib]
 biblio-style: apalike
 link-citations: yes
@@ -525,8 +539,8 @@ graphics: yes
 geometry: margin=0.75in
 ---</code></pre>
 </div>
-<div id="bookdown.yml" class="section level3 hasAnchor" number="8.4.3">
-<h3><span class="header-section-number">8.4.3</span> _bookdown.yml<a href="r-markdown-and-bookdown.html#bookdown.yml" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="bookdown.yml" class="section level3 hasAnchor" number="9.4.3">
+<h3><span class="header-section-number">9.4.3</span> _bookdown.yml<a href="r-markdown-and-bookdown.html#bookdown.yml" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>One thing I use this for is the list of chapters, which is nice to specify instead of letting RStudio figure out the chapters based on their names by using numbers like 01_introduction, etc.. To work on parts of the book a lot faster, and I can then easily comment out parts – so I’ve set them up one line at a time to make it easy to use Ctrl-Sh-C to toggle commenting.</p>
 <pre><code>book_filename: &quot;EnvDataSci&quot;
 clean: [packages.bib, bookdown.bbl]
@@ -553,8 +567,8 @@ language:
   ui:
     edit: &quot;Edit&quot;
     chapter_name: &quot;Chapter &quot;</code></pre>
-<div id="publishing" class="section level4 hasAnchor" number="8.4.3.1">
-<h4><span class="header-section-number">8.4.3.1</span> Publishing<a href="r-markdown-and-bookdown.html#publishing" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="publishing" class="section level4 hasAnchor" number="9.4.3.1">
+<h4><span class="header-section-number">9.4.3.1</span> Publishing<a href="r-markdown-and-bookdown.html#publishing" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>To get it published at bookdown.org, you’ll need an account at Posit Connect, and then replacing “myAccount” with your account name, use …</p>
 <pre><code>bookdown::publish_book(account=&quot;myAccount&quot;, server=&quot;bookdown.org&quot;)</code></pre>
 <p>… the first time, then after that you don’t need those two parameters.</p>
@@ -577,8 +591,8 @@ Xie, Yihui, JJ Allaire, and Garrett Grolemund. 2019. <em>R Markdown: The Definit
           </div>
         </div>
       </div>
-<a href="time-series-case-studies.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="building-a-package-on-github-for-data-and-code.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="co2-flux-data-red-clover-valley.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="figures-and-tables.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -634,20 +648,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>

@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>10 Non-linear model of PAR_ave ~ GPP_sum, using Michaelis-Menten model | Environmental Data Science Addenda</title>
+  <meta name="description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
+  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="10 Non-linear model of PAR_ave ~ GPP_sum, using Michaelis-Menten model | Environmental Data Science Addenda" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
+  <meta name="github-repo" content="iGISc/EnvDataSciAddenda" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="10 Non-linear model of PAR_ave ~ GPP_sum, using Michaelis-Menten model | Environmental Data Science Addenda" />
+  
+  <meta name="twitter:description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
+  
+
+<meta name="author" content="Jerry Davis, SFSU Institute for Geographic Information Science" />
+
+
+<meta name="date" content="2023-12-28" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="co2-flux-data-red-clover-valley.html"/>
+<link rel="next" href="r-markdown-and-bookdown.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><img src="img/eaRth_anna296addenda.png"></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Background, Goals and Data</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#structure-of-the-addenda"><i class="fa fa-check"></i><b>1.1</b> Structure of the Addenda</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#software-and-data"><i class="fa fa-check"></i><b>1.2</b> Software and Data</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#data"><i class="fa fa-check"></i><b>1.2.1</b> Data</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.3</b> Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="air-pollutant-emissions-trends-epa.html"><a href="air-pollutant-emissions-trends-epa.html"><i class="fa fa-check"></i><b>2</b> Air pollutant emissions trends (EPA)</a></li>
+<li class="chapter" data-level="3" data-path="distance-from-census-tract-centroid-to-closest-tri-site.html"><a href="distance-from-census-tract-centroid-to-closest-tri-site.html"><i class="fa fa-check"></i><b>3</b> Distance from census tract centroid to closest TRI site</a></li>
+<li class="chapter" data-level="4" data-path="terrain-mapping-caves-and-water-samples-in-a-karst.html"><a href="terrain-mapping-caves-and-water-samples-in-a-karst.html"><i class="fa fa-check"></i><b>4</b> Terrain mapping, caves and water samples in a karst</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="terrain-mapping-caves-and-water-samples-in-a-karst.html"><a href="terrain-mapping-caves-and-water-samples-in-a-karst.html#creating-a-basemap-from-a-dem-using-hillshade-and-terrain-shading"><i class="fa fa-check"></i><b>4.1</b> Creating a basemap from a DEM, using hillshade and terrain shading</a></li>
+<li class="chapter" data-level="4.2" data-path="terrain-mapping-caves-and-water-samples-in-a-karst.html"><a href="terrain-mapping-caves-and-water-samples-in-a-karst.html#using-maptiles-for-a-topographic-basemap-with-contours"><i class="fa fa-check"></i><b>4.2</b> Using maptiles for a topographic basemap with contours</a></li>
+<li class="chapter" data-level="4.3" data-path="terrain-mapping-caves-and-water-samples-in-a-karst.html"><a href="terrain-mapping-caves-and-water-samples-in-a-karst.html#interactive-map-with-tmap-view-mode"><i class="fa fa-check"></i><b>4.3</b> Interactive map with tmap view mode</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="pointblue-penguin-study.html"><a href="pointblue-penguin-study.html"><i class="fa fa-check"></i><b>5</b> PointBlue Penguin Study</a>
+<ul>
+<li class="chapter" data-level="5.0.1" data-path="pointblue-penguin-study.html"><a href="pointblue-penguin-study.html#interactive-mapping-of-individual-penguins-abstracted-from-a-big-dataset"><i class="fa fa-check"></i><b>5.0.1</b> Interactive mapping of individual penguins abstracted from a big dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="seabird-model.html"><a href="seabird-model.html"><i class="fa fa-check"></i><b>6</b> Seabird Model</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="seabird-model.html"><a href="seabird-model.html#goals-and-basic-methods-of-the-analysis"><i class="fa fa-check"></i><b>6.1</b> Goals and basic methods of the analysis</a></li>
+<li class="chapter" data-level="6.2" data-path="seabird-model.html"><a href="seabird-model.html#exploratory-data-analysis"><i class="fa fa-check"></i><b>6.2</b> Exploratory data analysis</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="seabird-model.html"><a href="seabird-model.html#identifying-the-appropriate-model-using-variance-and-mean-comparisons"><i class="fa fa-check"></i><b>6.2.1</b> Identifying the appropriate model using variance and mean comparisons</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="seabird-model.html"><a href="seabird-model.html#model-black-footed-albatross-counts-for-july-using-a-poisson-family-glm"><i class="fa fa-check"></i><b>6.3</b> Model black-footed albatross counts for July using a poisson-family glm</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="seabird-model.html"><a href="seabird-model.html#map-the-prediction"><i class="fa fa-check"></i><b>6.3.1</b> Map the prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="seabird-model.html"><a href="seabird-model.html#interpolation"><i class="fa fa-check"></i><b>6.4</b> Interpolation</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html"><i class="fa fa-check"></i><b>7</b> Time Series case studies</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html#loney-meadow-flux-data"><i class="fa fa-check"></i><b>7.1</b> Loney Meadow flux data</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html"><i class="fa fa-check"></i><b>8</b> Atmospheric CO2 record from Mauna Loa, Hawaii</a></li>
+<li class="chapter" data-level="9" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html"><i class="fa fa-check"></i><b>9</b> CO2 flux data : Red Clover Valley</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#initial-data-read-and-time-series-charting"><i class="fa fa-check"></i><b>9.1</b> 1. Initial data read and time series charting</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#reading-in-the-excel-file"><i class="fa fa-check"></i><b>9.1.1</b> Reading in the Excel File</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#time-series-plot"><i class="fa fa-check"></i><b>9.2</b> Time series plot</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html"><i class="fa fa-check"></i><b>10</b> Non-linear model of PAR_ave ~ GPP_sum, using Michaelis-Menten model</a>
+<ul>
+<li class="chapter" data-level="10.0.1" data-path="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#try-fitting-a-non-linear-model-ssmicmen-from-base-r"><i class="fa fa-check"></i><b>10.0.1</b> Try fitting a non-linear model (SSmicmen from base R)</a></li>
+<li class="chapter" data-level="10.1" data-path="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#polynomial-models"><i class="fa fa-check"></i><b>10.1</b> polynomial models</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#poly-1"><i class="fa fa-check"></i><b>10.1.1</b> poly 1</a></li>
+<li class="chapter" data-level="10.1.2" data-path="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#poly-2"><i class="fa fa-check"></i><b>10.1.2</b> poly 2</a></li>
+<li class="chapter" data-level="10.1.3" data-path="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#poly-3"><i class="fa fa-check"></i><b>10.1.3</b> poly 3</a></li>
+<li class="chapter" data-level="10.1.4" data-path="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#poly-4"><i class="fa fa-check"></i><b>10.1.4</b> poly 4</a></li>
+<li class="chapter" data-level="10.1.5" data-path="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#poly-5"><i class="fa fa-check"></i><b>10.1.5</b> poly 5</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#power-regression"><i class="fa fa-check"></i><b>10.2</b> power regression</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html"><i class="fa fa-check"></i><b>11</b> R Markdown and Bookdown</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#r-markdown"><i class="fa fa-check"></i><b>11.1</b> R Markdown</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#markdown-editing"><i class="fa fa-check"></i><b>11.1.1</b> Markdown editing</a></li>
+<li class="chapter" data-level="11.1.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#display-options-in-code-chunks"><i class="fa fa-check"></i><b>11.1.2</b> Display options in code chunks</a></li>
+<li class="chapter" data-level="11.1.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#numbered-figures-with-text-citations"><i class="fa fa-check"></i><b>11.1.3</b> Numbered figures with text citations</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#a-template-for-multiple-output-formats"><i class="fa fa-check"></i><b>11.2</b> A template for multiple output formats</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#the-template"><i class="fa fa-check"></i><b>11.2.1</b> The template</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#building-a-book-with-bookdown-and-yaml-options"><i class="fa fa-check"></i><b>11.3</b> Building a book with bookdown and YAML options</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#building-a-book"><i class="fa fa-check"></i><b>11.3.1</b> Building a book</a></li>
+<li class="chapter" data-level="11.3.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#special-characters-and-formatting-limitations-and-challenges"><i class="fa fa-check"></i><b>11.3.2</b> Special characters and formatting limitations and challenges</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#yaml-files-used-to-configure-the-book"><i class="fa fa-check"></i><b>11.4</b> YAML files used to configure the book</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#output.yml"><i class="fa fa-check"></i><b>11.4.1</b> _output.yml</a></li>
+<li class="chapter" data-level="11.4.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#index.rmd"><i class="fa fa-check"></i><b>11.4.2</b> index.Rmd</a></li>
+<li class="chapter" data-level="11.4.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#bookdown.yml"><i class="fa fa-check"></i><b>11.4.3</b> _bookdown.yml</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="figures-and-tables.html"><a href="figures-and-tables.html"><i class="fa fa-check"></i><b>12</b> Figures and Tables</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="figures-and-tables.html"><a href="figures-and-tables.html#figures"><i class="fa fa-check"></i><b>12.1</b> Figures</a></li>
+<li class="chapter" data-level="12.2" data-path="figures-and-tables.html"><a href="figures-and-tables.html#tables"><i class="fa fa-check"></i><b>12.2</b> Tables</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="figures-and-tables.html"><a href="figures-and-tables.html#dtdatatable"><i class="fa fa-check"></i><b>12.2.1</b> <code>DT::datatable</code></a></li>
+<li class="chapter" data-level="12.2.2" data-path="figures-and-tables.html"><a href="figures-and-tables.html#knitrkable-tables"><i class="fa fa-check"></i><b>12.2.2</b> <code>knitr::kable</code> tables</a></li>
+<li class="chapter" data-level="12.2.3" data-path="figures-and-tables.html"><a href="figures-and-tables.html#gt-package"><i class="fa fa-check"></i><b>12.2.3</b> <code>gt</code> package</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="figures-and-tables.html"><a href="figures-and-tables.html#other-tricks"><i class="fa fa-check"></i><b>12.3</b> Other tricks</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html"><i class="fa fa-check"></i><b>13</b> Building a Package on GitHub for Data and Code</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#git-and-github"><i class="fa fa-check"></i><b>13.1</b> Git and GitHub</a></li>
+<li class="chapter" data-level="13.2" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#some-notes-on-the-rstudio-process"><i class="fa fa-check"></i><b>13.2</b> Some notes on the RStudio process</a></li>
+<li class="chapter" data-level="13.3" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#data-1"><i class="fa fa-check"></i><b>13.3</b> Data</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#raw-data-in-extdata"><i class="fa fa-check"></i><b>13.3.1</b> Raw data in extdata</a></li>
+<li class="chapter" data-level="13.3.2" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#binary-data-as-rda-files"><i class="fa fa-check"></i><b>13.3.2</b> Binary data as <code>rda</code> files</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#code-functions"><i class="fa fa-check"></i><b>13.4</b> Code (functions)</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Environmental Data Science Addenda</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model" class="section level1 hasAnchor" number="10">
+<h1><span class="header-section-number">10</span> Non-linear model of PAR_ave ~ GPP_sum, using Michaelis-Menten model<a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><em>Not the right goal for a model between these variables, since GPP should derive from PAR, not the other way around. But it does illustrate asymptotic data.</em></p>
+<p>First the scatter plot:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb8-1" tabindex="-1"></a><span class="fu">plot</span>(Mountflux<span class="sc">$</span>GPP_sum, Mountflux<span class="sc">$</span>PAR_ave,<span class="at">xlab=</span><span class="st">&quot;GPP_sum&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;PAR_ave&quot;</span>)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<div id="try-fitting-a-non-linear-model-ssmicmen-from-base-r" class="section level3 hasAnchor" number="10.0.1">
+<h3><span class="header-section-number">10.0.1</span> Try fitting a non-linear model (SSmicmen from base R)<a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#try-fitting-a-non-linear-model-ssmicmen-from-base-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Based on <a href="https://www.datacamp.com/tutorial/introduction-to-non-linear-model-and-insights-using-r" class="uri">https://www.datacamp.com/tutorial/introduction-to-non-linear-model-and-insights-using-r</a></p>
+<p>Using start values for Vm and K based on interpreting the graph. We’ll use nonlinear least squares (<code>nls</code>) and starting values of the two coefficients.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb9-1" tabindex="-1"></a>micmenMod <span class="ot">&lt;-</span> <span class="fu">nls</span>(PAR_ave<span class="sc">~</span>(Vm)<span class="sc">*</span>GPP_sum<span class="sc">/</span>(K<span class="sc">+</span>GPP_sum), <span class="at">data=</span>Mountflux, <span class="at">start=</span><span class="fu">list</span>(<span class="at">Vm=</span><span class="dv">750</span>,<span class="at">K=</span><span class="dv">1</span>))</span>
+<span id="cb9-2"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb9-2" tabindex="-1"></a><span class="fu">summary</span>(micmenMod)</span></code></pre></div>
+<pre><code>## 
+## Formula: PAR_ave ~ (Vm) * GPP_sum/(K + GPP_sum)
+## 
+## Parameters:
+##    Estimate Std. Error t value Pr(&gt;|t|)    
+## Vm 819.0045    13.4911   60.71   &lt;2e-16 ***
+## K    5.0071     0.2573   19.46   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 121.1 on 904 degrees of freedom
+## 
+## Number of iterations to convergence: 7 
+## Achieved convergence tolerance: 8.843e-06</code></pre>
+<p><strong>Calculate residual error</strong></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb11-1" tabindex="-1"></a>sse <span class="ot">&lt;-</span> micmenMod<span class="sc">$</span>m<span class="sc">$</span><span class="fu">deviance</span>()</span>
+<span id="cb11-2"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb11-2" tabindex="-1"></a>null <span class="ot">&lt;-</span> <span class="fu">lm</span>(PAR_ave<span class="sc">~</span><span class="dv">1</span>, <span class="at">data=</span>Mountflux)</span>
+<span id="cb11-3"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb11-3" tabindex="-1"></a>sst <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">summary.aov</span>(null)[[<span class="dv">1</span>]])<span class="sc">$</span>Sum.Sq</span>
+<span id="cb11-4"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb11-4" tabindex="-1"></a>percent_variation_explained <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span>(sst<span class="sc">-</span>sse)<span class="sc">/</span>sst</span>
+<span id="cb11-5"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb11-5" tabindex="-1"></a>percent_variation_explained</span></code></pre></div>
+<pre><code>## [1] 59.97658</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb13-1" tabindex="-1"></a><span class="fu">plot</span>(Mountflux<span class="sc">$</span>GPP_sum, Mountflux<span class="sc">$</span>PAR_ave,<span class="at">xlab=</span><span class="st">&quot;GPP_sum&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;PAR_ave&quot;</span>)</span>
+<span id="cb13-2"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb13-2" tabindex="-1"></a> <span class="fu">lines</span>(Mountflux<span class="sc">$</span>GPP_sum, </span>
+<span id="cb13-3"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb13-3" tabindex="-1"></a>       <span class="fu">predict</span>(micmenMod,Mountflux),<span class="at">col=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+</div>
+<div id="polynomial-models" class="section level2 hasAnchor" number="10.1">
+<h2><span class="header-section-number">10.1</span> polynomial models<a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#polynomial-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb14-1" tabindex="-1"></a><span class="fu">plot</span>(Mountflux<span class="sc">$</span>PAR_ave,Mountflux<span class="sc">$</span>GPP_sum, <span class="at">xlab=</span><span class="st">&quot;PAR_ave&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;GPP_sum&quot;</span>)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<div id="poly-1" class="section level3 hasAnchor" number="10.1.1">
+<h3><span class="header-section-number">10.1.1</span> poly 1<a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#poly-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb15-1" tabindex="-1"></a>ord <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb15-2"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb15-2" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(GPP_sum <span class="sc">~</span> <span class="fu">poly</span>(PAR_ave, ord, <span class="at">raw=</span>T), <span class="at">data=</span>Mountflux))</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = GPP_sum ~ poly(PAR_ave, ord, raw = T), data = Mountflux)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -11.944  -4.931  -1.131   4.287  19.711 
+## 
+## Coefficients:
+##                              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                 -8.979814   0.669906  -13.40   &lt;2e-16 ***
+## poly(PAR_ave, ord, raw = T)  0.042818   0.001258   34.03   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 7.242 on 904 degrees of freedom
+## Multiple R-squared:  0.5616, Adjusted R-squared:  0.5611 
+## F-statistic:  1158 on 1 and 904 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb17-1" tabindex="-1"></a><span class="fu">ggplot</span>(Mountflux, <span class="fu">aes</span>(PAR_ave, GPP_sum)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb17-2"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb17-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm, <span class="at">formula=</span>y<span class="sc">~</span><span class="fu">poly</span>(x,ord,<span class="at">raw=</span>T))</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+</div>
+<div id="poly-2" class="section level3 hasAnchor" number="10.1.2">
+<h3><span class="header-section-number">10.1.2</span> poly 2<a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#poly-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb18-1" tabindex="-1"></a>ord <span class="ot">=</span> <span class="dv">2</span></span>
+<span id="cb18-2"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb18-2" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(GPP_sum <span class="sc">~</span> <span class="fu">poly</span>(PAR_ave, ord, <span class="at">raw=</span>T), <span class="at">data=</span>Mountflux))</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = GPP_sum ~ poly(PAR_ave, ord, raw = T), data = Mountflux)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -14.9170  -3.5363  -0.4922   2.4821  23.4111 
+## 
+## Coefficients:
+##                                Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                   1.062e+01  1.269e+00   8.368   &lt;2e-16 ***
+## poly(PAR_ave, ord, raw = T)1 -5.500e-02  5.737e-03  -9.587   &lt;2e-16 ***
+## poly(PAR_ave, ord, raw = T)2  1.023e-04  5.892e-06  17.367   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 6.273 on 903 degrees of freedom
+## Multiple R-squared:  0.6714, Adjusted R-squared:  0.6706 
+## F-statistic: 922.3 on 2 and 903 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb20-1" tabindex="-1"></a><span class="fu">ggplot</span>(Mountflux, <span class="fu">aes</span>(PAR_ave, GPP_sum)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb20-2"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb20-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm, <span class="at">formula=</span>y<span class="sc">~</span><span class="fu">poly</span>(x,ord,<span class="at">raw=</span>T))</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+</div>
+<div id="poly-3" class="section level3 hasAnchor" number="10.1.3">
+<h3><span class="header-section-number">10.1.3</span> poly 3<a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#poly-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb21-1" tabindex="-1"></a>ord <span class="ot">=</span> <span class="dv">3</span></span>
+<span id="cb21-2"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb21-2" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(GPP_sum <span class="sc">~</span> <span class="fu">poly</span>(PAR_ave, ord, <span class="at">raw=</span>T), <span class="at">data=</span>Mountflux))</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = GPP_sum ~ poly(PAR_ave, ord, raw = T), data = Mountflux)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -16.4635  -3.3477  -0.8198   2.3854  24.5018 
+## 
+## Coefficients:
+##                                Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                  -7.290e+00  2.276e+00  -3.203  0.00141 ** 
+## poly(PAR_ave, ord, raw = T)1  1.048e-01  1.804e-02   5.810 8.65e-09 ***
+## poly(PAR_ave, ord, raw = T)2 -2.949e-04  4.309e-05  -6.845 1.41e-11 ***
+## poly(PAR_ave, ord, raw = T)3  2.908e-07  3.127e-08   9.299  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 5.996 on 902 degrees of freedom
+## Multiple R-squared:  0.7001, Adjusted R-squared:  0.6991 
+## F-statistic: 701.9 on 3 and 902 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb23-1" tabindex="-1"></a><span class="fu">ggplot</span>(Mountflux, <span class="fu">aes</span>(PAR_ave, GPP_sum)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb23-2"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb23-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm, <span class="at">formula=</span>y<span class="sc">~</span><span class="fu">poly</span>(x,ord,<span class="at">raw=</span>T))</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+</div>
+<div id="poly-4" class="section level3 hasAnchor" number="10.1.4">
+<h3><span class="header-section-number">10.1.4</span> poly 4<a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#poly-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb24-1" tabindex="-1"></a>ord <span class="ot">=</span> <span class="dv">4</span></span>
+<span id="cb24-2"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb24-2" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(GPP_sum <span class="sc">~</span> <span class="fu">poly</span>(PAR_ave, ord, <span class="at">raw=</span>T), <span class="at">data=</span>Mountflux))</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = GPP_sum ~ poly(PAR_ave, ord, raw = T), data = Mountflux)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -17.0946  -2.9525  -0.7201   2.0130  23.8099 
+## 
+## Coefficients:
+##                                Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                   1.346e+01  3.769e+00   3.570 0.000375 ***
+## poly(PAR_ave, ord, raw = T)1 -1.768e-01  4.493e-02  -3.936 8.93e-05 ***
+## poly(PAR_ave, ord, raw = T)2  9.001e-04  1.804e-04   4.990 7.25e-07 ***
+## poly(PAR_ave, ord, raw = T)3 -1.692e-06  2.927e-07  -5.782 1.02e-08 ***
+## poly(PAR_ave, ord, raw = T)4  1.122e-09  1.647e-10   6.812 1.75e-11 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 5.85 on 901 degrees of freedom
+## Multiple R-squared:  0.7148, Adjusted R-squared:  0.7135 
+## F-statistic: 564.5 on 4 and 901 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb26-1" tabindex="-1"></a><span class="fu">ggplot</span>(Mountflux, <span class="fu">aes</span>(PAR_ave, GPP_sum)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb26-2"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb26-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm, <span class="at">formula=</span>y<span class="sc">~</span><span class="fu">poly</span>(x,ord,<span class="at">raw=</span>T))</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+</div>
+<div id="poly-5" class="section level3 hasAnchor" number="10.1.5">
+<h3><span class="header-section-number">10.1.5</span> poly 5<a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#poly-5" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb27-1" tabindex="-1"></a>ord <span class="ot">=</span> <span class="dv">5</span></span>
+<span id="cb27-2"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb27-2" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(GPP_sum <span class="sc">~</span> <span class="fu">poly</span>(PAR_ave, ord, <span class="at">raw=</span>T), <span class="at">data=</span>Mountflux))</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = GPP_sum ~ poly(PAR_ave, ord, raw = T), data = Mountflux)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -17.0834  -2.7700  -0.7949   1.9559  23.4067 
+## 
+## Coefficients:
+##                                Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept)                   1.325e+00  6.746e+00   0.196   0.8443  
+## poly(PAR_ave, ord, raw = T)1  4.446e-02  1.116e-01   0.398   0.6904  
+## poly(PAR_ave, ord, raw = T)2 -4.500e-04  6.488e-04  -0.694   0.4881  
+## poly(PAR_ave, ord, raw = T)3  1.931e-06  1.698e-06   1.137   0.2557  
+## poly(PAR_ave, ord, raw = T)4 -3.295e-09  2.046e-09  -1.611   0.1076  
+## poly(PAR_ave, ord, raw = T)5  1.999e-12  9.226e-13   2.166   0.0306 *
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 5.838 on 900 degrees of freedom
+## Multiple R-squared:  0.7163, Adjusted R-squared:  0.7147 
+## F-statistic: 454.4 on 5 and 900 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb29-1" tabindex="-1"></a><span class="fu">ggplot</span>(Mountflux, <span class="fu">aes</span>(PAR_ave, GPP_sum)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb29-2"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb29-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm, <span class="at">formula=</span>y<span class="sc">~</span><span class="fu">poly</span>(x,ord,<span class="at">raw=</span>T))</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+</div>
+</div>
+<div id="power-regression" class="section level2 hasAnchor" number="10.2">
+<h2><span class="header-section-number">10.2</span> power regression<a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#power-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb30-1" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(<span class="fu">log</span>(GPP_sum) <span class="sc">~</span> <span class="fu">log</span>(PAR_ave), <span class="at">data=</span>Mountflux))</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = log(GPP_sum) ~ log(PAR_ave), data = Mountflux)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.5030 -0.2995  0.0036  0.4460  1.8629 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   -7.0150     0.3034  -23.12   &lt;2e-16 ***
+## log(PAR_ave)   1.4869     0.0495   30.04   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.7199 on 904 degrees of freedom
+## Multiple R-squared:  0.4995, Adjusted R-squared:  0.499 
+## F-statistic: 902.2 on 1 and 904 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb32-1" tabindex="-1"></a><span class="fu">ggplot</span>(Mountflux, <span class="fu">aes</span>(<span class="fu">log</span>(PAR_ave), <span class="fu">log</span>(GPP_sum))) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb32-2"><a href="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model.html#cb32-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm)</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="co2-flux-data-red-clover-valley.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="r-markdown-and-bookdown.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+},
+"book_filename": "envdatasci",
+"toc_depth": 4
+});
+});
+</script>
+
+</body>
+
+</html>

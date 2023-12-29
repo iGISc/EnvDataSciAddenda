@@ -32,7 +32,46 @@ library(terra)
 
 We'll read in a digital elevation model (DEM) derived from USGS data, and use it to build a terrain basemap, using a hillshade and hypsometric coloring with a 24-level terrain.color palette, and start with a map showing the overall Sinking Cove Area (Figure \@ref(fig:areaMap)).
 
-```{r areaMap, fig.cap="Sinking Cove Area map, using terra rasters in tmap"}
+```{r SpatialDataMaps, echo=F, warning=F, message=F, fig.cap="Sinking Cove Area map, using terra rasters in tmap"}
+library(igisci)
+library(sf); library(tidyverse); library(readxl); library(tmap); library(terra)
+wChemData <- read_excel(ex("SinkingCove/SinkingCoveWaterChem.xlsx")) %>%
+  mutate(siteLoc = str_sub(Site,start=1L, end=1L))
+wChemTrunk <- wChemData %>% filter(siteLoc == "T") %>% mutate(siteType = "trunk")
+wChemDrip <- wChemData %>% filter(siteLoc %in% c("D","S")) %>% mutate(siteType = "dripwater")
+wChemTrib <- wChemData %>% filter(siteLoc %in% c("B", "F", "K", "W", "P")) %>% 
+  mutate(siteType = "tributary")
+wChemData <- bind_rows(wChemTrunk, wChemDrip, wChemTrib)
+sites <- read_csv(ex("SinkingCove/SinkingCoveSites.csv"))
+wChem <- wChemData %>%
+  left_join(sites, by = c("Site" = "site")) %>%
+  st_as_sf(coords = c("longitude", "latitude"), crs = 4326)
+tmap_mode("plot")
+DEM <- rast(ex("SinkingCove/DEM_SinkingCoveUTM.tif"))   
+slope <- terrain(DEM, v='slope')
+aspect <- terrain(DEM, v='aspect')
+hillsh <- shade(slope/180*pi, aspect/180*pi, 40, 330) 
+bounds <- tmaptools::bb(wChem, ext=1.1)
+
+hillshCol <- tm_scale_continuous(values = "-brewer.greys")
+terrainCol <- tm_scale_continuous(values = terrain.colors(9))
+
+tm_graticules(labels.cardinal=F) +
+  tm_shape(hillsh,bbox=bounds) +
+    tm_raster(col.scale=hillshCol, col.legend = tm_legend(show=F)) + 
+  tm_shape(DEM) + 
+    tm_raster(col.scale=terrainCol, col_alpha=0.5,col.legend = tm_legend(show=F)) +
+  tm_shape(wChem) +
+    tm_symbols(size="TH", fill="Lithology",
+               tm_scale_continuous(values=c(0.2,2)), 
+               shape="siteType",
+               tm_legend(frame=F)) +
+  tm_title("Upper Sinking Cove")
+  # tm_layout(legend.position = c("left", "bottom")) +
+  # tm_graticules()
+```
+
+```{r areaMap, eval=F}
 tmap_mode("plot")
 DEM <- rast(ex("SinkingCove/DEM_SinkingCoveUTM.tif"))
 slope <- terrain(DEM, v='slope')
@@ -112,10 +151,10 @@ Or the same map on Geology (Figure \@ref(fig:upperSinkingCoveGeology))
 geol_bounds <- st_bbox(geology)
 tm_shape(hillsh,bbox=geol_bounds) +
   tm_raster(palette="-Greys",legend.show=F,n=20) +
-  tm_shape(geology) + tm_fill(col="ElevGeol", alpha=0.5, title="Geology by base elevation (m)", legend.reverse=T) +
+  tm_shape(geology) + tm_fill(fill="ElevGeol", alpha=0.5, title="Geology by base elevation (m)", legend.reverse=T) +
   #tm_shape(DEM) + tm_raster(palette=terrain.colors(24), alpha=0.5,legend.show=F) +
   tm_shape(caves) + tm_lines(lwd=2) + tm_text("CaveLabel", size=0.5, just="left", xmod=0.75) +
-  tm_shape(ents) + tm_symbols(col="Formation", shape=24, size=0.33, alpha=.75, title.col ="Geologic unit of entrance") + 
+  tm_shape(ents) + tm_symbols(fill="Formation", shape=24, size=0.33, alpha=.75, title.col ="Geologic unit of entrance") + 
   #tm_shape(wChem) + tm_symbols(size="TH", col="Lithology", scale=2, shape="siteType", alpha=1) +
   tm_layout(legend.position = c("left", "bottom")) +
   tm_graticules(lines=F)
@@ -129,7 +168,7 @@ tm_shape(hillsh,bbox=geol_bounds) +
   tm_raster(palette="-Greys",legend.show=F,n=20) +
   #tm_shape(DEM) + tm_raster(palette=terrain.colors(24), alpha=0.5,legend.show=F) +
   tm_shape(caves) + tm_lines(lwd=2) +
-  tm_shape(geology) + tm_fill(col="ElevGeol", alpha=0.5, title="Geology by base elev(m)", legend.reverse=T) +
+  tm_shape(geology) + tm_fill(fill="ElevGeol", alpha=0.5, title="Geology by base elev(m)", legend.reverse=T) +
   tm_shape(wChem) + tm_symbols(col="siteType", size="carbonate_ppm", border.col="black", scale=2, alpha=0.66) + #col="navy", 
   tm_layout(legend.outside=TRUE) +
   tm_graticules(lines=F)
@@ -140,46 +179,16 @@ tm_shape(hillsh,bbox=geol_bounds) +
 Using maptiles with tmap in plot mode may produce the most informative map. We could have created contours from the DEM, but it's easier to use a basemap, as long as the internet connection works. The `Esri.WorldTopoMap` in employing USGS labels works well in the US, though elevations are in feet (Figure \@ref(fig:mapTiles)).
 ```{r mapTiles, out.width="100%", fig.cap="Upper Sinking Cove static map with maptiles"}
 library(maptiles)
-upperSinkingCove <- get_tiles(wChem, provider="Esri.WorldTopoMap", forceDownload=T)
-tm_shape(upperSinkingCove) + 
-  tm_rgb() +
+#upperSinkingCove <- get_tiles(wChem, provider="Esri.WorldTopoMap", forceDownload=T)
+tm_graticules(lines=F) + 
+  tm_basemap(server = "Esri.WorldTopoMap") + 
   tm_shape(caves, bbox=geol_bounds) + tm_lines(lwd=2) +
   tm_shape(wChem) + 
-  tm_symbols(size="carbonate_ppm", col="Lithology", scale=2, shape="siteType", alpha=0.5) +
-  tm_layout(legend.position = c("left", "bottom")) +
-  tm_graticules(lines=F)
+  tm_symbols(size="carbonate_ppm", col="Lithology", scale=2, shape="siteType", alpha=0.5)
+# +
+#   tm_layout(legend.position = tm_pos_in("right"c("left", "bottom"))
 ```
 
 
-## Interactive map with tmap view mode
 
-Interactive map with multiple choices of basemaps, showing water sample site types. This heavily forested area is a good example of why imagery may not be as useful as topographic symbology for a basemap.
-
-```{r waterSampleSites, fig.cap="Upper Sinking Cove interactive map"}
-tmap_mode("view")
-bounds <- st_bbox()
-wChem2map <- filter(wChem, Month == 8)
-minVal <- min(wChem2map$TH); maxVal <- max(wChem2map$TH)
-tmap_options(basemaps=c(OpenTopoMap="OpenTopoMap", 
-                        Esri.WorldTopoMap="Esri.WorldTopoMap",
-                        Esri.WorldImagery = "Esri.WorldImagery",
-                        Esri.NatGeoWorldMap="Esri.NatGeoWorldMap"))
-bounds <- st_bbox(wChem2map)
-tm_basemap() +
-  tm_shape(caves, bbox=geol_bounds) + tm_lines(lwd=2) +
-  tm_shape(wChem2map) + tm_symbols(col="siteType", size="carbonate_ppm", scale=2, alpha=0.5) +
-  tm_layout(title=paste("Dissolved carbonates ",as.character(minVal),"-",as.character(maxVal)," mg/L", sep=""))
-```
-
-```{r Lithology, eval=F, include=F, fig.cap="Interactive map with lithology"}
-tmap_options(basemaps=c(Esri.WorldTopoMap="Esri.WorldTopoMap",
-                        Esri.WorldImagery = "Esri.WorldImagery",
-                        Esri.NatGeoWorldMap="Esri.NatGeoWorldMap",
-                        OpenTopoMap="OpenTopoMap"))
-bounds <- st_bbox(wChem2map)
-tm_basemap() + 
-  tm_shape(caves, bbox=bounds) + tm_lines(lwd=2) +
-  tm_shape(wChem2map) + tm_symbols(col="Lithology", size="TH", scale=2, alpha=0.5) +
-  tm_layout(title=paste("Total Hardness ",as.character(minVal),"-",as.character(maxVal)," mg/L", sep=""))
-```
 
