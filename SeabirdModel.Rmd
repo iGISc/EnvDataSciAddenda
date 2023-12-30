@@ -18,26 +18,39 @@ mainland <- st_read(ex("SFmarine/mainland.shp"))
 sefi <- st_read(ex("SFmarine/sefi.shp"))
 ```
 
-```{r eval=F}
-library(tmap); library(maptiles)
+```{r modAlbatrossCounts, message=F, warning=F, fig.cap="Black-footed albatross counts, July 2006"}
 tmap_mode("plot")
-oceanBase <- get_tiles(transects, provider="Esri.NatGeoWorldMap")
+transJul2006 <- transects %>%
+  filter(month==7 & year==2006 & avg_tem>0 & avg_sal>0 & avg_fluo>0)
+tm_basemap("Esri.NatGeoWorldMap") +
+  tm_shape(transJul2006) + tm_symbols(fill="bfal", size="bfal",
+                                      fill.scale=tm_scale_continuous(values="Greens"))
+```
+
+```{r eval=F}
+library(tmap)
+tmap_mode("plot")
+#oceanBase <- get_tiles(transects, provider="Esri.NatGeoWorldMap")
 transJul <- transects %>% filter(month==7)
 transJulnonegTS <- transJul %>% filter(avg_tem>0 & avg_sal>0)
 transJulnonegTSF <- transJulnonegTS %>% filter(avg_fluo>0)
-Jul_bfal <- tm_shape(oceanBase) + tm_rgb() +
+bb <- st_bbox(transJul)
+JulBase <- tm_basemap("Esri.NatGeoWorldMap") + 
+  tm_shape(transJul) + tm_dots(alpha=0) 
+Jul_bfal <- JulBase +
   tm_shape(transJul) + tm_symbols(col="bfal", size="bfal")
-Jul_all <- tm_shape(oceanBase) + tm_rgb() +
+Jul_all <-  JulBase +
   tm_shape(transJul) + tm_dots(col="avg_fluo", size="avg_fluo")
-Jul_TS <- tm_shape(oceanBase) + tm_rgb() +
+Jul_TS <- JulBase +
   tm_shape(transJulnonegTS) + tm_dots(col="avg_fluo", size="avg_fluo")
-Jul_TSF <- tm_shape(oceanBase) + tm_rgb() +
+Jul_TSF <- JulBase +
   tm_shape(transJulnonegTSF) + tm_dots(col="avg_fluo", size="avg_fluo")
 
 tmap_arrange(Jul_bfal, Jul_all, Jul_TS, Jul_TSF)
 
 ```
 
+>There's not a lot of help on Zoom level of tiles, so I just tried different ones. Typical values are 0 to 20.
 
 The transects data have 45 variables including:
 
@@ -89,16 +102,16 @@ We'll use the July data from multiple years (in the modeling chapter we just loo
 
 
 ```{r message=F, warning=F, fig.cap="July black footed albatross, temperature, salinity, fluorescence"}
-tmap_mode("plot")
-oceanBase <- get_tiles(transects, provider="Esri.NatGeoWorldMap")
+# tmap_mode("plot")
+#oceanBase <- get_tiles(transects, provider="Esri.NatGeoWorldMap")
 transJul <- transects %>% filter(month==7 & !is.na(avg_tem) & !is.na(avg_sal) & !is.na(avg_fluo))
-Jul_bfal <- tm_shape(oceanBase) + tm_rgb() +
+Jul_bfal <- tm_basemap("Esri.NatGeoWorldMap") +
   tm_shape(transJul) + tm_symbols(col="bfal", size="bfal")
-Jul_tem <- tm_shape(oceanBase) + tm_rgb() +
+Jul_tem <- tm_basemap("Esri.NatGeoWorldMap") +
   tm_shape(transJul) + tm_dots(col="avg_tem", size="avg_tem")
-Jul_sal <- tm_shape(oceanBase) + tm_rgb() +
+Jul_sal <- tm_basemap("Esri.NatGeoWorldMap") +
   tm_shape(transJul) + tm_dots(col="avg_sal", size="avg_sal")
-Jul_fluo <- tm_shape(oceanBase) + tm_rgb() +
+Jul_fluo <- tm_basemap("Esri.NatGeoWorldMap") +
   tm_shape(transJul) + tm_dots(col="avg_fluo", size="avg_fluo")
 tmap_arrange(Jul_bfal, Jul_tem, Jul_sal, Jul_fluo)
 
@@ -253,10 +266,10 @@ for (i in 2004:2013) {
 ```
 
 
-```{r eval=F, include=F}
+```{r eval=T, include=T}
 # This illustrates the major contribution of dist_200m 
-tm_shape(oceanBase) + tm_rgb() +
-  tm_shape(bfalpred) + tm_raster(alpha=0.6) +
+tm_basemap("Esri.NatGeoWorldMap") +
+  tm_shape(bfalpred) + tm_raster(col.scale=tm_scale_continuous(values="brewer.YlGn"), col_alpha=0.6) +
   tm_shape(Sanctuaries) + tm_borders() +
   tm_shape(isobath_200) + tm_lines(col="blue") +
   tm_layout(legend.position=c("left","bottom"))

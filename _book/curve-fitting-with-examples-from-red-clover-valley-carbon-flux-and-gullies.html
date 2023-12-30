@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>9 Curve fitting, with examples from Red Clover Valley carbon flux and gullies | Environmental Data Science Addenda</title>
+  <meta name="description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
+  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="9 Curve fitting, with examples from Red Clover Valley carbon flux and gullies | Environmental Data Science Addenda" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
+  <meta name="github-repo" content="iGISc/EnvDataSciAddenda" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="9 Curve fitting, with examples from Red Clover Valley carbon flux and gullies | Environmental Data Science Addenda" />
+  
+  <meta name="twitter:description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
+  
+
+<meta name="author" content="Jerry Davis, SFSU Institute for Geographic Information Science" />
+
+
+<meta name="date" content="2023-12-29" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="atmospheric-co2-record-from-mauna-loa-hawaii.html"/>
+<link rel="next" href="r-markdown-and-bookdown.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.30/datatables.js"></script>
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><img src="img/eaRth_anna296addenda.png"></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Background, Goals and Data</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#structure-of-the-addenda"><i class="fa fa-check"></i><b>1.1</b> Structure of the Addenda</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#software-and-data"><i class="fa fa-check"></i><b>1.2</b> Software and Data</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#data"><i class="fa fa-check"></i><b>1.2.1</b> Data</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.3</b> Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="air-pollutant-emissions-trends-epa.html"><a href="air-pollutant-emissions-trends-epa.html"><i class="fa fa-check"></i><b>2</b> Air pollutant emissions trends (EPA)</a></li>
+<li class="chapter" data-level="3" data-path="distance-from-census-tract-centroid-to-closest-tri-site.html"><a href="distance-from-census-tract-centroid-to-closest-tri-site.html"><i class="fa fa-check"></i><b>3</b> Distance from census tract centroid to closest TRI site</a></li>
+<li class="chapter" data-level="4" data-path="terrain-mapping-caves-and-water-samples-in-a-karst.html"><a href="terrain-mapping-caves-and-water-samples-in-a-karst.html"><i class="fa fa-check"></i><b>4</b> Terrain mapping, caves and water samples in a karst</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="terrain-mapping-caves-and-water-samples-in-a-karst.html"><a href="terrain-mapping-caves-and-water-samples-in-a-karst.html#creating-a-basemap-from-a-dem-using-hillshade-and-terrain-shading"><i class="fa fa-check"></i><b>4.1</b> Creating a basemap from a DEM, using hillshade and terrain shading</a></li>
+<li class="chapter" data-level="4.2" data-path="terrain-mapping-caves-and-water-samples-in-a-karst.html"><a href="terrain-mapping-caves-and-water-samples-in-a-karst.html#using-topographic-basemap-with-contours"><i class="fa fa-check"></i><b>4.2</b> Using topographic basemap with contours</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="pointblue-penguin-study.html"><a href="pointblue-penguin-study.html"><i class="fa fa-check"></i><b>5</b> PointBlue Penguin Study</a>
+<ul>
+<li class="chapter" data-level="5.0.1" data-path="pointblue-penguin-study.html"><a href="pointblue-penguin-study.html#interactive-mapping-of-individual-penguins-abstracted-from-a-big-dataset"><i class="fa fa-check"></i><b>5.0.1</b> Interactive mapping of individual penguins abstracted from a big dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="seabird-model.html"><a href="seabird-model.html"><i class="fa fa-check"></i><b>6</b> Seabird Model</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="seabird-model.html"><a href="seabird-model.html#goals-and-basic-methods-of-the-analysis"><i class="fa fa-check"></i><b>6.1</b> Goals and basic methods of the analysis</a></li>
+<li class="chapter" data-level="6.2" data-path="seabird-model.html"><a href="seabird-model.html#exploratory-data-analysis"><i class="fa fa-check"></i><b>6.2</b> Exploratory data analysis</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="seabird-model.html"><a href="seabird-model.html#identifying-the-appropriate-model-using-variance-and-mean-comparisons"><i class="fa fa-check"></i><b>6.2.1</b> Identifying the appropriate model using variance and mean comparisons</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="seabird-model.html"><a href="seabird-model.html#model-black-footed-albatross-counts-for-july-using-a-poisson-family-glm"><i class="fa fa-check"></i><b>6.3</b> Model black-footed albatross counts for July using a poisson-family glm</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="seabird-model.html"><a href="seabird-model.html#map-the-prediction"><i class="fa fa-check"></i><b>6.3.1</b> Map the prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="seabird-model.html"><a href="seabird-model.html#interpolation"><i class="fa fa-check"></i><b>6.4</b> Interpolation</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html"><i class="fa fa-check"></i><b>7</b> Time Series case studies</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html#loney-meadow-flux-data"><i class="fa fa-check"></i><b>7.1</b> Loney Meadow flux data</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html"><i class="fa fa-check"></i><b>8</b> Atmospheric CO2 record from Mauna Loa, Hawaii</a></li>
+<li class="chapter" data-level="9" data-path="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html"><i class="fa fa-check"></i><b>9</b> Curve fitting, with examples from Red Clover Valley carbon flux and gullies</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#red-clover-valley-flux-data"><i class="fa fa-check"></i><b>9.1</b> Red Clover Valley flux data</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#reading-in-the-excel-file"><i class="fa fa-check"></i><b>9.1.1</b> Reading in the Excel File</a></li>
+<li class="chapter" data-level="9.1.2" data-path="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#time-series-plot"><i class="fa fa-check"></i><b>9.1.2</b> Time series plot</a></li>
+<li class="chapter" data-level="9.1.3" data-path="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#pairs-plot"><i class="fa fa-check"></i><b>9.1.3</b> Pairs plot</a></li>
+<li class="chapter" data-level="9.1.4" data-path="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model"><i class="fa fa-check"></i><b>9.1.4</b> Non-linear model of PAR_ave ~ GPP_sum, using Michaelis-Menten model</a></li>
+<li class="chapter" data-level="9.1.5" data-path="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#try-fitting-a-non-linear-model-ssmicmen-from-base-r"><i class="fa fa-check"></i><b>9.1.5</b> Try fitting a non-linear model (SSmicmen from base R)</a></li>
+<li class="chapter" data-level="9.1.6" data-path="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#polynomial-models"><i class="fa fa-check"></i><b>9.1.6</b> polynomial models</a></li>
+<li class="chapter" data-level="9.1.7" data-path="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#power-law-relationship"><i class="fa fa-check"></i><b>9.1.7</b> power law relationship</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#another-curve-fit-of-gullies-that-may-follow-a-rate-law-of-growth-or-other-asymptotic"><i class="fa fa-check"></i><b>9.2</b> Another curve fit – of gullies that may follow a rate law of growth, or other asymptotic</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html"><i class="fa fa-check"></i><b>10</b> R Markdown and Bookdown</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#r-markdown"><i class="fa fa-check"></i><b>10.1</b> R Markdown</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#markdown-editing"><i class="fa fa-check"></i><b>10.1.1</b> Markdown editing</a></li>
+<li class="chapter" data-level="10.1.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#display-options-in-code-chunks"><i class="fa fa-check"></i><b>10.1.2</b> Display options in code chunks</a></li>
+<li class="chapter" data-level="10.1.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#numbered-figures-with-text-citations"><i class="fa fa-check"></i><b>10.1.3</b> Numbered figures with text citations</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#a-template-for-multiple-output-formats"><i class="fa fa-check"></i><b>10.2</b> A template for multiple output formats</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#the-template"><i class="fa fa-check"></i><b>10.2.1</b> The template</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#building-a-book-with-bookdown-and-yaml-options"><i class="fa fa-check"></i><b>10.3</b> Building a book with bookdown and YAML options</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#building-a-book"><i class="fa fa-check"></i><b>10.3.1</b> Building a book</a></li>
+<li class="chapter" data-level="10.3.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#special-characters-and-formatting-limitations-and-challenges"><i class="fa fa-check"></i><b>10.3.2</b> Special characters and formatting limitations and challenges</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#yaml-files-used-to-configure-the-book"><i class="fa fa-check"></i><b>10.4</b> YAML files used to configure the book</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#output.yml"><i class="fa fa-check"></i><b>10.4.1</b> _output.yml</a></li>
+<li class="chapter" data-level="10.4.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#index.rmd"><i class="fa fa-check"></i><b>10.4.2</b> index.Rmd</a></li>
+<li class="chapter" data-level="10.4.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#bookdown.yml"><i class="fa fa-check"></i><b>10.4.3</b> _bookdown.yml</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="figures-and-tables.html"><a href="figures-and-tables.html"><i class="fa fa-check"></i><b>11</b> Figures and Tables</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="figures-and-tables.html"><a href="figures-and-tables.html#figures"><i class="fa fa-check"></i><b>11.1</b> Figures</a></li>
+<li class="chapter" data-level="11.2" data-path="figures-and-tables.html"><a href="figures-and-tables.html#tables"><i class="fa fa-check"></i><b>11.2</b> Tables</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="figures-and-tables.html"><a href="figures-and-tables.html#dtdatatable"><i class="fa fa-check"></i><b>11.2.1</b> <code>DT::datatable</code></a></li>
+<li class="chapter" data-level="11.2.2" data-path="figures-and-tables.html"><a href="figures-and-tables.html#knitrkable-tables"><i class="fa fa-check"></i><b>11.2.2</b> <code>knitr::kable</code> tables</a></li>
+<li class="chapter" data-level="11.2.3" data-path="figures-and-tables.html"><a href="figures-and-tables.html#gt-package"><i class="fa fa-check"></i><b>11.2.3</b> <code>gt</code> package</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="figures-and-tables.html"><a href="figures-and-tables.html#other-tricks"><i class="fa fa-check"></i><b>11.3</b> Other tricks</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html"><i class="fa fa-check"></i><b>12</b> Building a Package on GitHub for Data and Code</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#git-and-github"><i class="fa fa-check"></i><b>12.1</b> Git and GitHub</a></li>
+<li class="chapter" data-level="12.2" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#some-notes-on-the-rstudio-process"><i class="fa fa-check"></i><b>12.2</b> Some notes on the RStudio process</a></li>
+<li class="chapter" data-level="12.3" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#data-1"><i class="fa fa-check"></i><b>12.3</b> Data</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#raw-data-in-extdata"><i class="fa fa-check"></i><b>12.3.1</b> Raw data in extdata</a></li>
+<li class="chapter" data-level="12.3.2" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#binary-data-as-rda-files"><i class="fa fa-check"></i><b>12.3.2</b> Binary data as <code>rda</code> files</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#code-functions"><i class="fa fa-check"></i><b>12.4</b> Code (functions)</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Environmental Data Science Addenda</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">9</span> Curve fitting, with examples from Red Clover Valley carbon flux and gullies<a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This section will explore various curve fitting methods, starting with some carbon flux tower data from Red Clover Valley. There’s not a lot of interpretation, as this is basically a sandbox for now…</p>
+<div id="red-clover-valley-flux-data" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> Red Clover Valley flux data<a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#red-clover-valley-flux-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li>Initial data read and time series charting</li>
+</ol>
+<p>Some ideas for processing are from Mason Kealy. Data are from Andrew Oliphant.</p>
+<div id="reading-in-the-excel-file" class="section level3 hasAnchor" number="9.1.1">
+<h3><span class="header-section-number">9.1.1</span> Reading in the Excel File<a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#reading-in-the-excel-file" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>First create a function to convert the first two rows into individual variables. We won’t include the units.</p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb78-1" tabindex="-1"></a><span class="fu">library</span>(igisci); <span class="fu">library</span>(tidyverse); <span class="fu">library</span>(readxl)</span></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb79-1" tabindex="-1"></a>read_excel2 <span class="ot">&lt;-</span> <span class="cf">function</span>(xl){</span>
+<span id="cb79-2"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb79-2" tabindex="-1"></a>  vnames <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(xl, <span class="at">n_max=</span><span class="dv">0</span>) <span class="sc">|&gt;</span> <span class="fu">names</span>()</span>
+<span id="cb79-3"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb79-3" tabindex="-1"></a>  vunits <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(xl, <span class="at">n_max=</span><span class="dv">0</span>, <span class="at">skip=</span><span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="fu">names</span>()</span>
+<span id="cb79-4"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb79-4" tabindex="-1"></a>  <span class="fu">read_excel</span>(xl, <span class="at">skip=</span><span class="dv">2</span>, <span class="at">col_names=</span>vnames)</span>
+<span id="cb79-5"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb79-5" tabindex="-1"></a>}</span></code></pre></div>
+<p>In reading the data, we’ll remove the zero GPP_sum values.</p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb80-1" tabindex="-1"></a>Carbon_Flux <span class="ot">&lt;-</span> <span class="fu">read_excel2</span>(<span class="fu">ex</span>(<span class="st">&quot;meadows/RCV_carbon_flux_data.xlsx&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb80-2"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb80-2" tabindex="-1"></a>  <span class="fu">filter</span>(GPP_sum<span class="sc">&gt;</span><span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb81-1" tabindex="-1"></a>Mountflux <span class="ot">&lt;-</span> Carbon_Flux <span class="sc">%&gt;%</span> </span>
+<span id="cb81-2"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb81-2" tabindex="-1"></a><span class="fu">mutate_all</span>(as.numeric) <span class="sc">%&gt;%</span> </span>
+<span id="cb81-3"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb81-3" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">DOY =</span> <span class="fu">as.Date</span>(Date,<span class="at">format =</span> <span class="st">&quot;%m-%d&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb81-4"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb81-4" tabindex="-1"></a><span class="fu">select</span>(Date<span class="sc">:</span>PAR_ave) <span class="sc">%&gt;%</span> </span>
+<span id="cb81-5"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb81-5" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">NEE =</span> <span class="fu">round</span>(NEE_sum, <span class="at">digits =</span> <span class="dv">3</span>), </span>
+<span id="cb81-6"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb81-6" tabindex="-1"></a>       <span class="at">GPP =</span> <span class="fu">round</span>(GPP_sum, <span class="at">digits =</span> <span class="dv">3</span>),</span>
+<span id="cb81-7"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb81-7" tabindex="-1"></a>       <span class="at">RE =</span> <span class="fu">round</span>(RE_sum, <span class="at">digits =</span> <span class="dv">3</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb81-8"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb81-8" tabindex="-1"></a><span class="co">#select(-NEE_sum, -GPP_sum, -RE_sum) %&gt;% </span></span>
+<span id="cb81-9"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb81-9" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="st">&quot;NEE&quot;</span>, <span class="st">&quot;RE&quot;</span>, <span class="st">&quot;GPP&quot;</span>), <span class="at">names_to =</span> <span class="st">&quot;CO2_FLUX_COMPONENTS&quot;</span>, <span class="at">values_to =</span><span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb81-10"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb81-10" tabindex="-1"></a>  <span class="fu">filter</span>(GPP_sum <span class="sc">!=</span> <span class="dv">0</span>, <span class="sc">!</span><span class="fu">is.na</span>(PAR_ave))</span>
+<span id="cb81-11"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb81-11" tabindex="-1"></a></span>
+<span id="cb81-12"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb81-12" tabindex="-1"></a><span class="fu">print</span>(Mountflux)</span></code></pre></div>
+<pre><code>## # A tibble: 906 × 9
+##     Date GPP_sum NEE_sum RE_sum Tair_min Tair_max PAR_ave CO2_FLUX_COMPONENTS
+##    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;              
+##  1    61   0.215    3.74   3.96    -8.32    13.0     420. NEE                
+##  2    61   0.215    3.74   3.96    -8.32    13.0     420. RE                 
+##  3    61   0.215    3.74   3.96    -8.32    13.0     420. GPP                
+##  4    62   0.405    3.71   4.11    -6.75    14.8     424. NEE                
+##  5    62   0.405    3.71   4.11    -6.75    14.8     424. RE                 
+##  6    62   0.405    3.71   4.11    -6.75    14.8     424. GPP                
+##  7    63   0.620    3.35   3.97    -7.84     9.47    480. NEE                
+##  8    63   0.620    3.35   3.97    -7.84     9.47    480. RE                 
+##  9    63   0.620    3.35   3.97    -7.84     9.47    480. GPP                
+## 10    64   0.799    3.57   4.37    -4.99    11.8     474. NEE                
+## # ℹ 896 more rows
+## # ℹ 1 more variable: value &lt;dbl&gt;</code></pre>
+</div>
+<div id="time-series-plot" class="section level3 hasAnchor" number="9.1.2">
+<h3><span class="header-section-number">9.1.2</span> Time series plot<a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#time-series-plot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Then I used ggplot to create a visualization of how NEE, GPP, an RE changed over a yearly time scale.</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb83-1" tabindex="-1"></a>Mountflux <span class="sc">%&gt;%</span> </span>
+<span id="cb83-2"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb83-2" tabindex="-1"></a> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Date, <span class="at">y=</span> value, <span class="at">color =</span> CO2_FLUX_COMPONENTS))<span class="sc">+</span></span>
+<span id="cb83-3"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb83-3" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
+<span id="cb83-4"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb83-4" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">&quot;longdash&quot;</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>)<span class="sc">+</span></span>
+<span id="cb83-5"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb83-5" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot; Red Clover Valley: Interannual Components of Carbon Flux Measurements&quot;</span>) <span class="sc">+</span></span>
+<span id="cb83-6"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb83-6" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Day of Year&quot;</span>) <span class="sc">+</span></span>
+<span id="cb83-7"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb83-7" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;g C/m^2&quot;</span>)<span class="sc">+</span></span>
+<span id="cb83-8"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb83-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">caption =</span></span>
+<span id="cb83-9"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb83-9" tabindex="-1"></a><span class="st">&quot;Figure 1: Components of Carbon Flux measurements collected in 30 minute intervals in 2021</span></span>
+<span id="cb83-10"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb83-10" tabindex="-1"></a><span class="st">and added into ‘sum daily value’ , from flux tower in Red Clover Valley,California. Components included NEE (Net Ecosystem Exchange), RE (Respiration Efficiency), GPP (Gross Primary Productivity) all measured in g C m^2 and are plotted against an annual time scale with days as the unit of measure.&quot;</span>)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-58-1.png" width="75%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="pairs-plot" class="section level3 hasAnchor" number="9.1.3">
+<h3><span class="header-section-number">9.1.3</span> Pairs plot<a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#pairs-plot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb84-1" tabindex="-1"></a>Carbon_Flux <span class="sc">|&gt;</span></span>
+<span id="cb84-2"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb84-2" tabindex="-1"></a>  <span class="fu">select</span>(GPP_sum<span class="sc">:</span>vpd_max) <span class="sc">|&gt;</span></span>
+<span id="cb84-3"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb84-3" tabindex="-1"></a>  GGally<span class="sc">::</span><span class="fu">ggpairs</span>()</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-59-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb85-1" tabindex="-1"></a>  <span class="co"># pairs()</span></span></code></pre></div>
+</div>
+<div id="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model" class="section level3 hasAnchor" number="9.1.4">
+<h3><span class="header-section-number">9.1.4</span> Non-linear model of PAR_ave ~ GPP_sum, using Michaelis-Menten model<a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><em>Not the right goal for a model between these variables, since GPP should derive from PAR, not the other way around. But it does illustrate asymptotic data.</em></p>
+<p>First the scatter plot:</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb86-1" tabindex="-1"></a><span class="fu">plot</span>(Carbon_Flux<span class="sc">$</span>GPP_sum, Carbon_Flux<span class="sc">$</span>PAR_ave,<span class="at">xlab=</span><span class="st">&quot;GPP_sum&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;PAR_ave&quot;</span>)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-60-1.png" width="75%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="try-fitting-a-non-linear-model-ssmicmen-from-base-r" class="section level3 hasAnchor" number="9.1.5">
+<h3><span class="header-section-number">9.1.5</span> Try fitting a non-linear model (SSmicmen from base R)<a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#try-fitting-a-non-linear-model-ssmicmen-from-base-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Based on <a href="https://www.datacamp.com/tutorial/introduction-to-non-linear-model-and-insights-using-r" class="uri">https://www.datacamp.com/tutorial/introduction-to-non-linear-model-and-insights-using-r</a></p>
+<p>Using start values for Vm and K based on interpreting the graph. We’ll use nonlinear least squares (<code>nls</code>) and starting values of the two coefficients.</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb87-1" tabindex="-1"></a>micmenMod <span class="ot">&lt;-</span> <span class="fu">nls</span>(PAR_ave<span class="sc">~</span>(Vm)<span class="sc">*</span>GPP_sum<span class="sc">/</span>(K<span class="sc">+</span>GPP_sum), <span class="at">data=</span>Mountflux, <span class="at">start=</span><span class="fu">list</span>(<span class="at">Vm=</span><span class="dv">750</span>,<span class="at">K=</span><span class="dv">1</span>))</span>
+<span id="cb87-2"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb87-2" tabindex="-1"></a><span class="fu">summary</span>(micmenMod)</span></code></pre></div>
+<pre><code>## 
+## Formula: PAR_ave ~ (Vm) * GPP_sum/(K + GPP_sum)
+## 
+## Parameters:
+##    Estimate Std. Error t value Pr(&gt;|t|)    
+## Vm 819.0045    13.4911   60.71   &lt;2e-16 ***
+## K    5.0071     0.2573   19.46   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 121.1 on 904 degrees of freedom
+## 
+## Number of iterations to convergence: 7 
+## Achieved convergence tolerance: 8.843e-06</code></pre>
+<p><strong>Calculate residual error</strong></p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb89-1" tabindex="-1"></a>sse <span class="ot">&lt;-</span> micmenMod<span class="sc">$</span>m<span class="sc">$</span><span class="fu">deviance</span>()</span>
+<span id="cb89-2"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb89-2" tabindex="-1"></a>null <span class="ot">&lt;-</span> <span class="fu">lm</span>(PAR_ave<span class="sc">~</span><span class="dv">1</span>, <span class="at">data=</span>Mountflux)</span>
+<span id="cb89-3"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb89-3" tabindex="-1"></a>sst <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">summary.aov</span>(null)[[<span class="dv">1</span>]])<span class="sc">$</span>Sum.Sq</span>
+<span id="cb89-4"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb89-4" tabindex="-1"></a>percent_variation_explained <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span>(sst<span class="sc">-</span>sse)<span class="sc">/</span>sst</span>
+<span id="cb89-5"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb89-5" tabindex="-1"></a>percent_variation_explained</span></code></pre></div>
+<pre><code>## [1] 59.97658</code></pre>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb91-1" tabindex="-1"></a><span class="fu">plot</span>(Mountflux<span class="sc">$</span>GPP_sum, Mountflux<span class="sc">$</span>PAR_ave,<span class="at">xlab=</span><span class="st">&quot;GPP_sum&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;PAR_ave&quot;</span>)</span>
+<span id="cb91-2"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb91-2" tabindex="-1"></a> <span class="fu">lines</span>(Mountflux<span class="sc">$</span>GPP_sum, </span>
+<span id="cb91-3"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb91-3" tabindex="-1"></a>       <span class="fu">predict</span>(micmenMod,Mountflux),<span class="at">col=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-63-1.png" width="75%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="polynomial-models" class="section level3 hasAnchor" number="9.1.6">
+<h3><span class="header-section-number">9.1.6</span> polynomial models<a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#polynomial-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Ok, enough of that deceptive model of PAR predicted by GPP – not the way it works – and instead we’ll look at models that predict GPP from PAR, not asymptotic</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb92-1" tabindex="-1"></a><span class="fu">plot</span>(Mountflux<span class="sc">$</span>PAR_ave,Mountflux<span class="sc">$</span>GPP_sum, <span class="at">xlab=</span><span class="st">&quot;PAR_ave&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;GPP_sum&quot;</span>)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-64-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<div id="poly-1" class="section level4 hasAnchor" number="9.1.6.1">
+<h4><span class="header-section-number">9.1.6.1</span> poly 1<a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#poly-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb93-1" tabindex="-1"></a>ord <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb93-2"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb93-2" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(GPP_sum <span class="sc">~</span> <span class="fu">poly</span>(PAR_ave, ord, <span class="at">raw=</span>T), <span class="at">data=</span>Mountflux))</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = GPP_sum ~ poly(PAR_ave, ord, raw = T), data = Mountflux)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -11.944  -4.931  -1.131   4.287  19.711 
+## 
+## Coefficients:
+##                              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                 -8.979814   0.669906  -13.40   &lt;2e-16 ***
+## poly(PAR_ave, ord, raw = T)  0.042818   0.001258   34.03   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 7.242 on 904 degrees of freedom
+## Multiple R-squared:  0.5616, Adjusted R-squared:  0.5611 
+## F-statistic:  1158 on 1 and 904 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb95-1" tabindex="-1"></a><span class="fu">ggplot</span>(Mountflux, <span class="fu">aes</span>(PAR_ave, GPP_sum)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb95-2"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb95-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm, <span class="at">formula=</span>y<span class="sc">~</span><span class="fu">poly</span>(x,ord,<span class="at">raw=</span>T))</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-65-1.png" width="75%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="poly-2" class="section level4 hasAnchor" number="9.1.6.2">
+<h4><span class="header-section-number">9.1.6.2</span> poly 2<a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#poly-2" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb96-1" tabindex="-1"></a>ord <span class="ot">=</span> <span class="dv">2</span></span>
+<span id="cb96-2"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb96-2" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(GPP_sum <span class="sc">~</span> <span class="fu">poly</span>(PAR_ave, ord, <span class="at">raw=</span>T), <span class="at">data=</span>Mountflux))</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = GPP_sum ~ poly(PAR_ave, ord, raw = T), data = Mountflux)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -14.9170  -3.5363  -0.4922   2.4821  23.4111 
+## 
+## Coefficients:
+##                                Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                   1.062e+01  1.269e+00   8.368   &lt;2e-16 ***
+## poly(PAR_ave, ord, raw = T)1 -5.500e-02  5.737e-03  -9.587   &lt;2e-16 ***
+## poly(PAR_ave, ord, raw = T)2  1.023e-04  5.892e-06  17.367   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 6.273 on 903 degrees of freedom
+## Multiple R-squared:  0.6714, Adjusted R-squared:  0.6706 
+## F-statistic: 922.3 on 2 and 903 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb98-1" tabindex="-1"></a><span class="fu">ggplot</span>(Mountflux, <span class="fu">aes</span>(PAR_ave, GPP_sum)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb98-2"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb98-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm, <span class="at">formula=</span>y<span class="sc">~</span><span class="fu">poly</span>(x,ord,<span class="at">raw=</span>T))</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-66-1.png" width="75%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="poly-3" class="section level4 hasAnchor" number="9.1.6.3">
+<h4><span class="header-section-number">9.1.6.3</span> poly 3<a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#poly-3" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb99-1" tabindex="-1"></a>ord <span class="ot">=</span> <span class="dv">3</span></span>
+<span id="cb99-2"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb99-2" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(GPP_sum <span class="sc">~</span> <span class="fu">poly</span>(PAR_ave, ord, <span class="at">raw=</span>T), <span class="at">data=</span>Mountflux))</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = GPP_sum ~ poly(PAR_ave, ord, raw = T), data = Mountflux)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -16.4635  -3.3477  -0.8198   2.3854  24.5018 
+## 
+## Coefficients:
+##                                Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                  -7.290e+00  2.276e+00  -3.203  0.00141 ** 
+## poly(PAR_ave, ord, raw = T)1  1.048e-01  1.804e-02   5.810 8.65e-09 ***
+## poly(PAR_ave, ord, raw = T)2 -2.949e-04  4.309e-05  -6.845 1.41e-11 ***
+## poly(PAR_ave, ord, raw = T)3  2.908e-07  3.127e-08   9.299  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 5.996 on 902 degrees of freedom
+## Multiple R-squared:  0.7001, Adjusted R-squared:  0.6991 
+## F-statistic: 701.9 on 3 and 902 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb101-1" tabindex="-1"></a><span class="fu">ggplot</span>(Mountflux, <span class="fu">aes</span>(PAR_ave, GPP_sum)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb101-2"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb101-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm, <span class="at">formula=</span>y<span class="sc">~</span><span class="fu">poly</span>(x,ord,<span class="at">raw=</span>T))</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-67-1.png" width="75%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="poly-4" class="section level4 hasAnchor" number="9.1.6.4">
+<h4><span class="header-section-number">9.1.6.4</span> poly 4<a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#poly-4" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb102-1" tabindex="-1"></a>ord <span class="ot">=</span> <span class="dv">4</span></span>
+<span id="cb102-2"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb102-2" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(GPP_sum <span class="sc">~</span> <span class="fu">poly</span>(PAR_ave, ord, <span class="at">raw=</span>T), <span class="at">data=</span>Mountflux))</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = GPP_sum ~ poly(PAR_ave, ord, raw = T), data = Mountflux)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -17.0946  -2.9525  -0.7201   2.0130  23.8099 
+## 
+## Coefficients:
+##                                Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                   1.346e+01  3.769e+00   3.570 0.000375 ***
+## poly(PAR_ave, ord, raw = T)1 -1.768e-01  4.493e-02  -3.936 8.93e-05 ***
+## poly(PAR_ave, ord, raw = T)2  9.001e-04  1.804e-04   4.990 7.25e-07 ***
+## poly(PAR_ave, ord, raw = T)3 -1.692e-06  2.927e-07  -5.782 1.02e-08 ***
+## poly(PAR_ave, ord, raw = T)4  1.122e-09  1.647e-10   6.812 1.75e-11 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 5.85 on 901 degrees of freedom
+## Multiple R-squared:  0.7148, Adjusted R-squared:  0.7135 
+## F-statistic: 564.5 on 4 and 901 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb104-1" tabindex="-1"></a><span class="fu">ggplot</span>(Mountflux, <span class="fu">aes</span>(PAR_ave, GPP_sum)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb104-2"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb104-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm, <span class="at">formula=</span>y<span class="sc">~</span><span class="fu">poly</span>(x,ord,<span class="at">raw=</span>T))</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-68-1.png" width="75%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="poly-5" class="section level4 hasAnchor" number="9.1.6.5">
+<h4><span class="header-section-number">9.1.6.5</span> poly 5<a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#poly-5" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb105-1" tabindex="-1"></a>ord <span class="ot">=</span> <span class="dv">5</span></span>
+<span id="cb105-2"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb105-2" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(GPP_sum <span class="sc">~</span> <span class="fu">poly</span>(PAR_ave, ord, <span class="at">raw=</span>T), <span class="at">data=</span>Mountflux))</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = GPP_sum ~ poly(PAR_ave, ord, raw = T), data = Mountflux)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -17.0834  -2.7700  -0.7949   1.9559  23.4067 
+## 
+## Coefficients:
+##                                Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept)                   1.325e+00  6.746e+00   0.196   0.8443  
+## poly(PAR_ave, ord, raw = T)1  4.446e-02  1.116e-01   0.398   0.6904  
+## poly(PAR_ave, ord, raw = T)2 -4.500e-04  6.488e-04  -0.694   0.4881  
+## poly(PAR_ave, ord, raw = T)3  1.931e-06  1.698e-06   1.137   0.2557  
+## poly(PAR_ave, ord, raw = T)4 -3.295e-09  2.046e-09  -1.611   0.1076  
+## poly(PAR_ave, ord, raw = T)5  1.999e-12  9.226e-13   2.166   0.0306 *
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 5.838 on 900 degrees of freedom
+## Multiple R-squared:  0.7163, Adjusted R-squared:  0.7147 
+## F-statistic: 454.4 on 5 and 900 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb107-1" tabindex="-1"></a><span class="fu">ggplot</span>(Mountflux, <span class="fu">aes</span>(PAR_ave, GPP_sum)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb107-2"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb107-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm, <span class="at">formula=</span>y<span class="sc">~</span><span class="fu">poly</span>(x,ord,<span class="at">raw=</span>T))</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-69-1.png" width="75%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="power-law-relationship" class="section level3 hasAnchor" number="9.1.7">
+<h3><span class="header-section-number">9.1.7</span> power law relationship<a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#power-law-relationship" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb108-1" tabindex="-1"></a>powerModel <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(GPP_sum) <span class="sc">~</span> <span class="fu">log</span>(PAR_ave), <span class="at">data=</span>Mountflux)</span>
+<span id="cb108-2"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb108-2" tabindex="-1"></a><span class="fu">summary</span>(powerModel)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = log(GPP_sum) ~ log(PAR_ave), data = Mountflux)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.5030 -0.2995  0.0036  0.4460  1.8629 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   -7.0150     0.3034  -23.12   &lt;2e-16 ***
+## log(PAR_ave)   1.4869     0.0495   30.04   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.7199 on 904 degrees of freedom
+## Multiple R-squared:  0.4995, Adjusted R-squared:  0.499 
+## F-statistic: 902.2 on 1 and 904 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb110-1" tabindex="-1"></a><span class="fu">ggplot</span>(Mountflux, <span class="fu">aes</span>(<span class="fu">log</span>(PAR_ave), <span class="fu">log</span>(GPP_sum))) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb110-2"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb110-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-70-1.png" width="75%" style="display: block; margin: auto;" />
+Now plot without the log transformed axes, we’ll need to create the curve with the model, using the coefficients.</p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb111-1" tabindex="-1"></a>coeff <span class="ot">=</span> <span class="fu">exp</span>(powerModel<span class="sc">$</span>coefficients[<span class="dv">1</span>])</span>
+<span id="cb111-2"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb111-2" tabindex="-1"></a>power <span class="ot">=</span> powerModel<span class="sc">$</span>coefficients[<span class="dv">2</span>]</span>
+<span id="cb111-3"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb111-3" tabindex="-1"></a>fit_func <span class="ot">&lt;-</span> <span class="cf">function</span>(x) coeff<span class="sc">*</span>x<span class="sc">^</span>power</span>
+<span id="cb111-4"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb111-4" tabindex="-1"></a></span>
+<span id="cb111-5"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb111-5" tabindex="-1"></a>fluxPlot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(Mountflux) <span class="sc">+</span></span>
+<span id="cb111-6"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb111-6" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>PAR_ave,<span class="at">y=</span>GPP_sum))</span>
+<span id="cb111-7"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb111-7" tabindex="-1"></a>fluxPlot <span class="ot">&lt;-</span> fluxPlot <span class="sc">+</span></span>
+<span id="cb111-8"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb111-8" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span>fit_func, <span class="at">color=</span><span class="st">&quot;orange&quot;</span>,<span class="at">lwd=</span><span class="dv">2</span>, <span class="at">alpha=</span><span class="fl">0.5</span>)</span>
+<span id="cb111-9"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb111-9" tabindex="-1"></a>fluxPlot</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-71-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb112-1" tabindex="-1"></a>fit_eq <span class="ot">=</span> <span class="fu">paste</span>(<span class="st">&quot;y = &quot;</span>, <span class="fu">round</span>(coeff,<span class="dv">6</span>), <span class="st">&quot; x^&quot;</span>, <span class="fu">round</span>(power,<span class="dv">3</span>))</span>
+<span id="cb112-2"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb112-2" tabindex="-1"></a>fluxPlot <span class="ot">&lt;-</span> fluxPlot <span class="sc">+</span></span>
+<span id="cb112-3"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb112-3" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>,<span class="at">x=</span><span class="dv">200</span>,<span class="at">y=</span><span class="dv">40</span>,<span class="at">label=</span>fit_eq,<span class="at">size=</span><span class="dv">4</span>)</span>
+<span id="cb112-4"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb112-4" tabindex="-1"></a>fluxPlot</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-72-1.png" width="75%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="another-curve-fit-of-gullies-that-may-follow-a-rate-law-of-growth-or-other-asymptotic" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> Another curve fit – of gullies that may follow a rate law of growth, or other asymptotic<a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#another-curve-fit-of-gullies-that-may-follow-a-rate-law-of-growth-or-other-asymptotic" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>from Graf WL (1977). The rate law in fluvial geomorphology. Am. J. Sci 277: 178-191.</p>
+<p>The rate-law model that Graf used employs a half life, appropriate when depleting a quantity as will happen with an erosion phase following a disequilibrium (like a geomorphic drop in base level).</p>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb113-1" tabindex="-1"></a><span class="fu">library</span>(igisci); <span class="fu">library</span>(tidyverse)</span>
+<span id="cb113-2"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb113-2" tabindex="-1"></a>gullyGrowth <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">ex</span>(<span class="st">&quot;gully/gullyGrowth.csv&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb114-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>gullyGrowth, <span class="fu">aes</span>(<span class="at">x=</span>distance, <span class="at">y=</span>age_yrs, <span class="at">col=</span>type)) <span class="sc">+</span></span>
+<span id="cb114-2"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb114-2" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-74-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb115-1" tabindex="-1"></a>gully <span class="ot">&lt;-</span> gullyGrowth <span class="sc">|&gt;</span> <span class="fu">filter</span>(type<span class="sc">==</span><span class="st">&quot;gully&quot;</span>)</span>
+<span id="cb115-2"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb115-2" tabindex="-1"></a>gullyMod <span class="ot">&lt;-</span> <span class="fu">nls</span>(age_yrs<span class="sc">~</span>(Vm)<span class="sc">*</span>distance<span class="sc">/</span>(K<span class="sc">+</span>distance), <span class="at">data=</span>gully, <span class="at">start=</span><span class="fu">list</span>(<span class="at">Vm=</span><span class="dv">1</span>,<span class="at">K=</span><span class="dv">1</span>))</span>
+<span id="cb115-3"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb115-3" tabindex="-1"></a><span class="fu">summary</span>(gullyMod)</span></code></pre></div>
+<pre><code>## 
+## Formula: age_yrs ~ (Vm) * distance/(K + distance)
+## 
+## Parameters:
+##    Estimate Std. Error t value Pr(&gt;|t|)    
+## Vm   86.156      4.733  18.204 4.86e-13 ***
+## K   152.503     23.546   6.477 4.31e-06 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 3.947 on 18 degrees of freedom
+## 
+## Number of iterations to convergence: 9 
+## Achieved convergence tolerance: 8.225e-07</code></pre>
+<p><strong>Calculate residual error</strong></p>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb117-1" tabindex="-1"></a>sse <span class="ot">&lt;-</span> gullyMod<span class="sc">$</span>m<span class="sc">$</span><span class="fu">deviance</span>()</span>
+<span id="cb117-2"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb117-2" tabindex="-1"></a>null <span class="ot">&lt;-</span> <span class="fu">lm</span>(age_yrs<span class="sc">~</span><span class="dv">1</span>, <span class="at">data=</span>gully)</span>
+<span id="cb117-3"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb117-3" tabindex="-1"></a>sst <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">summary.aov</span>(null)[[<span class="dv">1</span>]])<span class="sc">$</span>Sum.Sq</span>
+<span id="cb117-4"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb117-4" tabindex="-1"></a>percent_variation_explained <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span>(sst<span class="sc">-</span>sse)<span class="sc">/</span>sst</span>
+<span id="cb117-5"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb117-5" tabindex="-1"></a>percent_variation_explained</span></code></pre></div>
+<pre><code>## [1] 95.50215</code></pre>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb119-1" tabindex="-1"></a>proto <span class="ot">&lt;-</span> gullyGrowth <span class="sc">|&gt;</span> <span class="fu">filter</span>(type<span class="sc">==</span><span class="st">&quot;proto-gully&quot;</span>)</span>
+<span id="cb119-2"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb119-2" tabindex="-1"></a>protoMod <span class="ot">&lt;-</span> <span class="fu">nls</span>(age_yrs<span class="sc">~</span>(Vm)<span class="sc">*</span>distance<span class="sc">/</span>(K<span class="sc">+</span>distance), <span class="at">data=</span>proto, <span class="at">start=</span><span class="fu">list</span>(<span class="at">Vm=</span><span class="dv">1</span>,<span class="at">K=</span><span class="dv">1</span>))</span>
+<span id="cb119-3"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb119-3" tabindex="-1"></a><span class="fu">summary</span>(protoMod)</span></code></pre></div>
+<pre><code>## 
+## Formula: age_yrs ~ (Vm) * distance/(K + distance)
+## 
+## Parameters:
+##    Estimate Std. Error t value Pr(&gt;|t|)    
+## Vm   141.36      12.66  11.162 2.35e-08 ***
+## K     35.84      20.14   1.779   0.0969 .  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 21.17 on 14 degrees of freedom
+## 
+## Number of iterations to convergence: 11 
+## Achieved convergence tolerance: 8.318e-06</code></pre>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb121-1" tabindex="-1"></a>sse <span class="ot">&lt;-</span> protoMod<span class="sc">$</span>m<span class="sc">$</span><span class="fu">deviance</span>()</span>
+<span id="cb121-2"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb121-2" tabindex="-1"></a>null <span class="ot">&lt;-</span> <span class="fu">lm</span>(age_yrs<span class="sc">~</span><span class="dv">1</span>, <span class="at">data=</span>proto)</span>
+<span id="cb121-3"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb121-3" tabindex="-1"></a>sst <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">summary.aov</span>(null)[[<span class="dv">1</span>]])<span class="sc">$</span>Sum.Sq</span>
+<span id="cb121-4"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb121-4" tabindex="-1"></a>percent_variation_explained <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span>(sst<span class="sc">-</span>sse)<span class="sc">/</span>sst</span>
+<span id="cb121-5"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb121-5" tabindex="-1"></a>percent_variation_explained</span></code></pre></div>
+<pre><code>## [1] 42.44041</code></pre>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb123-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>gullyGrowth, <span class="fu">aes</span>(<span class="at">x=</span>distance)) <span class="sc">+</span></span>
+<span id="cb123-2"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb123-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>age_yrs, <span class="at">col=</span>type)) <span class="sc">+</span></span>
+<span id="cb123-3"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb123-3" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>gully, <span class="fu">aes</span>(<span class="at">x=</span>distance, <span class="at">y=</span><span class="fu">predict</span>(gullyMod,gully))) <span class="sc">+</span></span>
+<span id="cb123-4"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#cb123-4" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>proto, <span class="fu">aes</span>(<span class="at">x=</span>distance, <span class="at">y=</span><span class="fu">predict</span>(protoMod,proto)))</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-79-1.png" width="75%" style="display: block; margin: auto;" /></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="atmospheric-co2-record-from-mauna-loa-hawaii.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="r-markdown-and-bookdown.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+},
+"book_filename": "envdatasci",
+"toc_depth": 4
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

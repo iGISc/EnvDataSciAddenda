@@ -135,30 +135,34 @@ newbounds <- st_bbox(c(xmin=xMIN, xmax=xMAX, ymin=yMIN, ymax=yMAX), crs= st_crs(
 Then we'll zoom into upper Sinking Cove, where we have some significant caves (Figure \@ref(fig:upperSinkingCoveCaves)).
 
 ```{r upperSinkingCoveCaves, fig.cap="Upper Sinking Cove caves and entrances"}
-tm_shape(hillsh,bbox=newbounds) +
-  tm_raster(palette="-Greys",legend.show=F,n=20) +
-  tm_shape(DEM) + tm_raster(palette=terrain.colors(24), alpha=0.5,legend.show=F) +
-  tm_shape(caves) + tm_lines(lwd=2) + tm_text("CaveLabel", size=0.5, just="left", xmod=0.75) +
-  tm_shape(ents) + tm_symbols(col="Formation", shape=24, size=0.33, alpha=.75, title.col ="Geologic unit of entrance") + 
-  #tm_shape(wChem) + tm_symbols(size="TH", col="Lithology", scale=2, shape="siteType", alpha=1) +
-  tm_layout(legend.position = c("left", "bottom")) +
-  tm_graticules(lines=F)
+hillshCol <- tm_scale_continuous(values = "-brewer.greys")
+labeledCaves <- caves |> filter(!is.na(CaveLabel))
+tm_graticules(labels.cardinal=F) +
+  tm_shape(hillsh,bbox=newbounds) +
+    tm_raster(col.scale=hillshCol, col.legend = tm_legend(show=F)) +
+  tm_shape(DEM) + 
+    tm_raster(col.scale=terrainCol, col_alpha=0.5,col.legend = tm_legend(show=F)) +
+  tm_shape(caves) + tm_lines(lwd=2) + 
+  tm_shape(labeledCaves) + tm_text("CaveLabel", size=0.7, col_alpha=0.5) +  #, just="left") + #, xmod=0.75) +
+  tm_shape(ents) + tm_symbols(fill="Formation", shape=17, size=0.33)# + #, title.col ="Geologic unit of entrance") + #col_alpha=.75,
+  # tm_layout(legend.position = c("left", "bottom"))
+
 
 ```
 
 Or the same map on Geology (Figure \@ref(fig:upperSinkingCoveGeology))
 ```{r upperSinkingCoveGeology, fig.cap="Upper Sinking Cove geology with caves"}
 geol_bounds <- st_bbox(geology)
-tm_shape(hillsh,bbox=geol_bounds) +
-  tm_raster(palette="-Greys",legend.show=F,n=20) +
-  tm_shape(geology) + tm_fill(fill="ElevGeol", alpha=0.5, title="Geology by base elevation (m)", legend.reverse=T) +
-  #tm_shape(DEM) + tm_raster(palette=terrain.colors(24), alpha=0.5,legend.show=F) +
-  tm_shape(caves) + tm_lines(lwd=2) + tm_text("CaveLabel", size=0.5, just="left", xmod=0.75) +
-  tm_shape(ents) + tm_symbols(fill="Formation", shape=24, size=0.33, alpha=.75, title.col ="Geologic unit of entrance") + 
-  #tm_shape(wChem) + tm_symbols(size="TH", col="Lithology", scale=2, shape="siteType", alpha=1) +
-  tm_layout(legend.position = c("left", "bottom")) +
-  tm_graticules(lines=F)
-
+tm_graticules(labels.cardinal=F) +
+  tm_shape(hillsh,bbox=geol_bounds) +
+    tm_raster(col.scale=hillshCol, col.legend = tm_legend(show=F)) +
+  tm_shape(geology) + 
+    tm_polygons(fill="ElevGeol", fill_alpha=0.5, 
+    fill.legend = tm_legend(reverse=T, title="Elevation and Geology")) +
+  tm_shape(caves) + tm_lines(lwd=2) + 
+  tm_shape(labeledCaves) + tm_text("CaveLabel", size=0.7, col_alpha=0.5) +  
+  tm_shape(ents) + tm_symbols(fill="Formation", shape=17, size=0.33, 
+                  fill.legend=tm_legend(title="Cave Entrance Formation"))
 ```
 
 We've studied the water chemistry in cave passages and surface water features to look at limestone solution processes (Figure \@ref(fig:upperSinkingCove)).
@@ -174,7 +178,7 @@ tm_shape(hillsh,bbox=geol_bounds) +
   tm_graticules(lines=F)
 ```
 
-## Using maptiles for a topographic basemap with contours
+## Using topographic basemap with contours
 
 Using maptiles with tmap in plot mode may produce the most informative map. We could have created contours from the DEM, but it's easier to use a basemap, as long as the internet connection works. The `Esri.WorldTopoMap` in employing USGS labels works well in the US, though elevations are in feet (Figure \@ref(fig:mapTiles)).
 ```{r mapTiles, out.width="100%", fig.cap="Upper Sinking Cove static map with maptiles"}
@@ -184,7 +188,7 @@ tm_graticules(lines=F) +
   tm_basemap(server = "Esri.WorldTopoMap") + 
   tm_shape(caves, bbox=geol_bounds) + tm_lines(lwd=2) +
   tm_shape(wChem) + 
-  tm_symbols(size="carbonate_ppm", col="Lithology", scale=2, shape="siteType", alpha=0.5)
+  tm_symbols(size="carbonate_ppm", col="Lithology", scale=2, shape="siteType", col_alpha=0.5)
 # +
 #   tm_layout(legend.position = tm_pos_in("right"c("left", "bottom"))
 ```

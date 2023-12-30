@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>8 CO2 flux data : Red Clover Valley | Environmental Data Science Addenda</title>
+  <title>9 CO2 flux data : Red Clover Valley | Environmental Data Science Addenda</title>
   <meta name="description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
   <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="8 CO2 flux data : Red Clover Valley | Environmental Data Science Addenda" />
+  <meta property="og:title" content="9 CO2 flux data : Red Clover Valley | Environmental Data Science Addenda" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
   <meta name="github-repo" content="iGISc/EnvDataSciAddenda" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="8 CO2 flux data : Red Clover Valley | Environmental Data Science Addenda" />
+  <meta name="twitter:title" content="9 CO2 flux data : Red Clover Valley | Environmental Data Science Addenda" />
   
   <meta name="twitter:description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
   
@@ -23,7 +23,7 @@
 <meta name="author" content="Jerry Davis, SFSU Institute for Geographic Information Science" />
 
 
-<meta name="date" content="2023-12-28" />
+<meta name="date" content="2023-12-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,14 +52,6 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
-<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.30/datatables.js"></script>
-<link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="libs/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script>
-<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
 
 
 <style type="text/css">
@@ -131,28 +123,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 </style>
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -190,77 +160,93 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="5.0.1" data-path="pointblue-penguin-study.html"><a href="pointblue-penguin-study.html#interactive-mapping-of-individual-penguins-abstracted-from-a-big-dataset"><i class="fa fa-check"></i><b>5.0.1</b> Interactive mapping of individual penguins abstracted from a big dataset</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html"><i class="fa fa-check"></i><b>6</b> Time Series case studies</a>
+<li class="chapter" data-level="6" data-path="seabird-model.html"><a href="seabird-model.html"><i class="fa fa-check"></i><b>6</b> Seabird Model</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html#loney-meadow-flux-data"><i class="fa fa-check"></i><b>6.1</b> Loney Meadow flux data</a></li>
+<li class="chapter" data-level="6.1" data-path="seabird-model.html"><a href="seabird-model.html#goals-and-basic-methods-of-the-analysis"><i class="fa fa-check"></i><b>6.1</b> Goals and basic methods of the analysis</a></li>
+<li class="chapter" data-level="6.2" data-path="seabird-model.html"><a href="seabird-model.html#exploratory-data-analysis"><i class="fa fa-check"></i><b>6.2</b> Exploratory data analysis</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="seabird-model.html"><a href="seabird-model.html#identifying-the-appropriate-model-using-variance-and-mean-comparisons"><i class="fa fa-check"></i><b>6.2.1</b> Identifying the appropriate model using variance and mean comparisons</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html"><i class="fa fa-check"></i><b>7</b> Atmospheric CO2 record from Mauna Loa, Hawaii</a></li>
-<li class="chapter" data-level="8" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html"><i class="fa fa-check"></i><b>8</b> CO2 flux data : Red Clover Valley</a>
+<li class="chapter" data-level="6.3" data-path="seabird-model.html"><a href="seabird-model.html#model-black-footed-albatross-counts-for-july-using-a-poisson-family-glm"><i class="fa fa-check"></i><b>6.3</b> Model black-footed albatross counts for July using a poisson-family glm</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#initial-data-read-and-time-series-charting"><i class="fa fa-check"></i><b>8.1</b> 1. Initial data read and time series charting</a>
-<ul>
-<li class="chapter" data-level="8.1.1" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#reading-in-the-excel-file"><i class="fa fa-check"></i><b>8.1.1</b> Reading in the Excel File</a></li>
+<li class="chapter" data-level="6.3.1" data-path="seabird-model.html"><a href="seabird-model.html#map-the-prediction"><i class="fa fa-check"></i><b>6.3.1</b> Map the prediction</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#time-series-plot"><i class="fa fa-check"></i><b>8.2</b> Time series plot</a></li>
-<li class="chapter" data-level="8.3" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model"><i class="fa fa-check"></i><b>8.3</b> Non-linear model of PAR_ave ~ GPP_sum, using Michaelis-Menten model</a>
-<ul>
-<li class="chapter" data-level="8.3.1" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#try-fitting-a-non-linear-model-ssmicmen-from-base-r"><i class="fa fa-check"></i><b>8.3.1</b> Try fitting a non-linear model (SSmicmen from base R)</a></li>
+<li class="chapter" data-level="6.4" data-path="seabird-model.html"><a href="seabird-model.html#interpolation"><i class="fa fa-check"></i><b>6.4</b> Interpolation</a></li>
 </ul></li>
-<li class="chapter" data-level="8.4" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#polynomial-models"><i class="fa fa-check"></i><b>8.4</b> polynomial models</a>
+<li class="chapter" data-level="7" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html"><i class="fa fa-check"></i><b>7</b> Time Series case studies</a>
 <ul>
-<li class="chapter" data-level="8.4.1" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#poly-1"><i class="fa fa-check"></i><b>8.4.1</b> poly 1</a></li>
-<li class="chapter" data-level="8.4.2" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#poly-2"><i class="fa fa-check"></i><b>8.4.2</b> poly 2</a></li>
-<li class="chapter" data-level="8.4.3" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#poly-3"><i class="fa fa-check"></i><b>8.4.3</b> poly 3</a></li>
-<li class="chapter" data-level="8.4.4" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#poly-4"><i class="fa fa-check"></i><b>8.4.4</b> poly 4</a></li>
-<li class="chapter" data-level="8.4.5" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#poly-5"><i class="fa fa-check"></i><b>8.4.5</b> poly 5</a></li>
+<li class="chapter" data-level="7.1" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html#loney-meadow-flux-data"><i class="fa fa-check"></i><b>7.1</b> Loney Meadow flux data</a></li>
 </ul></li>
-<li class="chapter" data-level="8.5" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#power-regression"><i class="fa fa-check"></i><b>8.5</b> power regression</a></li>
-</ul></li>
-<li class="chapter" data-level="9" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html"><i class="fa fa-check"></i><b>9</b> R Markdown and Bookdown</a>
+<li class="chapter" data-level="8" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html"><i class="fa fa-check"></i><b>8</b> Atmospheric CO2 record from Mauna Loa, Hawaii</a></li>
+<li class="chapter" data-level="9" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html"><i class="fa fa-check"></i><b>9</b> CO2 flux data : Red Clover Valley</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#r-markdown"><i class="fa fa-check"></i><b>9.1</b> R Markdown</a>
+<li class="chapter" data-level="9.1" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#initial-data-read-and-time-series-charting"><i class="fa fa-check"></i><b>9.1</b> 1. Initial data read and time series charting</a>
 <ul>
-<li class="chapter" data-level="9.1.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#markdown-editing"><i class="fa fa-check"></i><b>9.1.1</b> Markdown editing</a></li>
-<li class="chapter" data-level="9.1.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#display-options-in-code-chunks"><i class="fa fa-check"></i><b>9.1.2</b> Display options in code chunks</a></li>
-<li class="chapter" data-level="9.1.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#numbered-figures-with-text-citations"><i class="fa fa-check"></i><b>9.1.3</b> Numbered figures with text citations</a></li>
+<li class="chapter" data-level="9.1.1" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#reading-in-the-excel-file"><i class="fa fa-check"></i><b>9.1.1</b> Reading in the Excel File</a></li>
 </ul></li>
-<li class="chapter" data-level="9.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#a-template-for-multiple-output-formats"><i class="fa fa-check"></i><b>9.2</b> A template for multiple output formats</a>
+<li class="chapter" data-level="9.2" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#time-series-plot"><i class="fa fa-check"></i><b>9.2</b> Time series plot</a>
 <ul>
-<li class="chapter" data-level="9.2.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#the-template"><i class="fa fa-check"></i><b>9.2.1</b> The template</a></li>
+<li class="chapter" data-level="9.2.1" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#pairs-plot"><i class="fa fa-check"></i><b>9.2.1</b> Pairs plot</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#building-a-book-with-bookdown-and-yaml-options"><i class="fa fa-check"></i><b>9.3</b> Building a book with bookdown and YAML options</a>
+<li class="chapter" data-level="9.3" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model"><i class="fa fa-check"></i><b>9.3</b> Non-linear model of PAR_ave ~ GPP_sum, using Michaelis-Menten model</a>
 <ul>
-<li class="chapter" data-level="9.3.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#building-a-book"><i class="fa fa-check"></i><b>9.3.1</b> Building a book</a></li>
-<li class="chapter" data-level="9.3.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#special-characters-and-formatting-limitations-and-challenges"><i class="fa fa-check"></i><b>9.3.2</b> Special characters and formatting limitations and challenges</a></li>
+<li class="chapter" data-level="9.3.1" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#try-fitting-a-non-linear-model-ssmicmen-from-base-r"><i class="fa fa-check"></i><b>9.3.1</b> Try fitting a non-linear model (SSmicmen from base R)</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#yaml-files-used-to-configure-the-book"><i class="fa fa-check"></i><b>9.4</b> YAML files used to configure the book</a>
+<li class="chapter" data-level="9.4" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#polynomial-models"><i class="fa fa-check"></i><b>9.4</b> polynomial models</a>
 <ul>
-<li class="chapter" data-level="9.4.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#output.yml"><i class="fa fa-check"></i><b>9.4.1</b> _output.yml</a></li>
-<li class="chapter" data-level="9.4.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#index.rmd"><i class="fa fa-check"></i><b>9.4.2</b> index.Rmd</a></li>
-<li class="chapter" data-level="9.4.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#bookdown.yml"><i class="fa fa-check"></i><b>9.4.3</b> _bookdown.yml</a></li>
+<li class="chapter" data-level="9.4.1" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#poly-1"><i class="fa fa-check"></i><b>9.4.1</b> poly 1</a></li>
+<li class="chapter" data-level="9.4.2" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#poly-2"><i class="fa fa-check"></i><b>9.4.2</b> poly 2</a></li>
+<li class="chapter" data-level="9.4.3" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#poly-3"><i class="fa fa-check"></i><b>9.4.3</b> poly 3</a></li>
+<li class="chapter" data-level="9.4.4" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#poly-4"><i class="fa fa-check"></i><b>9.4.4</b> poly 4</a></li>
+<li class="chapter" data-level="9.4.5" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#poly-5"><i class="fa fa-check"></i><b>9.4.5</b> poly 5</a></li>
 </ul></li>
+<li class="chapter" data-level="9.5" data-path="co2-flux-data-red-clover-valley.html"><a href="co2-flux-data-red-clover-valley.html#power-law-relationship"><i class="fa fa-check"></i><b>9.5</b> power law relationship</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="figures-and-tables.html"><a href="figures-and-tables.html"><i class="fa fa-check"></i><b>10</b> Figures and Tables</a>
+<li class="chapter" data-level="10" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html"><i class="fa fa-check"></i><b>10</b> R Markdown and Bookdown</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="figures-and-tables.html"><a href="figures-and-tables.html#figures"><i class="fa fa-check"></i><b>10.1</b> Figures</a></li>
-<li class="chapter" data-level="10.2" data-path="figures-and-tables.html"><a href="figures-and-tables.html#tables"><i class="fa fa-check"></i><b>10.2</b> Tables</a>
+<li class="chapter" data-level="10.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#r-markdown"><i class="fa fa-check"></i><b>10.1</b> R Markdown</a>
 <ul>
-<li class="chapter" data-level="10.2.1" data-path="figures-and-tables.html"><a href="figures-and-tables.html#dtdatatable"><i class="fa fa-check"></i><b>10.2.1</b> <code>DT::datatable</code></a></li>
-<li class="chapter" data-level="10.2.2" data-path="figures-and-tables.html"><a href="figures-and-tables.html#knitrkable-tables"><i class="fa fa-check"></i><b>10.2.2</b> <code>knitr::kable</code> tables</a></li>
-<li class="chapter" data-level="10.2.3" data-path="figures-and-tables.html"><a href="figures-and-tables.html#gt-package"><i class="fa fa-check"></i><b>10.2.3</b> <code>gt</code> package</a></li>
+<li class="chapter" data-level="10.1.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#markdown-editing"><i class="fa fa-check"></i><b>10.1.1</b> Markdown editing</a></li>
+<li class="chapter" data-level="10.1.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#display-options-in-code-chunks"><i class="fa fa-check"></i><b>10.1.2</b> Display options in code chunks</a></li>
+<li class="chapter" data-level="10.1.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#numbered-figures-with-text-citations"><i class="fa fa-check"></i><b>10.1.3</b> Numbered figures with text citations</a></li>
 </ul></li>
-<li class="chapter" data-level="10.3" data-path="figures-and-tables.html"><a href="figures-and-tables.html#other-tricks"><i class="fa fa-check"></i><b>10.3</b> Other tricks</a></li>
-</ul></li>
-<li class="chapter" data-level="11" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html"><i class="fa fa-check"></i><b>11</b> Building a Package on GitHub for Data and Code</a>
+<li class="chapter" data-level="10.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#a-template-for-multiple-output-formats"><i class="fa fa-check"></i><b>10.2</b> A template for multiple output formats</a>
 <ul>
-<li class="chapter" data-level="11.1" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#git-and-github"><i class="fa fa-check"></i><b>11.1</b> Git and GitHub</a></li>
-<li class="chapter" data-level="11.2" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#some-notes-on-the-rstudio-process"><i class="fa fa-check"></i><b>11.2</b> Some notes on the RStudio process</a></li>
-<li class="chapter" data-level="11.3" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#data-1"><i class="fa fa-check"></i><b>11.3</b> Data</a>
-<ul>
-<li class="chapter" data-level="11.3.1" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#raw-data-in-extdata"><i class="fa fa-check"></i><b>11.3.1</b> Raw data in extdata</a></li>
-<li class="chapter" data-level="11.3.2" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#binary-data-as-rda-files"><i class="fa fa-check"></i><b>11.3.2</b> Binary data as <code>rda</code> files</a></li>
+<li class="chapter" data-level="10.2.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#the-template"><i class="fa fa-check"></i><b>10.2.1</b> The template</a></li>
 </ul></li>
-<li class="chapter" data-level="11.4" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#code-functions"><i class="fa fa-check"></i><b>11.4</b> Code (functions)</a></li>
+<li class="chapter" data-level="10.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#building-a-book-with-bookdown-and-yaml-options"><i class="fa fa-check"></i><b>10.3</b> Building a book with bookdown and YAML options</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#building-a-book"><i class="fa fa-check"></i><b>10.3.1</b> Building a book</a></li>
+<li class="chapter" data-level="10.3.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#special-characters-and-formatting-limitations-and-challenges"><i class="fa fa-check"></i><b>10.3.2</b> Special characters and formatting limitations and challenges</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#yaml-files-used-to-configure-the-book"><i class="fa fa-check"></i><b>10.4</b> YAML files used to configure the book</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#output.yml"><i class="fa fa-check"></i><b>10.4.1</b> _output.yml</a></li>
+<li class="chapter" data-level="10.4.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#index.rmd"><i class="fa fa-check"></i><b>10.4.2</b> index.Rmd</a></li>
+<li class="chapter" data-level="10.4.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#bookdown.yml"><i class="fa fa-check"></i><b>10.4.3</b> _bookdown.yml</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="figures-and-tables.html"><a href="figures-and-tables.html"><i class="fa fa-check"></i><b>11</b> Figures and Tables</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="figures-and-tables.html"><a href="figures-and-tables.html#figures"><i class="fa fa-check"></i><b>11.1</b> Figures</a></li>
+<li class="chapter" data-level="11.2" data-path="figures-and-tables.html"><a href="figures-and-tables.html#tables"><i class="fa fa-check"></i><b>11.2</b> Tables</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="figures-and-tables.html"><a href="figures-and-tables.html#dtdatatable"><i class="fa fa-check"></i><b>11.2.1</b> <code>DT::datatable</code></a></li>
+<li class="chapter" data-level="11.2.2" data-path="figures-and-tables.html"><a href="figures-and-tables.html#knitrkable-tables"><i class="fa fa-check"></i><b>11.2.2</b> <code>knitr::kable</code> tables</a></li>
+<li class="chapter" data-level="11.2.3" data-path="figures-and-tables.html"><a href="figures-and-tables.html#gt-package"><i class="fa fa-check"></i><b>11.2.3</b> <code>gt</code> package</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="figures-and-tables.html"><a href="figures-and-tables.html#other-tricks"><i class="fa fa-check"></i><b>11.3</b> Other tricks</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html"><i class="fa fa-check"></i><b>12</b> Building a Package on GitHub for Data and Code</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#git-and-github"><i class="fa fa-check"></i><b>12.1</b> Git and GitHub</a></li>
+<li class="chapter" data-level="12.2" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#some-notes-on-the-rstudio-process"><i class="fa fa-check"></i><b>12.2</b> Some notes on the RStudio process</a></li>
+<li class="chapter" data-level="12.3" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#data-1"><i class="fa fa-check"></i><b>12.3</b> Data</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#raw-data-in-extdata"><i class="fa fa-check"></i><b>12.3.1</b> Raw data in extdata</a></li>
+<li class="chapter" data-level="12.3.2" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#binary-data-as-rda-files"><i class="fa fa-check"></i><b>12.3.2</b> Binary data as <code>rda</code> files</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#code-functions"><i class="fa fa-check"></i><b>12.4</b> Code (functions)</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -283,37 +269,49 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="co2-flux-data-red-clover-valley" class="section level1 hasAnchor" number="8">
-<h1><span class="header-section-number">8</span> CO2 flux data : Red Clover Valley<a href="co2-flux-data-red-clover-valley.html#co2-flux-data-red-clover-valley" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="initial-data-read-and-time-series-charting" class="section level2 hasAnchor" number="8.1">
-<h2><span class="header-section-number">8.1</span> 1. Initial data read and time series charting<a href="co2-flux-data-red-clover-valley.html#initial-data-read-and-time-series-charting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="co2-flux-data-red-clover-valley" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">9</span> CO2 flux data : Red Clover Valley<a href="co2-flux-data-red-clover-valley.html#co2-flux-data-red-clover-valley" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="initial-data-read-and-time-series-charting" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> 1. Initial data read and time series charting<a href="co2-flux-data-red-clover-valley.html#initial-data-read-and-time-series-charting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Some ideas for processing are from Mason Kealy. Data are from Andrew Oliphant.</p>
-<div id="reading-in-the-excel-file" class="section level3 hasAnchor" number="8.1.1">
-<h3><span class="header-section-number">8.1.1</span> Reading in the Excel File<a href="co2-flux-data-red-clover-valley.html#reading-in-the-excel-file" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="reading-in-the-excel-file" class="section level3 hasAnchor" number="9.1.1">
+<h3><span class="header-section-number">9.1.1</span> Reading in the Excel File<a href="co2-flux-data-red-clover-valley.html#reading-in-the-excel-file" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>First create a function to convert the first two rows into individual variables. We won’t include the units.</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="co2-flux-data-red-clover-valley.html#cb47-1" tabindex="-1"></a><span class="fu">library</span>(igisci); <span class="fu">library</span>(tidyverse); <span class="fu">library</span>(readxl)</span></code></pre></div>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="co2-flux-data-red-clover-valley.html#cb48-1" tabindex="-1"></a>read_excel2 <span class="ot">&lt;-</span> <span class="cf">function</span>(xl){</span>
-<span id="cb48-2"><a href="co2-flux-data-red-clover-valley.html#cb48-2" tabindex="-1"></a>  vnames <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(xl, <span class="at">n_max=</span><span class="dv">0</span>) <span class="sc">|&gt;</span> <span class="fu">names</span>()</span>
-<span id="cb48-3"><a href="co2-flux-data-red-clover-valley.html#cb48-3" tabindex="-1"></a>  vunits <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(xl, <span class="at">n_max=</span><span class="dv">0</span>, <span class="at">skip=</span><span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="fu">names</span>()</span>
-<span id="cb48-4"><a href="co2-flux-data-red-clover-valley.html#cb48-4" tabindex="-1"></a>  <span class="fu">read_excel</span>(xl, <span class="at">skip=</span><span class="dv">2</span>, <span class="at">col_names=</span>vnames)</span>
-<span id="cb48-5"><a href="co2-flux-data-red-clover-valley.html#cb48-5" tabindex="-1"></a>}</span></code></pre></div>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="co2-flux-data-red-clover-valley.html#cb49-1" tabindex="-1"></a>Carbon_Flux <span class="ot">&lt;-</span> <span class="fu">read_excel2</span>(<span class="fu">ex</span>(<span class="st">&quot;meadows/RCV_carbon_flux_data.xlsx&quot;</span>))</span></code></pre></div>
-<p>You can see in the tibble above, that all the columns were in <code>chr</code> data type, this prevents the computer from seeing them as numbers.
-I started preparing the data for analysis by <code>mutate_all(as.numeric)</code> then setting the date column as a date with <code>as.Date</code> selected the variables I wanted and rounded the 7 digits values to get them looking a little nicer.
-Then I used <code>pivot_longer</code> to send the CO2 Flux Competent values to a new column and the names to a new column. This makes it a lot easier when creating a legend later on in Figure 1 (see next code chunk)
-<em>Then Jerry removed the zero GPP_sum values.</em></p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="co2-flux-data-red-clover-valley.html#cb50-1" tabindex="-1"></a>Mountflux <span class="ot">&lt;-</span> Carbon_Flux <span class="sc">%&gt;%</span> </span>
-<span id="cb50-2"><a href="co2-flux-data-red-clover-valley.html#cb50-2" tabindex="-1"></a><span class="fu">mutate_all</span>(as.numeric) <span class="sc">%&gt;%</span> </span>
-<span id="cb50-3"><a href="co2-flux-data-red-clover-valley.html#cb50-3" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">DOY =</span> <span class="fu">as.Date</span>(Date,<span class="at">format =</span> <span class="st">&quot;%m-%d&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb50-4"><a href="co2-flux-data-red-clover-valley.html#cb50-4" tabindex="-1"></a><span class="fu">select</span>(Date<span class="sc">:</span>PAR_ave) <span class="sc">%&gt;%</span> </span>
-<span id="cb50-5"><a href="co2-flux-data-red-clover-valley.html#cb50-5" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">NEE =</span> <span class="fu">round</span>(NEE_sum, <span class="at">digits =</span> <span class="dv">3</span>), </span>
-<span id="cb50-6"><a href="co2-flux-data-red-clover-valley.html#cb50-6" tabindex="-1"></a>       <span class="at">GPP =</span> <span class="fu">round</span>(GPP_sum, <span class="at">digits =</span> <span class="dv">3</span>),</span>
-<span id="cb50-7"><a href="co2-flux-data-red-clover-valley.html#cb50-7" tabindex="-1"></a>       <span class="at">RE =</span> <span class="fu">round</span>(RE_sum, <span class="at">digits =</span> <span class="dv">3</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb50-8"><a href="co2-flux-data-red-clover-valley.html#cb50-8" tabindex="-1"></a><span class="co">#select(-NEE_sum, -GPP_sum, -RE_sum) %&gt;% </span></span>
-<span id="cb50-9"><a href="co2-flux-data-red-clover-valley.html#cb50-9" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="st">&quot;NEE&quot;</span>, <span class="st">&quot;RE&quot;</span>, <span class="st">&quot;GPP&quot;</span>), <span class="at">names_to =</span> <span class="st">&quot;CO2_FLUX_COMPONENTS&quot;</span>, <span class="at">values_to =</span><span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb50-10"><a href="co2-flux-data-red-clover-valley.html#cb50-10" tabindex="-1"></a>  <span class="fu">filter</span>(GPP_sum <span class="sc">!=</span> <span class="dv">0</span>, <span class="sc">!</span><span class="fu">is.na</span>(PAR_ave))</span>
-<span id="cb50-11"><a href="co2-flux-data-red-clover-valley.html#cb50-11" tabindex="-1"></a></span>
-<span id="cb50-12"><a href="co2-flux-data-red-clover-valley.html#cb50-12" tabindex="-1"></a><span class="fu">print</span>(Mountflux)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="co2-flux-data-red-clover-valley.html#cb1-1" tabindex="-1"></a><span class="fu">library</span>(igisci); <span class="fu">library</span>(tidyverse); <span class="fu">library</span>(readxl)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="co2-flux-data-red-clover-valley.html#cb2-1" tabindex="-1"></a>read_excel2 <span class="ot">&lt;-</span> <span class="cf">function</span>(xl){</span>
+<span id="cb2-2"><a href="co2-flux-data-red-clover-valley.html#cb2-2" tabindex="-1"></a>  vnames <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(xl, <span class="at">n_max=</span><span class="dv">0</span>) <span class="sc">|&gt;</span> <span class="fu">names</span>()</span>
+<span id="cb2-3"><a href="co2-flux-data-red-clover-valley.html#cb2-3" tabindex="-1"></a>  vunits <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(xl, <span class="at">n_max=</span><span class="dv">0</span>, <span class="at">skip=</span><span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="fu">names</span>()</span>
+<span id="cb2-4"><a href="co2-flux-data-red-clover-valley.html#cb2-4" tabindex="-1"></a>  <span class="fu">read_excel</span>(xl, <span class="at">skip=</span><span class="dv">2</span>, <span class="at">col_names=</span>vnames)</span>
+<span id="cb2-5"><a href="co2-flux-data-red-clover-valley.html#cb2-5" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="co2-flux-data-red-clover-valley.html#cb3-1" tabindex="-1"></a>Carbon_Flux <span class="ot">&lt;-</span> <span class="fu">read_excel2</span>(<span class="fu">ex</span>(<span class="st">&quot;meadows/RCV_carbon_flux_data.xlsx&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="co2-flux-data-red-clover-valley.html#cb3-2" tabindex="-1"></a>  <span class="fu">filter</span>(GPP_sum<span class="sc">&gt;</span><span class="dv">0</span>)</span></code></pre></div>
+<pre><code>## New names:
+## • `gCO2 m-2 d-1` -&gt; `gCO2 m-2 d-1...2`
+## • `gCO2 m-2 d-1` -&gt; `gCO2 m-2 d-1...3`
+## • `gCO2 m-2 d-1` -&gt; `gCO2 m-2 d-1...4`
+## • `degC` -&gt; `degC...5`
+## • `degC` -&gt; `degC...6`
+## • `degC` -&gt; `degC...9`
+## • `degC` -&gt; `degC...10`
+## • `degC` -&gt; `degC...11`
+## • `degC` -&gt; `degC...12`
+## • `0-1` -&gt; `0-1...13`
+## • `0-1` -&gt; `0-1...14`
+## • `0-1` -&gt; `0-1...15`
+## • `0-1` -&gt; `0-1...16`</code></pre>
+<p><em>Then Jerry removed the zero GPP_sum values.</em></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="co2-flux-data-red-clover-valley.html#cb5-1" tabindex="-1"></a>Mountflux <span class="ot">&lt;-</span> Carbon_Flux <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="co2-flux-data-red-clover-valley.html#cb5-2" tabindex="-1"></a><span class="fu">mutate_all</span>(as.numeric) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-3"><a href="co2-flux-data-red-clover-valley.html#cb5-3" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">DOY =</span> <span class="fu">as.Date</span>(Date,<span class="at">format =</span> <span class="st">&quot;%m-%d&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-4"><a href="co2-flux-data-red-clover-valley.html#cb5-4" tabindex="-1"></a><span class="fu">select</span>(Date<span class="sc">:</span>PAR_ave) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-5"><a href="co2-flux-data-red-clover-valley.html#cb5-5" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">NEE =</span> <span class="fu">round</span>(NEE_sum, <span class="at">digits =</span> <span class="dv">3</span>), </span>
+<span id="cb5-6"><a href="co2-flux-data-red-clover-valley.html#cb5-6" tabindex="-1"></a>       <span class="at">GPP =</span> <span class="fu">round</span>(GPP_sum, <span class="at">digits =</span> <span class="dv">3</span>),</span>
+<span id="cb5-7"><a href="co2-flux-data-red-clover-valley.html#cb5-7" tabindex="-1"></a>       <span class="at">RE =</span> <span class="fu">round</span>(RE_sum, <span class="at">digits =</span> <span class="dv">3</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-8"><a href="co2-flux-data-red-clover-valley.html#cb5-8" tabindex="-1"></a><span class="co">#select(-NEE_sum, -GPP_sum, -RE_sum) %&gt;% </span></span>
+<span id="cb5-9"><a href="co2-flux-data-red-clover-valley.html#cb5-9" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="st">&quot;NEE&quot;</span>, <span class="st">&quot;RE&quot;</span>, <span class="st">&quot;GPP&quot;</span>), <span class="at">names_to =</span> <span class="st">&quot;CO2_FLUX_COMPONENTS&quot;</span>, <span class="at">values_to =</span><span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-10"><a href="co2-flux-data-red-clover-valley.html#cb5-10" tabindex="-1"></a>  <span class="fu">filter</span>(GPP_sum <span class="sc">!=</span> <span class="dv">0</span>, <span class="sc">!</span><span class="fu">is.na</span>(PAR_ave))</span>
+<span id="cb5-11"><a href="co2-flux-data-red-clover-valley.html#cb5-11" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="co2-flux-data-red-clover-valley.html#cb5-12" tabindex="-1"></a><span class="fu">print</span>(Mountflux)</span></code></pre></div>
 <pre><code>## # A tibble: 906 × 9
 ##     Date GPP_sum NEE_sum RE_sum Tair_min Tair_max PAR_ave CO2_FLUX_COMPONENTS
 ##    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;              
@@ -331,33 +329,41 @@ Then I used <code>pivot_longer</code> to send the CO2 Flux Competent values to a
 ## # ℹ 1 more variable: value &lt;dbl&gt;</code></pre>
 </div>
 </div>
-<div id="time-series-plot" class="section level2 hasAnchor" number="8.2">
-<h2><span class="header-section-number">8.2</span> Time series plot<a href="co2-flux-data-red-clover-valley.html#time-series-plot" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="time-series-plot" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> Time series plot<a href="co2-flux-data-red-clover-valley.html#time-series-plot" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Then I used ggplot to create a visualization of how NEE, GPP, an RE changed over a yearly time scale.</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="co2-flux-data-red-clover-valley.html#cb52-1" tabindex="-1"></a>Mountflux <span class="sc">%&gt;%</span> </span>
-<span id="cb52-2"><a href="co2-flux-data-red-clover-valley.html#cb52-2" tabindex="-1"></a> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Date, <span class="at">y=</span> value, <span class="at">color =</span> CO2_FLUX_COMPONENTS))<span class="sc">+</span></span>
-<span id="cb52-3"><a href="co2-flux-data-red-clover-valley.html#cb52-3" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
-<span id="cb52-4"><a href="co2-flux-data-red-clover-valley.html#cb52-4" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">&quot;longdash&quot;</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>)<span class="sc">+</span></span>
-<span id="cb52-5"><a href="co2-flux-data-red-clover-valley.html#cb52-5" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot; Red Clover Valley: Interannual Components of Carbon Flux Measurements&quot;</span>) <span class="sc">+</span></span>
-<span id="cb52-6"><a href="co2-flux-data-red-clover-valley.html#cb52-6" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Day of Year&quot;</span>) <span class="sc">+</span></span>
-<span id="cb52-7"><a href="co2-flux-data-red-clover-valley.html#cb52-7" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;g C/m^2&quot;</span>)<span class="sc">+</span></span>
-<span id="cb52-8"><a href="co2-flux-data-red-clover-valley.html#cb52-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">caption =</span></span>
-<span id="cb52-9"><a href="co2-flux-data-red-clover-valley.html#cb52-9" tabindex="-1"></a><span class="st">&quot;Figure 1: Components of Carbon Flux measurements collected in 30 minute intervals in 2021</span></span>
-<span id="cb52-10"><a href="co2-flux-data-red-clover-valley.html#cb52-10" tabindex="-1"></a><span class="st">and added into ‘sum daily value’ , from flux tower in Red Clover Valley,California. Components included NEE (Net Ecosystem Exchange), RE (Respiration Efficiency), GPP (Gross Primary Productivity) all measured in g C m^2 and are plotted against an annual time scale with days as the unit of measure.&quot;</span>)</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-39-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="co2-flux-data-red-clover-valley.html#cb7-1" tabindex="-1"></a>Mountflux <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="co2-flux-data-red-clover-valley.html#cb7-2" tabindex="-1"></a> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Date, <span class="at">y=</span> value, <span class="at">color =</span> CO2_FLUX_COMPONENTS))<span class="sc">+</span></span>
+<span id="cb7-3"><a href="co2-flux-data-red-clover-valley.html#cb7-3" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
+<span id="cb7-4"><a href="co2-flux-data-red-clover-valley.html#cb7-4" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">&quot;longdash&quot;</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>)<span class="sc">+</span></span>
+<span id="cb7-5"><a href="co2-flux-data-red-clover-valley.html#cb7-5" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot; Red Clover Valley: Interannual Components of Carbon Flux Measurements&quot;</span>) <span class="sc">+</span></span>
+<span id="cb7-6"><a href="co2-flux-data-red-clover-valley.html#cb7-6" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Day of Year&quot;</span>) <span class="sc">+</span></span>
+<span id="cb7-7"><a href="co2-flux-data-red-clover-valley.html#cb7-7" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;g C/m^2&quot;</span>)<span class="sc">+</span></span>
+<span id="cb7-8"><a href="co2-flux-data-red-clover-valley.html#cb7-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">caption =</span></span>
+<span id="cb7-9"><a href="co2-flux-data-red-clover-valley.html#cb7-9" tabindex="-1"></a><span class="st">&quot;Figure 1: Components of Carbon Flux measurements collected in 30 minute intervals in 2021</span></span>
+<span id="cb7-10"><a href="co2-flux-data-red-clover-valley.html#cb7-10" tabindex="-1"></a><span class="st">and added into ‘sum daily value’ , from flux tower in Red Clover Valley,California. Components included NEE (Net Ecosystem Exchange), RE (Respiration Efficiency), GPP (Gross Primary Productivity) all measured in g C m^2 and are plotted against an annual time scale with days as the unit of measure.&quot;</span>)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<div id="pairs-plot" class="section level3 hasAnchor" number="9.2.1">
+<h3><span class="header-section-number">9.2.1</span> Pairs plot<a href="co2-flux-data-red-clover-valley.html#pairs-plot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="co2-flux-data-red-clover-valley.html#cb8-1" tabindex="-1"></a>Carbon_Flux <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="co2-flux-data-red-clover-valley.html#cb8-2" tabindex="-1"></a>  <span class="fu">select</span>(GPP_sum<span class="sc">:</span>vpd_max) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="co2-flux-data-red-clover-valley.html#cb8-3" tabindex="-1"></a>  GGally<span class="sc">::</span><span class="fu">ggpairs</span>()</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="co2-flux-data-red-clover-valley.html#cb9-1" tabindex="-1"></a>  <span class="co"># pairs()</span></span></code></pre></div>
 </div>
-<div id="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model" class="section level2 hasAnchor" number="8.3">
-<h2><span class="header-section-number">8.3</span> Non-linear model of PAR_ave ~ GPP_sum, using Michaelis-Menten model<a href="co2-flux-data-red-clover-valley.html#non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> Non-linear model of PAR_ave ~ GPP_sum, using Michaelis-Menten model<a href="co2-flux-data-red-clover-valley.html#non-linear-model-of-par_ave-gpp_sum-using-michaelis-menten-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><em>Not the right goal for a model between these variables, since GPP should derive from PAR, not the other way around. But it does illustrate asymptotic data.</em></p>
 <p>First the scatter plot:</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="co2-flux-data-red-clover-valley.html#cb53-1" tabindex="-1"></a><span class="fu">plot</span>(Mountflux<span class="sc">$</span>GPP_sum, Mountflux<span class="sc">$</span>PAR_ave,<span class="at">xlab=</span><span class="st">&quot;GPP_sum&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;PAR_ave&quot;</span>)</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-40-1.png" width="75%" style="display: block; margin: auto;" /></p>
-<div id="try-fitting-a-non-linear-model-ssmicmen-from-base-r" class="section level3 hasAnchor" number="8.3.1">
-<h3><span class="header-section-number">8.3.1</span> Try fitting a non-linear model (SSmicmen from base R)<a href="co2-flux-data-red-clover-valley.html#try-fitting-a-non-linear-model-ssmicmen-from-base-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="co2-flux-data-red-clover-valley.html#cb10-1" tabindex="-1"></a><span class="fu">plot</span>(Carbon_Flux<span class="sc">$</span>GPP_sum, Carbon_Flux<span class="sc">$</span>PAR_ave,<span class="at">xlab=</span><span class="st">&quot;GPP_sum&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;PAR_ave&quot;</span>)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<div id="try-fitting-a-non-linear-model-ssmicmen-from-base-r" class="section level3 hasAnchor" number="9.3.1">
+<h3><span class="header-section-number">9.3.1</span> Try fitting a non-linear model (SSmicmen from base R)<a href="co2-flux-data-red-clover-valley.html#try-fitting-a-non-linear-model-ssmicmen-from-base-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Based on <a href="https://www.datacamp.com/tutorial/introduction-to-non-linear-model-and-insights-using-r" class="uri">https://www.datacamp.com/tutorial/introduction-to-non-linear-model-and-insights-using-r</a></p>
 <p>Using start values for Vm and K based on interpreting the graph. We’ll use nonlinear least squares (<code>nls</code>) and starting values of the two coefficients.</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="co2-flux-data-red-clover-valley.html#cb54-1" tabindex="-1"></a>micmenMod <span class="ot">&lt;-</span> <span class="fu">nls</span>(PAR_ave<span class="sc">~</span>(Vm)<span class="sc">*</span>GPP_sum<span class="sc">/</span>(K<span class="sc">+</span>GPP_sum), <span class="at">data=</span>Mountflux, <span class="at">start=</span><span class="fu">list</span>(<span class="at">Vm=</span><span class="dv">750</span>,<span class="at">K=</span><span class="dv">1</span>))</span>
-<span id="cb54-2"><a href="co2-flux-data-red-clover-valley.html#cb54-2" tabindex="-1"></a><span class="fu">summary</span>(micmenMod)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="co2-flux-data-red-clover-valley.html#cb11-1" tabindex="-1"></a>micmenMod <span class="ot">&lt;-</span> <span class="fu">nls</span>(PAR_ave<span class="sc">~</span>(Vm)<span class="sc">*</span>GPP_sum<span class="sc">/</span>(K<span class="sc">+</span>GPP_sum), <span class="at">data=</span>Mountflux, <span class="at">start=</span><span class="fu">list</span>(<span class="at">Vm=</span><span class="dv">750</span>,<span class="at">K=</span><span class="dv">1</span>))</span>
+<span id="cb11-2"><a href="co2-flux-data-red-clover-valley.html#cb11-2" tabindex="-1"></a><span class="fu">summary</span>(micmenMod)</span></code></pre></div>
 <pre><code>## 
 ## Formula: PAR_ave ~ (Vm) * GPP_sum/(K + GPP_sum)
 ## 
@@ -373,26 +379,27 @@ Then I used <code>pivot_longer</code> to send the CO2 Flux Competent values to a
 ## Number of iterations to convergence: 7 
 ## Achieved convergence tolerance: 8.843e-06</code></pre>
 <p><strong>Calculate residual error</strong></p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="co2-flux-data-red-clover-valley.html#cb56-1" tabindex="-1"></a>sse <span class="ot">&lt;-</span> micmenMod<span class="sc">$</span>m<span class="sc">$</span><span class="fu">deviance</span>()</span>
-<span id="cb56-2"><a href="co2-flux-data-red-clover-valley.html#cb56-2" tabindex="-1"></a>null <span class="ot">&lt;-</span> <span class="fu">lm</span>(PAR_ave<span class="sc">~</span><span class="dv">1</span>, <span class="at">data=</span>Mountflux)</span>
-<span id="cb56-3"><a href="co2-flux-data-red-clover-valley.html#cb56-3" tabindex="-1"></a>sst <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">summary.aov</span>(null)[[<span class="dv">1</span>]])<span class="sc">$</span>Sum.Sq</span>
-<span id="cb56-4"><a href="co2-flux-data-red-clover-valley.html#cb56-4" tabindex="-1"></a>percent_variation_explained <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span>(sst<span class="sc">-</span>sse)<span class="sc">/</span>sst</span>
-<span id="cb56-5"><a href="co2-flux-data-red-clover-valley.html#cb56-5" tabindex="-1"></a>percent_variation_explained</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="co2-flux-data-red-clover-valley.html#cb13-1" tabindex="-1"></a>sse <span class="ot">&lt;-</span> micmenMod<span class="sc">$</span>m<span class="sc">$</span><span class="fu">deviance</span>()</span>
+<span id="cb13-2"><a href="co2-flux-data-red-clover-valley.html#cb13-2" tabindex="-1"></a>null <span class="ot">&lt;-</span> <span class="fu">lm</span>(PAR_ave<span class="sc">~</span><span class="dv">1</span>, <span class="at">data=</span>Mountflux)</span>
+<span id="cb13-3"><a href="co2-flux-data-red-clover-valley.html#cb13-3" tabindex="-1"></a>sst <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">summary.aov</span>(null)[[<span class="dv">1</span>]])<span class="sc">$</span>Sum.Sq</span>
+<span id="cb13-4"><a href="co2-flux-data-red-clover-valley.html#cb13-4" tabindex="-1"></a>percent_variation_explained <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span>(sst<span class="sc">-</span>sse)<span class="sc">/</span>sst</span>
+<span id="cb13-5"><a href="co2-flux-data-red-clover-valley.html#cb13-5" tabindex="-1"></a>percent_variation_explained</span></code></pre></div>
 <pre><code>## [1] 59.97658</code></pre>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="co2-flux-data-red-clover-valley.html#cb58-1" tabindex="-1"></a><span class="fu">plot</span>(Mountflux<span class="sc">$</span>GPP_sum, Mountflux<span class="sc">$</span>PAR_ave,<span class="at">xlab=</span><span class="st">&quot;GPP_sum&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;PAR_ave&quot;</span>)</span>
-<span id="cb58-2"><a href="co2-flux-data-red-clover-valley.html#cb58-2" tabindex="-1"></a> <span class="fu">lines</span>(Mountflux<span class="sc">$</span>GPP_sum, </span>
-<span id="cb58-3"><a href="co2-flux-data-red-clover-valley.html#cb58-3" tabindex="-1"></a>       <span class="fu">predict</span>(micmenMod,Mountflux),<span class="at">col=</span><span class="dv">2</span>)</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-43-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="co2-flux-data-red-clover-valley.html#cb15-1" tabindex="-1"></a><span class="fu">plot</span>(Mountflux<span class="sc">$</span>GPP_sum, Mountflux<span class="sc">$</span>PAR_ave,<span class="at">xlab=</span><span class="st">&quot;GPP_sum&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;PAR_ave&quot;</span>)</span>
+<span id="cb15-2"><a href="co2-flux-data-red-clover-valley.html#cb15-2" tabindex="-1"></a> <span class="fu">lines</span>(Mountflux<span class="sc">$</span>GPP_sum, </span>
+<span id="cb15-3"><a href="co2-flux-data-red-clover-valley.html#cb15-3" tabindex="-1"></a>       <span class="fu">predict</span>(micmenMod,Mountflux),<span class="at">col=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 </div>
 </div>
-<div id="polynomial-models" class="section level2 hasAnchor" number="8.4">
-<h2><span class="header-section-number">8.4</span> polynomial models<a href="co2-flux-data-red-clover-valley.html#polynomial-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="co2-flux-data-red-clover-valley.html#cb59-1" tabindex="-1"></a><span class="fu">plot</span>(Mountflux<span class="sc">$</span>PAR_ave,Mountflux<span class="sc">$</span>GPP_sum, <span class="at">xlab=</span><span class="st">&quot;PAR_ave&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;GPP_sum&quot;</span>)</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-44-1.png" width="75%" style="display: block; margin: auto;" /></p>
-<div id="poly-1" class="section level3 hasAnchor" number="8.4.1">
-<h3><span class="header-section-number">8.4.1</span> poly 1<a href="co2-flux-data-red-clover-valley.html#poly-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="co2-flux-data-red-clover-valley.html#cb60-1" tabindex="-1"></a>ord <span class="ot">=</span> <span class="dv">1</span></span>
-<span id="cb60-2"><a href="co2-flux-data-red-clover-valley.html#cb60-2" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(GPP_sum <span class="sc">~</span> <span class="fu">poly</span>(PAR_ave, ord, <span class="at">raw=</span>T), <span class="at">data=</span>Mountflux))</span></code></pre></div>
+<div id="polynomial-models" class="section level2 hasAnchor" number="9.4">
+<h2><span class="header-section-number">9.4</span> polynomial models<a href="co2-flux-data-red-clover-valley.html#polynomial-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Ok, enough of that deceptive model of PAR predicted by GPP – not the way it works – and instead we’ll look at models that predict GPP from PAR, not asymptotic</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="co2-flux-data-red-clover-valley.html#cb16-1" tabindex="-1"></a><span class="fu">plot</span>(Mountflux<span class="sc">$</span>PAR_ave,Mountflux<span class="sc">$</span>GPP_sum, <span class="at">xlab=</span><span class="st">&quot;PAR_ave&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;GPP_sum&quot;</span>)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<div id="poly-1" class="section level3 hasAnchor" number="9.4.1">
+<h3><span class="header-section-number">9.4.1</span> poly 1<a href="co2-flux-data-red-clover-valley.html#poly-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="co2-flux-data-red-clover-valley.html#cb17-1" tabindex="-1"></a>ord <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb17-2"><a href="co2-flux-data-red-clover-valley.html#cb17-2" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(GPP_sum <span class="sc">~</span> <span class="fu">poly</span>(PAR_ave, ord, <span class="at">raw=</span>T), <span class="at">data=</span>Mountflux))</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = GPP_sum ~ poly(PAR_ave, ord, raw = T), data = Mountflux)
@@ -411,14 +418,14 @@ Then I used <code>pivot_longer</code> to send the CO2 Flux Competent values to a
 ## Residual standard error: 7.242 on 904 degrees of freedom
 ## Multiple R-squared:  0.5616, Adjusted R-squared:  0.5611 
 ## F-statistic:  1158 on 1 and 904 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="co2-flux-data-red-clover-valley.html#cb62-1" tabindex="-1"></a><span class="fu">ggplot</span>(Mountflux, <span class="fu">aes</span>(PAR_ave, GPP_sum)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb62-2"><a href="co2-flux-data-red-clover-valley.html#cb62-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm, <span class="at">formula=</span>y<span class="sc">~</span><span class="fu">poly</span>(x,ord,<span class="at">raw=</span>T))</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-45-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="co2-flux-data-red-clover-valley.html#cb19-1" tabindex="-1"></a><span class="fu">ggplot</span>(Mountflux, <span class="fu">aes</span>(PAR_ave, GPP_sum)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb19-2"><a href="co2-flux-data-red-clover-valley.html#cb19-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm, <span class="at">formula=</span>y<span class="sc">~</span><span class="fu">poly</span>(x,ord,<span class="at">raw=</span>T))</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 </div>
-<div id="poly-2" class="section level3 hasAnchor" number="8.4.2">
-<h3><span class="header-section-number">8.4.2</span> poly 2<a href="co2-flux-data-red-clover-valley.html#poly-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="co2-flux-data-red-clover-valley.html#cb63-1" tabindex="-1"></a>ord <span class="ot">=</span> <span class="dv">2</span></span>
-<span id="cb63-2"><a href="co2-flux-data-red-clover-valley.html#cb63-2" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(GPP_sum <span class="sc">~</span> <span class="fu">poly</span>(PAR_ave, ord, <span class="at">raw=</span>T), <span class="at">data=</span>Mountflux))</span></code></pre></div>
+<div id="poly-2" class="section level3 hasAnchor" number="9.4.2">
+<h3><span class="header-section-number">9.4.2</span> poly 2<a href="co2-flux-data-red-clover-valley.html#poly-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="co2-flux-data-red-clover-valley.html#cb20-1" tabindex="-1"></a>ord <span class="ot">=</span> <span class="dv">2</span></span>
+<span id="cb20-2"><a href="co2-flux-data-red-clover-valley.html#cb20-2" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(GPP_sum <span class="sc">~</span> <span class="fu">poly</span>(PAR_ave, ord, <span class="at">raw=</span>T), <span class="at">data=</span>Mountflux))</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = GPP_sum ~ poly(PAR_ave, ord, raw = T), data = Mountflux)
@@ -438,14 +445,14 @@ Then I used <code>pivot_longer</code> to send the CO2 Flux Competent values to a
 ## Residual standard error: 6.273 on 903 degrees of freedom
 ## Multiple R-squared:  0.6714, Adjusted R-squared:  0.6706 
 ## F-statistic: 922.3 on 2 and 903 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="co2-flux-data-red-clover-valley.html#cb65-1" tabindex="-1"></a><span class="fu">ggplot</span>(Mountflux, <span class="fu">aes</span>(PAR_ave, GPP_sum)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb65-2"><a href="co2-flux-data-red-clover-valley.html#cb65-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm, <span class="at">formula=</span>y<span class="sc">~</span><span class="fu">poly</span>(x,ord,<span class="at">raw=</span>T))</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-46-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="co2-flux-data-red-clover-valley.html#cb22-1" tabindex="-1"></a><span class="fu">ggplot</span>(Mountflux, <span class="fu">aes</span>(PAR_ave, GPP_sum)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb22-2"><a href="co2-flux-data-red-clover-valley.html#cb22-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm, <span class="at">formula=</span>y<span class="sc">~</span><span class="fu">poly</span>(x,ord,<span class="at">raw=</span>T))</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 </div>
-<div id="poly-3" class="section level3 hasAnchor" number="8.4.3">
-<h3><span class="header-section-number">8.4.3</span> poly 3<a href="co2-flux-data-red-clover-valley.html#poly-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="co2-flux-data-red-clover-valley.html#cb66-1" tabindex="-1"></a>ord <span class="ot">=</span> <span class="dv">3</span></span>
-<span id="cb66-2"><a href="co2-flux-data-red-clover-valley.html#cb66-2" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(GPP_sum <span class="sc">~</span> <span class="fu">poly</span>(PAR_ave, ord, <span class="at">raw=</span>T), <span class="at">data=</span>Mountflux))</span></code></pre></div>
+<div id="poly-3" class="section level3 hasAnchor" number="9.4.3">
+<h3><span class="header-section-number">9.4.3</span> poly 3<a href="co2-flux-data-red-clover-valley.html#poly-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="co2-flux-data-red-clover-valley.html#cb23-1" tabindex="-1"></a>ord <span class="ot">=</span> <span class="dv">3</span></span>
+<span id="cb23-2"><a href="co2-flux-data-red-clover-valley.html#cb23-2" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(GPP_sum <span class="sc">~</span> <span class="fu">poly</span>(PAR_ave, ord, <span class="at">raw=</span>T), <span class="at">data=</span>Mountflux))</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = GPP_sum ~ poly(PAR_ave, ord, raw = T), data = Mountflux)
@@ -466,14 +473,14 @@ Then I used <code>pivot_longer</code> to send the CO2 Flux Competent values to a
 ## Residual standard error: 5.996 on 902 degrees of freedom
 ## Multiple R-squared:  0.7001, Adjusted R-squared:  0.6991 
 ## F-statistic: 701.9 on 3 and 902 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="co2-flux-data-red-clover-valley.html#cb68-1" tabindex="-1"></a><span class="fu">ggplot</span>(Mountflux, <span class="fu">aes</span>(PAR_ave, GPP_sum)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb68-2"><a href="co2-flux-data-red-clover-valley.html#cb68-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm, <span class="at">formula=</span>y<span class="sc">~</span><span class="fu">poly</span>(x,ord,<span class="at">raw=</span>T))</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-47-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="co2-flux-data-red-clover-valley.html#cb25-1" tabindex="-1"></a><span class="fu">ggplot</span>(Mountflux, <span class="fu">aes</span>(PAR_ave, GPP_sum)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb25-2"><a href="co2-flux-data-red-clover-valley.html#cb25-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm, <span class="at">formula=</span>y<span class="sc">~</span><span class="fu">poly</span>(x,ord,<span class="at">raw=</span>T))</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 </div>
-<div id="poly-4" class="section level3 hasAnchor" number="8.4.4">
-<h3><span class="header-section-number">8.4.4</span> poly 4<a href="co2-flux-data-red-clover-valley.html#poly-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="co2-flux-data-red-clover-valley.html#cb69-1" tabindex="-1"></a>ord <span class="ot">=</span> <span class="dv">4</span></span>
-<span id="cb69-2"><a href="co2-flux-data-red-clover-valley.html#cb69-2" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(GPP_sum <span class="sc">~</span> <span class="fu">poly</span>(PAR_ave, ord, <span class="at">raw=</span>T), <span class="at">data=</span>Mountflux))</span></code></pre></div>
+<div id="poly-4" class="section level3 hasAnchor" number="9.4.4">
+<h3><span class="header-section-number">9.4.4</span> poly 4<a href="co2-flux-data-red-clover-valley.html#poly-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="co2-flux-data-red-clover-valley.html#cb26-1" tabindex="-1"></a>ord <span class="ot">=</span> <span class="dv">4</span></span>
+<span id="cb26-2"><a href="co2-flux-data-red-clover-valley.html#cb26-2" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(GPP_sum <span class="sc">~</span> <span class="fu">poly</span>(PAR_ave, ord, <span class="at">raw=</span>T), <span class="at">data=</span>Mountflux))</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = GPP_sum ~ poly(PAR_ave, ord, raw = T), data = Mountflux)
@@ -495,14 +502,14 @@ Then I used <code>pivot_longer</code> to send the CO2 Flux Competent values to a
 ## Residual standard error: 5.85 on 901 degrees of freedom
 ## Multiple R-squared:  0.7148, Adjusted R-squared:  0.7135 
 ## F-statistic: 564.5 on 4 and 901 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="co2-flux-data-red-clover-valley.html#cb71-1" tabindex="-1"></a><span class="fu">ggplot</span>(Mountflux, <span class="fu">aes</span>(PAR_ave, GPP_sum)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb71-2"><a href="co2-flux-data-red-clover-valley.html#cb71-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm, <span class="at">formula=</span>y<span class="sc">~</span><span class="fu">poly</span>(x,ord,<span class="at">raw=</span>T))</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-48-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="co2-flux-data-red-clover-valley.html#cb28-1" tabindex="-1"></a><span class="fu">ggplot</span>(Mountflux, <span class="fu">aes</span>(PAR_ave, GPP_sum)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb28-2"><a href="co2-flux-data-red-clover-valley.html#cb28-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm, <span class="at">formula=</span>y<span class="sc">~</span><span class="fu">poly</span>(x,ord,<span class="at">raw=</span>T))</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 </div>
-<div id="poly-5" class="section level3 hasAnchor" number="8.4.5">
-<h3><span class="header-section-number">8.4.5</span> poly 5<a href="co2-flux-data-red-clover-valley.html#poly-5" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="co2-flux-data-red-clover-valley.html#cb72-1" tabindex="-1"></a>ord <span class="ot">=</span> <span class="dv">5</span></span>
-<span id="cb72-2"><a href="co2-flux-data-red-clover-valley.html#cb72-2" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(GPP_sum <span class="sc">~</span> <span class="fu">poly</span>(PAR_ave, ord, <span class="at">raw=</span>T), <span class="at">data=</span>Mountflux))</span></code></pre></div>
+<div id="poly-5" class="section level3 hasAnchor" number="9.4.5">
+<h3><span class="header-section-number">9.4.5</span> poly 5<a href="co2-flux-data-red-clover-valley.html#poly-5" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="co2-flux-data-red-clover-valley.html#cb29-1" tabindex="-1"></a>ord <span class="ot">=</span> <span class="dv">5</span></span>
+<span id="cb29-2"><a href="co2-flux-data-red-clover-valley.html#cb29-2" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(GPP_sum <span class="sc">~</span> <span class="fu">poly</span>(PAR_ave, ord, <span class="at">raw=</span>T), <span class="at">data=</span>Mountflux))</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = GPP_sum ~ poly(PAR_ave, ord, raw = T), data = Mountflux)
@@ -525,15 +532,15 @@ Then I used <code>pivot_longer</code> to send the CO2 Flux Competent values to a
 ## Residual standard error: 5.838 on 900 degrees of freedom
 ## Multiple R-squared:  0.7163, Adjusted R-squared:  0.7147 
 ## F-statistic: 454.4 on 5 and 900 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="co2-flux-data-red-clover-valley.html#cb74-1" tabindex="-1"></a><span class="fu">ggplot</span>(Mountflux, <span class="fu">aes</span>(PAR_ave, GPP_sum)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb74-2"><a href="co2-flux-data-red-clover-valley.html#cb74-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm, <span class="at">formula=</span>y<span class="sc">~</span><span class="fu">poly</span>(x,ord,<span class="at">raw=</span>T))</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-49-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="co2-flux-data-red-clover-valley.html#cb31-1" tabindex="-1"></a><span class="fu">ggplot</span>(Mountflux, <span class="fu">aes</span>(PAR_ave, GPP_sum)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb31-2"><a href="co2-flux-data-red-clover-valley.html#cb31-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm, <span class="at">formula=</span>y<span class="sc">~</span><span class="fu">poly</span>(x,ord,<span class="at">raw=</span>T))</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 </div>
 </div>
-<div id="power-regression" class="section level2 hasAnchor" number="8.5">
-<h2><span class="header-section-number">8.5</span> power regression<a href="co2-flux-data-red-clover-valley.html#power-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="co2-flux-data-red-clover-valley.html#cb75-1" tabindex="-1"></a>powerModel <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(GPP_sum) <span class="sc">~</span> <span class="fu">log</span>(PAR_ave), <span class="at">data=</span>Mountflux)</span>
-<span id="cb75-2"><a href="co2-flux-data-red-clover-valley.html#cb75-2" tabindex="-1"></a><span class="fu">summary</span>(powerModel)</span></code></pre></div>
+<div id="power-law-relationship" class="section level2 hasAnchor" number="9.5">
+<h2><span class="header-section-number">9.5</span> power law relationship<a href="co2-flux-data-red-clover-valley.html#power-law-relationship" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="co2-flux-data-red-clover-valley.html#cb32-1" tabindex="-1"></a>powerModel <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(GPP_sum) <span class="sc">~</span> <span class="fu">log</span>(PAR_ave), <span class="at">data=</span>Mountflux)</span>
+<span id="cb32-2"><a href="co2-flux-data-red-clover-valley.html#cb32-2" tabindex="-1"></a><span class="fu">summary</span>(powerModel)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = log(GPP_sum) ~ log(PAR_ave), data = Mountflux)
@@ -552,25 +559,94 @@ Then I used <code>pivot_longer</code> to send the CO2 Flux Competent values to a
 ## Residual standard error: 0.7199 on 904 degrees of freedom
 ## Multiple R-squared:  0.4995, Adjusted R-squared:  0.499 
 ## F-statistic: 902.2 on 1 and 904 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="co2-flux-data-red-clover-valley.html#cb77-1" tabindex="-1"></a><span class="fu">ggplot</span>(Mountflux, <span class="fu">aes</span>(<span class="fu">log</span>(PAR_ave), <span class="fu">log</span>(GPP_sum))) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb77-2"><a href="co2-flux-data-red-clover-valley.html#cb77-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm)</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-50-1.png" width="75%" style="display: block; margin: auto;" />
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="co2-flux-data-red-clover-valley.html#cb34-1" tabindex="-1"></a><span class="fu">ggplot</span>(Mountflux, <span class="fu">aes</span>(<span class="fu">log</span>(PAR_ave), <span class="fu">log</span>(GPP_sum))) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb34-2"><a href="co2-flux-data-red-clover-valley.html#cb34-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm)</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-19-1.png" width="672" />
 Now plot without the log transformed axes, we’ll need to create the curve with the model, using the coefficients.</p>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="co2-flux-data-red-clover-valley.html#cb78-1" tabindex="-1"></a>coeff <span class="ot">=</span> <span class="fu">exp</span>(powerModel<span class="sc">$</span>coefficients[<span class="dv">1</span>])</span>
-<span id="cb78-2"><a href="co2-flux-data-red-clover-valley.html#cb78-2" tabindex="-1"></a>power <span class="ot">=</span> powerModel<span class="sc">$</span>coefficients[<span class="dv">2</span>]</span>
-<span id="cb78-3"><a href="co2-flux-data-red-clover-valley.html#cb78-3" tabindex="-1"></a>fit_func <span class="ot">&lt;-</span> <span class="cf">function</span>(x) coeff<span class="sc">*</span>x<span class="sc">^</span>power</span>
-<span id="cb78-4"><a href="co2-flux-data-red-clover-valley.html#cb78-4" tabindex="-1"></a></span>
-<span id="cb78-5"><a href="co2-flux-data-red-clover-valley.html#cb78-5" tabindex="-1"></a>fluxPlot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(Mountflux) <span class="sc">+</span></span>
-<span id="cb78-6"><a href="co2-flux-data-red-clover-valley.html#cb78-6" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>PAR_ave,<span class="at">y=</span>GPP_sum))</span>
-<span id="cb78-7"><a href="co2-flux-data-red-clover-valley.html#cb78-7" tabindex="-1"></a>fluxPlot <span class="ot">&lt;-</span> fluxPlot <span class="sc">+</span></span>
-<span id="cb78-8"><a href="co2-flux-data-red-clover-valley.html#cb78-8" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span>fit_func, <span class="at">color=</span><span class="st">&quot;orange&quot;</span>,<span class="at">lwd=</span><span class="dv">2</span>, <span class="at">alpha=</span><span class="fl">0.5</span>)</span>
-<span id="cb78-9"><a href="co2-flux-data-red-clover-valley.html#cb78-9" tabindex="-1"></a>fluxPlot</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-51-1.png" width="75%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="co2-flux-data-red-clover-valley.html#cb79-1" tabindex="-1"></a>fit_eq <span class="ot">=</span> <span class="fu">paste</span>(<span class="st">&quot;y = &quot;</span>, <span class="fu">round</span>(coeff,<span class="dv">4</span>), <span class="st">&quot; x^&quot;</span>, <span class="fu">round</span>(power,<span class="dv">3</span>))</span>
-<span id="cb79-2"><a href="co2-flux-data-red-clover-valley.html#cb79-2" tabindex="-1"></a>fluxPlot <span class="ot">&lt;-</span> fluxPlot <span class="sc">+</span></span>
-<span id="cb79-3"><a href="co2-flux-data-red-clover-valley.html#cb79-3" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>,<span class="at">x=</span><span class="dv">200</span>,<span class="at">y=</span><span class="dv">40</span>,<span class="at">label=</span>fit_eq,<span class="at">size=</span><span class="dv">6</span>)</span>
-<span id="cb79-4"><a href="co2-flux-data-red-clover-valley.html#cb79-4" tabindex="-1"></a>fluxPlot</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-52-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="co2-flux-data-red-clover-valley.html#cb36-1" tabindex="-1"></a>coeff <span class="ot">=</span> <span class="fu">exp</span>(powerModel<span class="sc">$</span>coefficients[<span class="dv">1</span>])</span>
+<span id="cb36-2"><a href="co2-flux-data-red-clover-valley.html#cb36-2" tabindex="-1"></a>power <span class="ot">=</span> powerModel<span class="sc">$</span>coefficients[<span class="dv">2</span>]</span>
+<span id="cb36-3"><a href="co2-flux-data-red-clover-valley.html#cb36-3" tabindex="-1"></a>fit_func <span class="ot">&lt;-</span> <span class="cf">function</span>(x) coeff<span class="sc">*</span>x<span class="sc">^</span>power</span>
+<span id="cb36-4"><a href="co2-flux-data-red-clover-valley.html#cb36-4" tabindex="-1"></a></span>
+<span id="cb36-5"><a href="co2-flux-data-red-clover-valley.html#cb36-5" tabindex="-1"></a>fluxPlot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(Mountflux) <span class="sc">+</span></span>
+<span id="cb36-6"><a href="co2-flux-data-red-clover-valley.html#cb36-6" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>PAR_ave,<span class="at">y=</span>GPP_sum))</span>
+<span id="cb36-7"><a href="co2-flux-data-red-clover-valley.html#cb36-7" tabindex="-1"></a>fluxPlot <span class="ot">&lt;-</span> fluxPlot <span class="sc">+</span></span>
+<span id="cb36-8"><a href="co2-flux-data-red-clover-valley.html#cb36-8" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span>fit_func, <span class="at">color=</span><span class="st">&quot;orange&quot;</span>,<span class="at">lwd=</span><span class="dv">2</span>, <span class="at">alpha=</span><span class="fl">0.5</span>)</span>
+<span id="cb36-9"><a href="co2-flux-data-red-clover-valley.html#cb36-9" tabindex="-1"></a>fluxPlot</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="co2-flux-data-red-clover-valley.html#cb37-1" tabindex="-1"></a>fit_eq <span class="ot">=</span> <span class="fu">paste</span>(<span class="st">&quot;y = &quot;</span>, <span class="fu">round</span>(coeff,<span class="dv">6</span>), <span class="st">&quot; x^&quot;</span>, <span class="fu">round</span>(power,<span class="dv">3</span>))</span>
+<span id="cb37-2"><a href="co2-flux-data-red-clover-valley.html#cb37-2" tabindex="-1"></a>fluxPlot <span class="ot">&lt;-</span> fluxPlot <span class="sc">+</span></span>
+<span id="cb37-3"><a href="co2-flux-data-red-clover-valley.html#cb37-3" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>,<span class="at">x=</span><span class="dv">200</span>,<span class="at">y=</span><span class="dv">40</span>,<span class="at">label=</span>fit_eq,<span class="at">size=</span><span class="dv">4</span>)</span>
+<span id="cb37-4"><a href="co2-flux-data-red-clover-valley.html#cb37-4" tabindex="-1"></a>fluxPlot</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-21-1.png" width="672" />
+## Another curve fit – of gullies that may follow a rate law of growth
+from Graf WL (1977). The rate law in fluvial geomorphology. Am. J. Sci 277: 178-191.</p>
+<p>The rate-law model that Graf used employs a half life,</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="co2-flux-data-red-clover-valley.html#cb38-1" tabindex="-1"></a><span class="fu">library</span>(igisci); <span class="fu">library</span>(tidyverse)</span>
+<span id="cb38-2"><a href="co2-flux-data-red-clover-valley.html#cb38-2" tabindex="-1"></a>gullyGrowth <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">ex</span>(<span class="st">&quot;gully/gullyGrowth.csv&quot;</span>))</span></code></pre></div>
+<pre><code>## Rows: 36 Columns: 3
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (1): type
+## dbl (2): distance, age_yrs
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="co2-flux-data-red-clover-valley.html#cb40-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>gullyGrowth, <span class="fu">aes</span>(<span class="at">x=</span>distance, <span class="at">y=</span>age_yrs, <span class="at">col=</span>type)) <span class="sc">+</span></span>
+<span id="cb40-2"><a href="co2-flux-data-red-clover-valley.html#cb40-2" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="co2-flux-data-red-clover-valley.html#cb41-1" tabindex="-1"></a>gully <span class="ot">&lt;-</span> gullyGrowth <span class="sc">|&gt;</span> <span class="fu">filter</span>(type<span class="sc">==</span><span class="st">&quot;gully&quot;</span>)</span>
+<span id="cb41-2"><a href="co2-flux-data-red-clover-valley.html#cb41-2" tabindex="-1"></a>gullyMod <span class="ot">&lt;-</span> <span class="fu">nls</span>(age_yrs<span class="sc">~</span>(Vm)<span class="sc">*</span>distance<span class="sc">/</span>(K<span class="sc">+</span>distance), <span class="at">data=</span>gully, <span class="at">start=</span><span class="fu">list</span>(<span class="at">Vm=</span><span class="dv">1</span>,<span class="at">K=</span><span class="dv">1</span>))</span>
+<span id="cb41-3"><a href="co2-flux-data-red-clover-valley.html#cb41-3" tabindex="-1"></a><span class="fu">summary</span>(gullyMod)</span></code></pre></div>
+<pre><code>## 
+## Formula: age_yrs ~ (Vm) * distance/(K + distance)
+## 
+## Parameters:
+##    Estimate Std. Error t value Pr(&gt;|t|)    
+## Vm   86.156      4.733  18.204 4.86e-13 ***
+## K   152.503     23.546   6.477 4.31e-06 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 3.947 on 18 degrees of freedom
+## 
+## Number of iterations to convergence: 9 
+## Achieved convergence tolerance: 8.225e-07</code></pre>
+<p><strong>Calculate residual error</strong></p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="co2-flux-data-red-clover-valley.html#cb43-1" tabindex="-1"></a>sse <span class="ot">&lt;-</span> gullyMod<span class="sc">$</span>m<span class="sc">$</span><span class="fu">deviance</span>()</span>
+<span id="cb43-2"><a href="co2-flux-data-red-clover-valley.html#cb43-2" tabindex="-1"></a>null <span class="ot">&lt;-</span> <span class="fu">lm</span>(age_yrs<span class="sc">~</span><span class="dv">1</span>, <span class="at">data=</span>gully)</span>
+<span id="cb43-3"><a href="co2-flux-data-red-clover-valley.html#cb43-3" tabindex="-1"></a>sst <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">summary.aov</span>(null)[[<span class="dv">1</span>]])<span class="sc">$</span>Sum.Sq</span>
+<span id="cb43-4"><a href="co2-flux-data-red-clover-valley.html#cb43-4" tabindex="-1"></a>percent_variation_explained <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span>(sst<span class="sc">-</span>sse)<span class="sc">/</span>sst</span>
+<span id="cb43-5"><a href="co2-flux-data-red-clover-valley.html#cb43-5" tabindex="-1"></a>percent_variation_explained</span></code></pre></div>
+<pre><code>## [1] 95.50215</code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="co2-flux-data-red-clover-valley.html#cb45-1" tabindex="-1"></a>proto <span class="ot">&lt;-</span> gullyGrowth <span class="sc">|&gt;</span> <span class="fu">filter</span>(type<span class="sc">==</span><span class="st">&quot;proto-gully&quot;</span>)</span>
+<span id="cb45-2"><a href="co2-flux-data-red-clover-valley.html#cb45-2" tabindex="-1"></a>protoMod <span class="ot">&lt;-</span> <span class="fu">nls</span>(age_yrs<span class="sc">~</span>(Vm)<span class="sc">*</span>distance<span class="sc">/</span>(K<span class="sc">+</span>distance), <span class="at">data=</span>proto, <span class="at">start=</span><span class="fu">list</span>(<span class="at">Vm=</span><span class="dv">1</span>,<span class="at">K=</span><span class="dv">1</span>))</span>
+<span id="cb45-3"><a href="co2-flux-data-red-clover-valley.html#cb45-3" tabindex="-1"></a><span class="fu">summary</span>(protoMod)</span></code></pre></div>
+<pre><code>## 
+## Formula: age_yrs ~ (Vm) * distance/(K + distance)
+## 
+## Parameters:
+##    Estimate Std. Error t value Pr(&gt;|t|)    
+## Vm   141.36      12.66  11.162 2.35e-08 ***
+## K     35.84      20.14   1.779   0.0969 .  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 21.17 on 14 degrees of freedom
+## 
+## Number of iterations to convergence: 11 
+## Achieved convergence tolerance: 8.318e-06</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="co2-flux-data-red-clover-valley.html#cb47-1" tabindex="-1"></a>sse <span class="ot">&lt;-</span> protoMod<span class="sc">$</span>m<span class="sc">$</span><span class="fu">deviance</span>()</span>
+<span id="cb47-2"><a href="co2-flux-data-red-clover-valley.html#cb47-2" tabindex="-1"></a>null <span class="ot">&lt;-</span> <span class="fu">lm</span>(age_yrs<span class="sc">~</span><span class="dv">1</span>, <span class="at">data=</span>proto)</span>
+<span id="cb47-3"><a href="co2-flux-data-red-clover-valley.html#cb47-3" tabindex="-1"></a>sst <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">summary.aov</span>(null)[[<span class="dv">1</span>]])<span class="sc">$</span>Sum.Sq</span>
+<span id="cb47-4"><a href="co2-flux-data-red-clover-valley.html#cb47-4" tabindex="-1"></a>percent_variation_explained <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span>(sst<span class="sc">-</span>sse)<span class="sc">/</span>sst</span>
+<span id="cb47-5"><a href="co2-flux-data-red-clover-valley.html#cb47-5" tabindex="-1"></a>percent_variation_explained</span></code></pre></div>
+<pre><code>## [1] 42.44041</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="co2-flux-data-red-clover-valley.html#cb49-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>gullyGrowth, <span class="fu">aes</span>(<span class="at">x=</span>distance)) <span class="sc">+</span></span>
+<span id="cb49-2"><a href="co2-flux-data-red-clover-valley.html#cb49-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>age_yrs, <span class="at">col=</span>type)) <span class="sc">+</span></span>
+<span id="cb49-3"><a href="co2-flux-data-red-clover-valley.html#cb49-3" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>gully, <span class="fu">aes</span>(<span class="at">x=</span>distance, <span class="at">y=</span><span class="fu">predict</span>(gullyMod,gully))) <span class="sc">+</span></span>
+<span id="cb49-4"><a href="co2-flux-data-red-clover-valley.html#cb49-4" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>proto, <span class="fu">aes</span>(<span class="at">x=</span>distance, <span class="at">y=</span><span class="fu">predict</span>(protoMod,proto)))</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
 
 </div>
 </div>

@@ -1,0 +1,686 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+]{book}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.33,0.33,0.33}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.27,0.27,0.27}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.06,0.06,0.06}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.5,0.5,0.5}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.27,0.27,0.27}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.27,0.27,0.27}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.06,0.06,0.06}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.14,0.14,0.14}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.06,0.06,0.06}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.27,0.27,0.27}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.27,0.27,0.27}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.43,0.43,0.43}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.43,0.43,0.43}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.5,0.5,0.5}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.5,0.5,0.5}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0,0,0}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.5,0.5,0.5}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage[bf,singlelinecheck=off]{caption}
+\captionsetup[table]{labelsep=space}
+\captionsetup[figure]{labelsep=space}
+\usepackage[scale=.8]{sourcecodepro}
+\usepackage{makeidx}
+\makeindex
+\frontmatter
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Environmental Data Science Addenda},
+  pdfauthor={Jerry Davis, SFSU Institute for Geographic Information Science},
+  colorlinks=true,
+  linkcolor={Maroon},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Environmental Data Science Addenda}
+\author{Jerry Davis, SFSU Institute for Geographic Information Science}
+\date{2023-12-29}
+
+\begin{document}
+\maketitle
+
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\listoffigures
+\mainmatter
+
+\hypertarget{background-goals-and-data}{%
+\chapter{Background, Goals and Data}\label{background-goals-and-data}}
+
+The purpose of this bookdown book is to provide Addenda to Introduction to Environmental Data Science, at \url{https://bookdown.org/igisc/EnvDataSci/} to include case studies, extended and experimental methods, and guides for building
+packages and RMarkdown documents.
+
+\hypertarget{structure-of-the-addenda}{%
+\section{Structure of the Addenda}\label{structure-of-the-addenda}}
+
+These addenda may include:
+
+\begin{itemize}
+\tightlist
+\item
+  Case studies and extended methods, such as
+
+  \begin{itemize}
+  \tightlist
+  \item
+    air pollution studies
+  \item
+    mapping methods
+  \item
+    exploring other interpolation methods
+  \item
+    models, e.g.~a more extended seabird model
+  \item
+    meadow research we're doing, in time and space domains
+  \item
+    other imagery classification methods
+  \end{itemize}
+\item
+  Guides
+
+  \begin{itemize}
+  \tightlist
+  \item
+    RMarkdown
+  \item
+    Building code and data packages on GitHub
+  \end{itemize}
+\end{itemize}
+
+See specifics in the table of contents.
+
+\emph{Note: some of these methods have made it into the main book, possibly in reduced form. The intention is in part to allow for a more extensive treatment in this addenda, and for the clearest and most succinct examples to make it to the next edition of the book, possibly replacing methods that might be moved here, as useful though not essential. And that's a good example of a non-succinct sentence, so it belongs here\ldots{}}
+
+\hypertarget{software-and-data}{%
+\section{Software and Data}\label{software-and-data}}
+
+Some things covered in the main book, but repeated here for convenience.
+
+\begin{verbatim}
+## [1] "This book was produced in RStudio using R version 4.3.1 (2023-06-16 ucrt)"
+\end{verbatim}
+
+For a start, you'll need to have R and \index{RStudio}RStudio installed, then you'll need to install various \index{packages}packages to support specific chapters and sections. No instructions are provided here, since you should know how to install packages in RStudio.
+
+From time to time, you'll want to update your installed packages, and that usually happens when something doesn't work and maybe the dependencies of one package on another gets broken with a change in a package. Fortunately, in the R world, especially at the main repository at CRAN, there's a lot of effort put into making sure packages work together, so usually there are no surprises if you're using the most current versions.
+
+Once a package like \texttt{dplyr} is installed, you can access all of its functions and data by adding a library call, like \ldots{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\ldots{} which you \emph{will} want to include in your code, or to provide access to multiple libraries in the tidyverse, you can use \texttt{library(tidyverse)}. Alternatively, if you're only using maybe one function out of an installed package, you can call that function with the \texttt{::} separator, like \texttt{dplyr::select()}. This method has another advantage in avoiding problems with duplicate names -- and for instance we'll generally call \texttt{dplyr::select()} this way.
+
+\hypertarget{data}{%
+\subsection{Data}\label{data}}
+
+We'll be using data from various sources, including data on CRAN like the code packages above which you install the same way -- so use \texttt{install.packages("palmerpenguins")}.
+
+\index{data}We've also created a repository on GitHub that includes data we've developed in the Institute for Geographic Information Science (iGISc) at SFSU, and you'll need to install that package a slightly different way.
+
+\begin{center}\includegraphics[width=0.33\linewidth]{img/IGIScSFSU281200} \end{center}
+
+GitHub packages \index{GitHub packages}require a bit more work on the user's part since we need to first install \texttt{remotes}\footnote{Note: you can also use \texttt{devtools} instead of \texttt{remotes} if you have that installed. They do the same thing; \texttt{remotes} is a subset of \texttt{devtools}. If you see a message about Rtools, you can ignore it since that is only needed for building tools from C++ and things like that.}, then use that to install the GitHub data package:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"remotes"}\NormalTok{)}
+\NormalTok{remotes}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"iGISc/igisci"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\index{igisci}Then you can access it just like other built-in data by including:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(igisci)}
+\end{Highlighting}
+\end{Shaded}
+
+To see what's in it, you'll see the various datasets listed in:
+
+\begin{verbatim}
+data(package="igisci")
+\end{verbatim}
+
+For instance, Figure \ref{fig:indexCAcounties} is a map of California counties using the CA\_counties \texttt{sf} feature data. We'll be looking at the \texttt{sf} (Simple Features) package later in the Spatial section of the book, but seeing \texttt{library(sf)}, this is one place where you'd need to have installed another package, with \texttt{install.packages("sf")}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse); }\FunctionTok{library}\NormalTok{(igisci); }\FunctionTok{library}\NormalTok{(sf)}
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{CA\_counties) }\SpecialCharTok{+} \FunctionTok{geom\_sf}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.75\linewidth]{EnvDataSciAddenda_files/figure-latex/indexCAcounties-1} 
+
+}
+
+\caption{California counties simple features data in igisci package}\label{fig:indexCAcounties}
+\end{figure}
+
+The package datasets can be used directly as \texttt{sf} data or data frames. And similarly to functions, you can access the (previously installed) data set by prefacing with \texttt{igisci::} this way, without having to load the library. This might be useful in a one-off operation:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mean}\NormalTok{(igisci}\SpecialCharTok{::}\NormalTok{sierraFeb}\SpecialCharTok{$}\NormalTok{LATITUDE)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 38.3192
+\end{verbatim}
+
+Raw data such as \texttt{.csv} files can also be read from the \texttt{extdata} folder that is installed on your computer when you install the package, using code such as:
+
+\begin{verbatim}
+csvPath <- system.file("extdata","TRI/TRI_1987_BaySites.csv", package="igisci")
+TRI87 <- read_csv(csvPath)
+\end{verbatim}
+
+or something similar for shapefiles, such as:
+
+\begin{verbatim}
+shpPath <- system.file("extdata","marbles/trails.shp", package="igisci")
+trails <- st_read(shpPath)
+\end{verbatim}
+
+And we'll find that including most of the above arcanity in a function will help. We'll look at functions later, but here's a function that we'll use a lot for setting up reading data from the extdata folder:
+
+\begin{verbatim}
+ex <- function(dta){system.file("extdata",dta,package="igisci")}
+\end{verbatim}
+
+And this \texttt{ex()}function is needed so often that it's installed in the \texttt{igisci} package, so if you have \texttt{library(igisci)} in effect, you can just use it like this:
+
+\begin{verbatim}
+trails <- st_read(ex("marbles/trails.shp"))
+\end{verbatim}
+
+But how do we see what's in the \texttt{extdata} folder? We can't use the \texttt{data()} function, so we would have to dig for the folder where the igisci package gets installed, which is buried pretty deeply in your user profile. So I wrote another function \texttt{exfiles()} that creates a data frame showing all of the files and the paths to use. In RStudio you could access it with \texttt{View(exfiles())} or we could use a datatable (you'll need to have installed ``DT''). You can use the path using the \texttt{ex()} function with any function that needs it to read data, like \texttt{read.csv(ex(\textquotesingle{}CA/CA\_ClimateNormals.csv\textquotesingle{}))}, or just enter that \texttt{ex()} call in the console like \texttt{ex(\textquotesingle{}CA/CA\_ClimateNormals.csv\textquotesingle{})} to display where on your computer the installed data reside.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{DT}\SpecialCharTok{::}\FunctionTok{datatable}\NormalTok{(}\FunctionTok{exfiles}\NormalTok{(), }\AttributeTok{options=}\FunctionTok{list}\NormalTok{(}\AttributeTok{scrollX=}\NormalTok{T), }\AttributeTok{rownames=}\NormalTok{F)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{img/exfilesDT} \end{center}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{acknowledgements}{%
+\section{Acknowledgements}\label{acknowledgements}}
+
+This compilation includes data and methods gathered by students in San Francisco State's GEOG 604/704 \emph{Environmental Data Science} class, colleagues in the Department of Geography \& Environment and NGOs such as PointBlue. And thanks again to Anna Studwell for the nice cover art: ``Dandelion fluff -- Ephemeral stalk sheds seeds to the universe''.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\emph{Environmental Data Science Addenda} © Jerry D. Davis, ORCID 0000-0002-5369-1197, Institute for Geographic Information Science, San Francisco State University, all rights reserved.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{building-a-package-on-github-for-data-and-code}{%
+\chapter{Building a Package on GitHub for Data and Code}\label{building-a-package-on-github-for-data-and-code}}
+
+These are just some notes mostly on building packages, based mostly on a couple of great sources which you should use to learn the process:
+
+\begin{itemize}
+\item
+  \emph{R Packages} \url{https://r-pkgs.org/} (Wickham and Bryan (\protect\hyperlink{ref-r-pkgs}{n.d.}))
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Includes a quick run through in chapter 2 for building a package, with a function
+  \item
+    Chapter 14 ``External data'' goes over how to build data into the package
+  \item
+    Various chapter references below refer to this source
+  \end{itemize}
+\item
+  \emph{Happy Git and GitHub for the useR} \url{https://happygitwithr.com/} (Bryan (\protect\hyperlink{ref-happygitwithr}{n.d.}))
+
+  \begin{itemize}
+  \tightlist
+  \item
+    All about how to get Git and GitHub working
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{git-and-github}{%
+\section{Git and GitHub}\label{git-and-github}}
+
+You'll need to learn about using Git methods to host a package on GitHub (\url{https://github.com}), where you'll also need at least a free account. See \emph{Happy Git and GitHub for the useR} \url{https://happygitwithr.com/} (Bryan (\protect\hyperlink{ref-happygitwithr}{n.d.})) to learn everything you'll need for this. Some key takeaways:
+
+\begin{itemize}
+\item
+  The purpose of Git is version control, and \url{https://github.com} is a place to host package repositories (repos) that use this. Methods include keeping track of all changes in your package, including all files in the folders.
+\item
+  You'll need to use GitHub to create an account and connect with collaborators. And you can use it for setting everything up in your package repository.
+\item
+  You'll need to have the same folders on your local computer, and a method for \emph{committing} and \emph{pushing} up changes to GitHub.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    You can use RStudio for most of this, and you'll be making all of your edits on this anyway. You'll see any changes showing up in the Git tab, where you can stage, commit, and push them to your repo.\\
+  \item
+    GitHub Desktop can also do commits, pushes and pulls, and is very handy for updating changes to GitHub resulting from any package editing done in RStudio (or from any other changes to files and folders in the package folder, such as external data added to \texttt{extdata}). You might also find GitHub Desktop better for dealing with moving external files and folders manually stored in the extdata folder.
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{some-notes-on-the-rstudio-process}{%
+\section{Some notes on the RStudio process}\label{some-notes-on-the-rstudio-process}}
+
+See Chapter 2 in \emph{R Packages} (Wickham and Bryan (\protect\hyperlink{ref-r-pkgs}{n.d.})) for a simple process. Some observations:
+
+\begin{itemize}
+\item
+  You need \texttt{devtools} and \texttt{usethis} packages.
+\item
+  You'll need to specify a folder with \texttt{create\_package}, and you might want to put it in a \texttt{GitHub} folder in \texttt{Documents}. It doesn't matter where, but it's useful to keep GitHub things together. Refer to Chapter 2 \url{https://r-pkgs.org/whole-game.html}.
+\item
+  This will create some essential files and folders:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{DESCRIPTION}: very important for naming and package information, which you'll be editing carefully
+  \item
+    \texttt{NAMESPACE}: where functions are declared, generated by \texttt{roxygen2}
+  \item
+    \texttt{R}: folder where your functions will go.
+  \end{itemize}
+\item
+  Ultimately, other folders and files are created, and there's a diagram in \url{https://r-pkgs.org/package-structure-state.html} that illustrates the structure.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{man}: documentation on all of your functions and data sets
+  \item
+    \texttt{inst}: various things go in here, but I've just used it for \texttt{extdata} where you can store .csv and other files
+  \item
+    \texttt{data}: data (as .rda files) that can be called up like \texttt{co2} in the base R package.
+  \end{itemize}
+\item
+  You might start by following the process in Chapter 2 for creating a simple package containing a simple function, using various \texttt{devtools} and \texttt{usethis} methods. This chapter also describes editing the \texttt{DESCRIPTION} file, using \texttt{roxygen2} to create the \texttt{man} file, how to document the function, and getting things ready to post to GitHub.
+\item
+  On getting things ready for GitHub, it's very useful to use \texttt{check()} from time to time to see if there are any errors in the various setup files, like \texttt{DESCRIPTION}, file \& folder structure, and documentation.
+\item
+  The process can be confusing, but the various RStudio methods and functions provided in \texttt{devtools} and \texttt{usethis} make it at least very easy to do if you follow directions, which are spelled out pretty clearly in the \emph{R Packages} book. We'll look at creating another function later in this appendix, following the method provided in \emph{R Packages}
+\end{itemize}
+
+\hypertarget{data-1}{%
+\section{Data}\label{data-1}}
+
+For our package, \texttt{igisci}, we provided data in two ways:
+
+\begin{itemize}
+\tightlist
+\item
+  raw data as CSVs, shapefiles and TIFFs (useful since rasters don't seem to be supported in rda)
+\item
+  \texttt{rda} files: normal external data that are ready to use as data frames and simple feature (sf) data
+\end{itemize}
+
+\hypertarget{raw-data-in-extdata}{%
+\subsection{Raw data in extdata}\label{raw-data-in-extdata}}
+
+Raw data (e.g.~CSVs, shapefiles, and rasters) can be simply stored in the \texttt{inst/extdata} folder. Just create those folders and put the files there. Make sure to include all the files (like the multiple files that go with a shapefile). Then, to access the data once the data package is installed, the user just needs to use the \texttt{system.file()} function to provide the path and then use that with the appropriate read function; e.g.~for a CSV, something like:
+
+\begin{verbatim}
+csvPath <- system.file("extdata","TRI/TRI_2017_CA.csv")
+TRI_2017_CA <- read_csv(csvPath)
+\end{verbatim}
+
+\ldots{} or by using the \texttt{igisci::ex()} function, can be written as
+
+\begin{verbatim}
+TRI_2017_CA <- read.csv(ex("TRI/TRI_2017_CA.csv"))
+\end{verbatim}
+
+\ldots{} which isn't much different from reading data in your RStudio project folder, so seemed a useful method to include in this book. And adding data to the data package by simply putting them in the \texttt{extdata} folder is very easy and also works for data files like TIFFs that aren't supported as \texttt{rda} files that we'll look at next.
+
+\hypertarget{binary-data-as-rda-files}{%
+\subsection{\texorpdfstring{Binary data as \texttt{rda} files}{Binary data as rda files}}\label{binary-data-as-rda-files}}
+
+For data needed frequently, similar to \texttt{co2} or other provided data in base R, you'll want to create binary data stored as \texttt{rda} files. These files need to be prepared from data in R and go in the data folder. The process is made very easy by using \texttt{usethis::use\_data()} to add data as rda files to the \texttt{data} folder. These data can be data frames, simple features, and I'm sure other things.
+
+I used a script \texttt{addData.R} that I put in the \texttt{inst} folder which built the data from some of the same files included in the extdata folder, with \texttt{usethis::use\_data()} to store it in the data folder. Here's a simple example with just a csv converted directly, and it takes care of storing the result in the \texttt{data} folder as an \texttt{.rda} file:
+
+\begin{verbatim}
+sierraFeb <- read_csv("inst/extdata/sierra/sierraFeb.csv")
+usethis::use_data(sierraFeb)
+\end{verbatim}
+
+\hypertarget{devtoolsdocument}{%
+\subsubsection{\texorpdfstring{\texttt{devtools::document()}}{devtools::document()}}\label{devtoolsdocument}}
+
+This creates documentation on the data sets, using the file \texttt{R/data.R}, which will need to have lines of code similar to the following to document each data set. Note that the name of the data set goes last, in quotes. The formatting of the field names and descriptions is a bit tricky and doesn't follow normal R rules. As a result, sometimes my field names don't exactly match the actual field names. Maybe I'll get around to changing the original field names with \texttt{rename}. Note that the organization is important, with the title of the data first, a blank line, then a description, etc.:
+
+\begin{verbatim}
+#' Sierra February climate data
+#'
+#' Selection from SierraData to only include February data
+#'
+#' @format A data frame with 82 entries and 7 variables selected and renamed \describe{
+#'   \item{STATION_NAME}{Station name}
+#'   \item{COUNTY}{County Name}
+#'   \item{ELEVATION}{Elevation in meters}
+#'   \item{LATITUDE}{Latitude in decimal degrees}
+#'   \item{LONGITUDE}{Longitude in decimal degrees}
+#'   \item{PRECIPITATION}{February Average Precipitation in mm}
+#'   \item{TEMPERATURE}{Febrary Average Temperature in degrees C}
+#' }
+#' @source \url{https://www.ncdc.noaa.gov/}
+"sierraFeb"
+\end{verbatim}
+
+Once these are on GitHub, a user can simply install the package with \texttt{devtools::install\_github("iGISc/igisci")} -- to use the \texttt{igisci} we created. Then to access the data just like built-in data, the user just needs to load that library with \texttt{library(igisci)}
+
+\hypertarget{removing-data}{%
+\subsubsection{Removing data}\label{removing-data}}
+
+There may be a better way, but what worked was removing the \texttt{rda} and corresponding \texttt{man} files. Also edited the \texttt{data.R} file to remove them from the \texttt{man} file maybe being created again.
+
+\hypertarget{code-functions}{%
+\section{Code (functions)}\label{code-functions}}
+
+You can build pretty extensive functions in a package, and you've been using these from a variety of packages. We'll just look at the simple example of a function we'll name \texttt{ex()} for making it easier to read data from the \texttt{extdata} folder of the \texttt{igisci} package. The methods shown here are based on \url{https://r-pkgs.org/} which you should refer to for more thorough documentation.
+
+Here's the function we'll create in the package. However, one caveat is that you want to add this after you've already installed the package with data, or you'll get an error.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ex }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(dta)\{}
+  \FunctionTok{system.file}\NormalTok{(}\StringTok{"extdata"}\NormalTok{,dta,}\AttributeTok{package=}\StringTok{"igisci"}\NormalTok{)}
+\NormalTok{  \}}
+\end{Highlighting}
+\end{Shaded}
+
+We want to use it where in our code we wanted to read a file from \texttt{extdata} but we want cleaner code that doesn't take up much space in code we're writing than just reading it from your workspace. There's a csv file in the \texttt{sierra} folder of \texttt{extdata} named \texttt{Sierra2LassenData.csv} that we could then read with:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{read.csv}\NormalTok{(}\FunctionTok{ex}\NormalTok{(}\StringTok{"sierra/sierraFebShort.csv"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        STATION    COUNTY ELEVATION LATITUDE LONGITUDE PRECIPITATION TEMPERATURE
+## 1     OROVILLE     Butte        52    39.52   -121.55           124        10.7
+## 2       AUBURN    Placer       394    38.91   -121.08           160         9.7
+## 3       SONORA  Tuolumne       511    37.97   -120.39           148         7.7
+## 4  PLACERVILLE El Dorado       564    38.70   -120.82           171         9.2
+## 5       COLFAX    Placer       725    39.09   -120.95           207         7.3
+## 6  NEVADA CITY    Nevada       848    39.25   -121.00           268         6.7
+## 7       QUINCY    Plumas      1042    39.94   -120.95           182         4.0
+## 8     YOSEMITE  Mariposa      1225    37.75   -119.59           169         5.0
+## 9      PORTOLA    Plumas      1478    39.81   -120.47            98         0.5
+## 10     TRUCKEE    Nevada      1775    39.33   -120.17           126        -1.1
+## 11  BRIDGEPORT      Mono      1972    38.26   -119.23            41        -2.2
+## 12  LEE VINING      Mono      2072    37.96   -119.12            72         0.4
+## 13       BODIE      Mono      2551    38.21   -119.01            40        -4.4
+\end{verbatim}
+
+\ldots{} and that doesn't take up much more code real estate than if you had a \texttt{"sierra/sierraFebShort.csv"} in your workspace/RStudio project folder. You just need to remember to also include \texttt{library(igisci)} in your code.
+
+As you can see, this function is already in the igisci package, but how did it get there? Here are the steps for this simple function.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Use \texttt{usethis::use\_r()} to create a script to hold your function(s). We'll just create one function, so we'll just name it the same name as the function, but you might want to have a set of maybe related functions in your script.
+\end{enumerate}
+
+\begin{verbatim}
+usethis::use_r("ex")
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Add the function code to the \texttt{ex.R} script created.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ex }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(dta)\{}
+  \FunctionTok{system.file}\NormalTok{(}\StringTok{"extdata"}\NormalTok{,dta,}\AttributeTok{package=}\StringTok{"igisci"}\NormalTok{)}
+\NormalTok{  \}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\item
+  Create the documentation skeleton while editing the script by using Insert Roxygen Skeleton from the RStudio Code menu.
+\item
+  Then fill in the various elements of the documentation (A title, parameters, what it returns and examples) which shows what you want the user to see with \texttt{?ex} or \texttt{?exfiles}, similar to this, and save the script. If you have more than one function, the documentation will go just above the function definition. See \url{https://r-pkgs.org/man.html}.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#\textquotesingle{} Access external data in package}
+\CommentTok{\#\textquotesingle{}}
+\CommentTok{\#\textquotesingle{} @param dta filename to access from extdata, including folders}
+\CommentTok{\#\textquotesingle{}}
+\CommentTok{\#\textquotesingle{} @return path to the file}
+\CommentTok{\#\textquotesingle{} @export}
+\CommentTok{\#\textquotesingle{}}
+\CommentTok{\#\textquotesingle{} @examples}
+\CommentTok{\#\textquotesingle{} read.csv(ex("sierra/sierraStations.csv"))}
+\NormalTok{ex }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(dta)\{}
+  \FunctionTok{system.file}\NormalTok{(}\StringTok{"extdata"}\NormalTok{,dta,}\AttributeTok{package=}\StringTok{"igisci"}\NormalTok{)}
+\NormalTok{\}}
+\CommentTok{\#\textquotesingle{} Listing contents of extdata from package}
+\CommentTok{\#\textquotesingle{} @param NA}
+\CommentTok{\#\textquotesingle{} @return tibble}
+\CommentTok{\#\textquotesingle{} @export}
+\CommentTok{\#\textquotesingle{}}
+\CommentTok{\#\textquotesingle{} @examples}
+\CommentTok{\#\textquotesingle{} view(exfiles())}
+\NormalTok{exfiles }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{()\{}
+  \FunctionTok{library}\NormalTok{(dplyr)}
+\NormalTok{  exfilesDF }\OtherTok{\textless{}{-}} \FunctionTok{tribble}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{dir,}\SpecialCharTok{\textasciitilde{}}\NormalTok{file,}\SpecialCharTok{\textasciitilde{}}\NormalTok{path,}\SpecialCharTok{\textasciitilde{}}\NormalTok{type)}
+  \ControlFlowTok{for}\NormalTok{(d }\ControlFlowTok{in} \FunctionTok{list.dirs}\NormalTok{(}\FunctionTok{ex}\NormalTok{(}\StringTok{""}\NormalTok{),}\AttributeTok{recursive=}\NormalTok{F))\{}
+    \CommentTok{\#print(d)}
+\NormalTok{    dsplit }\OtherTok{\textless{}{-}} \FunctionTok{strsplit}\NormalTok{(d,}\StringTok{"/"}\NormalTok{)}
+\NormalTok{    len }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(dsplit[[}\DecValTok{1}\NormalTok{]])}
+\NormalTok{    dir }\OtherTok{\textless{}{-}}\NormalTok{ dsplit[[}\DecValTok{1}\NormalTok{]][len]}
+    \ControlFlowTok{for}\NormalTok{(shp }\ControlFlowTok{in} \FunctionTok{list.files}\NormalTok{(d,}\AttributeTok{pattern=}\StringTok{"*.shp$"}\NormalTok{))\{}
+\NormalTok{      exfilesDF }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(exfilesDF,}\FunctionTok{tribble}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{dir,}\SpecialCharTok{\textasciitilde{}}\NormalTok{file,}\SpecialCharTok{\textasciitilde{}}\NormalTok{path,}\SpecialCharTok{\textasciitilde{}}\NormalTok{type,dir,shp,}\FunctionTok{paste0}\NormalTok{(}\StringTok{"ex(}\SpecialCharTok{\textbackslash{}\textquotesingle{}}\StringTok{"}\NormalTok{,dir,}\StringTok{"/"}\NormalTok{,shp,}\StringTok{"}\SpecialCharTok{\textbackslash{}\textquotesingle{}}\StringTok{)"}\NormalTok{),}\StringTok{"shapefile"}\NormalTok{))}
+\NormalTok{    \}}
+    \ControlFlowTok{for}\NormalTok{(tif }\ControlFlowTok{in} \FunctionTok{list.files}\NormalTok{(d,}\AttributeTok{pattern=}\StringTok{"*.tif$"}\NormalTok{))\{}
+\NormalTok{      exfilesDF }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(exfilesDF,}\FunctionTok{tribble}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{dir,}\SpecialCharTok{\textasciitilde{}}\NormalTok{file,}\SpecialCharTok{\textasciitilde{}}\NormalTok{path,}\SpecialCharTok{\textasciitilde{}}\NormalTok{type,dir,tif,}\FunctionTok{paste0}\NormalTok{(}\StringTok{"ex(}\SpecialCharTok{\textbackslash{}\textquotesingle{}}\StringTok{"}\NormalTok{,dir,}\StringTok{"/"}\NormalTok{,tif,}\StringTok{"}\SpecialCharTok{\textbackslash{}\textquotesingle{}}\StringTok{)"}\NormalTok{),}\StringTok{"TIFF"}\NormalTok{))}
+\NormalTok{    \}}
+    \ControlFlowTok{for}\NormalTok{(csv }\ControlFlowTok{in} \FunctionTok{list.files}\NormalTok{(d,}\AttributeTok{pattern=}\StringTok{"*.csv"}\NormalTok{))\{}
+\NormalTok{      exfilesDF }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(exfilesDF,}\FunctionTok{tribble}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{dir,}\SpecialCharTok{\textasciitilde{}}\NormalTok{file,}\SpecialCharTok{\textasciitilde{}}\NormalTok{path,}\SpecialCharTok{\textasciitilde{}}\NormalTok{type,dir,csv,}\FunctionTok{paste0}\NormalTok{(}\StringTok{"ex(}\SpecialCharTok{\textbackslash{}\textquotesingle{}}\StringTok{"}\NormalTok{,dir,}\StringTok{"/"}\NormalTok{,csv,}\StringTok{"}\SpecialCharTok{\textbackslash{}\textquotesingle{}}\StringTok{)"}\NormalTok{),}\StringTok{"CSV"}\NormalTok{))}
+\NormalTok{    \}}
+    \ControlFlowTok{for}\NormalTok{(xls }\ControlFlowTok{in} \FunctionTok{list.files}\NormalTok{(d,}\AttributeTok{pattern=}\StringTok{"*.xls"}\NormalTok{))\{}
+\NormalTok{      exfilesDF }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(exfilesDF,}\FunctionTok{tribble}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{dir,}\SpecialCharTok{\textasciitilde{}}\NormalTok{file,}\SpecialCharTok{\textasciitilde{}}\NormalTok{path,}\SpecialCharTok{\textasciitilde{}}\NormalTok{type,dir,xls,}\FunctionTok{paste0}\NormalTok{(}\StringTok{"ex(}\SpecialCharTok{\textbackslash{}\textquotesingle{}}\StringTok{"}\NormalTok{,dir,}\StringTok{"/"}\NormalTok{,xls,}\StringTok{"}\SpecialCharTok{\textbackslash{}\textquotesingle{}}\StringTok{)"}\NormalTok{),}\StringTok{"xls"}\NormalTok{))}
+\NormalTok{    \}}
+\NormalTok{  \}}
+\NormalTok{  exfilesDF}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  Use \texttt{devtools::document()} to convert the comments to .Rd files.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{devtools}\SpecialCharTok{::}\FunctionTok{document}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{5}
+\item
+  Then preview the documentation with \texttt{?ex}, and maybe use Check in the Build tab.
+\item
+  Then when you commit these changes in GitHub, the package will contain the function, ready to use as long as the user loads the library. You should see the function as \texttt{ex.Rd} in the \texttt{man} folder of your package, similar to what you see for the data described above.
+\end{enumerate}
+
+This example was pretty simple for this simple code with no dependencies other than what's in base R, but you'll probably want to test it thoroughly, and add more documentation to do anything more complicated.
+
+\hypertarget{references}{%
+\chapter*{References}\label{references}}
+
+
+\hypertarget{refs}{}
+\begin{CSLReferences}{1}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-happygitwithr}{}}%
+Bryan, Jenny. n.d. \emph{Happy Git and GitHub for the useR}. \url{https://happygitwithr.com/}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-r-pkgs}{}}%
+Wickham, Hadley, and Jenny Bryan. n.d. \emph{R Packages}. O'Reilly. \url{https://r-pkgs.org}.
+
+\end{CSLReferences}
+
+\backmatter
+\printindex
+
+\end{document}

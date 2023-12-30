@@ -1,6 +1,11 @@
-# CO2 flux data : Red Clover Valley
+# Curve fitting, with examples from Red Clover Valley carbon flux and gullies
 
-## 1. Initial data read and time series charting
+This section will explore various curve fitting methods, starting with some carbon flux tower data from Red Clover Valley. There's not a lot of interpretation, as this is basically a sandbox for now...
+
+
+## Red Clover Valley flux data
+
+1. Initial data read and time series charting
 
 Some ideas for processing are from Mason Kealy.  Data are from Andrew Oliphant.
 
@@ -25,17 +30,14 @@ read_excel2 <- function(xl){
 }
 ```
 
-
+In reading the data, we'll remove the zero GPP_sum values. 
 ```{r}
-Carbon_Flux <- read_excel2(ex("meadows/RCV_carbon_flux_data.xlsx"))
+Carbon_Flux <- read_excel2(ex("meadows/RCV_carbon_flux_data.xlsx")) |>
+  filter(GPP_sum>0)
 ```
   
-You can see in the tibble above, that all the columns were in `chr` data type, this prevents the computer from seeing them as numbers.
-  I started preparing the data for analysis by `mutate_all(as.numeric)` then setting the date column as a date with `as.Date` selected the variables I wanted and rounded the 7 digits values to get them looking a little nicer.
-  Then I used `pivot_longer` to send the CO2 Flux Competent values to a new column and the names to a new column. This makes it a lot easier when creating a legend later on in Figure 1 (see next code chunk)
-  *Then Jerry removed the zero GPP_sum values.* 
-```{r}
 
+```{r}
 Mountflux <- Carbon_Flux %>% 
 mutate_all(as.numeric) %>% 
 mutate(DOY = as.Date(Date,format = "%m-%d")) %>% 
@@ -48,11 +50,14 @@ mutate(NEE = round(NEE_sum, digits = 3),
   filter(GPP_sum != 0, !is.na(PAR_ave))
 
 print(Mountflux)
+```
 
+```{r}
 
 ```
 
-## Time series plot 
+
+### Time series plot 
   Then I used ggplot to create a visualization of how NEE, GPP, an RE changed over a yearly time scale.
 ```{r}
 
@@ -69,8 +74,17 @@ and added into ‘sum daily value’ , from flux tower in Red Clover Valley,Cali
   
 ```
  
+### Pairs plot
+```{r message=F,warning=F}
+Carbon_Flux |>
+  select(GPP_sum:vpd_max) |>
+  GGally::ggpairs()
+  # pairs()
+  
+```
+ 
 
-## Non-linear model of PAR_ave ~ GPP_sum, using Michaelis-Menten model
+### Non-linear model of PAR_ave ~ GPP_sum, using Michaelis-Menten model
 
 *Not the right goal for a model between these variables, since GPP should derive from PAR, not the other way around.  But it does illustrate asymptotic data.*
 
@@ -78,7 +92,7 @@ and added into ‘sum daily value’ , from flux tower in Red Clover Valley,Cali
 First the scatter plot:
 
 ```{r}
-plot(Mountflux$GPP_sum, Mountflux$PAR_ave,xlab="GPP_sum", ylab="PAR_ave")
+plot(Carbon_Flux$GPP_sum, Carbon_Flux$PAR_ave,xlab="GPP_sum", ylab="PAR_ave")
 ```
 
 
@@ -107,14 +121,16 @@ plot(Mountflux$GPP_sum, Mountflux$PAR_ave,xlab="GPP_sum", ylab="PAR_ave")
        predict(micmenMod,Mountflux),col=2)
 ```
 
-## polynomial models
+### polynomial models
+
+Ok, enough of that deceptive model of PAR predicted by GPP -- not the way it works -- and instead we'll look at models that predict GPP from PAR, not asymptotic 
 
 ```{r}
 plot(Mountflux$PAR_ave,Mountflux$GPP_sum, xlab="PAR_ave", ylab="GPP_sum")
 
 ```
 
-### poly 1
+#### poly 1
 
 ```{r}
 ord = 1
@@ -126,7 +142,7 @@ ggplot(Mountflux, aes(PAR_ave, GPP_sum)) + geom_point() +
 
 
 
-### poly 2
+#### poly 2
 
 ```{r}
 ord = 2
@@ -137,7 +153,7 @@ ggplot(Mountflux, aes(PAR_ave, GPP_sum)) + geom_point() +
 ```
 
 
-### poly 3
+#### poly 3
 
 
 ```{r}
@@ -147,7 +163,7 @@ ggplot(Mountflux, aes(PAR_ave, GPP_sum)) + geom_point() +
   stat_smooth(method=lm, formula=y~poly(x,ord,raw=T))
 ```
 
-### poly 4
+#### poly 4
 ```{r}
 ord = 4
 summary(lm(GPP_sum ~ poly(PAR_ave, ord, raw=T), data=Mountflux))
@@ -155,7 +171,7 @@ ggplot(Mountflux, aes(PAR_ave, GPP_sum)) + geom_point() +
   stat_smooth(method=lm, formula=y~poly(x,ord,raw=T))
 ```
 
-### poly 5
+#### poly 5
 ```{r}
 ord = 5
 summary(lm(GPP_sum ~ poly(PAR_ave, ord, raw=T), data=Mountflux))
@@ -163,8 +179,7 @@ ggplot(Mountflux, aes(PAR_ave, GPP_sum)) + geom_point() +
   stat_smooth(method=lm, formula=y~poly(x,ord,raw=T))
 ```
 
-## power regression
-
+### power law relationship
 ```{r}
 powerModel <- lm(log(GPP_sum) ~ log(PAR_ave), data=Mountflux)
 summary(powerModel)
@@ -186,9 +201,59 @@ fluxPlot
 ```
 
 ```{r}
-fit_eq = paste("y = ", round(coeff,4), " x^", round(power,3))
+fit_eq = paste("y = ", round(coeff,6), " x^", round(power,3))
 fluxPlot <- fluxPlot +
-  annotate("text",x=200,y=40,label=fit_eq,size=6)
+  annotate("text",x=200,y=40,label=fit_eq,size=4)
 fluxPlot
 ```
 
+## Another curve fit -- of gullies that may follow a rate law of growth, or other asymptotic
+from Graf WL (1977). The rate law in fluvial geomorphology. Am. J. Sci 277: 178-191.
+
+The rate-law model that Graf used employs a half life, appropriate when depleting a quantity as will happen with an erosion phase following a disequilibrium (like a geomorphic drop in base level).
+
+```{r}
+library(igisci); library(tidyverse)
+gullyGrowth <- read_csv(ex("gully/gullyGrowth.csv"))
+```
+
+```{r}
+ggplot(data=gullyGrowth, aes(x=distance, y=age_yrs, col=type)) +
+  geom_point()
+```
+
+```{r}
+gully <- gullyGrowth |> filter(type=="gully")
+gullyMod <- nls(age_yrs~(Vm)*distance/(K+distance), data=gully, start=list(Vm=1,K=1))
+summary(gullyMod)
+```
+**Calculate residual error**
+
+```{r}
+sse <- gullyMod$m$deviance()
+null <- lm(age_yrs~1, data=gully)
+sst <- data.frame(summary.aov(null)[[1]])$Sum.Sq
+percent_variation_explained <- 100*(sst-sse)/sst
+percent_variation_explained
+```
+
+```{r}
+proto <- gullyGrowth |> filter(type=="proto-gully")
+protoMod <- nls(age_yrs~(Vm)*distance/(K+distance), data=proto, start=list(Vm=1,K=1))
+summary(protoMod)
+```
+
+```{r}
+sse <- protoMod$m$deviance()
+null <- lm(age_yrs~1, data=proto)
+sst <- data.frame(summary.aov(null)[[1]])$Sum.Sq
+percent_variation_explained <- 100*(sst-sse)/sst
+percent_variation_explained
+```
+
+```{r}
+ggplot(data=gullyGrowth, aes(x=distance)) +
+  geom_point(aes(y=age_yrs, col=type)) +
+  geom_line(data=gully, aes(x=distance, y=predict(gullyMod,gully))) +
+  geom_line(data=proto, aes(x=distance, y=predict(protoMod,proto)))
+```
