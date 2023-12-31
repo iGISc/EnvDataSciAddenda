@@ -23,7 +23,7 @@
 <meta name="author" content="Jerry Davis, SFSU Institute for Geographic Information Science" />
 
 
-<meta name="date" content="2023-12-29" />
+<meta name="date" content="2023-12-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,14 +52,6 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
-<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.30/datatables.js"></script>
-<link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="libs/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script>
-<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
 
 
 <style type="text/css">
@@ -131,28 +123,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 </style>
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -207,7 +177,10 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="7.1" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html#loney-meadow-flux-data"><i class="fa fa-check"></i><b>7.1</b> Loney Meadow flux data</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html"><i class="fa fa-check"></i><b>8</b> Atmospheric CO2 record from Mauna Loa, Hawaii</a></li>
+<li class="chapter" data-level="8" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html"><i class="fa fa-check"></i><b>8</b> Atmospheric CO2 record from Mauna Loa, Hawaii</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#creating-a-time-series-object"><i class="fa fa-check"></i><b>8.1</b> Creating a time series object</a></li>
+</ul></li>
 <li class="chapter" data-level="9" data-path="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html"><i class="fa fa-check"></i><b>9</b> Curve fitting, with examples from Red Clover Valley carbon flux and gullies</a>
 <ul>
 <li class="chapter" data-level="9.1" data-path="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html"><a href="curve-fitting-with-examples-from-red-clover-valley-carbon-flux-and-gullies.html#red-clover-valley-flux-data"><i class="fa fa-check"></i><b>9.1</b> Red Clover Valley flux data</a>
@@ -292,45 +265,91 @@ div.csl-indent {
 <div id="atmospheric-co2-record-from-mauna-loa-hawaii" class="section level1 hasAnchor" number="8">
 <h1><span class="header-section-number">8</span> Atmospheric CO2 record from Mauna Loa, Hawaii<a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#atmospheric-co2-record-from-mauna-loa-hawaii" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <blockquote>
-<p>Note: this exercise is based on one developed for students in SFSU’s Geog 313 class by Andrew Oliphant, using Excel. Most of the text is from that exercise. All of the methods however are coded in R, and text reflects those changes.</p>
+<p>Note: Much of this notebook is based on an exercise in SFSU’s Geog 313 class developed by Andrew Oliphant, using Excel. Most of the text is from that exercise. All of the methods however are coded in R, and text reflects those changes.</p>
 </blockquote>
-<p><strong>Objectives</strong>: To build on experience in data processing, graphing and analysis. In this lab we particularly focus on data filtering, curve fitting and empirical modeling. The topical focus is on the recent (half century) changes in atmospheric concentrations of our most important greenhouse gas, CO2 as measured at 3.3 km above the central Pacific Ocean, at Mauna Loa observatory on Hawaii.
-Materials: A data record produced by NOAA and the Scripps Institute containing monthly average atmospheric CO2 concentration data measured at the Mauna Loa Observatory.
-For further information on the observations see: <a href="http://www.cmdl.noaa.gov/ccgg/" class="uri">http://www.cmdl.noaa.gov/ccgg/</a></p>
-<p>Use R code to download and prepare the data for plotting. The source file at NOAA <a href="ftp://aftp.cmdl.noaa.gov/products/trends/co2/co2_mm_mlo.txt" class="uri">ftp://aftp.cmdl.noaa.gov/products/trends/co2/co2_mm_mlo.txt</a> can be read directly into a data frame. We’ll start by using code to download the text file into the current working directory:</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb68-1" tabindex="-1"></a><span class="fu">library</span>(RCurl)</span>
-<span id="cb68-2"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb68-2" tabindex="-1"></a>filepath <span class="ot">&lt;-</span> <span class="st">&quot;ftp.cmdl.noaa.gov/products/trends/co2/co2_mm_mlo.txt&quot;</span></span>
-<span id="cb68-3"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb68-3" tabindex="-1"></a>filename <span class="ot">&lt;-</span> <span class="st">&quot;co2_mm_mlo.txt&quot;</span></span>
-<span id="cb68-4"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb68-4" tabindex="-1"></a><span class="fu">download.file</span>(filepath, <span class="fu">paste0</span>(<span class="fu">getwd</span>(),<span class="st">&quot;/&quot;</span>,filename))</span></code></pre></div>
-<p>Using the same path to where the file was stored, we’ll use <code>read_table</code> to allow whitespace to delimit the data.</p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb69-1" tabindex="-1"></a>CO2_HI <span class="ot">&lt;-</span> <span class="fu">read_table</span>(<span class="fu">paste0</span>(<span class="fu">getwd</span>(),<span class="st">&quot;/&quot;</span>,filename),</span>
-<span id="cb69-2"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb69-2" tabindex="-1"></a>                     <span class="at">comment=</span><span class="st">&quot;#&quot;</span>,</span>
-<span id="cb69-3"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb69-3" tabindex="-1"></a>                     <span class="at">col_names =</span><span class="fu">c</span>(<span class="st">&quot;year&quot;</span>,<span class="st">&quot;month&quot;</span>,<span class="st">&quot;dec_date&quot;</span>,</span>
-<span id="cb69-4"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb69-4" tabindex="-1"></a>                               <span class="st">&quot;monthly_ave&quot;</span>,<span class="st">&quot;de-seasonalized&quot;</span>,</span>
-<span id="cb69-5"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb69-5" tabindex="-1"></a>                               <span class="st">&quot;#days&quot;</span>,<span class="st">&quot;sd_days&quot;</span>,<span class="st">&quot;unc.of_mon_mean&quot;</span>))</span></code></pre></div>
-<p>Notice there are several timestamp columns; year, month and decimal date, which can be used for analysis of the different timescales. The decimal date is produced for use as an effective x-axis value to plot the time-series because it makes a continuous, evenly spaced time series, which includes both the year plus the fraction of the year at the center of the month (i.e. year + (month-0.5)/12). CO2 concentrations are recorded in micromols of carbon per mol of dry air, which is the same thing as parts per million since ‘micro’ means one millionth. Also, note that there are two CO2 records, ‘average’ and ‘interpolated’. The former are the raw average monthly numbers and contain some missing records, for example when instruments failed. To indicate these missing values without a blank space, the code -99.99 is used. This is a common programming code that means the datum is missing. The ‘interpolated’ record is continuous because these missing values have been replaced by interpolated values, using the trends in the dataset to estimate what the value should be. Since a continuous dataset is needed for our analysis, we will save ourselves some extra work by using the ‘interpolated’ values.</p>
+<p><strong>Goal</strong>: To download data from NOAA and the Scripps Institute containing monthly average atmospheric CO2 concentration data measured at the Mauna Loa Observatory on Hawai’i. These record recent (since 1958) changes in atmospheric concentrations of the important greenhouse gas, CO2 as measured at 3.3 km above the central Pacific Ocean. For further information on the observations see: <a href="http://www.cmdl.noaa.gov/ccgg/" class="uri">http://www.cmdl.noaa.gov/ccgg/</a></p>
+<p>We’ll use R code to download and prepare the data for plotting. The source file at NOAA <a href="ftp://aftp.cmdl.noaa.gov/products/trends/co2/co2_mm_mlo.txt" class="uri">ftp://aftp.cmdl.noaa.gov/products/trends/co2/co2_mm_mlo.txt</a> can be read directly into a data frame. We’ll start by using code to download the text file into the current working directory:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb1-1" tabindex="-1"></a><span class="fu">library</span>(RCurl)</span></code></pre></div>
+<pre><code>## Warning: package &#39;RCurl&#39; was built under R version 4.3.2</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb3-1" tabindex="-1"></a>filepath <span class="ot">&lt;-</span> <span class="st">&quot;ftp://aftp.cmdl.noaa.gov/products/trends/co2/co2_mm_mlo.txt&quot;</span></span>
+<span id="cb3-2"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb3-2" tabindex="-1"></a>filename <span class="ot">&lt;-</span> <span class="st">&quot;co2_mm_mlo.txt&quot;</span></span>
+<span id="cb3-3"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb3-3" tabindex="-1"></a><span class="fu">download.file</span>(filepath, <span class="fu">paste0</span>(<span class="fu">getwd</span>(),<span class="st">&quot;/&quot;</span>,filename))</span></code></pre></div>
+<p>Using the same path to where the file was stored, we’ll use <code>read_table</code> to allow whitespace to delimit the data. The text file also has several rows of comments at the beginning, each starting with “#”, so we’ll specify this as the comment character so those lines of text can be ignored. Unfortunately this also includes the variable names, but as these do not change we can simply assign them in code, based upon prior inspection.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb4-1" tabindex="-1"></a>CO2_HI <span class="ot">&lt;-</span> <span class="fu">read_table</span>(<span class="fu">paste0</span>(<span class="fu">getwd</span>(),<span class="st">&quot;/&quot;</span>,filename),</span>
+<span id="cb4-2"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb4-2" tabindex="-1"></a>                     <span class="at">comment=</span><span class="st">&quot;#&quot;</span>,</span>
+<span id="cb4-3"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb4-3" tabindex="-1"></a>                     <span class="at">col_names =</span><span class="fu">c</span>(<span class="st">&quot;year&quot;</span>,<span class="st">&quot;month&quot;</span>,<span class="st">&quot;dec_date&quot;</span>,</span>
+<span id="cb4-4"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb4-4" tabindex="-1"></a>                               <span class="st">&quot;monthly_CO2&quot;</span>,<span class="st">&quot;deseasonalized_CO2&quot;</span>,</span>
+<span id="cb4-5"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb4-5" tabindex="-1"></a>                               <span class="st">&quot;#days&quot;</span>,<span class="st">&quot;sd_days&quot;</span>,<span class="st">&quot;unc.of_mon_mean&quot;</span>))</span></code></pre></div>
+<pre><code>## 
+## ── Column specification ────────────────────────────────────────────────────────
+## cols(
+##   year = col_double(),
+##   month = col_double(),
+##   dec_date = col_double(),
+##   monthly_CO2 = col_double(),
+##   deseasonalized_CO2 = col_double(),
+##   `#days` = col_double(),
+##   sd_days = col_double(),
+##   unc.of_mon_mean = col_double()
+## )</code></pre>
+<p>CO2 concentrations are recorded in micromols of carbon per mol of dry air, which is the same thing as parts per million. Also, note that there are two CO2 records, average (<code>monthly_CO2</code>) and deseasonalized (<code>deseasonalized_CO2</code>).</p>
+<blockquote>
+<p>AO: “The former are the raw average monthly numbers and contain some missing records, for example when instruments failed. To indicate these missing values without a blank space, the code -99.99 may be used. The ‘interpolated’ record is continuous because these missing values have been replaced by interpolated values, using the trends in the dataset to estimate what the value should be.” This may have changed; there are no -99.99 values under the CO2 average column, and the deseasonalized values appear to be not quite the same as a moving average, since noise remains, but does remove the seasonal effect.</p>
+</blockquote>
+<p>Notice there are several time-stamp columns; year, month and decimal date. The decimal date is produced for use as an effective x-axis value to plot the time-series because it makes a continuous, evenly spaced time series, which includes both the year plus the fraction of the year at the center of the month (i.e. year + (month-0.5)/12); we can also convert it into a POSIXct date-time format:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb6-1" tabindex="-1"></a>CO2_HI <span class="ot">&lt;-</span> <span class="fu">mutate</span>(CO2_HI, <span class="at">datetime =</span> <span class="fu">date_decimal</span>(dec_date)) </span></code></pre></div>
 <blockquote>
 <p>We’ll actually use code to create the moving average in a bit…</p>
 </blockquote>
-<p><strong>Plot the time-series</strong> of monthly of CO2 concentrations against decimal date. Scale appropriately and use a line rather than markers until the detail is clearly visible.</p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb70-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>CO2_HI, <span class="fu">aes</span>(<span class="at">x=</span>dec_date,<span class="at">y=</span>monthly_ave)) <span class="sc">+</span></span>
-<span id="cb70-2"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb70-2" tabindex="-1"></a>         <span class="fu">geom_line</span>()</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-47-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb7-1" tabindex="-1"></a><span class="fu">summary</span>(CO2_HI)</span></code></pre></div>
+<pre><code>##       year          month           dec_date     monthly_CO2   
+##  Min.   :1958   Min.   : 1.000   Min.   :1958   Min.   :312.4  
+##  1st Qu.:1974   1st Qu.: 4.000   1st Qu.:1975   1st Qu.:330.2  
+##  Median :1991   Median : 7.000   Median :1991   Median :354.9  
+##  Mean   :1991   Mean   : 6.506   Mean   :1991   Mean   :358.6  
+##  3rd Qu.:2007   3rd Qu.: 9.000   3rd Qu.:2007   3rd Qu.:384.2  
+##  Max.   :2023   Max.   :12.000   Max.   :2024   Max.   :424.0  
+##  deseasonalized_CO2     #days          sd_days       unc.of_mon_mean   
+##  Min.   :314.4      Min.   :-1.00   Min.   :-9.990   Min.   :-0.99000  
+##  1st Qu.:330.5      1st Qu.:10.00   1st Qu.: 0.160   1st Qu.: 0.06000  
+##  Median :355.2      Median :25.00   Median : 0.400   Median : 0.15000  
+##  Mean   :358.6      Mean   :19.02   Mean   :-2.106   Mean   :-0.09957  
+##  3rd Qu.:383.9      3rd Qu.:28.00   3rd Qu.: 0.560   3rd Qu.: 0.21000  
+##  Max.   :422.5      Max.   :31.00   Max.   : 1.310   Max.   : 0.58000  
+##     datetime                     
+##  Min.   :1958-03-15 23:39:08.19  
+##  1st Qu.:1974-08-17 03:00:00.00  
+##  Median :1991-01-16 05:17:31.20  
+##  Mean   :1991-01-16 02:42:26.02  
+##  3rd Qu.:2007-06-17 06:42:28.79  
+##  Max.   :2023-11-16 09:00:00.00</code></pre>
+<p><strong>Plot the time-series</strong> of monthly of CO2 concentrations against decimal date in <code>ggplot</code>, using <code>geom_line</code> instead of <code>geom_point</code>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb9-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>CO2_HI, <span class="fu">aes</span>(<span class="at">x=</span>datetime,<span class="at">y=</span>monthly_CO2)) <span class="sc">+</span></span>
+<span id="cb9-2"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb9-2" tabindex="-1"></a>         <span class="fu">geom_line</span>()</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>The record looks like saw teeth because the amount of carbon dioxide in the atmosphere changes over the course of a year. Green plants absorb carbon dioxide during the summer when they are actively growing. There is more land area in the Northern Hemisphere and so carbon dioxide concentration decreases during the summer of the Northern Hemisphere. The carbon dioxide concentration peaks in March, just before the growing season starts in the Northern Hemisphere. If you look closely, you will notice that there is a slight flattening starting in 1991 and lasting a year or so. Mount Pinatubo in the Philippines erupted in 1991 and released a large volume of sulfur dioxide, which combined with water vapor to produce aerosols. This is thought to increase both terrestrial ecosystem photosynthesis and the solubility of carbon dioxide in the oceans, both of which are important carbon sinks.</p>
 <p><strong>Detrend the data</strong>: In order to more closely examine the apparent increase in CO2 concentration throughout the record, we ideally want to remove the noisy seasonal signal with the saw-tooth like pattern, since change over this timescale is not associated with the broader (century scale) change. This is called data detrending or filtering (i.e. we want to filter out or remove the trend associated with the seasonal signal). We will employ a 12-period moving average for this. In other words, for each month we will calculate the average CO2 concentrations of the 5 previous, the current and the 6 following months. In this way, you will generate a new column of averages where for each month you should have an annual average concentration for the year centered on the month.</p>
 <p>We’ll use the <code>ma()</code> function of the <code>forecast</code> package to create a 12-month moving average. Since <code>ma()</code> only works with single vectors, we’ll need to extract those and bind the columns to create a new data frame.</p>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb71-1" tabindex="-1"></a><span class="fu">library</span>(forecast)</span>
-<span id="cb71-2"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb71-2" tabindex="-1"></a>CO2_date_ma <span class="ot">&lt;-</span> <span class="fu">ma</span>(CO2_HI<span class="sc">$</span>dec_date, <span class="dv">12</span>)</span>
-<span id="cb71-3"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb71-3" tabindex="-1"></a>CO2_CO2_ma <span class="ot">&lt;-</span> <span class="fu">ma</span>(CO2_HI<span class="sc">$</span>monthly_ave, <span class="dv">12</span>)</span>
-<span id="cb71-4"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb71-4" tabindex="-1"></a>CO2_ma <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(<span class="at">date=</span>CO2_date_ma,<span class="at">CO2_12mo_avg=</span>CO2_CO2_ma)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb10-1" tabindex="-1"></a><span class="fu">library</span>(forecast)</span></code></pre></div>
+<pre><code>## Registered S3 method overwritten by &#39;quantmod&#39;:
+##   method            from
+##   as.zoo.data.frame zoo</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb12-1" tabindex="-1"></a>CO2_date_ma <span class="ot">&lt;-</span> <span class="fu">ma</span>(CO2_HI<span class="sc">$</span>dec_date, <span class="dv">12</span>)</span>
+<span id="cb12-2"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb12-2" tabindex="-1"></a>CO2_CO2_ma <span class="ot">&lt;-</span> <span class="fu">ma</span>(CO2_HI<span class="sc">$</span>monthly_CO2, <span class="dv">12</span>)</span>
+<span id="cb12-3"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb12-3" tabindex="-1"></a>CO2_ma <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(<span class="at">date=</span>CO2_date_ma,<span class="at">CO2_12mo_avg=</span>CO2_CO2_ma)</span></code></pre></div>
 <p>Then we’ll plot that moving average.</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb72-1" tabindex="-1"></a><span class="fu">ggplot</span>(CO2_ma,<span class="fu">aes</span>(<span class="at">x=</span>date,<span class="at">y=</span>CO2_12mo_avg)) <span class="sc">+</span></span>
-<span id="cb72-2"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb72-2" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-49-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb13-1" tabindex="-1"></a><span class="fu">ggplot</span>(CO2_ma,<span class="fu">aes</span>(<span class="at">x=</span>date,<span class="at">y=</span>CO2_12mo_avg)) <span class="sc">+</span></span>
+<span id="cb13-2"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb13-2" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
+<pre><code>## Don&#39;t know how to automatically pick scale for object of type &lt;ts&gt;. Defaulting
+## to continuous.
+## Don&#39;t know how to automatically pick scale for object of type &lt;ts&gt;. Defaulting
+## to continuous.</code></pre>
+<pre><code>## Warning: Removed 12 rows containing missing values (`geom_line()`).</code></pre>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p><strong>Curve fitting</strong>. If we could write a mathematical description of the CO2 increase curve, we could use it to model future scenarios under business-as-usual emissions increases. There are a variety of linear and non-linear curve forms known mathematically such as logarithmic and exponential to describe various forms in nature. For these data we will use a second order polynomial applied to the decimal year, the independent variable.</p>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb73-1" tabindex="-1"></a>ord <span class="ot">=</span> <span class="dv">2</span></span>
-<span id="cb73-2"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb73-2" tabindex="-1"></a>poly2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(CO2_12mo_avg <span class="sc">~</span> <span class="fu">poly</span>(date, ord, <span class="at">raw=</span>T), <span class="at">data=</span>CO2_ma)</span>
-<span id="cb73-3"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb73-3" tabindex="-1"></a><span class="fu">summary</span>(poly2)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb16-1" tabindex="-1"></a>ord <span class="ot">=</span> <span class="dv">2</span></span>
+<span id="cb16-2"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb16-2" tabindex="-1"></a>poly2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(CO2_12mo_avg <span class="sc">~</span> <span class="fu">poly</span>(date, ord, <span class="at">raw=</span>T), <span class="at">data=</span>CO2_ma)</span>
+<span id="cb16-3"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb16-3" tabindex="-1"></a><span class="fu">summary</span>(poly2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = CO2_12mo_avg ~ poly(date, ord, raw = T), data = CO2_ma)
@@ -351,23 +370,66 @@ For further information on the observations see: <a href="http://www.cmdl.noaa.g
 ##   (12 observations deleted due to missingness)
 ## Multiple R-squared:  0.9995, Adjusted R-squared:  0.9995 
 ## F-statistic: 7.213e+05 on 2 and 774 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb75-1" tabindex="-1"></a><span class="fu">ggplot</span>(CO2_ma, <span class="fu">aes</span>(<span class="at">x=</span>date,<span class="at">y=</span>CO2_12mo_avg)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb75-2"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb75-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm, <span class="at">formula=</span>y<span class="sc">~</span><span class="fu">poly</span>(x,ord,<span class="at">raw=</span>T))</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-50-1.png" width="75%" style="display: block; margin: auto;" /></p>
-<p>Modeling future CO2 concentrations: You can use this equation as an empirical model to predict CO2 concentrations for a future date. Just use the equation in a cell and replace x with the year of interest. Under a business-as-usual emissions future, what will the concentrations of CO2 be in 2050? In what year will pre-industrial CO2 levels of ~285 ppm be doubled? You may want to model through time by making a column of years e.g. from 2000-2100 and then writing the equation next to the year equation down, referencing the year in the adjacent cell. Then you can copy the predictive model equation down the cells adjacent to the years.</p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb76-1" tabindex="-1"></a>b0 <span class="ot">&lt;-</span> poly2<span class="sc">$</span>coefficients[<span class="dv">1</span>]</span>
-<span id="cb76-2"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb76-2" tabindex="-1"></a>b1 <span class="ot">&lt;-</span> poly2<span class="sc">$</span>coefficients[<span class="dv">2</span>]</span>
-<span id="cb76-3"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb76-3" tabindex="-1"></a>b2 <span class="ot">&lt;-</span> poly2<span class="sc">$</span>coefficients[<span class="dv">3</span>]</span>
-<span id="cb76-4"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb76-4" tabindex="-1"></a>doubledCO2 <span class="ot">&lt;-</span> <span class="dv">285</span><span class="sc">*</span><span class="dv">2</span></span>
-<span id="cb76-5"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb76-5" tabindex="-1"></a><span class="cf">for</span> (yr <span class="cf">in</span> <span class="fu">seq</span>(<span class="dv">2000</span>,<span class="dv">2100</span>)) {CO2 <span class="ot">=</span> (b0 <span class="sc">+</span> b1<span class="sc">*</span>yr <span class="sc">+</span> b2<span class="sc">*</span>yr<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb76-6"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb76-6" tabindex="-1"></a>   <span class="cf">if</span> (CO2<span class="sc">&gt;</span>doubledCO2) {<span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&quot;By the year &quot;</span>,yr,<span class="st">&quot;, CO2 levels will have reached &quot;</span>,<span class="fu">round</span>(b0 <span class="sc">+</span> b1<span class="sc">*</span>yr <span class="sc">+</span> b2<span class="sc">*</span>yr<span class="sc">^</span><span class="dv">2</span>),<span class="st">&quot; ppm,&quot;</span>));</span>
-<span id="cb76-7"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb76-7" tabindex="-1"></a>                        <span class="fu">print</span>(<span class="st">&quot;more than double the pre-industrial levels of 285 ppm.&quot;</span>)</span>
-<span id="cb76-8"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb76-8" tabindex="-1"></a>     <span class="cf">break</span></span>
-<span id="cb76-9"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb76-9" tabindex="-1"></a>     }</span>
-<span id="cb76-10"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb76-10" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb18-1" tabindex="-1"></a><span class="fu">ggplot</span>(CO2_ma, <span class="fu">aes</span>(<span class="at">x=</span>date,<span class="at">y=</span>CO2_12mo_avg)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb18-2"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb18-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm, <span class="at">formula=</span>y<span class="sc">~</span><span class="fu">poly</span>(x,ord,<span class="at">raw=</span>T))</span></code></pre></div>
+<pre><code>## Don&#39;t know how to automatically pick scale for object of type &lt;ts&gt;. Defaulting
+## to continuous.
+## Don&#39;t know how to automatically pick scale for object of type &lt;ts&gt;. Defaulting
+## to continuous.</code></pre>
+<pre><code>## Warning: Removed 12 rows containing non-finite values (`stat_smooth()`).</code></pre>
+<pre><code>## Warning: Removed 12 rows containing missing values (`geom_point()`).</code></pre>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>Modeling future CO2 concentrations: You can use this equation as an empirical model to predict CO2 concentrations for a future date. Just use the equation in a cell and replace x with the year of interest. Under a business-as-usual emissions future, what will the concentrations of CO2 be in 2050? In what year will pre-industrial CO2 levels of ~285 ppm be doubled? We’ll loop through time from 2000 to 2100 and stop when the predicted CO2 is greater than double 285 ppm, the pre-industrial level.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb22-1" tabindex="-1"></a>b0 <span class="ot">&lt;-</span> poly2<span class="sc">$</span>coefficients[<span class="dv">1</span>]</span>
+<span id="cb22-2"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb22-2" tabindex="-1"></a>b1 <span class="ot">&lt;-</span> poly2<span class="sc">$</span>coefficients[<span class="dv">2</span>]</span>
+<span id="cb22-3"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb22-3" tabindex="-1"></a>b2 <span class="ot">&lt;-</span> poly2<span class="sc">$</span>coefficients[<span class="dv">3</span>]</span>
+<span id="cb22-4"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb22-4" tabindex="-1"></a>doubledCO2 <span class="ot">&lt;-</span> <span class="dv">285</span><span class="sc">*</span><span class="dv">2</span></span>
+<span id="cb22-5"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb22-5" tabindex="-1"></a><span class="cf">for</span> (yr <span class="cf">in</span> <span class="fu">seq</span>(<span class="dv">2000</span>,<span class="dv">2100</span>)) {CO2 <span class="ot">=</span> (b0 <span class="sc">+</span> b1<span class="sc">*</span>yr <span class="sc">+</span> b2<span class="sc">*</span>yr<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb22-6"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb22-6" tabindex="-1"></a>   <span class="cf">if</span> (CO2<span class="sc">&gt;</span>doubledCO2) {<span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&quot;By the year &quot;</span>,yr,<span class="st">&quot;, CO2 levels will have reached &quot;</span>,<span class="fu">round</span>(b0 <span class="sc">+</span> b1<span class="sc">*</span>yr <span class="sc">+</span> b2<span class="sc">*</span>yr<span class="sc">^</span><span class="dv">2</span>),<span class="st">&quot; ppm,&quot;</span>));</span>
+<span id="cb22-7"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb22-7" tabindex="-1"></a>                        <span class="fu">print</span>(<span class="st">&quot;more than double the pre-industrial levels of 285 ppm.&quot;</span>)</span>
+<span id="cb22-8"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb22-8" tabindex="-1"></a>     <span class="cf">break</span></span>
+<span id="cb22-9"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb22-9" tabindex="-1"></a>     }</span>
+<span id="cb22-10"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb22-10" tabindex="-1"></a>}</span></code></pre></div>
 <pre><code>## [1] &quot;By the year 2072, CO2 levels will have reached 572 ppm,&quot;
 ## [1] &quot;more than double the pre-industrial levels of 285 ppm.&quot;</code></pre>
+<div id="creating-a-time-series-object" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> Creating a time series object<a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#creating-a-time-series-object" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>There are various types of time series objects: base R’s <code>ts</code>, extensible time series in the <code>xts</code> package, tsibbles in the <code>tsibble</code> package, and probably others. We’ll use a <code>tsibble</code> and a <code>ts</code>, after starting the read process over and creating the <code>datetime</code> variable.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb24-1" tabindex="-1"></a><span class="fu">library</span>(RCurl)</span>
+<span id="cb24-2"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb24-2" tabindex="-1"></a>filepath <span class="ot">&lt;-</span> <span class="st">&quot;ftp://aftp.cmdl.noaa.gov/products/trends/co2/co2_mm_mlo.txt&quot;</span></span>
+<span id="cb24-3"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb24-3" tabindex="-1"></a>filename <span class="ot">&lt;-</span> <span class="st">&quot;co2_mm_mlo.txt&quot;</span></span>
+<span id="cb24-4"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb24-4" tabindex="-1"></a><span class="fu">download.file</span>(filepath, <span class="fu">paste0</span>(<span class="fu">getwd</span>(),<span class="st">&quot;/&quot;</span>,filename))</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb25-1" tabindex="-1"></a>CO2_HI <span class="ot">&lt;-</span> <span class="fu">read_table</span>(<span class="fu">paste0</span>(<span class="fu">getwd</span>(),<span class="st">&quot;/&quot;</span>,filename),</span>
+<span id="cb25-2"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb25-2" tabindex="-1"></a>                     <span class="at">comment=</span><span class="st">&quot;#&quot;</span>,</span>
+<span id="cb25-3"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb25-3" tabindex="-1"></a>                     <span class="at">col_names =</span><span class="fu">c</span>(<span class="st">&quot;year&quot;</span>,<span class="st">&quot;month&quot;</span>,<span class="st">&quot;dec_date&quot;</span>,</span>
+<span id="cb25-4"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb25-4" tabindex="-1"></a>                               <span class="st">&quot;monthly_CO2&quot;</span>,<span class="st">&quot;deseasonalized_CO2&quot;</span>,</span>
+<span id="cb25-5"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb25-5" tabindex="-1"></a>                               <span class="st">&quot;#days&quot;</span>,<span class="st">&quot;sd_days&quot;</span>,<span class="st">&quot;unc.of_mon_mean&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb25-6"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb25-6" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">datetime =</span> <span class="fu">date_decimal</span>(dec_date)) </span></code></pre></div>
+<pre><code>## 
+## ── Column specification ────────────────────────────────────────────────────────
+## cols(
+##   year = col_double(),
+##   month = col_double(),
+##   dec_date = col_double(),
+##   monthly_CO2 = col_double(),
+##   deseasonalized_CO2 = col_double(),
+##   `#days` = col_double(),
+##   sd_days = col_double(),
+##   unc.of_mon_mean = col_double()
+## )</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb27-1" tabindex="-1"></a>co2tsibble <span class="ot">&lt;-</span> <span class="fu">as_tsibble</span>(CO2_HI)</span></code></pre></div>
+<pre><code>## Using `datetime` as index variable.</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb29-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> co2tsibble, <span class="fu">aes</span>(<span class="at">x=</span>datetime, <span class="at">y=</span>monthly_CO2)) <span class="sc">+</span> <span class="fu">geom_line</span>()</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-15-1.png" width="672" />
+Well, that’s nice, but it’s no different from what you get with just plotting from the original data frame.</p>
+<p>Let’s see if we can create a <code>ts</code> object, but we’ll need to specify the start month (after looking that up in the data) and the frequency of 12 months.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb30-1" tabindex="-1"></a>co2ts <span class="ot">&lt;-</span> <span class="fu">ts</span>(CO2_HI<span class="sc">$</span>monthly_CO2, <span class="at">start=</span><span class="fu">c</span>(<span class="dv">1958</span>,<span class="dv">3</span>), <span class="at">frequency=</span><span class="dv">12</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb31-1" tabindex="-1"></a><span class="fu">plot</span>(co2ts)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb32-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">ma</span>(co2ts,<span class="at">order=</span><span class="dv">12</span>))</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-17-2.png" width="672" /></p>
 
+</div>
 </div>
             </section>
 
@@ -431,20 +493,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>

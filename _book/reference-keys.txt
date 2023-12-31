@@ -95,3 +95,4 @@ binary-data-as-rda-files
 devtoolsdocument
 removing-data
 code-functions
+creating-a-time-series-object

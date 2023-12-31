@@ -1,42 +1,53 @@
 # Atmospheric CO2 record from Mauna Loa, Hawaii 
 
->Note: this exercise is based on one developed for students in SFSU's Geog 313 class by Andrew Oliphant, using Excel. Most of the text is from that exercise. All of the methods however are coded in R, and text reflects those changes.
+>Note: Much of this notebook is based on an exercise in SFSU's Geog 313 class developed by Andrew Oliphant, using Excel. Most of the text is from that exercise. All of the methods however are coded in R, and text reflects those changes.
 
-**Objectives**: To build on experience in data processing, graphing and analysis. In this lab we particularly focus on data filtering, curve fitting and empirical modeling. The topical focus is on the recent (half century) changes in atmospheric concentrations of our most important greenhouse gas, CO2 as measured at 3.3 km above the central Pacific Ocean, at Mauna Loa observatory on Hawaii.
-Materials: A data record produced by NOAA and the Scripps Institute containing monthly average atmospheric CO2 concentration data measured at the Mauna Loa Observatory.
-For further information on the observations see: http://www.cmdl.noaa.gov/ccgg/  
+**Goal**: To download data from NOAA and the Scripps Institute containing monthly average atmospheric CO2 concentration data measured at the Mauna Loa Observatory on Hawai'i. These record recent (since 1958) changes in atmospheric concentrations of the important greenhouse gas, CO2 as measured at 3.3 km above the central Pacific Ocean. For further information on the observations see: http://www.cmdl.noaa.gov/ccgg/
 
-Use R code to download and prepare the data for plotting. The source file at NOAA  ftp://aftp.cmdl.noaa.gov/products/trends/co2/co2_mm_mlo.txt can be read directly into a data frame.  We'll start by using code to download the text file into the current working directory:  
+We'll use R code to download and prepare the data for plotting. The source file at NOAA  ftp://aftp.cmdl.noaa.gov/products/trends/co2/co2_mm_mlo.txt can be read directly into a data frame.  We'll start by using code to download the text file into the current working directory:  
 
 ```{r}
 library(RCurl)
-filepath <- "ftp.cmdl.noaa.gov/products/trends/co2/co2_mm_mlo.txt"
+filepath <- "ftp://aftp.cmdl.noaa.gov/products/trends/co2/co2_mm_mlo.txt"
 filename <- "co2_mm_mlo.txt"
 download.file(filepath, paste0(getwd(),"/",filename))
 ```
 
-Using the same path to where the file was stored, we'll use `read_table` to allow whitespace to delimit the data.
+Using the same path to where the file was stored, we'll use `read_table` to allow whitespace to delimit the data. The text file also has several rows of comments at the beginning, each starting with "#", so we'll specify this as the comment character so those lines of text can be ignored. Unfortunately this also includes the variable names, but as these do not change we can simply assign them in code, based upon prior inspection.
 
 ```{r include=F}
-library(tidyverse)
+library(tidyverse); library(lubridate)
 ```
 ```{r}
 CO2_HI <- read_table(paste0(getwd(),"/",filename),
                      comment="#",
                      col_names =c("year","month","dec_date",
-                               "monthly_ave","de-seasonalized",
+                               "monthly_CO2","deseasonalized_CO2",
                                "#days","sd_days","unc.of_mon_mean"))
 ```
 
-Notice there are several timestamp columns; year, month and decimal date, which can be used for analysis of the different timescales. The decimal date is produced for use as an effective x-axis value to plot the time-series because it makes a continuous, evenly spaced time series, which includes both the year plus the fraction of the year at the center of the month (i.e. year + (month-0.5)/12). CO2 concentrations are recorded in micromols of carbon per mol of dry air, which is the same thing as parts per million since ‘micro’ means one millionth.  Also, note that there are two CO2 records, ‘average’ and ‘interpolated’. The former are the raw average monthly numbers and contain some missing records, for example when instruments failed. To indicate these missing values without a blank space, the code -99.99 is used. This is a common programming code that means the datum is missing. The ‘interpolated’ record is continuous because these missing values have been replaced by interpolated values, using the trends in the dataset to estimate what the value should be. Since a continuous dataset is needed for our analysis, we will save ourselves some extra work by using the ‘interpolated’ values.
+CO2 concentrations are recorded in micromols of carbon per mol of dry air, which is the same thing as parts per million. Also, note that there are two CO2 records, average (`monthly_CO2`) and deseasonalized (`deseasonalized_CO2`). 
+
+>AO: "The former are the raw average monthly numbers and contain some missing records, for example when instruments failed. To indicate these missing values without a blank space, the code -99.99 may be used. The ‘interpolated’ record is continuous because these missing values have been replaced by interpolated values, using the trends in the dataset to estimate what the value should be."  This may have changed; there are no -99.99 values under the CO2 average column, and the deseasonalized values appear to be not quite the same as a moving average, since noise remains, but does remove the seasonal effect.
+
+Notice there are several time-stamp columns; year, month and decimal date. The decimal date is produced for use as an effective x-axis value to plot the time-series because it makes a continuous, evenly spaced time series, which includes both the year plus the fraction of the year at the center of the month (i.e. year + (month-0.5)/12); we can also convert it into a POSIXct date-time format:
+
+```{r}
+CO2_HI <- mutate(CO2_HI, datetime = date_decimal(dec_date)) 
+```
 
 >We'll actually use code to create the moving average in a bit...
 
-**Plot the time-series** of monthly of CO2 concentrations against decimal date. Scale appropriately and use a line rather than markers until the detail is clearly visible.
+
  
+```{r}
+summary(CO2_HI)
+```
+
+**Plot the time-series** of monthly of CO2 concentrations against decimal date in `ggplot`, using `geom_line` instead of `geom_point`.
 
 ```{r}
-ggplot(data=CO2_HI, aes(x=dec_date,y=monthly_ave)) +
+ggplot(data=CO2_HI, aes(x=datetime,y=monthly_CO2)) +
          geom_line()
 ```
 
@@ -48,7 +59,7 @@ We'll use the `ma()` function of the `forecast` package to create a 12-month mov
 ```{r}
 library(forecast)
 CO2_date_ma <- ma(CO2_HI$dec_date, 12)
-CO2_CO2_ma <- ma(CO2_HI$monthly_ave, 12)
+CO2_CO2_ma <- ma(CO2_HI$monthly_CO2, 12)
 CO2_ma <- bind_cols(date=CO2_date_ma,CO2_12mo_avg=CO2_CO2_ma)
 ```
 
@@ -69,7 +80,7 @@ ggplot(CO2_ma, aes(x=date,y=CO2_12mo_avg)) + geom_point() +
 ```
 
  
-Modeling future CO2 concentrations: You can use this equation as an empirical model to predict CO2 concentrations for a future date. Just use the equation in a cell and replace x with the year of interest. Under a business-as-usual emissions future, what will the concentrations of CO2 be in 2050? In what year will pre-industrial CO2 levels of ~285 ppm be doubled? You may want to model through time by making a column of years e.g. from 2000-2100 and then writing the equation next to the year equation down, referencing the year in the adjacent cell. Then you can copy the predictive model equation down the cells adjacent to the years.
+Modeling future CO2 concentrations: You can use this equation as an empirical model to predict CO2 concentrations for a future date. Just use the equation in a cell and replace x with the year of interest. Under a business-as-usual emissions future, what will the concentrations of CO2 be in 2050? In what year will pre-industrial CO2 levels of ~285 ppm be doubled? We'll loop through time from 2000 to 2100 and stop when the predicted CO2 is greater than double 285 ppm, the pre-industrial level. 
 
 ```{r}
 b0 <- poly2$coefficients[1]
@@ -84,3 +95,50 @@ for (yr in seq(2000,2100)) {CO2 = (b0 + b1*yr + b2*yr^2)
 }
 
 ```
+
+## Creating a time series object
+
+There are various types of time series objects: base R's `ts`, extensible time series in the `xts` package, tsibbles in the `tsibble` package, and probably others. We'll use a `tsibble` and a `ts`, after starting the read process over and creating the `datetime` variable.
+
+```{r}
+library(RCurl)
+filepath <- "ftp://aftp.cmdl.noaa.gov/products/trends/co2/co2_mm_mlo.txt"
+filename <- "co2_mm_mlo.txt"
+download.file(filepath, paste0(getwd(),"/",filename))
+```
+
+```{r include=F}
+library(tidyverse); library(lubridate); library(tsibble); library(forecast)
+```
+```{r}
+CO2_HI <- read_table(paste0(getwd(),"/",filename),
+                     comment="#",
+                     col_names =c("year","month","dec_date",
+                               "monthly_CO2","deseasonalized_CO2",
+                               "#days","sd_days","unc.of_mon_mean")) |>
+  mutate(datetime = date_decimal(dec_date)) 
+```
+
+
+```{r}
+co2tsibble <- as_tsibble(CO2_HI)
+```
+
+```{r}
+ggplot(data = co2tsibble, aes(x=datetime, y=monthly_CO2)) + geom_line()
+```
+Well, that's nice, but it's no different from what you get with just plotting from the original data frame.  
+
+Let's see if we can create a `ts` object, but we'll need to specify the start month (after looking that up in the data) and the frequency of 12 months.
+
+```{r}
+co2ts <- ts(CO2_HI$monthly_CO2, start=c(1958,3), frequency=12)
+```
+```{r}
+plot(co2ts)
+plot(ma(co2ts,order=12))
+```
+
+
+
+
