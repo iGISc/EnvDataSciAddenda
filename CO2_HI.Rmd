@@ -1,6 +1,6 @@
 # Atmospheric CO2 record from Mauna Loa, Hawaii 
 
->Note: Much of this notebook is based on an exercise in SFSU's Geog 313 class developed by Andrew Oliphant, using Excel. Most of the text is from that exercise. All of the methods however are coded in R, and text reflects those changes.
+>Note: Much of this notebook is based on an exercise in SFSU's Geog 313 class developed by Andrew Oliphant, using Excel. Most of the text is from that exercise, but the methods are coded in R.
 
 **Goal**: To download data from NOAA and the Scripps Institute containing monthly average atmospheric CO2 concentration data measured at the Mauna Loa Observatory on Hawai'i. These record recent (since 1958) changes in atmospheric concentrations of the important greenhouse gas, CO2 as measured at 3.3 km above the central Pacific Ocean. For further information on the observations see: http://www.cmdl.noaa.gov/ccgg/
 
@@ -13,7 +13,7 @@ filename <- "co2_mm_mlo.txt"
 download.file(filepath, paste0(getwd(),"/",filename))
 ```
 
-Using the same path to where the file was stored, we'll use `read_table` to allow whitespace to delimit the data. The text file also has several rows of comments at the beginning, each starting with "#", so we'll specify this as the comment character so those lines of text can be ignored. Unfortunately this also includes the variable names, but as these do not change we can simply assign them in code, based upon prior inspection.
+Using the same path to where the file was stored, we'll use `read_table`, which has the ability to use white space (any number of spaces or tabs) to delimit the data, handy for this text file which has varying numbers of spaces as delimiters, since data are written as fixed length but numbers are formatted to varying length. The text file also has several rows of comments at the beginning, each starting with "#", so we'll specify this as the comment character so those lines of text can be ignored. Unfortunately this also includes the variable names, but as these do not change we can simply assign them in code, based upon prior inspection.
 
 ```{r include=F}
 library(tidyverse); library(lubridate)
@@ -26,18 +26,11 @@ CO2_HI <- read_table(paste0(getwd(),"/",filename),
                                "#days","sd_days","unc.of_mon_mean"))
 ```
 
-CO2 concentrations are recorded in micromols of carbon per mol of dry air, which is the same thing as parts per million. Also, note that there are two CO2 records, average (`monthly_CO2`) and deseasonalized (`deseasonalized_CO2`). 
-
->AO: "The former are the raw average monthly numbers and contain some missing records, for example when instruments failed. To indicate these missing values without a blank space, the code -99.99 may be used. The ‘interpolated’ record is continuous because these missing values have been replaced by interpolated values, using the trends in the dataset to estimate what the value should be."  This may have changed; there are no -99.99 values under the CO2 average column, and the deseasonalized values appear to be not quite the same as a moving average, since noise remains, but does remove the seasonal effect.
-
-Notice there are several time-stamp columns; year, month and decimal date. The decimal date is produced for use as an effective x-axis value to plot the time-series because it makes a continuous, evenly spaced time series, which includes both the year plus the fraction of the year at the center of the month (i.e. year + (month-0.5)/12); we can also convert it into a POSIXct date-time format:
+CO2 concentrations are recorded in micromols of carbon per mol of dry air, which is the same thing as parts per million. Also, note that there are two CO2 records, average (`monthly_CO2`) and deseasonalized (`deseasonalized_CO2`). Notice there are several time-stamp columns; year, month and decimal date. The decimal date is produced for use as an effective x-axis value to plot the time-series because it makes a continuous, evenly spaced time series, which includes both the year plus the fraction of the year at the center of the month (i.e. year + (month-0.5)/12); we can also convert it into a POSIXct date-time format:
 
 ```{r}
 CO2_HI <- mutate(CO2_HI, datetime = date_decimal(dec_date)) 
 ```
-
->We'll actually use code to create the moving average in a bit...
-
 
  
 ```{r}
@@ -53,9 +46,7 @@ ggplot(data=CO2_HI, aes(x=datetime,y=monthly_CO2)) +
 
 The record looks like saw teeth because the amount of carbon dioxide in the atmosphere changes over the course of a year. Green plants absorb carbon dioxide during the summer when they are actively growing. There is more land area in the Northern Hemisphere and so carbon dioxide concentration decreases during the summer of the Northern Hemisphere. The carbon dioxide concentration peaks in March, just before the growing season starts in the Northern Hemisphere. If you look closely, you will notice that there is a slight flattening starting in 1991 and lasting a year or so. Mount Pinatubo in the Philippines erupted in 1991 and released a large volume of sulfur dioxide, which combined with water vapor to produce aerosols. This is thought to increase both terrestrial ecosystem photosynthesis and the solubility of carbon dioxide in the oceans, both of which are important carbon sinks.
  
-**Detrend the data**: In order to more closely examine the apparent increase in CO2 concentration throughout the record, we ideally want to remove the noisy seasonal signal with the saw-tooth like pattern, since change over this timescale is not associated with the broader (century scale) change. This is called data detrending or filtering (i.e. we want to filter out or remove the trend associated with the seasonal signal). We will employ a 12-period moving average for this. In other words, for each month we will calculate the average CO2 concentrations of the 5 previous, the current and the 6 following months. In this way, you will generate a new column of averages where for each month you should have an annual average concentration for the year centered on the month.
- 
-We'll use the `ma()` function of the `forecast` package to create a 12-month moving average. Since `ma()` only works with single vectors, we'll need to extract those and bind the columns to create a new data frame.
+**Detrend the data**: In order to more closely examine the apparent increase in CO2 concentration throughout the record, we ideally want to remove the noisy seasonal signal with the saw-tooth like pattern, since change over this timescale is not associated with the broader (century scale) change. This is called data detrending or filtering (i.e. we want to filter out or remove the trend associated with the seasonal signal). We'll use the `ma()` function of the `forecast` package to create a 12-month moving average. Since `ma()` only works with single vectors, we'll need to extract those and bind the columns to create a new data frame.
 ```{r}
 library(forecast)
 CO2_date_ma <- ma(CO2_HI$dec_date, 12)

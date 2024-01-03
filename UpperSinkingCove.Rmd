@@ -67,8 +67,6 @@ tm_graticules(labels.cardinal=F) +
                shape="siteType",
                tm_legend(frame=F)) +
   tm_title("Upper Sinking Cove")
-  # tm_layout(legend.position = c("left", "bottom")) +
-  # tm_graticules()
 ```
 
 ```{r areaMap, eval=F}

@@ -6,7 +6,7 @@ Note that the methods you use will differ somewhat depending on whether you're o
 
 ## Figures
 
-You already know how to create figures in R Markdown, simply by creating graphics in code chunks. To make them more useful as a report, you can add a figure heading and cite the figure in the text. To create the figure heading, assign it in the code chunk header to `fig.cap`. To cite it in text use an inline reference like this: (Figure \@ref(fig:mapsGGlabels)). 
+You already know how to create figures in R Markdown, simply by creating graphics in code chunks. To make them more useful as a report, you can add a figure heading and cite the figure in the text. To create the figure heading, assign it in the code chunk header to `fig.cap`. To cite it in text use an inline reference like this: (Figure \@ref(fig:CAmap)). 
 
 ```{r CAmap, warning=F, message=F, fig.cap="California Counties"}
 library(igisci); library(ggplot2)
@@ -58,4 +58,4 @@ It's often useful to include options for the code chunks at the top of the docum
 knitr::opts_chunk$set(include=T,echo=T,fig.show=T,warning=F,message=F,fig.align='center',out.width="75%")
 ```
 
-
+You can also use various of these parameters in any individual code chunk header. For instance, you may not actually want to set warning messages to FALSE for the whole document, because some of those warnings may be useful to see as you're working on things. So what you might want to do is set `warning=F` in an individual code chunk *once you have it working!*  The same can apply to messages; I often set `message=F` for individual code chunks that produce messages I don't care to see. Some of the other settings are handy for hiding code while still running it with `echo=F`.

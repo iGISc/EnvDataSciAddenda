@@ -1,31 +1,27 @@
-# Curve fitting, with examples from Red Clover Valley carbon flux and gullies
+# Curve fitting
 
-This section will explore various curve fitting methods, starting with some carbon flux tower data from Red Clover Valley. There's not a lot of interpretation, as this is basically a sandbox for now...
+Typical curve fitting approaches are variations on a linear model, using `lm` with simple or transformed (e.g. `log()`) data, but there are other methods such as:
 
+- `glm` -- generalized linear models
+- `poly` -- for polynomials
+- `nls` -- for nonlinear models
 
-## Red Clover Valley flux data
+In this chapter, we'll explore a bit of polynomial models and nonlinear models; `glm` is covered in the modeling chapter https://bookdown.org/igisc/EnvDataSci/modeling.html#generalized-linear-model-glm of the book. This section will explore various curve fitting methods. We'll read in data as needed. There's not a lot of interpretation, as this is basically a sandbox for now. 
 
-1. Initial data read and time series charting
-
-Some ideas for processing are from Mason Kealy.  Data are from Andrew Oliphant.
-
-```{r include=FALSE}
-library(readxl)
-library(tidyverse)
-library(lubridate)
+```{r message=FALSE}
+library(readxl); library(tidyverse); library(lubridate); library(igisci)
 ```
 
-### Reading in the Excel File
+## Carbon flux data from Red Clover Valley
 
-First create a function to convert the first two rows into individual variables. We won't include the units.
+> Data are from Andrew Oliphant, used in his bioclimatology class at SFSU.
 
-```{r}
-library(igisci); library(tidyverse); library(readxl)
-```
+First create a function to convert the first two rows into individual variables. We won't include the units, so we'll comment out this line from the function we've used before.
+
 ```{r}
 read_excel2 <- function(xl){
   vnames <- read_excel(xl, n_max=0) |> names()
-  vunits <- read_excel(xl, n_max=0, skip=1) |> names()
+  # vunits <- read_excel(xl, n_max=0, skip=1) |> names()
   read_excel(xl, skip=2, col_names=vnames)
 }
 ```
@@ -36,42 +32,21 @@ Carbon_Flux <- read_excel2(ex("meadows/RCV_carbon_flux_data.xlsx")) |>
   filter(GPP_sum>0)
 ```
   
-
-```{r}
-Mountflux <- Carbon_Flux %>% 
-mutate_all(as.numeric) %>% 
-mutate(DOY = as.Date(Date,format = "%m-%d")) %>% 
-select(Date:PAR_ave) %>% 
-mutate(NEE = round(NEE_sum, digits = 3), 
+Then we'll build a figure, modified from a method used by Mason Kealy in GEOG 604, using ggplot to visualize change of NEE, GPP and RE over the period of data.
+```{r fig.cap="Figure 1: Components of Carbon Flux measurements collected in 30 minute intervals in 2021 and added into ‘sum daily value’ , from flux tower in Red Clover Valley,California. Components included NEE (Net Ecosystem Exchange), RE (Respiration Efficiency), GPP (Gross Primary Productivity) all measured in $g C m^-2$ and are plotted against an annual time scale with days as the unit of measure."}
+Carbon_Flux |>
+  select(Date:PAR_ave) |>
+  mutate(NEE = round(NEE_sum, digits = 3),
        GPP = round(GPP_sum, digits = 3),
-       RE = round(RE_sum, digits = 3)) %>%
-#select(-NEE_sum, -GPP_sum, -RE_sum) %>% 
-  pivot_longer(cols = c("NEE", "RE", "GPP"), names_to = "CO2_FLUX_COMPONENTS", values_to ="value") %>%
-  filter(GPP_sum != 0, !is.na(PAR_ave))
-
-print(Mountflux)
-```
-
-```{r}
-
-```
-
-
-### Time series plot 
-  Then I used ggplot to create a visualization of how NEE, GPP, an RE changed over a yearly time scale.
-```{r}
-
-Mountflux %>% 
- ggplot(aes(x = Date, y= value, color = CO2_FLUX_COMPONENTS))+
-  geom_line()+
-  geom_hline(yintercept = 0, linetype = "longdash", color = "black")+
-  ggtitle(" Red Clover Valley: Interannual Components of Carbon Flux Measurements") +
-  xlab("Day of Year") +
-  ylab("g C/m^2")+
-  labs(caption =
-"Figure 1: Components of Carbon Flux measurements collected in 30 minute intervals in 2021
-and added into ‘sum daily value’ , from flux tower in Red Clover Valley,California. Components included NEE (Net Ecosystem Exchange), RE (Respiration Efficiency), GPP (Gross Primary Productivity) all measured in g C m^2 and are plotted against an annual time scale with days as the unit of measure.")
-  
+       RE = round(RE_sum, digits = 3)) |>
+  pivot_longer(cols = c("NEE", "RE", "GPP"), names_to = "CO2_FLUX_COMPONENTS", values_to ="value") |>
+  filter(GPP_sum != 0, !is.na(PAR_ave)) |> 
+  ggplot(aes(x = Date, y= value, color = CO2_FLUX_COMPONENTS))+
+    geom_line()+
+    geom_hline(yintercept = 0, linetype = "longdash", color = "black")+
+    ggtitle(" Red Clover Valley: Interannual Components of Carbon Flux Measurements") +
+    xlab("Day of Year") +
+    ylab("grams C per square meter")# +
 ```
  
 ### Pairs plot
@@ -79,171 +54,231 @@ and added into ‘sum daily value’ , from flux tower in Red Clover Valley,Cali
 Carbon_Flux |>
   select(GPP_sum:vpd_max) |>
   GGally::ggpairs()
-  # pairs()
-  
 ```
- 
 
-### Non-linear model of PAR_ave ~ GPP_sum, using Michaelis-Menten model
-
-*Not the right goal for a model between these variables, since GPP should derive from PAR, not the other way around.  But it does illustrate asymptotic data.*
-
-
-First the scatter plot:
+We'll look at GPP_sum~PAR_ave. 
 
 ```{r}
-plot(Carbon_Flux$GPP_sum, Carbon_Flux$PAR_ave,xlab="GPP_sum", ylab="PAR_ave")
+plot(Carbon_Flux$PAR_ave,Carbon_Flux$GPP_sum, xlab="PAR_ave", ylab="GPP_sum")
 ```
 
+What we can see is a relationship that doesn't fit a straight line but steepens with higher values in the explanatory variable. One approach would be a polynomial, which can do so, and get even more complex.
 
-### Try fitting a non-linear model (SSmicmen from base R)
+## Polynomial models
 
-Based on https://www.datacamp.com/tutorial/introduction-to-non-linear-model-and-insights-using-r
-
-Using start values for Vm and K based on interpreting the graph. We'll use nonlinear least squares (`nls`) and starting values of the two coefficients.
-
-```{r}
-micmenMod <- nls(PAR_ave~(Vm)*GPP_sum/(K+GPP_sum), data=Mountflux, start=list(Vm=750,K=1))
-summary(micmenMod)
-```
-**Calculate residual error**
-
-```{r}
-sse <- micmenMod$m$deviance()
-null <- lm(PAR_ave~1, data=Mountflux)
-sst <- data.frame(summary.aov(null)[[1]])$Sum.Sq
-percent_variation_explained <- 100*(sst-sse)/sst
-percent_variation_explained
-```
-```{r}
-plot(Mountflux$GPP_sum, Mountflux$PAR_ave,xlab="GPP_sum", ylab="PAR_ave")
- lines(Mountflux$GPP_sum, 
-       predict(micmenMod,Mountflux),col=2)
-```
-
-### polynomial models
-
-Ok, enough of that deceptive model of PAR predicted by GPP -- not the way it works -- and instead we'll look at models that predict GPP from PAR, not asymptotic 
-
-```{r}
-plot(Mountflux$PAR_ave,Mountflux$GPP_sum, xlab="PAR_ave", ylab="GPP_sum")
-
-```
+Fitting to various polynomial orders (powers) is easy with the `poly` function. We'll try orders 1 through 3 PAR_ave~poly(GPP_sum), summarizing the results of a model ... 
 
 #### poly 1
-
-```{r}
+```{r warning=F}
 ord = 1
-summary(lm(GPP_sum ~ poly(PAR_ave, ord, raw=T), data=Mountflux))
-ggplot(Mountflux, aes(PAR_ave, GPP_sum)) + geom_point() +
-  stat_smooth(method=lm, formula=y~poly(x,ord,raw=T))
-
+summary(lm(GPP_sum ~ poly(PAR_ave, ord, raw=T), data=Carbon_Flux))
 ```
 
-
+... and displaying the curve using `stat_smooth()` in ggplot2:
+```{r warning=F}
+ggplot(Carbon_Flux, aes(PAR_ave, GPP_sum)) + geom_point() +
+  stat_smooth(method=lm, formula=y~poly(x,ord,raw=T))
+```
 
 #### poly 2
+The second order polynomial (also called a quadratic relationship) can create a parabola, so using part of that can create a steepening curve.
 
-```{r}
+```{r warning=F}
 ord = 2
-summary(lm(GPP_sum ~ poly(PAR_ave, ord, raw=T), data=Mountflux))
-ggplot(Mountflux, aes(PAR_ave, GPP_sum)) + geom_point() +
+summary(lm(GPP_sum ~ poly(PAR_ave, ord, raw=T), data=Carbon_Flux))
+ggplot(Carbon_Flux, aes(PAR_ave, GPP_sum)) + geom_point() +
   stat_smooth(method=lm, formula=y~poly(x,ord,raw=T))
-
 ```
-
 
 #### poly 3
-
-
-```{r}
+```{r warning=F}
 ord = 3
-summary(lm(GPP_sum ~ poly(PAR_ave, ord, raw=T), data=Mountflux))
-ggplot(Mountflux, aes(PAR_ave, GPP_sum)) + geom_point() +
+summary(lm(GPP_sum ~ poly(PAR_ave, ord, raw=T), data=Carbon_Flux))
+ggplot(Carbon_Flux, aes(PAR_ave, GPP_sum)) + geom_point() +
   stat_smooth(method=lm, formula=y~poly(x,ord,raw=T))
 ```
 
-#### poly 4
-```{r}
-ord = 4
-summary(lm(GPP_sum ~ poly(PAR_ave, ord, raw=T), data=Mountflux))
-ggplot(Mountflux, aes(PAR_ave, GPP_sum)) + geom_point() +
-  stat_smooth(method=lm, formula=y~poly(x,ord,raw=T))
-```
+Well, these all worked pretty well, with significant p values and $r^2$ of 70% for the 3rd order polynomial, but the patterns are difficult to interpret past the first order (a simple linear model anyway), and it allows parts of the curve to do odd things, like decrease in predicted value before increasing in the 2nd order polynomial, not surprising since it models a parabola.
 
-#### poly 5
-```{r}
-ord = 5
-summary(lm(GPP_sum ~ poly(PAR_ave, ord, raw=T), data=Mountflux))
-ggplot(Mountflux, aes(PAR_ave, GPP_sum)) + geom_point() +
-  stat_smooth(method=lm, formula=y~poly(x,ord,raw=T))
-```
+So we might want to try some methods that don't work this way, like a power law model or an exponential model.
 
-### power law relationship
-```{r}
-powerModel <- lm(log(GPP_sum) ~ log(PAR_ave), data=Mountflux)
+
+### Power law model
+
+A power law model looks like this:
+
+$$
+y=ax^p
+$$
+This can be log transformed...
+$$
+log(y)=log(ax^p)
+$$
+... and converted using logarithm reformatting rules to be the form of a simple linear model, with $log(a)$ the intercept and $p$ the slope:
+
+$$
+log(y)=log(a)+p(log(x))
+$$
+So by simply taking the log transform of each of the variables, we can model the relationship:
+
+$$
+GPP=aPAR^p
+$$
+using the log transformed variables to derive the intercept $log(a)$ and thus $a=exp(log(a))$ and slope $p$.
+
+$$
+log(GPP)=log(a)+p(log(PAR))
+$$
+
+> Note that this works because `log()` in R is a natural log, that is to the base $e$.
+
+```{r warning=F}
+powerModel <- lm(log(GPP_sum) ~ log(PAR_ave), data=Carbon_Flux)
 summary(powerModel)
-ggplot(Mountflux, aes(log(PAR_ave), log(GPP_sum))) + geom_point() +
+ggplot(Carbon_Flux, aes(log(PAR_ave), log(GPP_sum))) + geom_point() +
   stat_smooth(method=lm)
 ```
-Now plot without the log transformed axes, we'll need to create the curve with the model, using the coefficients.
+Now to plot without the log transformed axes, we'll need to create the curve with the model, using the coefficients.  
 
-```{r}
+```{r warning=F}
 coeff = exp(powerModel$coefficients[1])
 power = powerModel$coefficients[2]
 fit_func <- function(x) coeff*x^power
 
-fluxPlot <- ggplot(Mountflux) +
+fluxPlot <- ggplot(Carbon_Flux) +
   geom_point(aes(x=PAR_ave,y=GPP_sum))
 fluxPlot <- fluxPlot +
   stat_function(fun=fit_func, color="orange",lwd=2, alpha=0.5)
-fluxPlot
 ```
 
-```{r}
+```{r warning=F}
 fit_eq = paste("y = ", round(coeff,6), " x^", round(power,3))
 fluxPlot <- fluxPlot +
   annotate("text",x=200,y=40,label=fit_eq,size=4)
 fluxPlot
 ```
 
-## Another curve fit -- of gullies that may follow a rate law of growth, or other asymptotic
-from Graf WL (1977). The rate law in fluvial geomorphology. Am. J. Sci 277: 178-191.
+Hmmm... not a great fit graphically, with an $r^2$ of 50%. We can do better.  Let's try an exponential model.
 
-The rate-law model that Graf used employs a half life, appropriate when depleting a quantity as will happen with an erosion phase following a disequilibrium (like a geomorphic drop in base level).
+### Exponential model
+
+An exponential model can take many forms, but can commonly increase in response much more dramatically, as appears appropriate for the look of the scatter plot. The formula looks a bit like the power law, but the explanatory variable $x$ is the exponent instead of the coefficient $b$ (which was $p$ in the power law):
+
+$$
+y=ab^x
+$$
+This can be log transformed...
+$$
+log(y)=log(ab^x)
+$$
+... and converted using logarithm reformatting rules to be the form of a simple linear model, with $log(a)$ the intercept and $log(b)$ the slope:
+
+$$
+log(y)=log(a)+x(log(b))
+$$
+
+So what can we do with this? In this case, we don't take the $log(PAR)$ but just use PAR (in our case `PAR_ave`).
+
+```{r warning=F}
+expModel <- lm(log(GPP_sum) ~ PAR_ave, data=Carbon_Flux)
+summary(expModel)
+ggplot(Carbon_Flux, aes(x=PAR_ave, y=log(GPP_sum))) + geom_point() +
+  stat_smooth(method=lm)
+```
+Now plot without the log transformed axes, we'll need to create the curve with the model, using the coefficients.  
+
+```{r warning=F}
+coeff = exp(expModel$coefficients[1])
+slope = exp(expModel$coefficients[2])
+fit_func <- function(x) coeff*slope^x
+
+fluxPlot <- ggplot(Carbon_Flux) +
+  geom_point(aes(x=PAR_ave,y=GPP_sum))
+fluxPlot <- fluxPlot +
+  stat_function(fun=fit_func, color="orange",lwd=2, alpha=0.5)
+fit_eq = paste("GPP = ", round(coeff,4), round(slope,5), "^PAR")
+fluxPlot <- fluxPlot +
+  annotate("text",x=200,y=40,label=fit_eq,size=4)
+fluxPlot
+```
+This is a much better fit, as can be seen graphically above, and with an $r^2$ of 59%, as opposed to the 50% of the power model. It's not as high as we got with the 3rd order polynomial, but an exponential relationship is more easily interpreted as there are many natural phenomena that exhibit it.
+
+## Nonlinear models
+
+Sometimes the options we've looked at so far don't really match the relationship we're seeing, especially if things are nonlinear (the log-transformed models are still basically linear), and we may want to explore other models. One approach is the *nonlinear least squares* approach provided by the r function `nls`. It also works with linear relationships, and can be thought of as providing a model that uses a least-squares assessment similar to `lm`, but lets you provide the formula.
+
+>A good source to read more about this is https://datascienceplus.com/first-steps-with-non-linear-regression-in-r/. The method we'll borrow from is from https://www.datacamp.com/tutorial/introduction-to-non-linear-model-and-insights-using-r.  
+
+
+We might try this with an asymptotic model, which might be modeled with the Michaelis-Menten equation predicting a value $S$, where $V_{max}$ is the maximum value, $K_m$ is the independent variable. It's used in enzyme kinetics in biochemistry where the predicted value is a reaction rate and the independent variable is an enzyme concentration, but it's one way of modeling an asymptotic relationship. This type of equation describes a *rectangular hyperbola*. 
+
+$$
+v=\frac{V_{max}S}{K_m+S}
+$$
+
+
+
+So we'll use the equation to try to model gully growth from a limited supply of available slope to erode. This data comes from  Graf WL (1977). The rate law in fluvial geomorphology. Am. J. Sci 277: 178-191. After using these data to develop a gully *growth* model, we'll use a rate-law model similar to the one used by Graf to create a gully *hillslope erosion* model. Both approaches model response to a disequilibrium produced by an event (such as intensive grazing or off-road vehicle use).
 
 ```{r}
 library(igisci); library(tidyverse)
 gullyGrowth <- read_csv(ex("gully/gullyGrowth.csv"))
 ```
+First, let's look at the original data, which comes from measured quantities, from a rural `gully` and a more urban `proto-gully`:
+
+- distance: from the head of the gully
+- age_yrs: ages of trees that initiated in the lower part of the gully when sufficient soil had developed; that location moves headward as the gully grows
 
 ```{r}
 ggplot(data=gullyGrowth, aes(x=distance, y=age_yrs, col=type)) +
   geom_point()
 ```
 
-```{r}
-gully <- gullyGrowth |> filter(type=="gully")
-gullyMod <- nls(age_yrs~(Vm)*distance/(K+distance), data=gully, start=list(Vm=1,K=1))
-summary(gullyMod)
-```
-**Calculate residual error**
+They both exhibit an asymptotic form in the original data, but we'll need to turn things around to produce independent (time) and dependent (gully growth) variables, so we'll add a couple of variables that will help us with that. The existing data has distance from the headcut, which is the most recent part of the gully, so we'll add a `gully_length` variable (gullies erode *headward*) that starts at zero just below (arbitrarily 1 m past) the oldest tree, assuming that is somewhere near the initiation point; and since the variable is interval, not ratio, it doesn't matter where zero is as long as we're progressing forward in time. The age of trees can also be converted into `year` starting at the oldest age.
 
 ```{r}
+gully <- gullyGrowth |> filter(type=="gully") |>
+  mutate(year=max(age_yrs)-age_yrs, gully_length=max(distance)-distance+1)
+ggplot(data=gully, aes(x=year,y=gully_length)) + geom_point()
+```
+
+Here's where we apply the `nls` function, and define that Michaelis-Menten equation. Note that the `nls` function uses iteration from initial starting values, which we'll provide with the start parameter, a list of initial `Vmax` and `K` values: we'll get the `Vmax` as the maximum of the gully length values, and (the default) 1 for the `rate`.
+
+
+```{r}
+gullyMod <- nls(gully_length~(Vmax)*year/(K+year), data=gully, 
+                start=list(Vmax=max(gully$gully_length),K=1))
+summary(gullyMod)
+```
+
+
+```{r eval=F, include=F}
+# **Calculate residual error** NOT WORKING YET
 sse <- gullyMod$m$deviance()
-null <- lm(age_yrs~1, data=gully)
+null <- lm(year~1, data=gully)
 sst <- data.frame(summary.aov(null)[[1]])$Sum.Sq
 percent_variation_explained <- 100*(sst-sse)/sst
 percent_variation_explained
 ```
 
 ```{r}
-proto <- gullyGrowth |> filter(type=="proto-gully")
-protoMod <- nls(age_yrs~(Vm)*distance/(K+distance), data=proto, start=list(Vm=1,K=1))
+ggplot(data=gully, aes(x=year)) +
+  geom_point(aes(y=gully_length)) +
+  geom_line(data=gully, aes(x=year, y=predict(gullyMod,gully))) 
+```
+Now we'll do the same for the proto-gullies.
+
+```{r}
+proto <- gullyGrowth |> filter(type=="proto-gully") |>
+  mutate(year=max(age_yrs)-age_yrs, gully_length=max(distance)-distance+1)
+protoMod <- nls(gully_length~(Vmax)*year/(K+year), data=proto, 
+                start=list(Vmax=max(proto$gully_length),K=1))
 summary(protoMod)
 ```
 
-```{r}
+
+```{r eval=F, include=F}
+# **Calculate residual error** NOT WORKING YET
 sse <- protoMod$m$deviance()
 null <- lm(age_yrs~1, data=proto)
 sst <- data.frame(summary.aov(null)[[1]])$Sum.Sq
@@ -252,8 +287,55 @@ percent_variation_explained
 ```
 
 ```{r}
-ggplot(data=gullyGrowth, aes(x=distance)) +
-  geom_point(aes(y=age_yrs, col=type)) +
-  geom_line(data=gully, aes(x=distance, y=predict(gullyMod,gully))) +
-  geom_line(data=proto, aes(x=distance, y=predict(protoMod,proto)))
+ggplot(data=proto, aes(x=year)) +
+  geom_point(aes(y=gully_length)) +
+  geom_line(data=proto, aes(x=year, y=predict(protoMod,proto))) 
 ```
+
+So we can see significant gully growth models with both gully and proto-gully data. 
+
+### Using the *rate law* to model hillslope erosion
+
+As Graf (1977) did, we can apply a rate law to model how much of the original hillslope remains as it is being eroded. The rate law equation is:
+
+$$
+A_t=A_0e^{-bt}
+$$
+where:
+
+- $A_t$ is the amount of material changed, in this case the length of the gully from the headcut, the original measured `distance` at a given time 
+- $A_0$ is the potential equilibrium length of the gully
+- $b$ is the rate constant, to be derived as a coefficient. Note that the coefficient should be negative (-b), since we're modeling hillslope erosion
+- $t$ is the amount of time elapsed
+
+
+The rate law equation can be log-transformed to produce a simple linear equation
+
+$$
+log(A_t)=log(A_0)-bt
+$$
+
+So this is able to be processed with `lm`, and we'll use `year` instead of age, but stick with `distance` since this at least works.
+
+```{r}
+rateGully <- lm(log(distance)~year, data=gully)
+summary(rateGully)
+```
+```{r eval=T, include=T}
+A0 = exp(rateGully$coefficients[1])
+rate = rateGully$coefficients[2]
+fit_func <- function(x) A0*exp(rate*x)
+ggplot(data=gully, aes(x=year)) +
+  geom_point(aes(y=distance)) +
+  stat_function(fun=fit_func, color="orange",lwd=2, alpha=0.5)
+```
+So this seems to fit the erosion of the gully pretty well. We can also derive the half life of the erosion of hillslope length as:
+
+$$
+T=log(2)/{-b}
+$$
+
+```{r}
+paste0("The coefficient A0 is ", round(A0,1), ", the rate (b) is ",round(rate,3)," and the half life T is ", round(log(2)/-rate, 2), " years.")
+```
+
