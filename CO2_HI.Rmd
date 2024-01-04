@@ -1,43 +1,61 @@
 # Atmospheric CO2 record from Mauna Loa, Hawaii 
 
->Note: Much of this notebook is based on an exercise in SFSU's Geog 313 class developed by Andrew Oliphant, using Excel. Most of the text is from that exercise, but the methods are coded in R.
+>Note: Much of this notebook is based on an exercise in SFSU's Geog 313 class developed by Andrew Oliphant, using Excel. All methods here are instead coded in R.
 
-**Goal**: To download data from NOAA and the Scripps Institute containing monthly average atmospheric CO2 concentration data measured at the Mauna Loa Observatory on Hawai'i. These record recent (since 1958) changes in atmospheric concentrations of the important greenhouse gas, CO2 as measured at 3.3 km above the central Pacific Ocean. For further information on the observations see: http://www.cmdl.noaa.gov/ccgg/
+While there's already a built-in `co2` time series, that record only goes through 1998. We'll download a more current data set from NOAA and the Scripps Institute. As with the built-in time series, it contains monthly average atmospheric CO~2~
+concentration measured at the Mauna Loa Observatory on Hawai'i. These record recent (since 1958) changes in atmospheric concentrations of the important greenhouse gas, CO~2~ as measured at 3.3 km above the central Pacific Ocean. For further information on the observations see: http://www.cmdl.noaa.gov/ccgg/
+
+## Read the data
 
 We'll use R code to download and prepare the data for plotting. The source file at NOAA  ftp://aftp.cmdl.noaa.gov/products/trends/co2/co2_mm_mlo.txt can be read directly into a data frame.  We'll start by using code to download the text file into the current working directory:  
 
-```{r}
-library(RCurl)
+```{r warning=F, message=F}
+library(RCurl); library(igisci)
 filepath <- "ftp://aftp.cmdl.noaa.gov/products/trends/co2/co2_mm_mlo.txt"
 filename <- "co2_mm_mlo.txt"
-download.file(filepath, paste0(getwd(),"/",filename))
+result = try(download.file(filepath, paste0(getwd(),"/",filename)))
 ```
 
-Using the same path to where the file was stored, we'll use `read_table`, which has the ability to use white space (any number of spaces or tabs) to delimit the data, handy for this text file which has varying numbers of spaces as delimiters, since data are written as fixed length but numbers are formatted to varying length. The text file also has several rows of comments at the beginning, each starting with "#", so we'll specify this as the comment character so those lines of text can be ignored. Unfortunately this also includes the variable names, but as these do not change we can simply assign them in code, based upon prior inspection.
+Using the same path to where the file was stored, we'll use `read_table`, which has the ability to use white space (any number of spaces or tabs) to delimit the data; this is handy for this text file which has varying numbers of spaces as delimiters, since data are written as fixed length but numbers are formatted to varying length. The text file also has several rows of comments at the beginning, each starting with "#", so we'll specify this as the comment character so those lines of text can be ignored. Unfortunately this also includes the variable names, but as these do not change we can simply assign them in code, based upon prior inspection.
 
 ```{r include=F}
 library(tidyverse); library(lubridate)
 ```
-```{r}
-CO2_HI <- read_table(paste0(getwd(),"/",filename),
-                     comment="#",
-                     col_names =c("year","month","dec_date",
+
+>Note that the following could also be used read data from `igisci` in case the internet is down.
+
+```{r message=F}
+datafile <- paste0(getwd(),"/",filename)
+try(CO2_HI <- read_table(datafile,
+                    comment="#",
+                    col_names =c("year","month","dec_date",
+                               "monthly_CO2","deseasonalized_CO2",
+                               "#days","sd_days","unc.of_mon_mean")))
+```
+
+Note that the following could be used if the connection doesn't work:
+
+```{r eval=F}
+CO2_HI <- read_table(igisci::ex(paste0("CO2/",filename)),
+                    comment="#",
+                    col_names =c("year","month","dec_date",
                                "monthly_CO2","deseasonalized_CO2",
                                "#days","sd_days","unc.of_mon_mean"))
 ```
 
-CO2 concentrations are recorded in micromols of carbon per mol of dry air, which is the same thing as parts per million. Also, note that there are two CO2 records, average (`monthly_CO2`) and deseasonalized (`deseasonalized_CO2`). Notice there are several time-stamp columns; year, month and decimal date. The decimal date is produced for use as an effective x-axis value to plot the time-series because it makes a continuous, evenly spaced time series, which includes both the year plus the fraction of the year at the center of the month (i.e. year + (month-0.5)/12); we can also convert it into a POSIXct date-time format:
+CO2 concentrations are recorded in micromols of carbon per mol of dry air, which is the same thing as parts per million. Also, note that there are two CO~2~ records, average (`monthly_CO2`) and deseasonalized (`deseasonalized_CO2`). Notice there are several time-stamp columns; year, month and decimal date. The decimal date is produced for use as an effective x-axis value to plot the time-series because it makes a continuous, evenly spaced time series, which includes both the year plus the fraction of the year at the center of the month (i.e. year + (month-0.5)/12); we can also convert it into a POSIXct date-time format:
 
 ```{r}
 CO2_HI <- mutate(CO2_HI, datetime = date_decimal(dec_date)) 
 ```
 
- 
-```{r}
+```{r eval=F, include=F}
 summary(CO2_HI)
 ```
 
-**Plot the time-series** of monthly of CO2 concentrations against decimal date in `ggplot`, using `geom_line` instead of `geom_point`.
+## Plot the time series
+
+Plot the time-series of monthly of CO2 concentrations against decimal date in `ggplot`, using `geom_line` instead of `geom_point`.
 
 ```{r}
 ggplot(data=CO2_HI, aes(x=datetime,y=monthly_CO2)) +
@@ -46,7 +64,8 @@ ggplot(data=CO2_HI, aes(x=datetime,y=monthly_CO2)) +
 
 The record looks like saw teeth because the amount of carbon dioxide in the atmosphere changes over the course of a year. Green plants absorb carbon dioxide during the summer when they are actively growing. There is more land area in the Northern Hemisphere and so carbon dioxide concentration decreases during the summer of the Northern Hemisphere. The carbon dioxide concentration peaks in March, just before the growing season starts in the Northern Hemisphere. If you look closely, you will notice that there is a slight flattening starting in 1991 and lasting a year or so. Mount Pinatubo in the Philippines erupted in 1991 and released a large volume of sulfur dioxide, which combined with water vapor to produce aerosols. This is thought to increase both terrestrial ecosystem photosynthesis and the solubility of carbon dioxide in the oceans, both of which are important carbon sinks.
  
-**Detrend the data**: In order to more closely examine the apparent increase in CO2 concentration throughout the record, we ideally want to remove the noisy seasonal signal with the saw-tooth like pattern, since change over this timescale is not associated with the broader (century scale) change. This is called data detrending or filtering (i.e. we want to filter out or remove the trend associated with the seasonal signal). We'll use the `ma()` function of the `forecast` package to create a 12-month moving average. Since `ma()` only works with single vectors, we'll need to extract those and bind the columns to create a new data frame.
+## Generalize the data
+In order to more closely examine the apparent increase in CO~2~ concentration throughout the record, we ideally want to remove the noisy seasonal signal with the saw-tooth like pattern, since change over this timescale is not associated with the broader (century scale) change. We'll use the `ma()` function of the `forecast` package to create a 12-month moving average. Since `ma()` only works with single vectors, we'll need to extract those and bind the columns to create a new data frame.
 ```{r}
 library(forecast)
 CO2_date_ma <- ma(CO2_HI$dec_date, 12)
@@ -60,7 +79,62 @@ ggplot(CO2_ma,aes(x=date,y=CO2_12mo_avg)) +
   geom_line()
 ```
 
-**Curve fitting**. If we could write a mathematical description of the CO2 increase curve, we could use it to model future scenarios under business-as-usual emissions increases. There are a variety of linear and non-linear curve forms known mathematically such as logarithmic and exponential to describe various forms in nature. For these data we will use a second order polynomial applied to the decimal year, the independent variable.
+## Curve Fitting and Creating a Prediction
+If we could write a mathematical description of the CO~2~ increase curve, we could use it to model future scenarios under business-as-usual emissions increases. There are a variety of linear and non-linear curve forms known mathematically such as logarithmic and exponential to describe various forms in nature. 
+
+
+### Exponential model
+
+```{r warning=F}
+expCO2mod <- lm(log(CO2_12mo_avg) ~ date, data=CO2_ma)
+summary(expCO2mod)
+
+```
+Now plot without the log transformed axes, we'll need to create the curve with the model, using the coefficients.  
+
+```{r warning=F}
+coeff = exp(expCO2mod$coefficients[1])
+slope = exp(expCO2mod$coefficients[2])
+fit_func <- function(x) coeff*slope^x
+
+co2Plot <- ggplot(CO2_ma) +
+  geom_point(aes(x=date,y=CO2_12mo_avg))
+co2Plot <- co2Plot +
+  stat_function(fun=fit_func, color="orange",lwd=2, alpha=0.5)
+fit_eq = paste("co2 = ", round(coeff,4), round(slope,5), "^date")
+co2Plot <- co2Plot +
+  annotate("text",x=1980,y=400,label=fit_eq,size=4)
+co2Plot
+```
+
+### Power law model
+
+```{r warning=F}
+powerCO2mod <- lm(log(CO2_12mo_avg) ~ log(date), data=CO2_ma)
+summary(powerCO2mod)
+ggplot(CO2_ma, aes(x=log(date), y=log(CO2_12mo_avg))) + geom_point()
+```
+
+Now to plot without the log transformed axes, we'll need to create the curve with the model, using the coefficients.  
+
+```{r warning=F}
+coeff = exp(powerCO2mod$coefficients[1])
+power = powerCO2mod$coefficients[2]
+fit_func <- function(x) coeff*x^power
+
+powerCO2plot <- ggplot(CO2_ma) +
+  geom_point(aes(x=date,y=CO2_12mo_avg))
+powerCO2plot <- powerCO2plot +
+  stat_function(fun=fit_func, color="orange",lwd=2, alpha=0.5)
+fit_eq = paste("y = ", round(coeff,6), " x^", round(power,3))
+powerCO2plot <- powerCO2plot +
+  annotate("text",x=1980,y=400,label=fit_eq,size=4)
+powerCO2plot
+```
+
+### Second order polynomial
+
+Let's try a second order polynomial applied to the decimal year, the independent variable.
 
 ```{r}
 ord = 2
@@ -70,8 +144,9 @@ ggplot(CO2_ma, aes(x=date,y=CO2_12mo_avg)) + geom_point() +
   stat_smooth(method=lm, formula=y~poly(x,ord,raw=T))
 ```
 
- 
-Modeling future CO2 concentrations: You can use this equation as an empirical model to predict CO2 concentrations for a future date. Just use the equation in a cell and replace x with the year of interest. Under a business-as-usual emissions future, what will the concentrations of CO2 be in 2050? In what year will pre-industrial CO2 levels of ~285 ppm be doubled? We'll loop through time from 2000 to 2100 and stop when the predicted CO2 is greater than double 285 ppm, the pre-industrial level. 
+It's interesting that this works better than either a power-law or an exponential model.
+
+Modeling future CO2 concentrations: You can use this equation as an empirical model to predict CO2 concentrations for a future date. Just use the equation in a cell and replace x with the year of interest. Under a business-as-usual emissions future, what will the concentrations of CO2 be in 2050? In what year will pre-industrial CO~2~ levels of ~285 ppm be doubled? We'll loop through time from 2000 to 2100 and stop when the predicted CO~2~ is greater than double 285 ppm, the pre-industrial level. 
 
 ```{r}
 b0 <- poly2$coefficients[1]

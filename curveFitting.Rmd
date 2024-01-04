@@ -8,6 +8,8 @@ Typical curve fitting approaches are variations on a linear model, using `lm` wi
 
 In this chapter, we'll explore a bit of polynomial models and nonlinear models; `glm` is covered in the modeling chapter https://bookdown.org/igisc/EnvDataSci/modeling.html#generalized-linear-model-glm of the book. This section will explore various curve fitting methods. We'll read in data as needed. There's not a lot of interpretation, as this is basically a sandbox for now. 
 
+> Note: There's a lot to understand about curve fitting, and this brief presentation doesn't pretend to be comprehensive, but just provide some examples that use graphics and model results to guide the process of choosing and testing appropriate models. 
+
 ```{r message=FALSE}
 library(readxl); library(tidyverse); library(lubridate); library(igisci)
 ```
@@ -32,24 +34,26 @@ Carbon_Flux <- read_excel2(ex("meadows/RCV_carbon_flux_data.xlsx")) |>
   filter(GPP_sum>0)
 ```
   
-Then we'll build a figure, modified from a method used by Mason Kealy in GEOG 604, using ggplot to visualize change of NEE, GPP and RE over the period of data.
-```{r fig.cap="Figure 1: Components of Carbon Flux measurements collected in 30 minute intervals in 2021 and added into ‘sum daily value’ , from flux tower in Red Clover Valley,California. Components included NEE (Net Ecosystem Exchange), RE (Respiration Efficiency), GPP (Gross Primary Productivity) all measured in $g C m^-2$ and are plotted against an annual time scale with days as the unit of measure."}
+Then we'll build a figure, using ggplot to visualize change of NEE, GPP, PAR and RE over the period of data.
+```{r fig.cap="Figure 1: Components of Carbon Flux measurements collected in 30 minute intervals in 2021 and added into sum or average, from flux tower in Red Clover Valley,California. Components included NEE (Net Ecosystem Exchange), RE (Respiration Efficiency), PAR (photosynthetically active radiation), and GPP (Gross Primary Productivity) plotted against a year-day time scale with day as the unit of measure."}
 Carbon_Flux |>
   select(Date:PAR_ave) |>
   mutate(NEE = round(NEE_sum, digits = 3),
        GPP = round(GPP_sum, digits = 3),
-       RE = round(RE_sum, digits = 3)) |>
-  pivot_longer(cols = c("NEE", "RE", "GPP"), names_to = "CO2_FLUX_COMPONENTS", values_to ="value") |>
+       RE = round(RE_sum, digits = 3),
+       PAR = round(PAR_ave, digits = 3)) |>
+  pivot_longer(cols = c("NEE", "RE", "GPP", "PAR"), names_to = "CO2_FLUX_COMPONENTS", values_to ="value") |>
   filter(GPP_sum != 0, !is.na(PAR_ave)) |> 
-  ggplot(aes(x = Date, y= value, color = CO2_FLUX_COMPONENTS))+
+  ggplot(aes(x = Date, y= value)) + #, color = CO2_FLUX_COMPONENTS))+
     geom_line()+
     geom_hline(yintercept = 0, linetype = "longdash", color = "black")+
-    ggtitle(" Red Clover Valley: Interannual Components of Carbon Flux Measurements") +
-    xlab("Day of Year") +
-    ylab("grams C per square meter")# +
+    ggtitle(" Red Clover Valley: Components of Eddy Covariance Flux Measurements") +
+    facet_grid(CO2_FLUX_COMPONENTS ~ ., scales = "free_y")
 ```
  
 ### Pairs plot
+As we've seen elsewhere, pairs plots are useful for visualizing bivariate relationships of continuous data, all on one graph.
+
 ```{r message=F,warning=F}
 Carbon_Flux |>
   select(GPP_sum:vpd_max) |>
@@ -62,13 +66,19 @@ We'll look at GPP_sum~PAR_ave.
 plot(Carbon_Flux$PAR_ave,Carbon_Flux$GPP_sum, xlab="PAR_ave", ylab="GPP_sum")
 ```
 
-What we can see is a relationship that doesn't fit a straight line but steepens with higher values in the explanatory variable. One approach would be a polynomial, which can do so, and get even more complex.
+What we can see is a relationship that doesn't fit a straight line but steepens with higher values in the explanatory variable. We'll need to look at other models that aren't simple linear.
 
 ## Polynomial models
 
-Fitting to various polynomial orders (powers) is easy with the `poly` function. We'll try orders 1 through 3 PAR_ave~poly(GPP_sum), summarizing the results of a model ... 
+One popular way of handling Fitting to various polynomial orders (powers) is easy with the `poly` function. We'll try orders 1 through 3 PAR_ave~poly(GPP_sum), summarizing the results of a model ... 
 
-#### poly 1
+### poly 1
+
+This is the same a normal linear model.
+
+$$
+y = b_0 + b_1 X
+$$
 ```{r warning=F}
 ord = 1
 summary(lm(GPP_sum ~ poly(PAR_ave, ord, raw=T), data=Carbon_Flux))
@@ -80,8 +90,12 @@ ggplot(Carbon_Flux, aes(PAR_ave, GPP_sum)) + geom_point() +
   stat_smooth(method=lm, formula=y~poly(x,ord,raw=T))
 ```
 
-#### poly 2
-The second order polynomial (also called a quadratic relationship) can create a parabola, so using part of that can create a steepening curve.
+### poly 2
+The second order polynomial (also called a quadratic relationship) can create a parabola, so using part of that can create a steepening curve, though that's not the main purpose of quadratic relationships, commonly used in optics. 
+
+$$
+y = b_0 + b_1 x + b_2x^2
+$$
 
 ```{r warning=F}
 ord = 2
@@ -90,7 +104,11 @@ ggplot(Carbon_Flux, aes(PAR_ave, GPP_sum)) + geom_point() +
   stat_smooth(method=lm, formula=y~poly(x,ord,raw=T))
 ```
 
-#### poly 3
+### poly 3
+
+$$
+y = b_0 + b_1 x + b_2 x^2 + b_3 x^3
+$$
 ```{r warning=F}
 ord = 3
 summary(lm(GPP_sum ~ poly(PAR_ave, ord, raw=T), data=Carbon_Flux))
@@ -98,12 +116,15 @@ ggplot(Carbon_Flux, aes(PAR_ave, GPP_sum)) + geom_point() +
   stat_smooth(method=lm, formula=y~poly(x,ord,raw=T))
 ```
 
-Well, these all worked pretty well, with significant p values and $r^2$ of 70% for the 3rd order polynomial, but the patterns are difficult to interpret past the first order (a simple linear model anyway), and it allows parts of the curve to do odd things, like decrease in predicted value before increasing in the 2nd order polynomial, not surprising since it models a parabola.
+Well, these all worked pretty well, with significant p values and $r^2$ of 70% for the 3rd order polynomial, but the patterns are difficult to interpret past the first order (a simple linear model anyway), and it allows parts of the curve to do odd things, like decrease in predicted value before increasing in the 2nd order polynomial, not surprising since it models a parabola. Polynomial models are typically poor choices, but their simple use often makes them popular. 
 
-So we might want to try some methods that don't work this way, like a power law model or an exponential model.
+So we might want to try some methods that can be better interpreted based on known properties of natural systems. Some examples are the power law model, the exponential model, and a simple log transform of independent variables.
 
+Many of these take advantage of the use of logarithms. One common method is to just use a log transformed independent variable. This can make sense especially if a variable exhibits linearity in that transformed sense, as do many natural systems, for instance pH is the negative base 2 logarithm of the hydrogen ion activity, and sediment particle size is often given as phi values, which is the negative base 2 logarithm of particle diameter in millimeters, and the Richter scale of earthquake intensity is a log10 value.
 
-### Power law model
+Since we've been looking at the flux data, we'll start with models that might be an improvement over the linear and polynomial values: power law and exponential models.
+
+## Power law model
 
 A power law model looks like this:
 
@@ -160,7 +181,7 @@ fluxPlot
 
 Hmmm... not a great fit graphically, with an $r^2$ of 50%. We can do better.  Let's try an exponential model.
 
-### Exponential model
+## Exponential model
 
 An exponential model can take many forms, but can commonly increase in response much more dramatically, as appears appropriate for the look of the scatter plot. The formula looks a bit like the power law, but the explanatory variable $x$ is the exponent instead of the coefficient $b$ (which was $p$ in the power law):
 
@@ -203,24 +224,11 @@ fluxPlot
 ```
 This is a much better fit, as can be seen graphically above, and with an $r^2$ of 59%, as opposed to the 50% of the power model. It's not as high as we got with the 3rd order polynomial, but an exponential relationship is more easily interpreted as there are many natural phenomena that exhibit it.
 
-## Nonlinear models
+## Gully growth data
 
-Sometimes the options we've looked at so far don't really match the relationship we're seeing, especially if things are nonlinear (the log-transformed models are still basically linear), and we may want to explore other models. One approach is the *nonlinear least squares* approach provided by the r function `nls`. It also works with linear relationships, and can be thought of as providing a model that uses a least-squares assessment similar to `lm`, but lets you provide the formula.
+There are many instances where our variables can benefit from a log transformation. For an example, we'll look at some other data that suggest that a log transform may have a benefit: data on gully growth from a paper by @Graf1977. Then, after using these data to develop a gully *growth* model, we'll use a rate-law model similar to the one used by Graf to create a gully *hillslope erosion* model. Both approaches model response to a disequilibrium produced by an event (such as intensive grazing or off-road vehicle use).
 
->A good source to read more about this is https://datascienceplus.com/first-steps-with-non-linear-regression-in-r/. The method we'll borrow from is from https://www.datacamp.com/tutorial/introduction-to-non-linear-model-and-insights-using-r.  
-
-
-We might try this with an asymptotic model, which might be modeled with the Michaelis-Menten equation predicting a value $S$, where $V_{max}$ is the maximum value, $K_m$ is the independent variable. It's used in enzyme kinetics in biochemistry where the predicted value is a reaction rate and the independent variable is an enzyme concentration, but it's one way of modeling an asymptotic relationship. This type of equation describes a *rectangular hyperbola*. 
-
-$$
-v=\frac{V_{max}S}{K_m+S}
-$$
-
-
-
-So we'll use the equation to try to model gully growth from a limited supply of available slope to erode. This data comes from  Graf WL (1977). The rate law in fluvial geomorphology. Am. J. Sci 277: 178-191. After using these data to develop a gully *growth* model, we'll use a rate-law model similar to the one used by Graf to create a gully *hillslope erosion* model. Both approaches model response to a disequilibrium produced by an event (such as intensive grazing or off-road vehicle use).
-
-```{r}
+```{r message=F}
 library(igisci); library(tidyverse)
 gullyGrowth <- read_csv(ex("gully/gullyGrowth.csv"))
 ```
@@ -229,18 +237,68 @@ First, let's look at the original data, which comes from measured quantities, fr
 - distance: from the head of the gully
 - age_yrs: ages of trees that initiated in the lower part of the gully when sufficient soil had developed; that location moves headward as the gully grows
 
-```{r}
+```{r warning=F}
 ggplot(data=gullyGrowth, aes(x=distance, y=age_yrs, col=type)) +
   geom_point()
 ```
 
 They both exhibit an asymptotic form in the original data, but we'll need to turn things around to produce independent (time) and dependent (gully growth) variables, so we'll add a couple of variables that will help us with that. The existing data has distance from the headcut, which is the most recent part of the gully, so we'll add a `gully_length` variable (gullies erode *headward*) that starts at zero just below (arbitrarily 1 m past) the oldest tree, assuming that is somewhere near the initiation point; and since the variable is interval, not ratio, it doesn't matter where zero is as long as we're progressing forward in time. The age of trees can also be converted into `year` starting at the oldest age.
 
-```{r}
+```{r warning=F}
 gully <- gullyGrowth |> filter(type=="gully") |>
   mutate(year=max(age_yrs)-age_yrs, gully_length=max(distance)-distance+1)
 ggplot(data=gully, aes(x=year,y=gully_length)) + geom_point()
 ```
+
+## Log-transformed independent variables
+
+So if we plot the log(year) and gully_length, along with a linear curve of that, we see a compelling result... 
+
+```{r warning=F}
+ggplot(data=gully, aes(x=log(year),y=gully_length)) +
+    geom_point() + geom_smooth(method="lm")
+```
+
+... suggesting a linear model might be appropriate.  We'll bump up the year by 0.1 to avoid problems with deriving the log of zero, and create a model...
+
+```{r}
+gullyLogModel <- lm(gully_length~log(year+0.1),data=gully)
+summary(gullyLogModel)
+```
+
+... then display it in the original coordinate values:
+
+```{r}
+a = gullyLogModel$coefficients[1]
+b = gullyLogModel$coefficients[2]
+```
+
+```{r warning=F}
+fit_func <- function(x) a + b*log(x)
+ggplot(data=gully, aes(x=year)) +
+  geom_point(aes(y=gully_length)) +
+  stat_function(fun=fit_func, color="orange",lwd=2, alpha=0.5)
+```
+
+... where it's not very convincing. So it looks like we need to look elsewhere, and one place is the realm of nonlinear models.
+
+## Nonlinear models
+
+Sometimes the options we've looked at so far don't really match the relationship we're seeing, especially if things are nonlinear (the log-transformed models are still basically linear), and we may want to explore other models. One approach is the *nonlinear least squares* approach provided by the r function `nls`. It also works with linear relationships, and can be thought of as providing a model that uses a least-squares assessment similar to `lm`, but lets you provide the formula.
+
+>There's a lot to curve fitting in general, and nonlinear methods are no exception, but fortunately there are some good sources. A good brief introduction is https://datascienceplus.com/first-steps-with-non-linear-regression-in-r/ and to learn more, I'd recommend looking into the package `nlstools` and literature on its use for nonlinear modeling in @JSSv066i05 at https://www.jstatsoft.org/article/view/v066i05 and some of the sources they cite. The method we'll borrow from is from https://www.datacamp.com/tutorial/introduction-to-non-linear-model-and-insights-using-r.  
+
+
+
+### Using `nls` for a rectangular hyperbola model, using the Michaelis-Menten equation
+
+We might try this with an asymptotic model, which might be modeled with the Michaelis-Menten equation predicting a value $S$, where $V_{max}$ is the maximum value, $K_m$ is the independent variable. It's used in enzyme kinetics in biochemistry where the predicted value is a reaction rate and the independent variable is an enzyme concentration, but it's one way of modeling an asymptotic relationship. This type of equation describes a *rectangular hyperbola*. 
+
+$$
+v=\frac{V_{max}S}{K_m+S}
+$$
+
+So we'll use the equation to try to model gully growth from a limited supply of available slope to erode. 
 
 Here's where we apply the `nls` function, and define that Michaelis-Menten equation. Note that the `nls` function uses iteration from initial starting values, which we'll provide with the start parameter, a list of initial `Vmax` and `K` values: we'll get the `Vmax` as the maximum of the gully length values, and (the default) 1 for the `rate`.
 
@@ -293,6 +351,7 @@ ggplot(data=proto, aes(x=year)) +
 ```
 
 So we can see significant gully growth models with both gully and proto-gully data. 
+
 
 ### Using the *rate law* to model hillslope erosion
 
