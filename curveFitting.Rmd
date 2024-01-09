@@ -70,7 +70,7 @@ What we can see is a relationship that doesn't fit a straight line but steepens 
 
 ## Polynomial models
 
-One popular way of handling Fitting to various polynomial orders (powers) is easy with the `poly` function. We'll try orders 1 through 3 PAR_ave~poly(GPP_sum), summarizing the results of a model ... 
+Fitting to various polynomial orders (powers) is easy with the `poly` function. We'll try orders 1 through 3 PAR_ave~poly(GPP_sum), summarizing the results of a model ... 
 
 ### poly 1
 
@@ -224,9 +224,9 @@ fluxPlot
 ```
 This is a much better fit, as can be seen graphically above, and with an $r^2$ of 59%, as opposed to the 50% of the power model. It's not as high as we got with the 3rd order polynomial, but an exponential relationship is more easily interpreted as there are many natural phenomena that exhibit it.
 
-## Gully growth data
+## Growth and loss models in geomorphology: Gully data
 
-There are many instances where our variables can benefit from a log transformation. For an example, we'll look at some other data that suggest that a log transform may have a benefit: data on gully growth from a paper by @Graf1977. Then, after using these data to develop a gully *growth* model, we'll use a rate-law model similar to the one used by Graf to create a gully *hillslope erosion* model. Both approaches model response to a disequilibrium produced by an event (such as intensive grazing or off-road vehicle use).
+There are many instances where our variables can benefit from a log transformation. For an example, we'll look at some other data that suggest that a log transform may have a benefit: data on gully growth from a paper by @Graf1977. Then, after using these data to develop a gully *growth* model, we'll use a rate-law model similar to the one used by Graf to create a *loss* model of hillslope erosion resulting from the same gully growth. Both approaches model response to a disequilibrium produced by an event (such as intensive grazing or off-road vehicle use).
 
 ```{r message=F}
 library(igisci); library(tidyverse)

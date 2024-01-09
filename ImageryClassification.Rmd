@@ -1,0 +1,224 @@
+# Imagery Classification Testing
+
+```{r}
+library(stringr)
+library(terra)
+imgFolder <- paste0("S2A_MSIL2A_20210628T184921_N0300_R113_T10TGK_20210628T230915.",
+                    "SAFE\\GRANULE\\L2A_T10TGK_A031427_20210628T185628")
+img20mFolder <- paste0("~/sentinel2/",imgFolder,"\\IMG_DATA\\R20m")
+imgDateTime <- str_sub(imgFolder,12,26)
+imgDateTime
+imgDate <- str_sub(imgDateTime,1,8)
+```
+
+```{r}
+sentinelBands <- paste0("B",c("02","03","04","05","06","07","8A","11","12"))
+sentFiles <- paste0(img20mFolder,"/T10TGK_",imgDateTime,"_",
+                        sentinelBands,"_20m.jp2")
+sentinel <- rast(sentFiles)
+sentinelBands
+names(sentinel) <- sentinelBands
+```
+
+**Spring**
+```{r}
+library(terra); library(stringr); library(igisci)
+imgFolderSpring <- paste0("S2B_MSIL2A_20210603T184919_N0300_R113_T10TGK_20210603",
+                     "T213609.SAFE\\GRANULE\\L2A_T10TGK_A022161_20210603T185928")
+img10mFolderSpring <- paste0("~/sentinel2/",imgFolderSpring,"\\IMG_DATA\\R20m")
+imgDateTimeSpring <- str_sub(imgFolderSpring,12,26)
+```
+**Summer**
+```{r}
+imgFolderSummer <- paste0("S2A_MSIL2A_20210628T184921_N0300_R113_T10TGK_20210628",
+                      "T230915.SAFE\\GRANULE\\L2A_T10TGK_A031427_20210628T185628")
+img10mFolderSummer <- paste0("~/sentinel2/",imgFolder,"\\IMG_DATA\\R20m")
+imgDateTimeSummer <- str_sub(imgFolderSummer,12,26)
+```
+
+```{r}
+sentinelBands <- paste0("B",c("02","03","04","05","06","07","8A","11","12"))
+sentFilesSpring <- paste0(img10mFolderSpring,"/T10TGK_",
+                              imgDateTimeSpring,"_",sentinelBands,"_20m.jp2")
+sentinelSpring <- rast(sentFilesSpring)
+names(sentinelSpring) <- paste0("spring",sentinelBands)
+
+sentFilesSummer <- paste0(img10mFolderSummer,"/T10TGK_",
+                              imgDateTimeSummer,"_",sentinelBands,"_20m.jp2")
+sentinelSummer <- rast(sentFilesSummer)
+names(sentinelSummer) <- paste0("summer",sentinelBands)
+```
+
+```{r}
+RCVext <- ext(715680,725040,4419120,4429980)
+sentRCVspring <- crop(sentinelSpring,RCVext)
+sentRCVsummer <- crop(sentinelSummer,RCVext)
+```
+
+
+### Create a 18-band stack from both images
+Since we have two imagery dates , we have a total of 18 variables to work with. So we'll put these together as a multi-band stack simply using `c()` with the various bands. 
+```{r}
+sentRCV <- c(sentRCVspring, sentRCVsummer)
+```
+
+```{r}
+plotRGB(subset(sentRCV,c(7,3,2)),stretch="lin")
+```
+
+```{r}
+plotRGB(subset(sentRCV,c(16,12,11)),stretch="lin")
+```
+
+### Extract the training data (20 m spring + summer)
+We'll repeat some of the steps where we read in the training data and set up the land cover classes, reducing the 7 to 6 classes, then extract from our new 20-band image stack the training data. 
+```{r}
+library(igisci)
+trainPolys <- vect(ex("RCVimagery/train_polys7.shp"))
+ptsRCV <- spatSample(trainPolys, 1000, method="random")
+LCclass <- c("forest","hydric","mesic","rocky","water","willow","xeric")
+classdf <- data.frame(value=1:length(LCclass),names=LCclass)
+trainPolys <- vect(ex("RCVimagery/train_polys7.shp"))
+trainPolys[trainPolys$class=="willow"]$class <- "hydric"
+ptsRCV <- spatSample(trainPolys, 1000, method="random")
+LCclass <- c("forest","hydric","mesic","rocky","water","xeric")
+classdf <- data.frame(value=1:length(LCclass),names=LCclass)
+
+extRCV <- terra::extract(sentRCV, ptsRCV)[,-1] # REMOVE ID
+sampdataRCV <- data.frame(class = ptsRCV$class, extRCV)
+```
+
+### CART model and prediction (20 m spring + summer)
+\index{imagery classification from phenological change CART model 20 m spring + summer}
+```{r}
+library(rpart)
+# Train the model
+cartmodel <- rpart(as.factor(class)~., 
+                   data = sampdataRCV, method = 'class', minsplit = 5)
+```
+
+The CART model tree for the two-season 20 m example (Figure \@ref(fig:imgCARTtreePheno20)), in contrast with the 10 m classification, does not end up with a few pixels classified as "rocky" (Figures \@ref(fig:imgCARTprobmapPheno20) and \@ref(fig:imgCARThighestPheno20)).  
+
+```{r imgCARTtreePheno20, fig.cap="CART decision tree, Sentinel 20-m, spring and summer 2021 images"}
+library(rpart.plot)
+rpart.plot(cartmodel, fallen.leaves=F)
+```
+
+```{r imgCARTprobmapPheno20, fig.cap="CART classification, probabilities of each class, Sentinel-2 20 m, 2021 spring and summer phenology"}
+CARTpred <- predict(sentRCV, cartmodel, na.rm = TRUE)
+plot(CARTpred)
+```
+
+```{r}
+LCpheno <- which.max(CARTpred)
+cls <- names(CARTpred)
+df <- data.frame(id = 1:length(cls), class=cls)
+levels(LCpheno) <- df
+```
+
+```{r eval=F}
+LCcolors <- c("green4","cyan","gold","grey90","mediumblue","red")
+plot(LCpheno, col=LCcolors)
+```
+
+```{r imgCARThighestPheno20, fig.height=6.5, fig.width=6, fig.cap="CART classification, highest probability class, Sentinel-2 20 m, 2021 spring and summer phenology"}
+library(tmap)
+LCcolors <- c("green4","cyan","gold","grey90","mediumblue","red")
+tm_shape(LCpheno) + 
+    tm_raster(col="class",  
+            col.scale=tm_scale_categorical(values=LCcolors),
+            col.legend=tm_legend(frame=F)) +
+  tm_graticules(alpha=0.5, col="gray")
+
+```
+
+
+
+We might compare this plot with the previous 20 m (Figure \@ref(fig:imgCARThighestProb20m)), 10 m (Figure \@ref(fig:imgCART10mHighestProb)), and 10 m spring+summer classification (\@ref(fig:imgCARThighestPheno)).
+
+
+#### Cross validation : CART model for 20 m spring + summer
+```{r}
+set.seed(42)
+k <- 5 # number of folds
+j <- sample(rep(1:k, each = round(nrow(sampdataRCV))/k))
+# table(j)
+```
+
+```{r}
+x <- list()
+for (k in 1:5) {
+    train <- sampdataRCV[j!= k, ]
+    test <- sampdataRCV[j == k, ]
+    cart <- rpart(as.factor(class)~., data=train, method = 'class',
+                  minsplit = 5)
+    pclass <- predict(cart, test, na.rm = TRUE)
+    # assign class to maximum probablity
+    pclass <- apply(pclass, 1, which.max)
+    # create a data.frame using the reference and prediction
+    x[[k]] <- cbind(test$class, as.integer(pclass))
+}
+```
+
+#### Accuracy metrics : CART model for 20 m spring + summer
+Finally, as we did above, we'll look at the various accuracy metrics for the classification using the two-image (peak-growth spring and senescent summer) source.
+
+**Confusion Matrix**
+```{r}
+y <- do.call(rbind, x)
+y <- data.frame(y)
+colnames(y) <- c('observed', 'predicted')
+conmat <- table(y) # confusion matrix
+```
+```{r}
+# change the name of the columns and rows to LCclass
+if(length(LCclass)==dim(conmat)[2]){
+  colnames(conmat) <- LCclass}else{
+    print("Confusion matrix column dimension/LCclass array mismatch")
+    print(str(LCclass))
+    print(str(conmat))
+  }
+if(length(LCclass)==dim(conmat)[1]){
+  rownames(conmat) <- LCclass}else{
+    print("Confusion matrix row dimension/LCclass array mismatch")
+    print(str(LCclass))
+    print(str(conmat))
+  }
+```
+```{r}
+print(conmat)
+```
+
+**Overall Accuracy**
+```{r}
+n <- sum(conmat) # number of total cases
+diag <- diag(conmat) # number of correctly classified cases per class
+OA20ph <- sum(diag) / n # overall accuracy
+OA20ph
+```
+
+**kappa**
+
+```{r}
+rowsums <- apply(conmat, 1, sum) 
+p <- rowsums / n # observed (true) cases per class
+colsums <- apply(conmat, 2, sum)
+q <- colsums / n # predicted cases per class
+expAccuracy <- sum(p*q)
+kappa20ph <- (OA20ph - expAccuracy) / (1 - expAccuracy)
+kappa20ph
+```
+
+**User and Producer accuracy**
+```{r}
+PA <- diag / colsums # Producer accuracy
+UA <- diag / rowsums # User accuracy
+if(length(PA)==length(UA)){
+  outAcc <- data.frame(producerAccuracy = PA, userAccuracy = UA)
+  print(outAcc)}else{
+     print("length(PA)!=length(UA)")
+     print(PA)
+     print(UA)
+  }
+
+```

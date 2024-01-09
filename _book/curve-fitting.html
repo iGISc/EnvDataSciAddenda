@@ -23,7 +23,7 @@
 <meta name="author" content="Jerry Davis, SFSU Institute for Geographic Information Science" />
 
 
-<meta name="date" content="2024-01-03" />
+<meta name="date" content="2024-01-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -221,7 +221,7 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="8.3" data-path="curve-fitting.html"><a href="curve-fitting.html#power-law-model"><i class="fa fa-check"></i><b>8.3</b> Power law model</a></li>
 <li class="chapter" data-level="8.4" data-path="curve-fitting.html"><a href="curve-fitting.html#exponential-model"><i class="fa fa-check"></i><b>8.4</b> Exponential model</a></li>
-<li class="chapter" data-level="8.5" data-path="curve-fitting.html"><a href="curve-fitting.html#gully-growth-data"><i class="fa fa-check"></i><b>8.5</b> Gully growth data</a></li>
+<li class="chapter" data-level="8.5" data-path="curve-fitting.html"><a href="curve-fitting.html#growth-and-loss-models-in-geomorphology-gully-data"><i class="fa fa-check"></i><b>8.5</b> Growth and loss models in geomorphology: Gully data</a></li>
 <li class="chapter" data-level="8.6" data-path="curve-fitting.html"><a href="curve-fitting.html#log-transformed-independent-variables"><i class="fa fa-check"></i><b>8.6</b> Log-transformed independent variables</a></li>
 <li class="chapter" data-level="8.7" data-path="curve-fitting.html"><a href="curve-fitting.html#nonlinear-models"><i class="fa fa-check"></i><b>8.7</b> Nonlinear models</a>
 <ul>
@@ -371,7 +371,7 @@ FIGURE 8.1: Figure 1: Components of Carbon Flux measurements collected in 30 min
 </div>
 <div id="polynomial-models" class="section level2 hasAnchor" number="8.2">
 <h2><span class="header-section-number">8.2</span> Polynomial models<a href="curve-fitting.html#polynomial-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>One popular way of handling Fitting to various polynomial orders (powers) is easy with the <code>poly</code> function. We’ll try orders 1 through 3 PAR_ave~poly(GPP_sum), summarizing the results of a model …</p>
+<p>Fitting to various polynomial orders (powers) is easy with the <code>poly</code> function. We’ll try orders 1 through 3 PAR_ave~poly(GPP_sum), summarizing the results of a model …</p>
 <div id="poly-1" class="section level3 hasAnchor" number="8.2.1">
 <h3><span class="header-section-number">8.2.1</span> poly 1<a href="curve-fitting.html#poly-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>This is the same a normal linear model.</p>
@@ -593,9 +593,9 @@ Now plot without the log transformed axes, we’ll need to create the curve with
 <p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-58-1.png" width="75%" style="display: block; margin: auto;" />
 This is a much better fit, as can be seen graphically above, and with an <span class="math inline">\(r^2\)</span> of 59%, as opposed to the 50% of the power model. It’s not as high as we got with the 3rd order polynomial, but an exponential relationship is more easily interpreted as there are many natural phenomena that exhibit it.</p>
 </div>
-<div id="gully-growth-data" class="section level2 hasAnchor" number="8.5">
-<h2><span class="header-section-number">8.5</span> Gully growth data<a href="curve-fitting.html#gully-growth-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>There are many instances where our variables can benefit from a log transformation. For an example, we’ll look at some other data that suggest that a log transform may have a benefit: data on gully growth from a paper by <span class="citation">Graf (<a href="#ref-Graf1977">1977</a>)</span>. Then, after using these data to develop a gully <em>growth</em> model, we’ll use a rate-law model similar to the one used by Graf to create a gully <em>hillslope erosion</em> model. Both approaches model response to a disequilibrium produced by an event (such as intensive grazing or off-road vehicle use).</p>
+<div id="growth-and-loss-models-in-geomorphology-gully-data" class="section level2 hasAnchor" number="8.5">
+<h2><span class="header-section-number">8.5</span> Growth and loss models in geomorphology: Gully data<a href="curve-fitting.html#growth-and-loss-models-in-geomorphology-gully-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>There are many instances where our variables can benefit from a log transformation. For an example, we’ll look at some other data that suggest that a log transform may have a benefit: data on gully growth from a paper by <span class="citation">Graf (<a href="#ref-Graf1977">1977</a>)</span>. Then, after using these data to develop a gully <em>growth</em> model, we’ll use a rate-law model similar to the one used by Graf to create a <em>loss</em> model of hillslope erosion resulting from the same gully growth. Both approaches model response to a disequilibrium produced by an event (such as intensive grazing or off-road vehicle use).</p>
 <div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="curve-fitting.html#cb92-1" tabindex="-1"></a><span class="fu">library</span>(igisci); <span class="fu">library</span>(tidyverse)</span>
 <span id="cb92-2"><a href="curve-fitting.html#cb92-2" tabindex="-1"></a>gullyGrowth <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">ex</span>(<span class="st">&quot;gully/gullyGrowth.csv&quot;</span>))</span></code></pre></div>
 <p>First, let’s look at the original data, which comes from measured quantities, from a rural <code>gully</code> and a more urban <code>proto-gully</code>:</p>

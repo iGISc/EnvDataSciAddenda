@@ -22,18 +22,16 @@ Using the same path to where the file was stored, we'll use `read_table`, which 
 library(tidyverse); library(lubridate)
 ```
 
->Note that the following could also be used read data from `igisci` in case the internet is down.
-
 ```{r message=F}
 datafile <- paste0(getwd(),"/",filename)
-try(CO2_HI <- read_table(datafile,
+CO2_HI <- read_table(datafile,
                     comment="#",
                     col_names =c("year","month","dec_date",
                                "monthly_CO2","deseasonalized_CO2",
-                               "#days","sd_days","unc.of_mon_mean")))
+                               "#days","sd_days","unc.of_mon_mean"))
 ```
 
-Note that the following could be used if the connection doesn't work:
+>Note that the following could also be used read data from `igisci` in case the internet is down.
 
 ```{r eval=F}
 CO2_HI <- read_table(igisci::ex(paste0("CO2/",filename)),

@@ -58,7 +58,7 @@ poly-2
 poly-3
 power-law-model
 exponential-model
-gully-growth-data
+growth-and-loss-models-in-geomorphology-gully-data
 log-transformed-independent-variables
 nonlinear-models
 using-nls-for-a-rectangular-hyperbola-model-using-the-michaelis-menten-equation

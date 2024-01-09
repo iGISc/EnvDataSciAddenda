@@ -23,7 +23,7 @@
 <meta name="author" content="Jerry Davis, SFSU Institute for Geographic Information Science" />
 
 
-<meta name="date" content="2024-01-03" />
+<meta name="date" content="2024-01-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -221,7 +221,7 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="8.3" data-path="curve-fitting.html"><a href="curve-fitting.html#power-law-model"><i class="fa fa-check"></i><b>8.3</b> Power law model</a></li>
 <li class="chapter" data-level="8.4" data-path="curve-fitting.html"><a href="curve-fitting.html#exponential-model"><i class="fa fa-check"></i><b>8.4</b> Exponential model</a></li>
-<li class="chapter" data-level="8.5" data-path="curve-fitting.html"><a href="curve-fitting.html#gully-growth-data"><i class="fa fa-check"></i><b>8.5</b> Gully growth data</a></li>
+<li class="chapter" data-level="8.5" data-path="curve-fitting.html"><a href="curve-fitting.html#growth-and-loss-models-in-geomorphology-gully-data"><i class="fa fa-check"></i><b>8.5</b> Growth and loss models in geomorphology: Gully data</a></li>
 <li class="chapter" data-level="8.6" data-path="curve-fitting.html"><a href="curve-fitting.html#log-transformed-independent-variables"><i class="fa fa-check"></i><b>8.6</b> Log-transformed independent variables</a></li>
 <li class="chapter" data-level="8.7" data-path="curve-fitting.html"><a href="curve-fitting.html#nonlinear-models"><i class="fa fa-check"></i><b>8.7</b> Nonlinear models</a>
 <ul>
@@ -324,16 +324,15 @@ concentration measured at the Mauna Loa Observatory on Hawai’i. These record r
 <span id="cb111-3"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb111-3" tabindex="-1"></a>filename <span class="ot">&lt;-</span> <span class="st">&quot;co2_mm_mlo.txt&quot;</span></span>
 <span id="cb111-4"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb111-4" tabindex="-1"></a>result <span class="ot">=</span> <span class="fu">try</span>(<span class="fu">download.file</span>(filepath, <span class="fu">paste0</span>(<span class="fu">getwd</span>(),<span class="st">&quot;/&quot;</span>,filename)))</span></code></pre></div>
 <p>Using the same path to where the file was stored, we’ll use <code>read_table</code>, which has the ability to use white space (any number of spaces or tabs) to delimit the data; this is handy for this text file which has varying numbers of spaces as delimiters, since data are written as fixed length but numbers are formatted to varying length. The text file also has several rows of comments at the beginning, each starting with “#”, so we’ll specify this as the comment character so those lines of text can be ignored. Unfortunately this also includes the variable names, but as these do not change we can simply assign them in code, based upon prior inspection.</p>
-<blockquote>
-<p>Note that the following could also be used read data from <code>igisci</code> in case the internet is down.</p>
-</blockquote>
 <div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb112-1" tabindex="-1"></a>datafile <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="fu">getwd</span>(),<span class="st">&quot;/&quot;</span>,filename)</span>
-<span id="cb112-2"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb112-2" tabindex="-1"></a><span class="fu">try</span>(CO2_HI <span class="ot">&lt;-</span> <span class="fu">read_table</span>(datafile,</span>
+<span id="cb112-2"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb112-2" tabindex="-1"></a>CO2_HI <span class="ot">&lt;-</span> <span class="fu">read_table</span>(datafile,</span>
 <span id="cb112-3"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb112-3" tabindex="-1"></a>                    <span class="at">comment=</span><span class="st">&quot;#&quot;</span>,</span>
 <span id="cb112-4"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb112-4" tabindex="-1"></a>                    <span class="at">col_names =</span><span class="fu">c</span>(<span class="st">&quot;year&quot;</span>,<span class="st">&quot;month&quot;</span>,<span class="st">&quot;dec_date&quot;</span>,</span>
 <span id="cb112-5"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb112-5" tabindex="-1"></a>                               <span class="st">&quot;monthly_CO2&quot;</span>,<span class="st">&quot;deseasonalized_CO2&quot;</span>,</span>
-<span id="cb112-6"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb112-6" tabindex="-1"></a>                               <span class="st">&quot;#days&quot;</span>,<span class="st">&quot;sd_days&quot;</span>,<span class="st">&quot;unc.of_mon_mean&quot;</span>)))</span></code></pre></div>
-<p>Note that the following could be used if the connection doesn’t work:</p>
+<span id="cb112-6"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb112-6" tabindex="-1"></a>                               <span class="st">&quot;#days&quot;</span>,<span class="st">&quot;sd_days&quot;</span>,<span class="st">&quot;unc.of_mon_mean&quot;</span>))</span></code></pre></div>
+<blockquote>
+<p>Note that the following could also be used read data from <code>igisci</code> in case the internet is down.</p>
+</blockquote>
 <div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb113-1" tabindex="-1"></a>CO2_HI <span class="ot">&lt;-</span> <span class="fu">read_table</span>(igisci<span class="sc">::</span><span class="fu">ex</span>(<span class="fu">paste0</span>(<span class="st">&quot;CO2/&quot;</span>,filename)),</span>
 <span id="cb113-2"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb113-2" tabindex="-1"></a>                    <span class="at">comment=</span><span class="st">&quot;#&quot;</span>,</span>
 <span id="cb113-3"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb113-3" tabindex="-1"></a>                    <span class="at">col_names =</span><span class="fu">c</span>(<span class="st">&quot;year&quot;</span>,<span class="st">&quot;month&quot;</span>,<span class="st">&quot;dec_date&quot;</span>,</span>
@@ -375,19 +374,19 @@ concentration measured at the Mauna Loa Observatory on Hawai’i. These record r
 ## 
 ## Residuals:
 ##       Min        1Q    Median        3Q       Max 
-## -0.011092 -0.006277 -0.002801  0.004831  0.021667 
+## -0.011121 -0.006291 -0.002770  0.004861  0.021712 
 ## 
 ## Coefficients:
 ##               Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) -3.114e+00  3.235e-02  -96.27   &lt;2e-16 ***
-## date         4.516e-03  1.625e-05  278.00   &lt;2e-16 ***
+## (Intercept) -3.118e+00  3.236e-02  -96.38   &lt;2e-16 ***
+## date         4.519e-03  1.625e-05  278.06   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 0.008465 on 775 degrees of freedom
+## Residual standard error: 0.008484 on 776 degrees of freedom
 ##   (12 observations deleted due to missingness)
 ## Multiple R-squared:  0.9901, Adjusted R-squared:  0.9901 
-## F-statistic: 7.729e+04 on 1 and 775 DF,  p-value: &lt; 2.2e-16</code></pre>
+## F-statistic: 7.732e+04 on 1 and 776 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Now plot without the log transformed axes, we’ll need to create the curve with the model, using the coefficients.</p>
 <div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb120-1" tabindex="-1"></a>coeff <span class="ot">=</span> <span class="fu">exp</span>(expCO2mod<span class="sc">$</span>coefficients[<span class="dv">1</span>])</span>
 <span id="cb120-2"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb120-2" tabindex="-1"></a>slope <span class="ot">=</span> <span class="fu">exp</span>(expCO2mod<span class="sc">$</span>coefficients[<span class="dv">2</span>])</span>
@@ -413,19 +412,19 @@ concentration measured at the Mauna Loa Observatory on Hawai’i. These record r
 ## 
 ## Residuals:
 ##       Min        1Q    Median        3Q       Max 
-## -0.011475 -0.006560 -0.002853  0.005090  0.022399 
+## -0.011505 -0.006558 -0.002855  0.005157  0.022447 
 ## 
 ## Coefficients:
 ##              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) -62.39947    0.25573    -244   &lt;2e-16 ***
-## log(date)     8.98820    0.03367     267   &lt;2e-16 ***
+## (Intercept) -62.43286    0.25582  -244.1   &lt;2e-16 ***
+## log(date)     8.99260    0.03368   267.0   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 0.008811 on 775 degrees of freedom
+## Residual standard error: 0.00883 on 776 degrees of freedom
 ##   (12 observations deleted due to missingness)
 ## Multiple R-squared:  0.9892, Adjusted R-squared:  0.9892 
-## F-statistic: 7.128e+04 on 1 and 775 DF,  p-value: &lt; 2.2e-16</code></pre>
+## F-statistic: 7.13e+04 on 1 and 776 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb123-1" tabindex="-1"></a><span class="fu">ggplot</span>(CO2_ma, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">log</span>(date), <span class="at">y=</span><span class="fu">log</span>(CO2_12mo_avg))) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-86-1.png" width="75%" style="display: block; margin: auto;" /></p>
 <p>Now to plot without the log transformed axes, we’ll need to create the curve with the model, using the coefficients.</p>
@@ -455,20 +454,20 @@ concentration measured at the Mauna Loa Observatory on Hawai’i. These record r
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -1.0998 -0.5886 -0.1904  0.5084  1.9930 
+## -1.0995 -0.5906 -0.1894  0.5061  1.9931 
 ## 
 ## Coefficients:
 ##                             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)                4.910e+04  3.244e+02   151.4   &lt;2e-16 ***
-## poly(date, ord, raw = T)1 -5.060e+01  3.259e-01  -155.3   &lt;2e-16 ***
-## poly(date, ord, raw = T)2  1.311e-02  8.183e-05   160.3   &lt;2e-16 ***
+## (Intercept)                4.912e+04  3.232e+02   152.0   &lt;2e-16 ***
+## poly(date, ord, raw = T)1 -5.061e+01  3.247e-01  -155.9   &lt;2e-16 ***
+## poly(date, ord, raw = T)2  1.312e-02  8.154e-05   160.9   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 0.7129 on 774 degrees of freedom
+## Residual standard error: 0.7126 on 775 degrees of freedom
 ##   (12 observations deleted due to missingness)
 ## Multiple R-squared:  0.9995, Adjusted R-squared:  0.9995 
-## F-statistic: 7.213e+05 on 2 and 774 DF,  p-value: &lt; 2.2e-16</code></pre>
+## F-statistic: 7.257e+05 on 2 and 775 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb127-1" tabindex="-1"></a><span class="fu">ggplot</span>(CO2_ma, <span class="fu">aes</span>(<span class="at">x=</span>date,<span class="at">y=</span>CO2_12mo_avg)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb127-2"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb127-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm, <span class="at">formula=</span>y<span class="sc">~</span><span class="fu">poly</span>(x,ord,<span class="at">raw=</span>T))</span></code></pre></div>
 <p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-88-1.png" width="75%" style="display: block; margin: auto;" /></p>
