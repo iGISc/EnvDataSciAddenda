@@ -1,0 +1,18 @@
+## test terra::project
+
+```{r}
+library(igisci); library(sf); library(tidyverse); library(tmap)
+library(maptiles); library(readxl); library(DT)
+Sanctuaries <- st_read(ex("SFmarine/Sanctuaries.shp"))
+transectsXLS <- read_xls(ex("SFmarine/TransectsData.xls"))
+transects <- st_transform(st_as_sf(transectsXLS, coords=c("midlon","midlat"), crs=4326), crs=st_crs(Sanctuaries))
+```
+```{r}
+library(terra)
+bathy <- project(rast(ex("SFmarine/bd200m_v2i.tif")),crs(transects))
+```
+
+```{r}
+plot(bathy)
+```
+

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>9 Atmospheric CO2 record from Mauna Loa, Hawaii | Environmental Data Science Addenda</title>
   <meta name="description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
-  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
   <meta property="og:title" content="9 Atmospheric CO2 record from Mauna Loa, Hawaii | Environmental Data Science Addenda" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Jerry Davis, SFSU Institute for Geographic Information Science" />
 
 
-<meta name="date" content="2024-01-08" />
+<meta name="date" content="2024-03-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -54,7 +54,7 @@
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.30/datatables.js"></script>
+<script src="libs/datatables-binding-0.29/datatables.js"></script>
 <link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script>
@@ -374,19 +374,19 @@ concentration measured at the Mauna Loa Observatory on Hawai’i. These record r
 ## 
 ## Residuals:
 ##       Min        1Q    Median        3Q       Max 
-## -0.011121 -0.006291 -0.002770  0.004861  0.021712 
+## -0.011177 -0.006300 -0.002756  0.004986  0.021805 
 ## 
 ## Coefficients:
 ##               Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) -3.118e+00  3.236e-02  -96.38   &lt;2e-16 ***
-## date         4.519e-03  1.625e-05  278.06   &lt;2e-16 ***
+## (Intercept) -3.127e+00  3.238e-02  -96.56   &lt;2e-16 ***
+## date         4.523e-03  1.626e-05  278.12   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 0.008484 on 776 degrees of freedom
+## Residual standard error: 0.008523 on 778 degrees of freedom
 ##   (12 observations deleted due to missingness)
-## Multiple R-squared:  0.9901, Adjusted R-squared:  0.9901 
-## F-statistic: 7.732e+04 on 1 and 776 DF,  p-value: &lt; 2.2e-16</code></pre>
+## Multiple R-squared:   0.99,  Adjusted R-squared:   0.99 
+## F-statistic: 7.735e+04 on 1 and 778 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Now plot without the log transformed axes, we’ll need to create the curve with the model, using the coefficients.</p>
 <div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb120-1" tabindex="-1"></a>coeff <span class="ot">=</span> <span class="fu">exp</span>(expCO2mod<span class="sc">$</span>coefficients[<span class="dv">1</span>])</span>
 <span id="cb120-2"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb120-2" tabindex="-1"></a>slope <span class="ot">=</span> <span class="fu">exp</span>(expCO2mod<span class="sc">$</span>coefficients[<span class="dv">2</span>])</span>
@@ -412,19 +412,19 @@ concentration measured at the Mauna Loa Observatory on Hawai’i. These record r
 ## 
 ## Residuals:
 ##       Min        1Q    Median        3Q       Max 
-## -0.011505 -0.006558 -0.002855  0.005157  0.022447 
+## -0.011563 -0.006584 -0.002873  0.005282  0.022544 
 ## 
 ## Coefficients:
-##              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) -62.43286    0.25582  -244.1   &lt;2e-16 ***
-## log(date)     8.99260    0.03368   267.0   &lt;2e-16 ***
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -62.5006     0.2560  -244.1   &lt;2e-16 ***
+## log(date)     9.0015     0.0337   267.1   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 0.00883 on 776 degrees of freedom
+## Residual standard error: 0.008871 on 778 degrees of freedom
 ##   (12 observations deleted due to missingness)
 ## Multiple R-squared:  0.9892, Adjusted R-squared:  0.9892 
-## F-statistic: 7.13e+04 on 1 and 776 DF,  p-value: &lt; 2.2e-16</code></pre>
+## F-statistic: 7.133e+04 on 1 and 778 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb123-1" tabindex="-1"></a><span class="fu">ggplot</span>(CO2_ma, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">log</span>(date), <span class="at">y=</span><span class="fu">log</span>(CO2_12mo_avg))) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-86-1.png" width="75%" style="display: block; margin: auto;" /></p>
 <p>Now to plot without the log transformed axes, we’ll need to create the curve with the model, using the coefficients.</p>
@@ -454,20 +454,20 @@ concentration measured at the Mauna Loa Observatory on Hawai’i. These record r
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -1.0995 -0.5906 -0.1894  0.5061  1.9931 
+## -1.1003 -0.5900 -0.1874  0.5137  1.9957 
 ## 
 ## Coefficients:
 ##                             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)                4.912e+04  3.232e+02   152.0   &lt;2e-16 ***
-## poly(date, ord, raw = T)1 -5.061e+01  3.247e-01  -155.9   &lt;2e-16 ***
-## poly(date, ord, raw = T)2  1.312e-02  8.154e-05   160.9   &lt;2e-16 ***
+## (Intercept)                4.916e+04  3.210e+02   153.1   &lt;2e-16 ***
+## poly(date, ord, raw = T)1 -5.066e+01  3.225e-01  -157.1   &lt;2e-16 ***
+## poly(date, ord, raw = T)2  1.313e-02  8.098e-05   162.1   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 0.7126 on 775 degrees of freedom
+## Residual standard error: 0.7123 on 777 degrees of freedom
 ##   (12 observations deleted due to missingness)
 ## Multiple R-squared:  0.9995, Adjusted R-squared:  0.9995 
-## F-statistic: 7.257e+05 on 2 and 775 DF,  p-value: &lt; 2.2e-16</code></pre>
+## F-statistic: 7.341e+05 on 2 and 777 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb127-1" tabindex="-1"></a><span class="fu">ggplot</span>(CO2_ma, <span class="fu">aes</span>(<span class="at">x=</span>date,<span class="at">y=</span>CO2_12mo_avg)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb127-2"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#cb127-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm, <span class="at">formula=</span>y<span class="sc">~</span><span class="fu">poly</span>(x,ord,<span class="at">raw=</span>T))</span></code></pre></div>
 <p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-88-1.png" width="75%" style="display: block; margin: auto;" /></p>
