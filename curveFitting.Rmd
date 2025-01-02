@@ -6,7 +6,7 @@ Typical curve fitting approaches are variations on a linear model, using `lm` wi
 - `poly` -- for polynomials
 - `nls` -- for nonlinear models
 
-In this chapter, we'll explore a bit of polynomial models and nonlinear models; `glm` is covered in the modeling chapter https://bookdown.org/igisc/EnvDataSci/modeling.html#generalized-linear-model-glm of the book. This section will explore various curve fitting methods. We'll read in data as needed. There's not a lot of interpretation, as this is basically a sandbox for now. 
+In this chapter, we'll explore a bit of polynomial models and nonlinear models; `glm` is covered in the modeling chapter https://bookdown.org/igisc/EnvDataSci/modeling.html#generalized-linear-model-glm of the main book. This section will explore various curve fitting methods. We'll read in data as needed. There's not a lot of interpretation, as this is basically a sandbox for now. 
 
 > Note: There's a lot to understand about curve fitting, and this brief presentation doesn't pretend to be comprehensive, but just provide some examples that use graphics and model results to guide the process of choosing and testing appropriate models. 
 
@@ -74,7 +74,7 @@ Fitting to various polynomial orders (powers) is easy with the `poly` function. 
 
 ### poly 1
 
-This is the same a normal linear model.
+This is the same as a normal linear model.
 
 $$
 y = b_0 + b_1 X

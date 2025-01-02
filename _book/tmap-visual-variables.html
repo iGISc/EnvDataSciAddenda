@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>6 tmap visual variables | tmap: visual variables</title>
+  <meta name="description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="6 tmap visual variables | tmap: visual variables" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
+  <meta name="github-repo" content="iGISc/EnvDataSciAddenda" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="6 tmap visual variables | tmap: visual variables" />
+  
+  <meta name="twitter:description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
+  
+
+<meta name="author" content="Martijn Tennekes" />
+
+
+<meta name="date" content="2024-08-14" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="tmap4.html"/>
+<link rel="next" href="pointblue-penguin-study.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><img src="img/eaRth_anna296addenda.png"></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Background, Goals and Data</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#structure-of-the-addenda"><i class="fa fa-check"></i><b>1.1</b> Structure of the Addenda</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#software-and-data"><i class="fa fa-check"></i><b>1.2</b> Software and Data</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#data"><i class="fa fa-check"></i><b>1.2.1</b> Data</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.3</b> Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="air-pollutant-emissions-trends-epa.html"><a href="air-pollutant-emissions-trends-epa.html"><i class="fa fa-check"></i><b>2</b> Air pollutant emissions trends (EPA)</a></li>
+<li class="chapter" data-level="3" data-path="distance-from-census-tract-centroid-to-closest-tri-site.html"><a href="distance-from-census-tract-centroid-to-closest-tri-site.html"><i class="fa fa-check"></i><b>3</b> Distance from census tract centroid to closest TRI site</a></li>
+<li class="chapter" data-level="4" data-path="terrain-mapping-caves-and-water-samples-in-a-karst.html"><a href="terrain-mapping-caves-and-water-samples-in-a-karst.html"><i class="fa fa-check"></i><b>4</b> Terrain mapping, caves and water samples in a karst</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="terrain-mapping-caves-and-water-samples-in-a-karst.html"><a href="terrain-mapping-caves-and-water-samples-in-a-karst.html#creating-a-basemap-from-a-dem-using-hillshade-and-terrain-shading"><i class="fa fa-check"></i><b>4.1</b> Creating a basemap from a DEM, using hillshade and terrain shading</a></li>
+<li class="chapter" data-level="4.2" data-path="terrain-mapping-caves-and-water-samples-in-a-karst.html"><a href="terrain-mapping-caves-and-water-samples-in-a-karst.html#using-topographic-basemap-with-contours"><i class="fa fa-check"></i><b>4.2</b> Using topographic basemap with contours</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="tmap4.html"><a href="tmap4.html"><i class="fa fa-check"></i><b>5</b> tmap4</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="tmap4.html"><a href="tmap4.html#visual-variables"><i class="fa fa-check"></i><b>5.1</b> Visual variables</a></li>
+<li class="chapter" data-level="5.2" data-path="tmap4.html"><a href="tmap4.html#constant-visual-variables"><i class="fa fa-check"></i><b>5.2</b> Constant visual variables</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="tmap-visual-variables.html"><a href="tmap-visual-variables.html"><i class="fa fa-check"></i><b>6</b> tmap visual variables</a>
+<ul>
+<li class="chapter" data-level="6.0.1" data-path="tmap-visual-variables.html"><a href="tmap-visual-variables.html#tmap-4---tmap-3.x"><i class="fa fa-check"></i><b>6.0.1</b> tmap 4 - tmap 3.x</a></li>
+<li class="chapter" data-level="6.0.2" data-path="tmap-visual-variables.html"><a href="tmap-visual-variables.html#tmap-4---ggplot2"><i class="fa fa-check"></i><b>6.0.2</b> tmap 4 - ggplot2</a></li>
+<li class="chapter" data-level="6.0.3" data-path="tmap-visual-variables.html"><a href="tmap-visual-variables.html#tmap-4---other-r-packages"><i class="fa fa-check"></i><b>6.0.3</b> tmap 4 - other R packages</a></li>
+<li class="chapter" data-level="6.1" data-path="tmap-visual-variables.html"><a href="tmap-visual-variables.html#map-layers"><i class="fa fa-check"></i><b>6.1</b> Map layers</a></li>
+<li class="chapter" data-level="6.2" data-path="tmap-visual-variables.html"><a href="tmap-visual-variables.html#visual-variables-1"><i class="fa fa-check"></i><b>6.2</b> Visual variables</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="tmap-visual-variables.html"><a href="tmap-visual-variables.html#constant-visual-values"><i class="fa fa-check"></i><b>6.2.1</b> Constant visual values</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="tmap-visual-variables.html"><a href="tmap-visual-variables.html#transformation-variables"><i class="fa fa-check"></i><b>6.3</b> Transformation variables</a></li>
+<li class="chapter" data-level="6.4" data-path="tmap-visual-variables.html"><a href="tmap-visual-variables.html#scales"><i class="fa fa-check"></i><b>6.4</b> Scales</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="pointblue-penguin-study.html"><a href="pointblue-penguin-study.html"><i class="fa fa-check"></i><b>7</b> PointBlue Penguin Study</a>
+<ul>
+<li class="chapter" data-level="7.0.1" data-path="pointblue-penguin-study.html"><a href="pointblue-penguin-study.html#interactive-mapping-of-individual-penguins-abstracted-from-a-big-dataset"><i class="fa fa-check"></i><b>7.0.1</b> Interactive mapping of individual penguins abstracted from a big dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="seabird-model.html"><a href="seabird-model.html"><i class="fa fa-check"></i><b>8</b> Seabird Model</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="seabird-model.html"><a href="seabird-model.html#goals-and-basic-methods-of-the-analysis"><i class="fa fa-check"></i><b>8.1</b> Goals and basic methods of the analysis</a></li>
+<li class="chapter" data-level="8.2" data-path="seabird-model.html"><a href="seabird-model.html#exploratory-data-analysis"><i class="fa fa-check"></i><b>8.2</b> Exploratory data analysis</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="seabird-model.html"><a href="seabird-model.html#identifying-the-appropriate-model-using-variance-and-mean-comparisons"><i class="fa fa-check"></i><b>8.2.1</b> Identifying the appropriate model using variance and mean comparisons</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="seabird-model.html"><a href="seabird-model.html#model-black-footed-albatross-counts-for-july-using-a-poisson-family-glm"><i class="fa fa-check"></i><b>8.3</b> Model black-footed albatross counts for July using a poisson-family glm</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="seabird-model.html"><a href="seabird-model.html#map-the-prediction"><i class="fa fa-check"></i><b>8.3.1</b> Map the prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="seabird-model.html"><a href="seabird-model.html#interpolation"><i class="fa fa-check"></i><b>8.4</b> Interpolation</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html"><i class="fa fa-check"></i><b>9</b> Time Series case studies</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html#loney-meadow-flux-data"><i class="fa fa-check"></i><b>9.1</b> Loney Meadow flux data</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="curve-fitting.html"><a href="curve-fitting.html"><i class="fa fa-check"></i><b>10</b> Curve fitting</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="curve-fitting.html"><a href="curve-fitting.html#carbon-flux-data-from-red-clover-valley"><i class="fa fa-check"></i><b>10.1</b> Carbon flux data from Red Clover Valley</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="curve-fitting.html"><a href="curve-fitting.html#pairs-plot"><i class="fa fa-check"></i><b>10.1.1</b> Pairs plot</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="curve-fitting.html"><a href="curve-fitting.html#polynomial-models"><i class="fa fa-check"></i><b>10.2</b> Polynomial models</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="curve-fitting.html"><a href="curve-fitting.html#poly-1"><i class="fa fa-check"></i><b>10.2.1</b> poly 1</a></li>
+<li class="chapter" data-level="10.2.2" data-path="curve-fitting.html"><a href="curve-fitting.html#poly-2"><i class="fa fa-check"></i><b>10.2.2</b> poly 2</a></li>
+<li class="chapter" data-level="10.2.3" data-path="curve-fitting.html"><a href="curve-fitting.html#poly-3"><i class="fa fa-check"></i><b>10.2.3</b> poly 3</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="curve-fitting.html"><a href="curve-fitting.html#power-law-model"><i class="fa fa-check"></i><b>10.3</b> Power law model</a></li>
+<li class="chapter" data-level="10.4" data-path="curve-fitting.html"><a href="curve-fitting.html#exponential-model"><i class="fa fa-check"></i><b>10.4</b> Exponential model</a></li>
+<li class="chapter" data-level="10.5" data-path="curve-fitting.html"><a href="curve-fitting.html#growth-and-loss-models-in-geomorphology-gully-data"><i class="fa fa-check"></i><b>10.5</b> Growth and loss models in geomorphology: Gully data</a></li>
+<li class="chapter" data-level="10.6" data-path="curve-fitting.html"><a href="curve-fitting.html#log-transformed-independent-variables"><i class="fa fa-check"></i><b>10.6</b> Log-transformed independent variables</a></li>
+<li class="chapter" data-level="10.7" data-path="curve-fitting.html"><a href="curve-fitting.html#nonlinear-models"><i class="fa fa-check"></i><b>10.7</b> Nonlinear models</a>
+<ul>
+<li class="chapter" data-level="10.7.1" data-path="curve-fitting.html"><a href="curve-fitting.html#using-nls-for-a-rectangular-hyperbola-model-using-the-michaelis-menten-equation"><i class="fa fa-check"></i><b>10.7.1</b> Using <code>nls</code> for a rectangular hyperbola model, using the Michaelis-Menten equation</a></li>
+<li class="chapter" data-level="10.7.2" data-path="curve-fitting.html"><a href="curve-fitting.html#using-the-rate-law-to-model-hillslope-erosion"><i class="fa fa-check"></i><b>10.7.2</b> Using the <em>rate law</em> to model hillslope erosion</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html"><i class="fa fa-check"></i><b>11</b> Atmospheric CO2 record from Mauna Loa, Hawaii</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#read-the-data"><i class="fa fa-check"></i><b>11.1</b> Read the data</a></li>
+<li class="chapter" data-level="11.2" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#plot-the-time-series"><i class="fa fa-check"></i><b>11.2</b> Plot the time series</a></li>
+<li class="chapter" data-level="11.3" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#generalize-the-data"><i class="fa fa-check"></i><b>11.3</b> Generalize the data</a></li>
+<li class="chapter" data-level="11.4" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#curve-fitting-and-creating-a-prediction"><i class="fa fa-check"></i><b>11.4</b> Curve Fitting and Creating a Prediction</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#exponential-model-1"><i class="fa fa-check"></i><b>11.4.1</b> Exponential model</a></li>
+<li class="chapter" data-level="11.4.2" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#power-law-model-1"><i class="fa fa-check"></i><b>11.4.2</b> Power law model</a></li>
+<li class="chapter" data-level="11.4.3" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#second-order-polynomial"><i class="fa fa-check"></i><b>11.4.3</b> Second order polynomial</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#creating-a-time-series-object"><i class="fa fa-check"></i><b>11.5</b> Creating a time series object</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html"><i class="fa fa-check"></i><b>12</b> R Markdown and Bookdown</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#r-markdown"><i class="fa fa-check"></i><b>12.1</b> R Markdown</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#markdown-editing"><i class="fa fa-check"></i><b>12.1.1</b> Markdown editing</a></li>
+<li class="chapter" data-level="12.1.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#display-options-in-code-chunks"><i class="fa fa-check"></i><b>12.1.2</b> Display options in code chunks</a></li>
+<li class="chapter" data-level="12.1.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#numbered-figures-with-text-citations"><i class="fa fa-check"></i><b>12.1.3</b> Numbered figures with text citations</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#a-template-for-multiple-output-formats"><i class="fa fa-check"></i><b>12.2</b> A template for multiple output formats</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#the-template"><i class="fa fa-check"></i><b>12.2.1</b> The template</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#building-a-book-with-bookdown-and-yaml-options"><i class="fa fa-check"></i><b>12.3</b> Building a book with bookdown and YAML options</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#building-a-book"><i class="fa fa-check"></i><b>12.3.1</b> Building a book</a></li>
+<li class="chapter" data-level="12.3.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#special-characters-and-formatting-limitations-and-challenges"><i class="fa fa-check"></i><b>12.3.2</b> Special characters and formatting limitations and challenges</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#yaml-files-used-to-configure-the-book"><i class="fa fa-check"></i><b>12.4</b> YAML files used to configure the book</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#output.yml"><i class="fa fa-check"></i><b>12.4.1</b> _output.yml</a></li>
+<li class="chapter" data-level="12.4.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#index.rmd"><i class="fa fa-check"></i><b>12.4.2</b> index.Rmd</a></li>
+<li class="chapter" data-level="12.4.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#bookdown.yml"><i class="fa fa-check"></i><b>12.4.3</b> _bookdown.yml</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="figures-and-tables.html"><a href="figures-and-tables.html"><i class="fa fa-check"></i><b>13</b> Figures and Tables</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="figures-and-tables.html"><a href="figures-and-tables.html#figures"><i class="fa fa-check"></i><b>13.1</b> Figures</a></li>
+<li class="chapter" data-level="13.2" data-path="figures-and-tables.html"><a href="figures-and-tables.html#tables"><i class="fa fa-check"></i><b>13.2</b> Tables</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="figures-and-tables.html"><a href="figures-and-tables.html#dtdatatable"><i class="fa fa-check"></i><b>13.2.1</b> <code>DT::datatable</code></a></li>
+<li class="chapter" data-level="13.2.2" data-path="figures-and-tables.html"><a href="figures-and-tables.html#knitrkable-tables"><i class="fa fa-check"></i><b>13.2.2</b> <code>knitr::kable</code> tables</a></li>
+<li class="chapter" data-level="13.2.3" data-path="figures-and-tables.html"><a href="figures-and-tables.html#gt-package"><i class="fa fa-check"></i><b>13.2.3</b> <code>gt</code> package</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="figures-and-tables.html"><a href="figures-and-tables.html#other-tricks"><i class="fa fa-check"></i><b>13.3</b> Other tricks</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html"><i class="fa fa-check"></i><b>14</b> Building a Package on GitHub for Data and Code</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#git-and-github"><i class="fa fa-check"></i><b>14.1</b> Git and GitHub</a></li>
+<li class="chapter" data-level="14.2" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#some-notes-on-the-rstudio-process"><i class="fa fa-check"></i><b>14.2</b> Some notes on the RStudio process</a></li>
+<li class="chapter" data-level="14.3" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#data-1"><i class="fa fa-check"></i><b>14.3</b> Data</a>
+<ul>
+<li class="chapter" data-level="14.3.1" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#raw-data-in-extdata"><i class="fa fa-check"></i><b>14.3.1</b> Raw data in extdata</a></li>
+<li class="chapter" data-level="14.3.2" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#binary-data-as-rda-files"><i class="fa fa-check"></i><b>14.3.2</b> Binary data as <code>rda</code> files</a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#code-functions"><i class="fa fa-check"></i><b>14.4</b> Code (functions)</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">tmap: visual variables</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="tmap-visual-variables" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">6</span> tmap visual variables<a href="tmap-visual-variables.html#tmap-visual-variables" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><strong>tmap</strong> is an R package for spatial data visualization. This vignette describes the alpha version of the major update (version 4), which will be on CRAN soon (fall 2024?).</p>
+<div id="tmap-4---tmap-3.x" class="section level3 hasAnchor" number="6.0.1">
+<h3><span class="header-section-number">6.0.1</span> tmap 4 - tmap 3.x<a href="tmap-visual-variables.html#tmap-4---tmap-3.x" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><p><strong>tmap 3.x</strong> supports several map layer variables, for example <code>"col"</code>, <code>"size"</code>, and <code>"shape"</code> for the <code>tm_symbols()</code> map layer function. There will be many more of those variables in <strong>tmap 4</strong>. Besides the visual variables, so-called transformation variables also will be available. A <em>transformation variable</em> role is to change the spatial coordinates (for instance, to create a cartogram). A <em>visual variable</em> only changes the appearance of a spatial object, e.g. fill color or line width. You can find some examples of these variables below.</p></li>
+<li><p>Map layer arguments (e.g. the arguments of <code>tm_polygons()</code>) are much better organized: for each visual/transformation variable, there are only four arguments. In case of the fill visual variable, these are: <code>fill</code>, <code>fill.scale</code>, <code>fill.legend</code> and <code>fill.free</code>, which respectively specify the data variable or visual value that defines the polygon fill color, the used scaling function, the legend layout, and whether scales are applied freely across facets.</p></li>
+<li><p>The input for each visual/transformation variable can be multivariate, in the sense that multiple data variables are scaled to one transformation of visual variable. An example is a bivariate choropleth, in which a cross tabulation of two data variables is mapped to one (bivariate) color palette.</p></li>
+<li><p>User-defined map layer functions can be written (e.g. as an extension package).</p></li>
+<li><p>Like <strong>tmap 3.x</strong>, <strong>tmap 4.0</strong> comes with two modes, a <code>"plot"</code> and a <code>"view"</code> mode. However, other modes can be added as well, so you may expect an extension package <strong>tmap.rayshader</strong> at some point (or start writing one yourself).</p></li>
+<li><p>Legends and other map components (such as scale bars) can be drawn anywhere on or outside the map.</p></li>
+<li><p>The layout of legends has been improved and made much more flexible.</p></li>
+<li><p>It is possible to combine legends, which is useful if the same data variable is applied for multiple visual variables using the same scaling function.</p></li>
+</ul>
+</div>
+<div id="tmap-4---ggplot2" class="section level3 hasAnchor" number="6.0.2">
+<h3><span class="header-section-number">6.0.2</span> tmap 4 - ggplot2<a href="tmap-visual-variables.html#tmap-4---ggplot2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The <strong>tmap</strong> package is very similar to <strong>ggplot2</strong> and its Grammar of Graphics, but tailored to spatial data visualization, whereas <strong>ggplot2</strong> is much more general. More specifically:</p>
+<ul>
+<li><p>In <strong>tmap</strong>, the visual/transformation variables are always specifies in the map layer functions, whereas in ggplot2 the aesthetics are usually specified at plot level.</p></li>
+<li><p>In <strong>ggplot2</strong>, scales are determined on plot level, whereas in <strong>tmap</strong>, they are determined on map layer level.</p></li>
+<li><p>In <strong>tmap</strong>, spatial data (e.g. an <code>sf</code> object) is specified with <code>tm_shape()</code>. The spatial coordinates (<code>x</code> and <code>y</code>) are considered to be part of the data (which can be changed with transformation variables). In principle, any map layer function can be used with any spatial class. E.g. <code>tm_dots()</code> renders dots for <code>sf</code> points data, but it also works for other spatial classes: e.g. centroids for <code>sf</code> polygons/lines and raster data (<strong>stars</strong> / <strong>terra</strong> packages). However, in <code>ggplot2::ggplot()</code>, each spatial class requires a custom map layer function, e.g. <code>ggplot2::geom_sf()</code> for <code>sf</code> objects.</p></li>
+<li><p><strong>tmap</strong> has a static plot mode and an interactive mode.</p></li>
+<li><p>…</p></li>
+</ul>
+</div>
+<div id="tmap-4---other-r-packages" class="section level3 hasAnchor" number="6.0.3">
+<h3><span class="header-section-number">6.0.3</span> tmap 4 - other R packages<a href="tmap-visual-variables.html#tmap-4---other-r-packages" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>There are several great R packages for spatial data visualization, including: <strong>ggplot2</strong>, <strong>mapview</strong>, <strong>leaflet</strong>, <strong>mapsf</strong>, and the generic plot function.</p>
+<p>The interactive <code>"view"</code> mode of <strong>tmap</strong> is similar to <strong>mapview</strong> in the sense that it uses the same building blocks (packages like <strong>leaflet</strong>, <strong>leafsync</strong>, and <strong>leafgl</strong>).</p>
+<p>Colors are important for data visualization. For this purpose, <strong>tmap</strong> uses <strong>cols4all</strong>, a new R package to analyse color palettes, and check their color-blind-friendliness and other properties.</p>
+</div>
+<div id="map-layers" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Map layers<a href="tmap-visual-variables.html#map-layers" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A (thematic) map consists of one or more <strong>map layers</strong>. Each map layer has a specific set of variables that determine how the objects of that layer are drawn. We distinguish two type of variables: <strong>transformation variables</strong> and <strong>visual variables</strong>. A transformation variable is used to change the spatial coordinates (for instance, a cartogram which distorts polygons). A visual variable only changes the appearance of a spatial object, e.g. fill color or line width.</p>
+<p>Transformation variables will only be used for specific map layers such as the cartogram, whereas visual variables will used in almost all map layers.</p>
+</div>
+<div id="visual-variables-1" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Visual variables<a href="tmap-visual-variables.html#visual-variables-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A <strong>visual variable</strong> describes a certain visual property of a drawn object, such as color, size, shape, line width, line stroke, transparency, fill pattern (in <strong>ggplot2</strong> these are called aesthetics). A visual variable can be specified using a constant value (e.g. <code>fill = "blue"</code>) or be <strong>data-driven</strong> (more on this later). If it can <em>only</em> be specified with a constant value, it is called a <strong>visual constant</strong>.</p>
+<p>The following table shows which visual variables are used in standard map layers.</p>
+<table>
+<colgroup>
+<col width="16%" />
+<col width="50%" />
+<col width="33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Map layer</th>
+<th>Visual variables</th>
+<th>Visual constant</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>tm_basemap()</code></td>
+<td>none</td>
+<td><code>alpha</code></td>
+</tr>
+<tr class="even">
+<td><code>tm_polygons()</code></td>
+<td><code>fill</code> (fill color), <code>col</code> (border color), <code>lwd</code> (border line width) <code>lty</code> (border line type), <code>fill_alpha</code> (fill transparency), <code>col_alpha</code> (border color transparency)</td>
+<td><code>linejoin</code> (line join) and <code>lineend</code> (line end)</td>
+</tr>
+<tr class="odd">
+<td><code>tm_symbols()</code></td>
+<td><code>fill</code> (fill color), <code>col</code> (border color), <code>size</code>, <code>shape</code>, <code>lwd</code> (border line width) <code>lty</code> (border line type), <code>fill_alpha</code> fill transparency, <code>col_alpha</code> border color transparency</td>
+<td><code>linejoin</code> (line join) and <code>lineend</code> (line end)</td>
+</tr>
+<tr class="even">
+<td><code>tm_lines()</code></td>
+<td><code>col</code> (color), <code>lwd</code> (line width) <code>lty</code> (line type), <code>alpha</code> transparency</td>
+<td><code>linejoin</code> (line join) and <code>lineend</code> (line end)</td>
+</tr>
+<tr class="odd">
+<td><code>tm_raster()</code></td>
+<td><code>col</code> (color), <code>alpha</code> (transparency)</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>tm_text()</code></td>
+<td><code>size</code>, <code>col</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>New in <strong>tmap 4.0</strong> is that users can write their own custom map layer functions; more on this in another vignette. Important for now is that map layers and their visual variables can be extended if needed.</p>
+<div id="constant-visual-values" class="section level3 hasAnchor" number="6.2.1">
+<h3><span class="header-section-number">6.2.1</span> Constant visual values<a href="tmap-visual-variables.html#constant-visual-values" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The following code draws gold country polygons.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="tmap-visual-variables.html#cb1-1" tabindex="-1"></a><span class="fu">tm_shape</span>(World) <span class="sc">+</span></span>
+<span id="cb1-2"><a href="tmap-visual-variables.html#cb1-2" tabindex="-1"></a>    <span class="fu">tm_polygons</span>(<span class="st">&quot;gold&quot;</span>)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-2-1.png" width="864" /></p>
+<p>All the visual variables mentioned in the previous table are used, but with constant values. For instance, polygon borders are drawn with width <code>lwd</code> and colored with <code>col</code>. Each of these visual variables has a default value, in case of the border width and color respectively <code>1</code> and <code>"black"</code>. The only visual variable for which we have specified a different value is <code>fill</code>, which we have set to <code>"gold"</code>.</p>
+<p>For those who are completely new to <strong>tmap</strong>: the function <code>tm_shape()</code> specifies the spatial data object, which can be any spatial data object from the packages <code>sf</code>, <code>stars</code>, <code>terra</code>, <code>sp</code>, and <code>raster</code>. The subsequent map layer functions (stacked with the <code>+</code> operator) specify how this spatial data is visualized.</p>
+<p>In the next example we have three layers: a basemap from OpenTopoMap, country polygon boundaries, and dots for metropolitan areas:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="tmap-visual-variables.html#cb2-1" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">requireNamespace</span>(<span class="st">&quot;maptiles&quot;</span>)) {</span>
+<span id="cb2-2"><a href="tmap-visual-variables.html#cb2-2" tabindex="-1"></a><span class="fu">tm_basemap</span>(<span class="at">server =</span> <span class="st">&quot;OpenTopoMap&quot;</span>, <span class="at">zoom =</span> <span class="dv">2</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb2-3"><a href="tmap-visual-variables.html#cb2-3" tabindex="-1"></a><span class="fu">tm_shape</span>(World, <span class="at">bbox =</span> sf<span class="sc">::</span><span class="fu">st_bbox</span>(<span class="fu">c</span>(<span class="at">xmin =</span> <span class="sc">-</span><span class="dv">180</span>, <span class="at">xmax =</span> <span class="dv">180</span>, <span class="at">ymin =</span> <span class="sc">-</span><span class="dv">86</span>, <span class="at">ymax =</span> <span class="dv">86</span>))) <span class="sc">+</span></span>
+<span id="cb2-4"><a href="tmap-visual-variables.html#cb2-4" tabindex="-1"></a>    <span class="fu">tm_polygons</span>(<span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">col =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
+<span id="cb2-5"><a href="tmap-visual-variables.html#cb2-5" tabindex="-1"></a><span class="fu">tm_shape</span>(metro) <span class="sc">+</span></span>
+<span id="cb2-6"><a href="tmap-visual-variables.html#cb2-6" tabindex="-1"></a>    <span class="fu">tm_symbols</span>(<span class="at">size =</span> <span class="fl">0.1</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb2-7"><a href="tmap-visual-variables.html#cb2-7" tabindex="-1"></a><span class="fu">tm_layout</span>(<span class="at">inner.margins =</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">4</span>))</span>
+<span id="cb2-8"><a href="tmap-visual-variables.html#cb2-8" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>## Loading required namespace: maptiles</code></pre>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-3-1.png" width="864" /></p>
+<p>Each visual variable argument can also be specified with a data variable (e.g., a column name). What happens in that case is that the values of data variable are mapped to values of the corresponding visual variable.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="tmap-visual-variables.html#cb4-1" tabindex="-1"></a><span class="fu">tm_shape</span>(World) <span class="sc">+</span></span>
+<span id="cb4-2"><a href="tmap-visual-variables.html#cb4-2" tabindex="-1"></a>    <span class="fu">tm_polygons</span>(<span class="st">&quot;life_exp&quot;</span>)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-4-1.png" width="864" /></p>
+<p>In this example, life expectancy per country is shown, or to put it more precisely: the <em>data variable</em> life expectancy is mapped to the <em>visual variable</em> polygon fill.</p>
+<p>To understand this data mapping, consider the following schematic dataset:</p>
+<pre><code>##       geom  x1   vv1
+## 1 polygon1  72 blue6
+## 2 polygon2  58 blue3
+## 3 polygon3  52 blue2
+## 4 polygon4  73 blue7
+## 5      ... ...   ...</code></pre>
+<p>The first column contains spatial geometries (in this case polygons, but they can also be points, lines, and raster tiles). The second column is the data variable that we would like to show. The third column contains the visual values, in this case colors.</p>
+<p>Important to note is that there are many ways to scale data values to visual values. In this example data values are put into 5 year intervals and a sequential discrete blue scale is used to show these. With the <code>tm_scale_*()</code> family of functions, users are free to create other scales.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="tmap-visual-variables.html#cb6-1" tabindex="-1"></a><span class="fu">tm_shape</span>(World) <span class="sc">+</span></span>
+<span id="cb6-2"><a href="tmap-visual-variables.html#cb6-2" tabindex="-1"></a>    <span class="fu">tm_polygons</span>(<span class="st">&quot;life_exp&quot;</span>, <span class="at">fill.scale =</span> <span class="fu">tm_scale_continuous</span>(<span class="at">values =</span> <span class="st">&quot;-carto.earth&quot;</span>), <span class="at">fill.legend =</span> <span class="fu">tm_legend</span>(<span class="st">&quot;Life</span><span class="sc">\n</span><span class="st">Expectancy&quot;</span>))</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-6-1.png" width="864" /></p>
+<p>This map uses a continuous color scale with colors from CARTO. More on scales later.</p>
+</div>
+</div>
+<div id="transformation-variables" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Transformation variables<a href="tmap-visual-variables.html#transformation-variables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Besides visual variables, map layer may use spatial transformation variables.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="tmap-visual-variables.html#cb7-1" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">requireNamespace</span>(<span class="st">&quot;cartogram&quot;</span>)) {</span>
+<span id="cb7-2"><a href="tmap-visual-variables.html#cb7-2" tabindex="-1"></a><span class="fu">tm_shape</span>(World, <span class="at">crs =</span> <span class="dv">8857</span>) <span class="sc">+</span></span>
+<span id="cb7-3"><a href="tmap-visual-variables.html#cb7-3" tabindex="-1"></a>    <span class="fu">tm_cartogram</span>(<span class="at">size =</span> <span class="st">&quot;pop_est&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;income_grp&quot;</span>)</span>
+<span id="cb7-4"><a href="tmap-visual-variables.html#cb7-4" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>## Loading required namespace: cartogram</code></pre>
+<pre><code>## Cartogram in progress...</code></pre>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-7-1.png" width="864" /></p>
+<p>We used two variables: <code>size</code> to deform the polygons using a continuous cartogram and <code>fill</code> to color the polygons.
+The former is an example of a <em>transformation variable</em>. In our example schematic dataset:</p>
+<pre><code>##       geom         x1 x_scaled geom_transformed
+## 1 polygon1    491,775   0.0007        polygon1&#39;
+## 2 polygon2  2,231,503   0.0033        polygon2&#39;
+## 3 polygon3 34,859,364   0.0554        polygon3&#39;
+## 4 polygon4  4,320,748   0.0067        polygon4&#39;
+## 5      ...        ...      ...              ...</code></pre>
+<p>The data variable <code>x1</code>, in the example <code>pop_est</code> (population estimation), is scaled to <code>x1_scaled</code> which is in this case a normalization using a continuous scale. Next, the geometries are distorted such that the areas are proportional to <code>x1_scaled</code> (as much as the cartogram algorithm is able to achieve).</p>
+</div>
+<div id="scales" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> Scales<a href="tmap-visual-variables.html#scales" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Each visual variable and each transformation variable can be scaled with one of the <code>tm_scale_</code> functions. To illustrate the different options, we show life expectancy across Africa, which we round in order to use the categorical scales as well.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="tmap-visual-variables.html#cb11-1" tabindex="-1"></a><span class="fu">data</span>(World)</span>
+<span id="cb11-2"><a href="tmap-visual-variables.html#cb11-2" tabindex="-1"></a>Africa <span class="ot">=</span> World[World<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Africa&quot;</span>, ]</span>
+<span id="cb11-3"><a href="tmap-visual-variables.html#cb11-3" tabindex="-1"></a>Africa<span class="sc">$</span>life_exp <span class="ot">=</span> <span class="fu">round</span>(Africa<span class="sc">$</span>life_exp)</span></code></pre></div>
+<p>Like <strong>tmap 3.x</strong>, it is possible to create facets by specifying multiple data variable names and scales to one visual (or transformation) variable, in this case <code>"fill"</code>:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r bg-success"><code class="sourceCode r"><span id="cb12-1"><a href="tmap-visual-variables.html#cb12-1" tabindex="-1"></a><span class="fu">tm_shape</span>(Africa) <span class="sc">+</span></span>
+<span id="cb12-2"><a href="tmap-visual-variables.html#cb12-2" tabindex="-1"></a>    <span class="fu">tm_polygons</span>(<span class="fu">rep</span>(<span class="st">&quot;life_exp&quot;</span>, <span class="dv">6</span>), </span>
+<span id="cb12-3"><a href="tmap-visual-variables.html#cb12-3" tabindex="-1"></a>                <span class="at">fill.scale =</span> <span class="fu">list</span>(<span class="fu">tm_scale_categorical</span>(),</span>
+<span id="cb12-4"><a href="tmap-visual-variables.html#cb12-4" tabindex="-1"></a>                                  <span class="fu">tm_scale_ordinal</span>(),</span>
+<span id="cb12-5"><a href="tmap-visual-variables.html#cb12-5" tabindex="-1"></a>                                  <span class="fu">tm_scale_intervals</span>(),</span>
+<span id="cb12-6"><a href="tmap-visual-variables.html#cb12-6" tabindex="-1"></a>                                  <span class="fu">tm_scale_continuous</span>(),</span>
+<span id="cb12-7"><a href="tmap-visual-variables.html#cb12-7" tabindex="-1"></a>                                  <span class="fu">tm_scale_continuous_log</span>(),</span>
+<span id="cb12-8"><a href="tmap-visual-variables.html#cb12-8" tabindex="-1"></a>                                  <span class="fu">tm_scale_discrete</span>()),</span>
+<span id="cb12-9"><a href="tmap-visual-variables.html#cb12-9" tabindex="-1"></a>                <span class="at">fill.legend =</span> <span class="fu">tm_legend</span>(<span class="at">title =</span> <span class="st">&quot;&quot;</span>, <span class="at">position =</span> <span class="fu">tm_pos_in</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;top&quot;</span>))) <span class="sc">+</span></span>
+<span id="cb12-10"><a href="tmap-visual-variables.html#cb12-10" tabindex="-1"></a>    <span class="fu">tm_layout</span>(<span class="at">panel.labels =</span> <span class="fu">c</span>(<span class="st">&quot;tm_scale_categorical&quot;</span>, <span class="st">&quot;tm_scale_ordinal&quot;</span>, <span class="st">&quot;tm_scale_intervals&quot;</span>, <span class="st">&quot;tm_scale_continuous&quot;</span>, <span class="st">&quot;tm_scale_continuous_log&quot;</span>, <span class="st">&quot;tm_scale_discrete&quot;</span>), </span>
+<span id="cb12-11"><a href="tmap-visual-variables.html#cb12-11" tabindex="-1"></a>              <span class="at">inner.margins =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.4</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>),</span>
+<span id="cb12-12"><a href="tmap-visual-variables.html#cb12-12" tabindex="-1"></a>              <span class="at">legend.text.size =</span> <span class="fl">0.5</span>)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-10-1.png" width="864" /></p>
+<p>Both <code>tm_scale_categorical()</code> and <code>tm_scale_ordinal()</code> tread data as categorical data, so ignoring the fact that they are actually numbers. The only difference is that categorical does not assume any order between the categories, whereas ordinal does. This is similar to a factor in R which can be ordered or not.</p>
+<p>The other shown scales can only be applied to numeric data. Note that in this example the breaks of <code>tm_scale_intervals()</code> are similar to the tick marks of <code>tm_scale_continous()</code>. However, when using class intervals only a few colors are used (in this case 6 plus a color for missing values) whereas in a continuous scale a gradient of colors is used. The advantage of using class intervals is that it is relatively easy to read data values from the map, e.g. the value of South Africa is 55 to 60, while the advantage of using a continuous color scale is that the colors in the map are more accurate (because they are unrounded).</p>
+<p>For <code>tm_scale_intervals()</code> it is possible to chose how to determine the breaks (with the argument <code>style</code>). For <code>tm_scale_continous()</code> it is possible to use a transformation function: in this case the built-in log transformation is used (which is pretty useless for this particular example because of the data range).</p>
+<p>Finally, <code>tm_scale_discrete()</code> uses a discrete linear scale. Note that this is different than <code>tm_scale_ordinal()</code>, which does not use colors for values that are not present (as categories), for instance 53.</p>
+<p>Each <code>tm_scale_*()</code> functions can (in principle) be applied to any visual or transformation variable. Note that this is different from <strong>ggplot2</strong> where scales are organized by variable and by type (e.g. <code>ggplot2::scale_fill_continuous()</code>). This is related to another difference with <strong>ggplot2</strong>. In <strong>tmap</strong>, the scales are set directly in the map layer function to the target visual/transformation variable, for instance <code>tm_polygons(fill = "x", fill.scale = tm_scale_continuous())</code>. In <code>ggplot()</code>, scales are set outside the layer functions.</p>
+<p>Each <code>tm_scale_</code> function has (at least) the following arguments: <code>values</code>, <code>values.repeat</code>, <code>values.range</code>, <code>values.scale</code>, <code>value.na</code>, <code>value.null</code>, <code>value.neutral</code>, <code>labels</code>, <code>label.na</code>, <code>label.null</code>, and <code>label.format</code>.
+The <code>value*</code> arguments determine the visual values to which the data values are mapped. In case the scale is applied to a visual variable that represents color, they takes color values or a color palette. However, if for instance the same scale is applied to line width, then values should be numeric values that represent line widths.</p>
+<p>This is illustrated in the following example:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="tmap-visual-variables.html#cb13-1" tabindex="-1"></a><span class="fu">tm_shape</span>(World) <span class="sc">+</span></span>
+<span id="cb13-2"><a href="tmap-visual-variables.html#cb13-2" tabindex="-1"></a>    <span class="fu">tm_polygons</span>(<span class="at">fill =</span> <span class="st">&quot;HPI&quot;</span>, <span class="at">fill.scale =</span> <span class="fu">tm_scale_intervals</span>(<span class="at">values =</span> <span class="st">&quot;scico.roma&quot;</span>, <span class="at">value.na =</span> <span class="st">&quot;grey95&quot;</span>, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">12</span>,<span class="dv">20</span>,<span class="dv">30</span>,<span class="dv">45</span>))) <span class="sc">+</span></span>
+<span id="cb13-3"><a href="tmap-visual-variables.html#cb13-3" tabindex="-1"></a>    <span class="fu">tm_symbols</span>(<span class="at">size =</span> <span class="st">&quot;HPI&quot;</span>, <span class="at">size.scale =</span> <span class="fu">tm_scale_intervals</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="fl">0.3</span>,<span class="fl">0.5</span>, <span class="fl">0.8</span>), <span class="at">value.na =</span> <span class="fl">0.1</span>, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">12</span>,<span class="dv">20</span>,<span class="dv">30</span>,<span class="dv">45</span>)), <span class="at">col =</span> <span class="st">&quot;grey30&quot;</span>)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-11-1.png" width="864" /></p>
+<p>The defaults for those <code>value.*</code> arguments are stored in the <strong>tmap</strong> options. For instance</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="tmap-visual-variables.html#cb14-1" tabindex="-1"></a><span class="fu">tmap_options</span>(<span class="st">&quot;values.var&quot;</span>)<span class="sc">$</span>values.var<span class="sc">$</span>fill</span></code></pre></div>
+<pre><code>## $seq
+## [1] &quot;hcl.blues3&quot;
+## 
+## $div
+## [1] &quot;pu_gn_div&quot;
+## 
+## $unord
+## [1] &quot;tol.muted&quot;
+## 
+## $ord
+## [1] &quot;hcl.blues3&quot;
+## 
+## $cyc
+## [1] &quot;tol.rainbow_pu_rd&quot;
+## 
+## $biv
+## [1] &quot;pu_gn_bivs&quot;</code></pre>
+<p>contains the default color palettes for the visual variable <code>"fill"</code> for different types of data. For instance, when data values are all positive numbers, and <code>tm_scale_intervals()</code> or <code>tm_scale_continuous()</code> is applied, the default color palette is <code>"hcl.blues3"</code>, as can be seen in the examples above.</p>
+<p>Regarding the available color palettes: <strong>tmap</strong> uses the new R package <strong>cols4all</strong> which contains a large number of well-known color palettes.
+Please run <code>cols4all::c4a_gui()</code> which starts an interactive tool (the successor of <code>tmaptools::palette_explorer()</code>).
+Of course, also own color palettes can be loaded directly via a vector of color codes.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="tmap4.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="pointblue-penguin-study.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+},
+"book_filename": "envdatasci",
+"toc_depth": 4
+});
+});
+</script>
+
+</body>
+
+</html>

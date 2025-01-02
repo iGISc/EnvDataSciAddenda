@@ -78,7 +78,7 @@ ggplot(CO2_ma,aes(x=date,y=CO2_12mo_avg)) +
 ```
 
 ## Curve Fitting and Creating a Prediction
-If we could write a mathematical description of the CO~2~ increase curve, we could use it to model future scenarios under business-as-usual emissions increases. There are a variety of linear and non-linear curve forms known mathematically such as logarithmic and exponential to describe various forms in nature. 
+If we could write a mathematical description of the CO~2~ increase curve, we could use it to model future scenarios under business-as-usual emissions increases. There are linear and non-linear curve forms known mathematically such as logarithmic and exponential to describe a variety of forms in nature. 
 
 
 ### Exponential model

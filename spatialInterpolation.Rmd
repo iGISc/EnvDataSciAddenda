@@ -1,0 +1,509 @@
+```{r echo=FALSE}
+knitr::opts_chunk$set(include=T,echo=T,fig.show=T,results=T,warning=F,message=F,fig.align='center',out.width="75%")
+```
+
+# Spatial Interpolation {#interpolation}
+
+\index{interpolation}A lot of environmental data is captured in point samples, which might be from soil properties, the atmosphere (like weather stations that capture temperature, precipitation, pressure, and winds), properties in surface water bodies or aquifers, etc. While it's often useful to just use those point observations and evaluate spatial patterns of those measurements, we also may want to predict a "surface" of those variables over the map, and that's where interpolation comes in.
+
+In this section, we'll look at a few interpolators -- nearest neighbor, inverse distance weighting (IDW) and kriging -- but the reader should refer to more thorough coverage in Jakub Nowosad's *Geostatistics in R* (@NowosadGeostatisticsR) or at https://rspatial.org. For data, we'll use the Sierra climate data and derive the annual summaries that we looked at in the last chapter. 
+
+```{r include=F}
+library(tidyverse); library(gstat); library(igisci); library(tmap); library(sf); library(terra)
+```
+
+```{r results='hide', include=F}
+sierraCounties <- st_make_valid(CA_counties) %>%
+  filter(NAME %in% c("Alpine","Amador","Butte","Calaveras","El Dorado",
+                     "Fresno","Inyo","Kern","Lassen","Madera","Mariposa",
+                     "Mono","Nevada","Placer","Plumas","Sacramento","Shasta",
+                     "Sierra","Tehama","Tulare","Tuolumne","Yuba"))
+normals <- read_csv(ex("sierra/908277.csv")) %>%
+  mutate(STATION = str_sub(STATION,7,str_length(STATION)))
+sierraStations <- read_csv(ex("sierra/sierraStations.csv"))
+```
+
+```{r include=F}
+sierraAnnual <- right_join(sierraStations,normals,by="STATION") %>%
+  filter(!is.na(STATION_NA)) %>% 
+    dplyr::select(-STATION_NA) %>%
+    group_by(STATION_NAME) %>% summarize(LONGITUDE = first(LONGITUDE),
+                                         LATITUDE = first(LATITUDE),
+                                         ELEVATION = first(ELEVATION),
+                                         PRECIPITATION = sum(`MLY-PRCP-NORMAL`),
+                                         TEMPERATURE = mean(`MLY-TAVG-NORMAL`)) %>%
+    mutate(STATION_NAME = str_sub(STATION_NAME,1,str_length(STATION_NAME)-6)) %>%
+  filter(PRECIPITATION > 0) %>% filter(TEMPERATURE > -100) %>%
+  st_as_sf(coords = c("LONGITUDE", "LATITUDE"), crs=4326, remove=F)
+# ggplot(data=sierraAnnual) + geom_sf(aes(col=PRECIPITATION))    
+```
+
+We'll be working in the Teale Albers \index{Teale Albers}projection, which is good for California, in metres (Figure \@ref(fig:intPrecipMap)), so we'll start by reprojecting Sierra data we created earlier (\@ref(GroupedSummaries)) using `st_transform`.
+
+```{r intPrecipMap, fig.cap="Precipitation map in Teale Albers in Sierra counties"}
+Teale<-paste0("+proj=aea +lat_1=34 +lat_2=40.5 +lat_0=0 +lon_0=-120 ",
+              "+x_0=0 +y_0=-4000000 +datum=WGS84 +units=m")
+sierra <- st_transform(sierraAnnual, crs=Teale)
+counties <- st_transform(CA_counties, crs=Teale)
+sierraCounties <- st_transform(sierraCounties, crs=Teale)
+ggplot() + 
+  geom_sf(data=counties) +
+  geom_sf(data=sierraCounties, fill="grey", col="black") + 
+  geom_sf(data=sierra, aes(col=PRECIPITATION))
+```
+
+## Null Model of the Original Data
+
+We'll start by creating a "null model" of the z intercept, z being precipitation, as the root mean squared error (RMSE) \index{rmse}of individual precipitation values as compared to the mean. (This is the same as the standard deviation\index{standard deviation} if we could assume that were dealing with a population instead of a sample, so we'll borrow that symbol $\sigma$.) We'll then compare this with the RMSE of our model predictions to derive *relative performance*, since the models should have lower RMSE than the overall standard deviation.
+
+$$
+\sigma =\sqrt{\frac{\sum_{i=1}^{n}{(z_i-\bar{z})^2}}{n}}
+$$
+
+```{r}
+RMSE <- function(obs, pred) {
+  sqrt(mean((obs-pred)**2, na.rm=TRUE))
+}
+null <- RMSE(mean(sierra$PRECIPITATION), sierra$PRECIPITATION)
+null
+```
+
+The term "null model" \index{null model}can be confusing unless you consider that it's related to a null hypothesis of random variation about the mean. Note that it's not exactly the same as R's `sd()` function, which assumes you have a sample, not the population, and uses $n-1$ instead of $n$ in the equation, as we can see here ...
+
+```{r}
+sd(sierra$PRECIPITATION)
+```
+
+... and resolve `null` back to the sample standard deviation by multiplying by $\sqrt{\frac{n}{n-1}}$:
+
+```{r}
+n <- length(sierra$PRECIPITATION)
+null*sqrt(n/(n-1))
+```
+
+## Voronoi Polygon
+
+\index{Voronoi}We're going to develop a simple prediction using Voronoi polygons (@Voronoi), so we'll create these and see what they look like with the original data points also displayed (Figure \@ref(fig:intVoronoi)). Note that we'll need to convert to S4 objects using `vect()`:
+
+```{r intVoronoi, fig.cap="Voronoi polygons around Sierra stations"}
+library(terra)
+# proximity (Voronoi/Thiessen) polygons
+sierraV <- vect(sierra)
+v <- voronoi(sierraV)
+plot(v)
+points(sierraV)
+```
+
+Voronoi polygons keep going outward to some arbitrary limit, so for a more realistic tesselation, we'll crop out the Sierra counties we selected earlier that contain weather stations. Note that the Voronoi polygons contain all of the attribute data from the original points, just associated with polygon geometry now.
+
+Now we can see a map that displays the original intent envisioned by the meteorologist Thiessen\index{Thiessen polygons} (@Thiessen) to apply observations to a polygon area surrounding the station (Figure \@ref(fig:intPrecipVoronoi)). Voronoi polygons or the raster determined from them (next) will also work with categorical data.
+
+```{r intPrecipVoronoi, fig.cap="Precipitation mapped by Voronoi polygon"}
+vSierra <- crop(v, vect(st_union(sierraCounties)))
+plot(vSierra, "PRECIPITATION")
+```
+
+Now we'll rasterize\index{rasterize, terra} those polygons (Figure \@ref(fig:intVoronoiRas)). We'll start by building a blank raster of given dimensions of our selected counties, with a resolution of 1000 m.  
+
+```{r intVoronoiRas, fig.cap="Rasterized Voronoi polygons"}
+# rasterize
+r <- rast(vSierra, res=1000)  # Builds a blank raster 
+vr <- rasterize(vSierra, r, "PRECIPITATION")
+plot(vr)
+```
+
+### Cross-validation and relative performance
+
+\index{cross-validation of models}**Cross-validation** is used to see how well the model works by sampling it a defined number of times (folds) \index{k-fold cross-validation}to pull out sets of training and testing samples, and then comparing the model's predictions with the (unused) testing data. Each time through, the model is built out of that fold's training data. For each fold, a random selection \@ref(random) is created by the sample function. The mean RMSE of all of the folds is the overall result, and provides an idea on how well the interpolation worked. 
+\index{relative performance of models}**Relative performance** is a normalized measure of how well the model compares with the null model, and ranges from 0 (same RMSE as the null model) to 1 (zero error in our model). We'll use $\sigma$ to represent the null model, since it's similar to the standard deviation:  
+
+$$perf=1-\frac{\overline{RMSE}}{\sigma}$$
+The coding approach for the cross-validation process we'll use generally follows that documented at https://rspatial.org for use with `terra` data (@rspatial) and `gstat` (@gstat) geostatistical methods.
+
+```{r cache=T}
+# k-fold cross-validation
+k <- 5
+set.seed(42)
+kf <- sample(1:k, size = nrow(sierraV), replace=TRUE) # get random numbers 
+   # between 1 and 5 to same size as input data points SpatVector sierraV 
+rmse <- rep(NA, k) # blank set of 5 NAs
+for (i in 1:k) {
+  test <- sierraV[kf == i, ]  # split into k sets of points, 
+                              # (k-1)/k going to training set,
+  train <- sierraV[kf != i, ] # and 1/k to test, including all of the variables
+  v <- voronoi(train)
+  v
+  test
+  p <- terra::extract(v, test) # extract values from training data at test locations
+  rmse[i] <- RMSE(test$PRECIPITATION, p$PRECIPITATION)
+}
+rmse
+mean(rmse)
+# relative model performance
+perf <- 1 - (mean(rmse) / null)
+round(perf, 3)
+
+```
+
+## Nearest Neighbor Interpolation
+
+\index{nearest neighbor interpolation}The previous assignment of data to Voronoi polygons can be considered to be a nearest neighbor interpolation where only one neighbor is used, but we can instead use multiple neighbors (Figure \@ref(fig:intNearestNeighbor)). In this case we'll use up to 5 (`nmax=5`). Presumably setting `idp` to zero makes it a nearest neighbor, along with the `nmax` setting .
+
+```{r intNearestNeighbor, fig.cap="Nearest neighbor interpolation of precipitation"}
+library(gstat)
+d <- data.frame(geom(sierraV)[,c("x", "y")], as.data.frame(sierraV))
+head(d)
+gs <- gstat(formula=PRECIPITATION~1, locations=~x+y, data=d, nmax=5, 
+            set=list(idp = 0))
+nn <- interpolate(r, gs, debug.level=0)
+nnmsk <- mask(nn, vr)
+plot(nnmsk, 1)
+```
+
+### Cross-validation and relative performance of the nearest neighbor model
+
+\index{cross-validation of nearest neighbor model}Again using cross-validation and deriving relative performance for our nearest neighbor model, the higher RMSE and lower relative performance compared with the Voronoi model suggests that it's not any better than that single-neighbor model, so we might just stick with that.
+
+```{r}
+rmsenn <- rep(NA, k)
+for (i in 1:k) {
+  test <- d[kf == i, ]
+  train <- d[kf != i, ]
+  gscv <- gstat(formula=PRECIPITATION~1, locations=~x+y, data=train, 
+                nmax=5, set=list(idp = 0))
+  p <- predict(gscv, test, debug.level=0)$var1.pred
+  rmsenn[i] <- RMSE(test$PRECIPITATION, p)
+}
+rmsenn
+mean(rmsenn)
+1 - (mean(rmsenn) / null)
+```
+  
+
+## Inverse Distance Weighted (IDW)
+
+\index{IDW interpolation}The inverse distance weighted (IDW) interpolator is popular due to its ease of use and few statistical assumptions. Surrounding points influence the predicted value of a cell based on the inverse of their distance. The inverse distance weight has an an exponent set with `set=list(idp=2)`, and if that is 2 (so inverse distance squared), it is sometimes referred to as a "gravity model" since it's the same as the way gravity works. For environmental variables, however, sampling locations are not like objects that create an effect but rather *observations of a continuous surface*.  But we'll go ahead and start with the gravity model, inverse distance power of 2 (Figure \@ref(fig:intIDW2)).
+
+```{r intIDW2, fig.cap="IDW interpolation, power = 2"}
+library(gstat)
+gs <- gstat(formula=PRECIPITATION~1, locations=~x+y, data=d, nmax=Inf,
+            set=list(idp=2))
+idw <- interpolate(r, gs, debug.level=0)
+idwr <- mask(idw, vr)
+plot(idwr, 1)
+```
+
+### Using cross-validation and relative performance to guide inverse-distance weight choice
+
+```{r}
+rmse <- rep(NA, k)
+for (i in 1:k) {
+  test <- d[kf == i, ]
+  train <- d[kf != i, ]
+  gs <- gstat(formula=PRECIPITATION~1, locations=~x+y, data=train,
+              set=list(idp=2))
+  p <- predict(gs, test, debug.level=0)
+  rmse[i] <- RMSE(test$PRECIPITATION, p$var1.pred)
+}
+rmse
+mean(rmse)
+1 - (mean(rmse) / null)
+```
+
+So what we can see from the above is the IDW has a bit better relative performance (from a lower mean RMSE). The IDW does come with an artifact of pits and peaks around the data points, which you can see in the map, and this effect can be decreased with a lower idp.   
+
+### IDW: trying other inverse distance powers
+\index{inverse distance weighting exponent}A power of 1 might reduce the gravity-like emphasis on the sampling point, so we'll try that `(idp=1)` (Figure \@ref(fig:intIDW1)):
+
+```{r intIDW1, fig.cap="IDW interpolation, power = 1"}
+library(gstat)
+gs <- gstat(formula=PRECIPITATION~1, locations=~x+y, data=d, nmax=Inf,
+            set=list(idp=1))
+idw <- interpolate(r, gs, debug.level=0)
+idwr <- mask(idw, vr)
+plot(idwr, 1)
+```
+
+
+```{r}
+rmse <- rep(NA, k)
+for (i in 1:k) {
+  test <- d[kf == i, ]
+  train <- d[kf != i, ]
+  gs <- gstat(formula=PRECIPITATION~1, locations=~x+y, data=train, set=list(idp=1))
+  p <- predict(gs, test, debug.level=0)
+  rmse[i] <- RMSE(test$PRECIPITATION, p$var1.pred)
+}
+rmse
+mean(rmse)
+1 - (mean(rmse) / null)
+```
+
+... but the relative performance is no better. You should continue this experiment by trying other weights (remember to set them the same for the model you're mapping and for the cross-validation), or you could even loop it to optimize the setting for the highest relative performance, but I'll leave you to figure that out.  Note that the number of folds may also have an impact, especially for small data sets like this.
+
+
+## Polynomials and Trend Surfaces
+
+\index{polynomial interpolation}\index{trend surface interpolation}In the Voronoi, nearest-neighbor, and IDW methods above, predicted cell values were based on values of nearby input points, in the case of the Voronoi creating a polygon surrounding the input point to assign its value to (and the raster simply being those polygons assigned to raster cells.)  Another approach is to create a polynomial model where values are assigned based on their location defined as x and y values. The simplest is first-order linear trend surface model, as the equation of a plane:
+
+$$
+z = b_0 + b_1x + b_2y
+$$ 
+
+where z is a variable like `PRECIPITATION`.  Higher-order polynomials can model more complex surfaces, such as a fold using a second-order polynomial, which would look like:
+
+$$
+z = b_0 + b_1x + b_2y + b_3x^2 + b_4xy + b_5y^2
+$$ 
+
+... or a third-order polynomial which might model a dome or basin:
+
+$$
+z = b_0 + b_1x + b_2y + b_3x^2 + b_4xy + b_5y^2 + b_6x^3 + b_7x^2y + b_8xy^2 + b_9y^3
+$$ 
+
+To enter the first order, your formula can look like `z~x+y` but anything beyond this pretty much requires using the `degree` setting.  For the first order this would include `z~1` and `degree=1`; the second order just requires changing the degree to 2, etc.
+
+We'll use gstat with a global linear trend surface by providing this formula as `TEMPERATURE~x+y`, and use the `degree` setting (Figure \@ref(fig:intLinearTrend)).
+
+```{r intLinearTrend, fig.cap="Linear trend"}
+library(gstat)
+gs <- gstat(formula=PRECIPITATION~1, locations=~x+y, degree=1, data=d)
+interp <- interpolate(r, gs, debug.level=0)
+prc1 <- mask(interp, vr)
+plot(prc1, 1)
+```
+
+What we're seeing is a map of a sloping plane showing the general trend. Not surprisingly there are areas with values lower than the minimum input temperature and higher than the maximum input temperature, which we can check with:
+
+```{r}
+min(d$PRECIPITATION)
+max(d$PRECIPITATION)
+```
+... but that's what we should expect when defining a trend that extends beyond our input point locations.
+
+Then we'll try a second order (Figure \@ref(fig:intPolynomial2)):
+
+```{r intPolynomial2, fig.cap="2nd order polynomial, precipitation"}
+gs <- gstat(formula=PRECIPITATION~1, locations=~x+y, degree=2, data=d)
+interp2 <- interpolate(r, gs, debug.level=0)
+prc2 <- mask(interp2, vr)
+plot(prc2, 1)
+```
+
+... which exhibits this phenomenon all the more, though only away from our input data.  Then a third order (Figure \@ref(fig:intPolynomial3))...
+
+```{r intPolynomial3, fig.cap="Third order polynomial, temperature"}
+gs <- gstat(formula=PRECIPITATION~1, locations=~x+y, degree=3, data=d)
+interp3 <- interpolate(r, gs, debug.level=0)
+prc3 <- mask(interp3, vr)
+plot(prc3, 1)
+```
+
+... extends this to the extreme, though the effect is only away from our data points so it's just a cartographic problem we could address by controlling the range of values over which to apply the color range. Or we could use map algebra to assign all cells higher than the maximum inputs to the maximum and lower than the minimum inputs to the minimum (Figure \@ref(fig:intPoly3flattened)).
+
+```{r intPoly3flattened, fig.cap="Third order polynomial with extremes flattened"}
+prc3$var1.pred[prc3$var1.pred > max(d$PRECIPITATION)] <- max(d$PRECIPITATION)
+prc3$var1.pred[prc3$var1.pred < min(d$PRECIPITATION)] <- min(d$PRECIPITATION)
+plot(prc3$var1.pred)
+```
+
+Then a third order *local* polynomial \index{local polynomial interpolation}(setting nmax to less than Inf), where we'll similarly set the values outside the range to the min or max value. The nmax setting can be seen to have a significant effect on the smoothness of the result (Figure \@ref(fig:intLocalPoly3Precip)).
+
+```{r intLocalPoly3Precip, fig.cap="Third order local polynomial, precipitation"}
+gs <- gstat(formula=PRECIPITATION~1, locations=~x+y, degree=3, nmax=30, data=d)
+interp3loc <- interpolate(r, gs, debug.level=0)
+prc3loc <- mask(interp3loc, vr)
+prc3loc$var1.pred[prc3loc$var1.pred > max(d$PRECIPITATION)] <- max(d$PRECIPITATION)
+prc3loc$var1.pred[prc3loc$var1.pred < min(d$PRECIPITATION)] <- min(d$PRECIPITATION)
+plot(prc3loc$var1.pred)
+```
+
+## Kriging
+
+\index{Kriging}Kriging is a *stochastic* geostatistical interpolator that provides advantages for considering the statistical probability of results and characteristics of the original data such as spatial autocorrelation, and has been widely applied in fields such as mining (Krige's application) and considering environmental risk. There's a lot more to it than we can cover here, and the reader is encouraged to see @NowosadGeostatisticsR and other works to learn more. Kriging commonly requires a lot of exploratory work with visual interpretation of data to derive the right model parameters. It starts by looking at the variogram and creating a model with parameters to see which might best approximates the distribution.
+
+### Create a variogram.
+
+\index{variogram}Compare every point to every other point. The width setting (20,000 m) is the subsequent distance intervals into which data point pairs are grouped for semivariance estimates (Figure \@ref(fig:intVariogram)).
+
+```{r intVariogram, fig.cap="Variogram of precipitation at Sierra weather stations"}
+#p <- data.frame(geom(dtakm)[, c("x","y")], as.data.frame(dta))
+gs <- gstat(formula=PRECIPITATION~1, locations=~x+y, data=d)
+v <- variogram(gs, width=20e3)
+v
+plot(v)
+```
+
+### Fit the variogram based on visual interpretation
+
+For geostatistical analysis leading to Kriging, we often use visual interpretation of the variogram to find the best fit, employing various models, such as exponential `"Exp"` (Figure \@ref(fig:intFittedVariogram)).
+
+```{r intFittedVariogram, fig.cap="Fitted variogram"}
+fve <- fit.variogram(v, vgm(psill=2e5, model="Exp", range=200e3, nugget=0)) 
+plot(variogramLine(fve, maxdist=2e5), type='l', ylim=c(0,2e5))
+points(v[,2:3], pch=20, col='red')
+```
+
+The list of twenty variogram models can be provided with `vgm()`. We'll try spherical with `"Sph"` (Figure \@ref(fig:intSphericalModel)).
+
+```{r}
+vgm()
+```
+
+```{r intSphericalModel, warning=F, message=F, fig.cap="Spherical fit"}
+fvs <- fit.variogram(v, vgm(psill=2e5, model="Sph", range=20e3, nugget=0)) 
+fvs
+plot(variogramLine(fvs, maxdist=2e5), type='l', ylim=c(0,2e5))
+points(v[,2:3], pch=20, col='red')
+```
+
+The exponential model at least visually looks like the best fit, so we'll use the `fse` model we created first (Figure \@ref(fig:intExponentialModel)).
+
+```{r intExponentialModel, fig.cap="Exponential model"}
+plot(v, fve)
+```
+
+### Ordinary Kriging
+
+\index{ordinary Kriging}So we'll go with the `fve` model derived using an exponential form to develop an ordinary Kriging prediction and variance result. The prediction is the interpolation, and the variance shows the areas near the data points where we should have more confidence in the prediction; this ability is one of the hallmarks of the Kriging method (Figure \@ref(fig:intOrdinaryKriging)).
+
+```{r intOrdinaryKriging, fig.cap="Ordinary Kriging"}
+kr <- gstat(formula=PRECIPITATION~1, locations=~x+y, data=d, model=fve)
+kp <- interpolate(r, kr, debug.level=0)
+ok <- mask(kp, vr)
+names(ok) <- c('prediction', 'variance')
+plot(ok)
+```
+
+Clearly the prediction provides a clear pattern of precipitation, at least for the areas with low variance. The next step would be to do a cross-validation to compare its RMSE with IDW and other models, but we'll leave that for later.
+
+To learn more about these interpolation methods and related geostatistical methods, see <http://rspatial.org/terra/analysis/4-interpolation.html>, @NowosadGeostatisticsR, and the gstat user manual at <http://www.gstat.org/gstat.pdf> .
+
+\pagebreak
+## Exercises: Spatial Interpolation
+```{r echo=FALSE}
+knitr::opts_chunk$set(include=F)
+```
+
+:::{.exercise}
+We're going to create a couple of interpolations of California climate variables, so start by building `CAclimate` `sf` from the `908277.csv` file in the `sierra` folder; this csv has stations from all of California. Note that you should use `na.rm=T` for summarizations of both `MLY-PRCP-NORMAL` and `MLY-TAVG-NORMAL`, and since there are some weird extreme unrealistic negative numbers for these, also filter for `PRECIPITATION > 0` and `TEMPERATURE > -100` -- other values don't exist on our planet, much less California. There are also some "unknown" values in `LATITUDE`, `LONGITUDE`, and `ELEVATION`, so also filter for `LATITUDE != "unknown"`. (These low negative values plus codes like "unknown" are just other ways of saying `NA`). Create a plot of your points colored by `PRECIPITATION`. You can either use ggplot2 or tmap. Note that `LATITUDE`, `LONGITUDE` and `ELEVATION` get read in as `chr`, so you'll want to use `as.numeric` with them in the summarize section, so code like `LATITUDE = first(as.numeric(LATITUDE))`.
+:::
+
+```{r, results='hide'}
+library(tidyverse); library(gstat); library(igisci)
+library(sf)
+library(terra)
+library(tmap)
+# plot(sierraCounties)
+normalsRaw <- read_csv(ex("sierra/908277.csv"))
+normals <- read_csv(ex("sierra/908277.csv")) %>%
+  mutate(STATION = str_sub(STATION,7,str_length(STATION))) %>%
+  group_by(STATION) %>%
+  summarize(STATION = first(STATION),
+            STATION_NAME = first(STATION_NAME),
+            LATITUDE = first(as.numeric(LATITUDE)),
+            LONGITUDE = first(as.numeric(LONGITUDE)),
+            ELEVATION = first(as.numeric(ELEVATION)),
+            PRECIPITATION = sum(`MLY-PRCP-NORMAL`,na.rm=T),
+            TEMPERATURE = mean(`MLY-TAVG-NORMAL`,na.rm=T)) %>%
+  filter(PRECIPITATION > 0) %>%
+  filter(TEMPERATURE > -100) %>%
+  filter(LATITUDE != "unknown")
+CAclimate <- st_as_sf(normals, coords=c("LONGITUDE","LATITUDE"), remove=F, crs=4326)
+CAcounties = st_read(ex("CA/CA_counties.shp"))
+```
+
+```{r}
+ggplot(data = CAclimate) + geom_sf(aes(col = PRECIPITATION)) + geom_sf(data=CAcounties, fill=NA)
+```
+
+```{r}
+tm_shape(CAcounties) + tm_borders() + tm_shape(CAclimate) + tm_symbols(col="PRECIPITATION", size=0.5)
+```
+
+
+:::{.exercise}
+Create **Voronoi polygons of precipitation** (Figure \@ref(fig:intVoronoiPrecipGoal)) Note that the voronoi tool is in `terra` so the data need to be converted to S4 objects with `vect()`. Then rasterize the resulting polygons, remembering that the coordinates are in decimal degrees so `res=0.01` would probably be a better setting. (Extra credit: what shape will the cells be on the map? Remember that we're working in decimal degrees, but the map is visually projected by the plotting system since it understands geospatial coordinate systems. Experiment with the res setting to visualize this.)
+:::
+
+```{r intVoronoiGoal, eval=F}
+#TA <- "+proj=aea +lat_1=34 +lat_2=40.5 +lat_0=0 +lon_0=-120 +x_0=0 +y_0=-4000000 +datum=WGS84 +units=m"
+CAclimateT <- vect(CA_ClimateNormals) # CAclimate)
+v <- voronoi(CAclimateT)
+vClimate <- crop(v, vect(CAcounties))
+r <- rast(vClimate, res=0.01) # This builds a blank raster of a given 
+                              # dimension and resolution.   
+                              # We're in GCS, so the res is 0.1 degrees
+                              # We'll use this several times below
+vr <- rasterize(vClimate, r, "PRECIPITATION")
+sfClimate <- st_as_sf(vClimate)
+ggplot() + geom_sf(data=sfClimate, mapping=aes(fill=PRECIPITATION)) +
+  scale_fill_gradientn(colors=rainbow(20)) + geom_sf(data=CAclimate)
+```
+
+```{r intVoronoiPrecipGoal, include=T, eval=T, echo=F, out.width='50%', fig.align="center", fig.cap="Voronoi polygons of precipitation (goal)"}
+knitr::include_graphics(here::here("img","goal_intVoronoiPrecip.png"))
+```
+
+:::{.exercise}
+Use `gstat` to create an IDW interpolation of the same data, as we did earlier for the `sierra` data, creating a data frame `d`, but now from `CAclimateT` (Figure \@ref(fig:IDWgoal)).
+:::
+
+```{r intIDWgoal, eval=F}
+library(gstat)
+d <- data.frame(geom(CAclimateT)[,c("x", "y")], as.data.frame(CAclimateT))
+gs <- gstat(formula=PRECIPITATION~1, locations=~x+y, data=d, set=list(idp=2))
+idw <- interpolate(r, gs, debug.level=0)
+idwr <- mask(idw, vr)
+plot(idwr, 1)
+```
+
+```{r IDWgoal, include=T, eval=T, echo=F, out.width='50%', fig.align="center", fig.cap="IDW (goal)"}
+knitr::include_graphics(here::here("img","goal_intIDW.png"))
+```
+
+:::{.exercise}
+Use the IDW interpolator from the same data, but use `ELEVATION` instead of `PRECIPITATION`. Then create a hillshade from it using the `terra::shade` function (since the interpolator will return an `SpatRaster`. Then compare it with `"ca_hillsh_WGS84.tif"` from the external data.
+:::
+
+```{r eval=F}
+d <- data.frame(geom(CAclimateT)[,c("x", "y")], as.data.frame(CAclimateT))
+gse <- gstat(formula=ELEVATION~1, locations=~x+y, data=d)
+idwe <- interpolate(r, gse, debug.level=0)
+idwemask <- mask(idwe,vr)
+
+slope <- terrain(idwemask$var1.pred, v="slope")
+aspect <- terrain(idwemask$var1.pred, v="aspect")
+plot(shade(slope/180*pi, aspect/180*pi, angle=40, direction=330), col=gray(0:100/100))
+plot(rast(ex("CA/ca_hillsh_WGS84.tif")), col=gray(0:100/100))
+```
+
+:::{.exercise}
+**Hillshade of Voronoi station elevations**. Optionally, how about a hillshade created from a voronoi of elevation?  Remember that the hillshade above is created from point data that happens to have elevation data at the stations, and the Voronoi polygons are simply flat "plateaus" surrounding the weather stations.
+:::
+
+```{r intVoronoiStaElevGoal, eval=F}
+v <- voronoi(CAclimateT)
+vClimate <- crop(v, vect(CAcounties))
+r <- rast(vClimate, res=0.01)
+vElev <- rasterize(vClimate, r, "ELEVATION")
+vElevMask <- mask(vElev,vr)
+slope <- terrain(vElevMask$ELEVATION, v="slope")
+aspect <- terrain(vElevMask$ELEVATION, v="aspect")
+plot(shade(slope/180*pi, aspect/180*pi, angle=40, direction=330), col=gray(0:100/100))
+```
+
+:::{.exercise}
+Create a linear trend surface of `PRECIPITATION` in California from the same data.
+:::
+
+```{r linearTrendGoal, eval=F}
+d <- data.frame(geom(CAclimateT)[,c("x", "y")], as.data.frame(CAclimateT))
+gsp <- gstat(formula=PRECIPITATION~x+y, locations=~x+y, data=d)
+trendp <- interpolate(r, gsp, debug.level=0)
+trendpmask <- mask(trendp,vr)
+```
+```{r eval=F}
+plot(trendpmask, 1)
+```

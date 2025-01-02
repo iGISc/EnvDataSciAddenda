@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>10 Imagery Classification Testing | Environmental Data Science Addenda</title>
+  <meta name="description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="10 Imagery Classification Testing | Environmental Data Science Addenda" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
+  <meta name="github-repo" content="iGISc/EnvDataSciAddenda" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="10 Imagery Classification Testing | Environmental Data Science Addenda" />
+  
+  <meta name="twitter:description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
+  
+
+<meta name="author" content="Jerry Davis, SFSU Institute for Geographic Information Science" />
+
+
+<meta name="date" content="2024-03-28" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="atmospheric-co2-record-from-mauna-loa-hawaii.html"/>
+<link rel="next" href="r-markdown-and-bookdown.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><img src="img/eaRth_anna296addenda.png"></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Background, Goals and Data</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#structure-of-the-addenda"><i class="fa fa-check"></i><b>1.1</b> Structure of the Addenda</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#software-and-data"><i class="fa fa-check"></i><b>1.2</b> Software and Data</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#data"><i class="fa fa-check"></i><b>1.2.1</b> Data</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.3</b> Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="air-pollutant-emissions-trends-epa.html"><a href="air-pollutant-emissions-trends-epa.html"><i class="fa fa-check"></i><b>2</b> Air pollutant emissions trends (EPA)</a></li>
+<li class="chapter" data-level="3" data-path="distance-from-census-tract-centroid-to-closest-tri-site.html"><a href="distance-from-census-tract-centroid-to-closest-tri-site.html"><i class="fa fa-check"></i><b>3</b> Distance from census tract centroid to closest TRI site</a></li>
+<li class="chapter" data-level="4" data-path="terrain-mapping-caves-and-water-samples-in-a-karst.html"><a href="terrain-mapping-caves-and-water-samples-in-a-karst.html"><i class="fa fa-check"></i><b>4</b> Terrain mapping, caves and water samples in a karst</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="terrain-mapping-caves-and-water-samples-in-a-karst.html"><a href="terrain-mapping-caves-and-water-samples-in-a-karst.html#creating-a-basemap-from-a-dem-using-hillshade-and-terrain-shading"><i class="fa fa-check"></i><b>4.1</b> Creating a basemap from a DEM, using hillshade and terrain shading</a></li>
+<li class="chapter" data-level="4.2" data-path="terrain-mapping-caves-and-water-samples-in-a-karst.html"><a href="terrain-mapping-caves-and-water-samples-in-a-karst.html#using-topographic-basemap-with-contours"><i class="fa fa-check"></i><b>4.2</b> Using topographic basemap with contours</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="pointblue-penguin-study.html"><a href="pointblue-penguin-study.html"><i class="fa fa-check"></i><b>5</b> PointBlue Penguin Study</a>
+<ul>
+<li class="chapter" data-level="5.0.1" data-path="pointblue-penguin-study.html"><a href="pointblue-penguin-study.html#interactive-mapping-of-individual-penguins-abstracted-from-a-big-dataset"><i class="fa fa-check"></i><b>5.0.1</b> Interactive mapping of individual penguins abstracted from a big dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="seabird-model.html"><a href="seabird-model.html"><i class="fa fa-check"></i><b>6</b> Seabird Model</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="seabird-model.html"><a href="seabird-model.html#goals-and-basic-methods-of-the-analysis"><i class="fa fa-check"></i><b>6.1</b> Goals and basic methods of the analysis</a></li>
+<li class="chapter" data-level="6.2" data-path="seabird-model.html"><a href="seabird-model.html#exploratory-data-analysis"><i class="fa fa-check"></i><b>6.2</b> Exploratory data analysis</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="seabird-model.html"><a href="seabird-model.html#identifying-the-appropriate-model-using-variance-and-mean-comparisons"><i class="fa fa-check"></i><b>6.2.1</b> Identifying the appropriate model using variance and mean comparisons</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="seabird-model.html"><a href="seabird-model.html#model-black-footed-albatross-counts-for-july-using-a-poisson-family-glm"><i class="fa fa-check"></i><b>6.3</b> Model black-footed albatross counts for July using a poisson-family glm</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="seabird-model.html"><a href="seabird-model.html#map-the-prediction"><i class="fa fa-check"></i><b>6.3.1</b> Map the prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="seabird-model.html"><a href="seabird-model.html#interpolation"><i class="fa fa-check"></i><b>6.4</b> Interpolation</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html"><i class="fa fa-check"></i><b>7</b> Time Series case studies</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html#loney-meadow-flux-data"><i class="fa fa-check"></i><b>7.1</b> Loney Meadow flux data</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="curve-fitting.html"><a href="curve-fitting.html"><i class="fa fa-check"></i><b>8</b> Curve fitting</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="curve-fitting.html"><a href="curve-fitting.html#carbon-flux-data-from-red-clover-valley"><i class="fa fa-check"></i><b>8.1</b> Carbon flux data from Red Clover Valley</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="curve-fitting.html"><a href="curve-fitting.html#pairs-plot"><i class="fa fa-check"></i><b>8.1.1</b> Pairs plot</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="curve-fitting.html"><a href="curve-fitting.html#polynomial-models"><i class="fa fa-check"></i><b>8.2</b> Polynomial models</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="curve-fitting.html"><a href="curve-fitting.html#poly-1"><i class="fa fa-check"></i><b>8.2.1</b> poly 1</a></li>
+<li class="chapter" data-level="8.2.2" data-path="curve-fitting.html"><a href="curve-fitting.html#poly-2"><i class="fa fa-check"></i><b>8.2.2</b> poly 2</a></li>
+<li class="chapter" data-level="8.2.3" data-path="curve-fitting.html"><a href="curve-fitting.html#poly-3"><i class="fa fa-check"></i><b>8.2.3</b> poly 3</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="curve-fitting.html"><a href="curve-fitting.html#power-law-model"><i class="fa fa-check"></i><b>8.3</b> Power law model</a></li>
+<li class="chapter" data-level="8.4" data-path="curve-fitting.html"><a href="curve-fitting.html#exponential-model"><i class="fa fa-check"></i><b>8.4</b> Exponential model</a></li>
+<li class="chapter" data-level="8.5" data-path="curve-fitting.html"><a href="curve-fitting.html#growth-and-loss-models-in-geomorphology-gully-data"><i class="fa fa-check"></i><b>8.5</b> Growth and loss models in geomorphology: Gully data</a></li>
+<li class="chapter" data-level="8.6" data-path="curve-fitting.html"><a href="curve-fitting.html#log-transformed-independent-variables"><i class="fa fa-check"></i><b>8.6</b> Log-transformed independent variables</a></li>
+<li class="chapter" data-level="8.7" data-path="curve-fitting.html"><a href="curve-fitting.html#nonlinear-models"><i class="fa fa-check"></i><b>8.7</b> Nonlinear models</a>
+<ul>
+<li class="chapter" data-level="8.7.1" data-path="curve-fitting.html"><a href="curve-fitting.html#using-nls-for-a-rectangular-hyperbola-model-using-the-michaelis-menten-equation"><i class="fa fa-check"></i><b>8.7.1</b> Using <code>nls</code> for a rectangular hyperbola model, using the Michaelis-Menten equation</a></li>
+<li class="chapter" data-level="8.7.2" data-path="curve-fitting.html"><a href="curve-fitting.html#using-the-rate-law-to-model-hillslope-erosion"><i class="fa fa-check"></i><b>8.7.2</b> Using the <em>rate law</em> to model hillslope erosion</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html"><i class="fa fa-check"></i><b>9</b> Atmospheric CO2 record from Mauna Loa, Hawaii</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#read-the-data"><i class="fa fa-check"></i><b>9.1</b> Read the data</a></li>
+<li class="chapter" data-level="9.2" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#plot-the-time-series"><i class="fa fa-check"></i><b>9.2</b> Plot the time series</a></li>
+<li class="chapter" data-level="9.3" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#generalize-the-data"><i class="fa fa-check"></i><b>9.3</b> Generalize the data</a></li>
+<li class="chapter" data-level="9.4" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#curve-fitting-and-creating-a-prediction"><i class="fa fa-check"></i><b>9.4</b> Curve Fitting and Creating a Prediction</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#exponential-model-1"><i class="fa fa-check"></i><b>9.4.1</b> Exponential model</a></li>
+<li class="chapter" data-level="9.4.2" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#power-law-model-1"><i class="fa fa-check"></i><b>9.4.2</b> Power law model</a></li>
+<li class="chapter" data-level="9.4.3" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#second-order-polynomial"><i class="fa fa-check"></i><b>9.4.3</b> Second order polynomial</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#creating-a-time-series-object"><i class="fa fa-check"></i><b>9.5</b> Creating a time series object</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="imagery-classification-testing.html"><a href="imagery-classification-testing.html"><i class="fa fa-check"></i><b>10</b> Imagery Classification Testing</a>
+<ul>
+<li class="chapter" data-level="10.0.1" data-path="imagery-classification-testing.html"><a href="imagery-classification-testing.html#create-a-18-band-stack-from-both-images"><i class="fa fa-check"></i><b>10.0.1</b> Create a 18-band stack from both images</a></li>
+<li class="chapter" data-level="10.0.2" data-path="imagery-classification-testing.html"><a href="imagery-classification-testing.html#extract-the-training-data-20-m-spring-summer"><i class="fa fa-check"></i><b>10.0.2</b> Extract the training data (20 m spring + summer)</a></li>
+<li class="chapter" data-level="10.0.3" data-path="imagery-classification-testing.html"><a href="imagery-classification-testing.html#cart-model-and-prediction-20-m-spring-summer"><i class="fa fa-check"></i><b>10.0.3</b> CART model and prediction (20 m spring + summer)</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html"><i class="fa fa-check"></i><b>11</b> R Markdown and Bookdown</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#r-markdown"><i class="fa fa-check"></i><b>11.1</b> R Markdown</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#markdown-editing"><i class="fa fa-check"></i><b>11.1.1</b> Markdown editing</a></li>
+<li class="chapter" data-level="11.1.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#display-options-in-code-chunks"><i class="fa fa-check"></i><b>11.1.2</b> Display options in code chunks</a></li>
+<li class="chapter" data-level="11.1.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#numbered-figures-with-text-citations"><i class="fa fa-check"></i><b>11.1.3</b> Numbered figures with text citations</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#a-template-for-multiple-output-formats"><i class="fa fa-check"></i><b>11.2</b> A template for multiple output formats</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#the-template"><i class="fa fa-check"></i><b>11.2.1</b> The template</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#building-a-book-with-bookdown-and-yaml-options"><i class="fa fa-check"></i><b>11.3</b> Building a book with bookdown and YAML options</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#building-a-book"><i class="fa fa-check"></i><b>11.3.1</b> Building a book</a></li>
+<li class="chapter" data-level="11.3.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#special-characters-and-formatting-limitations-and-challenges"><i class="fa fa-check"></i><b>11.3.2</b> Special characters and formatting limitations and challenges</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#yaml-files-used-to-configure-the-book"><i class="fa fa-check"></i><b>11.4</b> YAML files used to configure the book</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#output.yml"><i class="fa fa-check"></i><b>11.4.1</b> _output.yml</a></li>
+<li class="chapter" data-level="11.4.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#index.rmd"><i class="fa fa-check"></i><b>11.4.2</b> index.Rmd</a></li>
+<li class="chapter" data-level="11.4.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#bookdown.yml"><i class="fa fa-check"></i><b>11.4.3</b> _bookdown.yml</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="figures-and-tables.html"><a href="figures-and-tables.html"><i class="fa fa-check"></i><b>12</b> Figures and Tables</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="figures-and-tables.html"><a href="figures-and-tables.html#figures"><i class="fa fa-check"></i><b>12.1</b> Figures</a></li>
+<li class="chapter" data-level="12.2" data-path="figures-and-tables.html"><a href="figures-and-tables.html#tables"><i class="fa fa-check"></i><b>12.2</b> Tables</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="figures-and-tables.html"><a href="figures-and-tables.html#dtdatatable"><i class="fa fa-check"></i><b>12.2.1</b> <code>DT::datatable</code></a></li>
+<li class="chapter" data-level="12.2.2" data-path="figures-and-tables.html"><a href="figures-and-tables.html#knitrkable-tables"><i class="fa fa-check"></i><b>12.2.2</b> <code>knitr::kable</code> tables</a></li>
+<li class="chapter" data-level="12.2.3" data-path="figures-and-tables.html"><a href="figures-and-tables.html#gt-package"><i class="fa fa-check"></i><b>12.2.3</b> <code>gt</code> package</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="figures-and-tables.html"><a href="figures-and-tables.html#other-tricks"><i class="fa fa-check"></i><b>12.3</b> Other tricks</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html"><i class="fa fa-check"></i><b>13</b> Building a Package on GitHub for Data and Code</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#git-and-github"><i class="fa fa-check"></i><b>13.1</b> Git and GitHub</a></li>
+<li class="chapter" data-level="13.2" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#some-notes-on-the-rstudio-process"><i class="fa fa-check"></i><b>13.2</b> Some notes on the RStudio process</a></li>
+<li class="chapter" data-level="13.3" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#data-1"><i class="fa fa-check"></i><b>13.3</b> Data</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#raw-data-in-extdata"><i class="fa fa-check"></i><b>13.3.1</b> Raw data in extdata</a></li>
+<li class="chapter" data-level="13.3.2" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#binary-data-as-rda-files"><i class="fa fa-check"></i><b>13.3.2</b> Binary data as <code>rda</code> files</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#code-functions"><i class="fa fa-check"></i><b>13.4</b> Code (functions)</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Environmental Data Science Addenda</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="imagery-classification-testing" class="section level1 hasAnchor" number="10">
+<h1><span class="header-section-number">10</span> Imagery Classification Testing<a href="imagery-classification-testing.html#imagery-classification-testing" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="imagery-classification-testing.html#cb1-1" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb1-2"><a href="imagery-classification-testing.html#cb1-2" tabindex="-1"></a><span class="fu">library</span>(terra)</span></code></pre></div>
+<pre><code>## Warning: package &#39;terra&#39; was built under R version 4.3.3</code></pre>
+<pre><code>## terra 1.7.71</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="imagery-classification-testing.html#cb4-1" tabindex="-1"></a>imgFolder <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;S2A_MSIL2A_20210628T184921_N0300_R113_T10TGK_20210628T230915.&quot;</span>,</span>
+<span id="cb4-2"><a href="imagery-classification-testing.html#cb4-2" tabindex="-1"></a>                    <span class="st">&quot;SAFE</span><span class="sc">\\</span><span class="st">GRANULE</span><span class="sc">\\</span><span class="st">L2A_T10TGK_A031427_20210628T185628&quot;</span>)</span>
+<span id="cb4-3"><a href="imagery-classification-testing.html#cb4-3" tabindex="-1"></a>img20mFolder <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;~/sentinel2/&quot;</span>,imgFolder,<span class="st">&quot;</span><span class="sc">\\</span><span class="st">IMG_DATA</span><span class="sc">\\</span><span class="st">R20m&quot;</span>)</span>
+<span id="cb4-4"><a href="imagery-classification-testing.html#cb4-4" tabindex="-1"></a>imgDateTime <span class="ot">&lt;-</span> <span class="fu">str_sub</span>(imgFolder,<span class="dv">12</span>,<span class="dv">26</span>)</span>
+<span id="cb4-5"><a href="imagery-classification-testing.html#cb4-5" tabindex="-1"></a>imgDateTime</span></code></pre></div>
+<pre><code>## [1] &quot;20210628T184921&quot;</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="imagery-classification-testing.html#cb6-1" tabindex="-1"></a>imgDate <span class="ot">&lt;-</span> <span class="fu">str_sub</span>(imgDateTime,<span class="dv">1</span>,<span class="dv">8</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="imagery-classification-testing.html#cb7-1" tabindex="-1"></a>sentinelBands <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;B&quot;</span>,<span class="fu">c</span>(<span class="st">&quot;02&quot;</span>,<span class="st">&quot;03&quot;</span>,<span class="st">&quot;04&quot;</span>,<span class="st">&quot;05&quot;</span>,<span class="st">&quot;06&quot;</span>,<span class="st">&quot;07&quot;</span>,<span class="st">&quot;8A&quot;</span>,<span class="st">&quot;11&quot;</span>,<span class="st">&quot;12&quot;</span>))</span>
+<span id="cb7-2"><a href="imagery-classification-testing.html#cb7-2" tabindex="-1"></a>sentFiles <span class="ot">&lt;-</span> <span class="fu">paste0</span>(img20mFolder,<span class="st">&quot;/T10TGK_&quot;</span>,imgDateTime,<span class="st">&quot;_&quot;</span>,</span>
+<span id="cb7-3"><a href="imagery-classification-testing.html#cb7-3" tabindex="-1"></a>                        sentinelBands,<span class="st">&quot;_20m.jp2&quot;</span>)</span>
+<span id="cb7-4"><a href="imagery-classification-testing.html#cb7-4" tabindex="-1"></a>sentinel <span class="ot">&lt;-</span> <span class="fu">rast</span>(sentFiles)</span>
+<span id="cb7-5"><a href="imagery-classification-testing.html#cb7-5" tabindex="-1"></a>sentinelBands</span></code></pre></div>
+<pre><code>## [1] &quot;B02&quot; &quot;B03&quot; &quot;B04&quot; &quot;B05&quot; &quot;B06&quot; &quot;B07&quot; &quot;B8A&quot; &quot;B11&quot; &quot;B12&quot;</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="imagery-classification-testing.html#cb9-1" tabindex="-1"></a><span class="fu">names</span>(sentinel) <span class="ot">&lt;-</span> sentinelBands</span></code></pre></div>
+<p><strong>Spring</strong></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="imagery-classification-testing.html#cb10-1" tabindex="-1"></a><span class="fu">library</span>(terra); <span class="fu">library</span>(stringr); <span class="fu">library</span>(igisci)</span>
+<span id="cb10-2"><a href="imagery-classification-testing.html#cb10-2" tabindex="-1"></a>imgFolderSpring <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;S2B_MSIL2A_20210603T184919_N0300_R113_T10TGK_20210603&quot;</span>,</span>
+<span id="cb10-3"><a href="imagery-classification-testing.html#cb10-3" tabindex="-1"></a>                     <span class="st">&quot;T213609.SAFE</span><span class="sc">\\</span><span class="st">GRANULE</span><span class="sc">\\</span><span class="st">L2A_T10TGK_A022161_20210603T185928&quot;</span>)</span>
+<span id="cb10-4"><a href="imagery-classification-testing.html#cb10-4" tabindex="-1"></a>img10mFolderSpring <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;~/sentinel2/&quot;</span>,imgFolderSpring,<span class="st">&quot;</span><span class="sc">\\</span><span class="st">IMG_DATA</span><span class="sc">\\</span><span class="st">R20m&quot;</span>)</span>
+<span id="cb10-5"><a href="imagery-classification-testing.html#cb10-5" tabindex="-1"></a>imgDateTimeSpring <span class="ot">&lt;-</span> <span class="fu">str_sub</span>(imgFolderSpring,<span class="dv">12</span>,<span class="dv">26</span>)</span></code></pre></div>
+<p><strong>Summer</strong></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="imagery-classification-testing.html#cb11-1" tabindex="-1"></a>imgFolderSummer <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;S2A_MSIL2A_20210628T184921_N0300_R113_T10TGK_20210628&quot;</span>,</span>
+<span id="cb11-2"><a href="imagery-classification-testing.html#cb11-2" tabindex="-1"></a>                      <span class="st">&quot;T230915.SAFE</span><span class="sc">\\</span><span class="st">GRANULE</span><span class="sc">\\</span><span class="st">L2A_T10TGK_A031427_20210628T185628&quot;</span>)</span>
+<span id="cb11-3"><a href="imagery-classification-testing.html#cb11-3" tabindex="-1"></a>img10mFolderSummer <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;~/sentinel2/&quot;</span>,imgFolder,<span class="st">&quot;</span><span class="sc">\\</span><span class="st">IMG_DATA</span><span class="sc">\\</span><span class="st">R20m&quot;</span>)</span>
+<span id="cb11-4"><a href="imagery-classification-testing.html#cb11-4" tabindex="-1"></a>imgDateTimeSummer <span class="ot">&lt;-</span> <span class="fu">str_sub</span>(imgFolderSummer,<span class="dv">12</span>,<span class="dv">26</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="imagery-classification-testing.html#cb12-1" tabindex="-1"></a>sentinelBands <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;B&quot;</span>,<span class="fu">c</span>(<span class="st">&quot;02&quot;</span>,<span class="st">&quot;03&quot;</span>,<span class="st">&quot;04&quot;</span>,<span class="st">&quot;05&quot;</span>,<span class="st">&quot;06&quot;</span>,<span class="st">&quot;07&quot;</span>,<span class="st">&quot;8A&quot;</span>,<span class="st">&quot;11&quot;</span>,<span class="st">&quot;12&quot;</span>))</span>
+<span id="cb12-2"><a href="imagery-classification-testing.html#cb12-2" tabindex="-1"></a>sentFilesSpring <span class="ot">&lt;-</span> <span class="fu">paste0</span>(img10mFolderSpring,<span class="st">&quot;/T10TGK_&quot;</span>,</span>
+<span id="cb12-3"><a href="imagery-classification-testing.html#cb12-3" tabindex="-1"></a>                              imgDateTimeSpring,<span class="st">&quot;_&quot;</span>,sentinelBands,<span class="st">&quot;_20m.jp2&quot;</span>)</span>
+<span id="cb12-4"><a href="imagery-classification-testing.html#cb12-4" tabindex="-1"></a>sentinelSpring <span class="ot">&lt;-</span> <span class="fu">rast</span>(sentFilesSpring)</span>
+<span id="cb12-5"><a href="imagery-classification-testing.html#cb12-5" tabindex="-1"></a><span class="fu">names</span>(sentinelSpring) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;spring&quot;</span>,sentinelBands)</span>
+<span id="cb12-6"><a href="imagery-classification-testing.html#cb12-6" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="imagery-classification-testing.html#cb12-7" tabindex="-1"></a>sentFilesSummer <span class="ot">&lt;-</span> <span class="fu">paste0</span>(img10mFolderSummer,<span class="st">&quot;/T10TGK_&quot;</span>,</span>
+<span id="cb12-8"><a href="imagery-classification-testing.html#cb12-8" tabindex="-1"></a>                              imgDateTimeSummer,<span class="st">&quot;_&quot;</span>,sentinelBands,<span class="st">&quot;_20m.jp2&quot;</span>)</span>
+<span id="cb12-9"><a href="imagery-classification-testing.html#cb12-9" tabindex="-1"></a>sentinelSummer <span class="ot">&lt;-</span> <span class="fu">rast</span>(sentFilesSummer)</span>
+<span id="cb12-10"><a href="imagery-classification-testing.html#cb12-10" tabindex="-1"></a><span class="fu">names</span>(sentinelSummer) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;summer&quot;</span>,sentinelBands)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="imagery-classification-testing.html#cb13-1" tabindex="-1"></a>RCVext <span class="ot">&lt;-</span> <span class="fu">ext</span>(<span class="dv">715680</span>,<span class="dv">725040</span>,<span class="dv">4419120</span>,<span class="dv">4429980</span>)</span>
+<span id="cb13-2"><a href="imagery-classification-testing.html#cb13-2" tabindex="-1"></a>sentRCVspring <span class="ot">&lt;-</span> <span class="fu">crop</span>(sentinelSpring,RCVext)</span>
+<span id="cb13-3"><a href="imagery-classification-testing.html#cb13-3" tabindex="-1"></a>sentRCVsummer <span class="ot">&lt;-</span> <span class="fu">crop</span>(sentinelSummer,RCVext)</span></code></pre></div>
+<div id="create-a-18-band-stack-from-both-images" class="section level3 hasAnchor" number="10.0.1">
+<h3><span class="header-section-number">10.0.1</span> Create a 18-band stack from both images<a href="imagery-classification-testing.html#create-a-18-band-stack-from-both-images" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Since we have two imagery dates , we have a total of 18 variables to work with. So we’ll put these together as a multi-band stack simply using <code>c()</code> with the various bands.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="imagery-classification-testing.html#cb14-1" tabindex="-1"></a>sentRCV <span class="ot">&lt;-</span> <span class="fu">c</span>(sentRCVspring, sentRCVsummer)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="imagery-classification-testing.html#cb15-1" tabindex="-1"></a><span class="fu">plotRGB</span>(<span class="fu">subset</span>(sentRCV,<span class="fu">c</span>(<span class="dv">7</span>,<span class="dv">3</span>,<span class="dv">2</span>)),<span class="at">stretch=</span><span class="st">&quot;lin&quot;</span>)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="imagery-classification-testing.html#cb16-1" tabindex="-1"></a><span class="fu">plotRGB</span>(<span class="fu">subset</span>(sentRCV,<span class="fu">c</span>(<span class="dv">16</span>,<span class="dv">12</span>,<span class="dv">11</span>)),<span class="at">stretch=</span><span class="st">&quot;lin&quot;</span>)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+</div>
+<div id="extract-the-training-data-20-m-spring-summer" class="section level3 hasAnchor" number="10.0.2">
+<h3><span class="header-section-number">10.0.2</span> Extract the training data (20 m spring + summer)<a href="imagery-classification-testing.html#extract-the-training-data-20-m-spring-summer" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We’ll repeat some of the steps where we read in the training data and set up the land cover classes, reducing the 7 to 6 classes, then extract from our new 20-band image stack the training data.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="imagery-classification-testing.html#cb17-1" tabindex="-1"></a><span class="fu">library</span>(igisci)</span>
+<span id="cb17-2"><a href="imagery-classification-testing.html#cb17-2" tabindex="-1"></a>trainPolys <span class="ot">&lt;-</span> <span class="fu">vect</span>(<span class="fu">ex</span>(<span class="st">&quot;RCVimagery/train_polys7.shp&quot;</span>))</span>
+<span id="cb17-3"><a href="imagery-classification-testing.html#cb17-3" tabindex="-1"></a>ptsRCV <span class="ot">&lt;-</span> <span class="fu">spatSample</span>(trainPolys, <span class="dv">1000</span>, <span class="at">method=</span><span class="st">&quot;random&quot;</span>)</span>
+<span id="cb17-4"><a href="imagery-classification-testing.html#cb17-4" tabindex="-1"></a>LCclass <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;forest&quot;</span>,<span class="st">&quot;hydric&quot;</span>,<span class="st">&quot;mesic&quot;</span>,<span class="st">&quot;rocky&quot;</span>,<span class="st">&quot;water&quot;</span>,<span class="st">&quot;willow&quot;</span>,<span class="st">&quot;xeric&quot;</span>)</span>
+<span id="cb17-5"><a href="imagery-classification-testing.html#cb17-5" tabindex="-1"></a>classdf <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">value=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(LCclass),<span class="at">names=</span>LCclass)</span>
+<span id="cb17-6"><a href="imagery-classification-testing.html#cb17-6" tabindex="-1"></a>trainPolys <span class="ot">&lt;-</span> <span class="fu">vect</span>(<span class="fu">ex</span>(<span class="st">&quot;RCVimagery/train_polys7.shp&quot;</span>))</span>
+<span id="cb17-7"><a href="imagery-classification-testing.html#cb17-7" tabindex="-1"></a>trainPolys[trainPolys<span class="sc">$</span>class<span class="sc">==</span><span class="st">&quot;willow&quot;</span>]<span class="sc">$</span>class <span class="ot">&lt;-</span> <span class="st">&quot;hydric&quot;</span></span>
+<span id="cb17-8"><a href="imagery-classification-testing.html#cb17-8" tabindex="-1"></a>ptsRCV <span class="ot">&lt;-</span> <span class="fu">spatSample</span>(trainPolys, <span class="dv">1000</span>, <span class="at">method=</span><span class="st">&quot;random&quot;</span>)</span>
+<span id="cb17-9"><a href="imagery-classification-testing.html#cb17-9" tabindex="-1"></a>LCclass <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;forest&quot;</span>,<span class="st">&quot;hydric&quot;</span>,<span class="st">&quot;mesic&quot;</span>,<span class="st">&quot;rocky&quot;</span>,<span class="st">&quot;water&quot;</span>,<span class="st">&quot;xeric&quot;</span>)</span>
+<span id="cb17-10"><a href="imagery-classification-testing.html#cb17-10" tabindex="-1"></a>classdf <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">value=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(LCclass),<span class="at">names=</span>LCclass)</span>
+<span id="cb17-11"><a href="imagery-classification-testing.html#cb17-11" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="imagery-classification-testing.html#cb17-12" tabindex="-1"></a>extRCV <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">extract</span>(sentRCV, ptsRCV)[,<span class="sc">-</span><span class="dv">1</span>] <span class="co"># REMOVE ID</span></span>
+<span id="cb17-13"><a href="imagery-classification-testing.html#cb17-13" tabindex="-1"></a>sampdataRCV <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">class =</span> ptsRCV<span class="sc">$</span>class, extRCV)</span></code></pre></div>
+</div>
+<div id="cart-model-and-prediction-20-m-spring-summer" class="section level3 hasAnchor" number="10.0.3">
+<h3><span class="header-section-number">10.0.3</span> CART model and prediction (20 m spring + summer)<a href="imagery-classification-testing.html#cart-model-and-prediction-20-m-spring-summer" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p></p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="imagery-classification-testing.html#cb18-1" tabindex="-1"></a><span class="fu">library</span>(rpart)</span>
+<span id="cb18-2"><a href="imagery-classification-testing.html#cb18-2" tabindex="-1"></a><span class="co"># Train the model</span></span>
+<span id="cb18-3"><a href="imagery-classification-testing.html#cb18-3" tabindex="-1"></a>cartmodel <span class="ot">&lt;-</span> <span class="fu">rpart</span>(<span class="fu">as.factor</span>(class)<span class="sc">~</span>., </span>
+<span id="cb18-4"><a href="imagery-classification-testing.html#cb18-4" tabindex="-1"></a>                   <span class="at">data =</span> sampdataRCV, <span class="at">method =</span> <span class="st">&#39;class&#39;</span>, <span class="at">minsplit =</span> <span class="dv">5</span>)</span></code></pre></div>
+<p>The CART model tree for the two-season 20 m example (Figure <a href="imagery-classification-testing.html#fig:imgCARTtreePheno20">10.1</a>), in contrast with the 10 m classification, does not end up with a few pixels classified as “rocky” (Figures <a href="imagery-classification-testing.html#fig:imgCARTprobmapPheno20">10.2</a> and <a href="imagery-classification-testing.html#fig:imgCARThighestPheno20">10.3</a>).</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="imagery-classification-testing.html#cb19-1" tabindex="-1"></a><span class="fu">library</span>(rpart.plot)</span></code></pre></div>
+<pre><code>## Warning: package &#39;rpart.plot&#39; was built under R version 4.3.3</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="imagery-classification-testing.html#cb21-1" tabindex="-1"></a><span class="fu">rpart.plot</span>(cartmodel, <span class="at">fallen.leaves=</span>F)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:imgCARTtreePheno20"></span>
+<img src="EnvDataSciAddenda_files/figure-html/imgCARTtreePheno20-1.png" alt="CART decision tree, Sentinel 20-m, spring and summer 2021 images" width="672" />
+<p class="caption">
+FIGURE 10.1: CART decision tree, Sentinel 20-m, spring and summer 2021 images
+</p>
+</div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="imagery-classification-testing.html#cb22-1" tabindex="-1"></a>CARTpred <span class="ot">&lt;-</span> <span class="fu">predict</span>(sentRCV, cartmodel, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb22-2"><a href="imagery-classification-testing.html#cb22-2" tabindex="-1"></a><span class="fu">plot</span>(CARTpred)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:imgCARTprobmapPheno20"></span>
+<img src="EnvDataSciAddenda_files/figure-html/imgCARTprobmapPheno20-1.png" alt="CART classification, probabilities of each class, Sentinel-2 20 m, 2021 spring and summer phenology" width="672" />
+<p class="caption">
+FIGURE 10.2: CART classification, probabilities of each class, Sentinel-2 20 m, 2021 spring and summer phenology
+</p>
+</div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="imagery-classification-testing.html#cb23-1" tabindex="-1"></a>LCpheno <span class="ot">&lt;-</span> <span class="fu">which.max</span>(CARTpred)</span>
+<span id="cb23-2"><a href="imagery-classification-testing.html#cb23-2" tabindex="-1"></a>cls <span class="ot">&lt;-</span> <span class="fu">names</span>(CARTpred)</span>
+<span id="cb23-3"><a href="imagery-classification-testing.html#cb23-3" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(cls), <span class="at">class=</span>cls)</span>
+<span id="cb23-4"><a href="imagery-classification-testing.html#cb23-4" tabindex="-1"></a><span class="fu">levels</span>(LCpheno) <span class="ot">&lt;-</span> df</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="imagery-classification-testing.html#cb24-1" tabindex="-1"></a>LCcolors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;green4&quot;</span>,<span class="st">&quot;cyan&quot;</span>,<span class="st">&quot;gold&quot;</span>,<span class="st">&quot;grey90&quot;</span>,<span class="st">&quot;mediumblue&quot;</span>,<span class="st">&quot;red&quot;</span>)</span>
+<span id="cb24-2"><a href="imagery-classification-testing.html#cb24-2" tabindex="-1"></a><span class="fu">plot</span>(LCpheno, <span class="at">col=</span>LCcolors)</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="imagery-classification-testing.html#cb25-1" tabindex="-1"></a><span class="fu">library</span>(tmap)</span></code></pre></div>
+<pre><code>## The legacy packages maptools, rgdal, and rgeos, underpinning the sp package,
+## which was just loaded, will retire in October 2023.
+## Please refer to R-spatial evolution reports for details, especially
+## https://r-spatial.org/r/2023/05/15/evolution4.html.
+## It may be desirable to make the sf package available;
+## package maintainers should consider adding sf to Suggests:.
+## The sp package is now running under evolution status 2
+##      (status 2 uses the sf package in place of rgdal)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;tmap&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:datasets&#39;:
+## 
+##     rivers</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="imagery-classification-testing.html#cb29-1" tabindex="-1"></a>LCcolors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;green4&quot;</span>,<span class="st">&quot;cyan&quot;</span>,<span class="st">&quot;gold&quot;</span>,<span class="st">&quot;grey90&quot;</span>,<span class="st">&quot;mediumblue&quot;</span>,<span class="st">&quot;red&quot;</span>)</span>
+<span id="cb29-2"><a href="imagery-classification-testing.html#cb29-2" tabindex="-1"></a><span class="fu">tm_shape</span>(LCpheno) <span class="sc">+</span> </span>
+<span id="cb29-3"><a href="imagery-classification-testing.html#cb29-3" tabindex="-1"></a>    <span class="fu">tm_raster</span>(<span class="at">col=</span><span class="st">&quot;class&quot;</span>,  </span>
+<span id="cb29-4"><a href="imagery-classification-testing.html#cb29-4" tabindex="-1"></a>            <span class="at">col.scale=</span><span class="fu">tm_scale_categorical</span>(<span class="at">values=</span>LCcolors),</span>
+<span id="cb29-5"><a href="imagery-classification-testing.html#cb29-5" tabindex="-1"></a>            <span class="at">col.legend=</span><span class="fu">tm_legend</span>(<span class="at">frame=</span>F)) <span class="sc">+</span></span>
+<span id="cb29-6"><a href="imagery-classification-testing.html#cb29-6" tabindex="-1"></a>  <span class="fu">tm_graticules</span>(<span class="at">alpha=</span><span class="fl">0.5</span>, <span class="at">col=</span><span class="st">&quot;gray&quot;</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:imgCARThighestPheno20"></span>
+<img src="EnvDataSciAddenda_files/figure-html/imgCARThighestPheno20-1.png" alt="CART classification, highest probability class, Sentinel-2 20 m, 2021 spring and summer phenology" width="576" />
+<p class="caption">
+FIGURE 10.3: CART classification, highest probability class, Sentinel-2 20 m, 2021 spring and summer phenology
+</p>
+</div>
+<p>We might compare this plot with the previous 20 m (Figure <a href="#fig:imgCARThighestProb20m"><strong>??</strong></a>), 10 m (Figure <a href="#fig:imgCART10mHighestProb"><strong>??</strong></a>), and 10 m spring+summer classification (<a href="#fig:imgCARThighestPheno"><strong>??</strong></a>).</p>
+<div id="cross-validation-cart-model-for-20-m-spring-summer" class="section level4 hasAnchor" number="10.0.3.1">
+<h4><span class="header-section-number">10.0.3.1</span> Cross validation : CART model for 20 m spring + summer<a href="imagery-classification-testing.html#cross-validation-cart-model-for-20-m-spring-summer" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="imagery-classification-testing.html#cb30-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb30-2"><a href="imagery-classification-testing.html#cb30-2" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">5</span> <span class="co"># number of folds</span></span>
+<span id="cb30-3"><a href="imagery-classification-testing.html#cb30-3" tabindex="-1"></a>j <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span>k, <span class="at">each =</span> <span class="fu">round</span>(<span class="fu">nrow</span>(sampdataRCV))<span class="sc">/</span>k))</span>
+<span id="cb30-4"><a href="imagery-classification-testing.html#cb30-4" tabindex="-1"></a><span class="co"># table(j)</span></span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="imagery-classification-testing.html#cb31-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb31-2"><a href="imagery-classification-testing.html#cb31-2" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) {</span>
+<span id="cb31-3"><a href="imagery-classification-testing.html#cb31-3" tabindex="-1"></a>    train <span class="ot">&lt;-</span> sampdataRCV[j<span class="sc">!=</span> k, ]</span>
+<span id="cb31-4"><a href="imagery-classification-testing.html#cb31-4" tabindex="-1"></a>    test <span class="ot">&lt;-</span> sampdataRCV[j <span class="sc">==</span> k, ]</span>
+<span id="cb31-5"><a href="imagery-classification-testing.html#cb31-5" tabindex="-1"></a>    cart <span class="ot">&lt;-</span> <span class="fu">rpart</span>(<span class="fu">as.factor</span>(class)<span class="sc">~</span>., <span class="at">data=</span>train, <span class="at">method =</span> <span class="st">&#39;class&#39;</span>,</span>
+<span id="cb31-6"><a href="imagery-classification-testing.html#cb31-6" tabindex="-1"></a>                  <span class="at">minsplit =</span> <span class="dv">5</span>)</span>
+<span id="cb31-7"><a href="imagery-classification-testing.html#cb31-7" tabindex="-1"></a>    pclass <span class="ot">&lt;-</span> <span class="fu">predict</span>(cart, test, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb31-8"><a href="imagery-classification-testing.html#cb31-8" tabindex="-1"></a>    <span class="co"># assign class to maximum probablity</span></span>
+<span id="cb31-9"><a href="imagery-classification-testing.html#cb31-9" tabindex="-1"></a>    pclass <span class="ot">&lt;-</span> <span class="fu">apply</span>(pclass, <span class="dv">1</span>, which.max)</span>
+<span id="cb31-10"><a href="imagery-classification-testing.html#cb31-10" tabindex="-1"></a>    <span class="co"># create a data.frame using the reference and prediction</span></span>
+<span id="cb31-11"><a href="imagery-classification-testing.html#cb31-11" tabindex="-1"></a>    x[[k]] <span class="ot">&lt;-</span> <span class="fu">cbind</span>(test<span class="sc">$</span>class, <span class="fu">as.integer</span>(pclass))</span>
+<span id="cb31-12"><a href="imagery-classification-testing.html#cb31-12" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="accuracy-metrics-cart-model-for-20-m-spring-summer" class="section level4 hasAnchor" number="10.0.3.2">
+<h4><span class="header-section-number">10.0.3.2</span> Accuracy metrics : CART model for 20 m spring + summer<a href="imagery-classification-testing.html#accuracy-metrics-cart-model-for-20-m-spring-summer" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Finally, as we did above, we’ll look at the various accuracy metrics for the classification using the two-image (peak-growth spring and senescent summer) source.</p>
+<p><strong>Confusion Matrix</strong></p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="imagery-classification-testing.html#cb32-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, x)</span>
+<span id="cb32-2"><a href="imagery-classification-testing.html#cb32-2" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(y)</span>
+<span id="cb32-3"><a href="imagery-classification-testing.html#cb32-3" tabindex="-1"></a><span class="fu">colnames</span>(y) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;observed&#39;</span>, <span class="st">&#39;predicted&#39;</span>)</span>
+<span id="cb32-4"><a href="imagery-classification-testing.html#cb32-4" tabindex="-1"></a>conmat <span class="ot">&lt;-</span> <span class="fu">table</span>(y) <span class="co"># confusion matrix</span></span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="imagery-classification-testing.html#cb33-1" tabindex="-1"></a><span class="co"># change the name of the columns and rows to LCclass</span></span>
+<span id="cb33-2"><a href="imagery-classification-testing.html#cb33-2" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">length</span>(LCclass)<span class="sc">==</span><span class="fu">dim</span>(conmat)[<span class="dv">2</span>]){</span>
+<span id="cb33-3"><a href="imagery-classification-testing.html#cb33-3" tabindex="-1"></a>  <span class="fu">colnames</span>(conmat) <span class="ot">&lt;-</span> LCclass}<span class="cf">else</span>{</span>
+<span id="cb33-4"><a href="imagery-classification-testing.html#cb33-4" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">&quot;Confusion matrix column dimension/LCclass array mismatch&quot;</span>)</span>
+<span id="cb33-5"><a href="imagery-classification-testing.html#cb33-5" tabindex="-1"></a>    <span class="fu">print</span>(<span class="fu">str</span>(LCclass))</span>
+<span id="cb33-6"><a href="imagery-classification-testing.html#cb33-6" tabindex="-1"></a>    <span class="fu">print</span>(<span class="fu">str</span>(conmat))</span>
+<span id="cb33-7"><a href="imagery-classification-testing.html#cb33-7" tabindex="-1"></a>  }</span>
+<span id="cb33-8"><a href="imagery-classification-testing.html#cb33-8" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">length</span>(LCclass)<span class="sc">==</span><span class="fu">dim</span>(conmat)[<span class="dv">1</span>]){</span>
+<span id="cb33-9"><a href="imagery-classification-testing.html#cb33-9" tabindex="-1"></a>  <span class="fu">rownames</span>(conmat) <span class="ot">&lt;-</span> LCclass}<span class="cf">else</span>{</span>
+<span id="cb33-10"><a href="imagery-classification-testing.html#cb33-10" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">&quot;Confusion matrix row dimension/LCclass array mismatch&quot;</span>)</span>
+<span id="cb33-11"><a href="imagery-classification-testing.html#cb33-11" tabindex="-1"></a>    <span class="fu">print</span>(<span class="fu">str</span>(LCclass))</span>
+<span id="cb33-12"><a href="imagery-classification-testing.html#cb33-12" tabindex="-1"></a>    <span class="fu">print</span>(<span class="fu">str</span>(conmat))</span>
+<span id="cb33-13"><a href="imagery-classification-testing.html#cb33-13" tabindex="-1"></a>  }</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="imagery-classification-testing.html#cb34-1" tabindex="-1"></a><span class="fu">print</span>(conmat)</span></code></pre></div>
+<pre><code>##         predicted
+## observed forest hydric mesic rocky water xeric
+##   forest     97      1     0     0     1     0
+##   hydric      1     46     0     0     0     1
+##   mesic       0      0    84     0     0     0
+##   rocky       0      0     1    11     0     1
+##   water       1      0     0     0    32     0
+##   xeric       0      0     1     0     0    99</code></pre>
+<p><strong>Overall Accuracy</strong></p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="imagery-classification-testing.html#cb36-1" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">sum</span>(conmat) <span class="co"># number of total cases</span></span>
+<span id="cb36-2"><a href="imagery-classification-testing.html#cb36-2" tabindex="-1"></a>diag <span class="ot">&lt;-</span> <span class="fu">diag</span>(conmat) <span class="co"># number of correctly classified cases per class</span></span>
+<span id="cb36-3"><a href="imagery-classification-testing.html#cb36-3" tabindex="-1"></a>OA20ph <span class="ot">&lt;-</span> <span class="fu">sum</span>(diag) <span class="sc">/</span> n <span class="co"># overall accuracy</span></span>
+<span id="cb36-4"><a href="imagery-classification-testing.html#cb36-4" tabindex="-1"></a>OA20ph</span></code></pre></div>
+<pre><code>## [1] 0.9787798</code></pre>
+<p><strong>kappa</strong></p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="imagery-classification-testing.html#cb38-1" tabindex="-1"></a>rowsums <span class="ot">&lt;-</span> <span class="fu">apply</span>(conmat, <span class="dv">1</span>, sum) </span>
+<span id="cb38-2"><a href="imagery-classification-testing.html#cb38-2" tabindex="-1"></a>p <span class="ot">&lt;-</span> rowsums <span class="sc">/</span> n <span class="co"># observed (true) cases per class</span></span>
+<span id="cb38-3"><a href="imagery-classification-testing.html#cb38-3" tabindex="-1"></a>colsums <span class="ot">&lt;-</span> <span class="fu">apply</span>(conmat, <span class="dv">2</span>, sum)</span>
+<span id="cb38-4"><a href="imagery-classification-testing.html#cb38-4" tabindex="-1"></a>q <span class="ot">&lt;-</span> colsums <span class="sc">/</span> n <span class="co"># predicted cases per class</span></span>
+<span id="cb38-5"><a href="imagery-classification-testing.html#cb38-5" tabindex="-1"></a>expAccuracy <span class="ot">&lt;-</span> <span class="fu">sum</span>(p<span class="sc">*</span>q)</span>
+<span id="cb38-6"><a href="imagery-classification-testing.html#cb38-6" tabindex="-1"></a>kappa20ph <span class="ot">&lt;-</span> (OA20ph <span class="sc">-</span> expAccuracy) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> expAccuracy)</span>
+<span id="cb38-7"><a href="imagery-classification-testing.html#cb38-7" tabindex="-1"></a>kappa20ph</span></code></pre></div>
+<pre><code>## [1] 0.9729546</code></pre>
+<p><strong>User and Producer accuracy</strong></p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="imagery-classification-testing.html#cb40-1" tabindex="-1"></a>PA <span class="ot">&lt;-</span> diag <span class="sc">/</span> colsums <span class="co"># Producer accuracy</span></span>
+<span id="cb40-2"><a href="imagery-classification-testing.html#cb40-2" tabindex="-1"></a>UA <span class="ot">&lt;-</span> diag <span class="sc">/</span> rowsums <span class="co"># User accuracy</span></span>
+<span id="cb40-3"><a href="imagery-classification-testing.html#cb40-3" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">length</span>(PA)<span class="sc">==</span><span class="fu">length</span>(UA)){</span>
+<span id="cb40-4"><a href="imagery-classification-testing.html#cb40-4" tabindex="-1"></a>  outAcc <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">producerAccuracy =</span> PA, <span class="at">userAccuracy =</span> UA)</span>
+<span id="cb40-5"><a href="imagery-classification-testing.html#cb40-5" tabindex="-1"></a>  <span class="fu">print</span>(outAcc)}<span class="cf">else</span>{</span>
+<span id="cb40-6"><a href="imagery-classification-testing.html#cb40-6" tabindex="-1"></a>     <span class="fu">print</span>(<span class="st">&quot;length(PA)!=length(UA)&quot;</span>)</span>
+<span id="cb40-7"><a href="imagery-classification-testing.html#cb40-7" tabindex="-1"></a>     <span class="fu">print</span>(PA)</span>
+<span id="cb40-8"><a href="imagery-classification-testing.html#cb40-8" tabindex="-1"></a>     <span class="fu">print</span>(UA)</span>
+<span id="cb40-9"><a href="imagery-classification-testing.html#cb40-9" tabindex="-1"></a>  }</span></code></pre></div>
+<pre><code>##        producerAccuracy userAccuracy
+## forest        0.9797980    0.9797980
+## hydric        0.9787234    0.9583333
+## mesic         0.9767442    1.0000000
+## rocky         1.0000000    0.8461538
+## water         0.9696970    0.9696970
+## xeric         0.9801980    0.9900000</code></pre>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="atmospheric-co2-record-from-mauna-loa-hawaii.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="r-markdown-and-bookdown.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+},
+"book_filename": "envdatasci",
+"toc_depth": 4
+});
+});
+</script>
+
+</body>
+
+</html>

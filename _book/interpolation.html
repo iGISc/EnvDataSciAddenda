@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>5 Spatial Interpolation | Environmental Data Science Addenda</title>
+  <meta name="description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="5 Spatial Interpolation | Environmental Data Science Addenda" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
+  <meta name="github-repo" content="iGISc/EnvDataSciAddenda" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="5 Spatial Interpolation | Environmental Data Science Addenda" />
+  
+  <meta name="twitter:description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
+  
+
+<meta name="author" content="Jerry Davis, SFSU Institute for Geographic Information Science" />
+
+
+<meta name="date" content="2024-11-28" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="tmap4.html"/>
+<link rel="next" href="terrain-mapping-caves-and-water-samples-in-a-karst.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.33/datatables.js"></script>
+<link href="libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.2.2/leaflet.js"></script>
+<script src="libs/leaflet-providers-2.0.0/leaflet-providers_2.0.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.2.2/leaflet-providers-plugin.js"></script>
+<script src="libs/leaflet-graticule-0.1.0/L.Graticule.js"></script>
+<script src="libs/leaflet-graticule-0.1.0/Graticule-binding.js"></script>
+<script src="libs/Leaflet.glify-3.2.0/addGlifyPoints.js"></script>
+<script src="libs/Leaflet.glify-3.2.0/addGlifyPolygons.js"></script>
+<script src="libs/Leaflet.glify-3.2.0/addGlifyPolylines.js"></script>
+<script src="libs/Leaflet.glify-3.2.0/glify-browser.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><img src="img/eaRth_anna296addenda.png"></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Background, Goals and Data</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#structure-of-the-addenda"><i class="fa fa-check"></i><b>1.1</b> Structure of the Addenda</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#software-and-data"><i class="fa fa-check"></i><b>1.2</b> Software and Data</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#data"><i class="fa fa-check"></i><b>1.2.1</b> Data</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.3</b> Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="air-pollutant-emissions-trends-epa.html"><a href="air-pollutant-emissions-trends-epa.html"><i class="fa fa-check"></i><b>2</b> Air pollutant emissions trends (EPA)</a></li>
+<li class="chapter" data-level="3" data-path="distance-from-census-tract-centroid-to-closest-tri-site.html"><a href="distance-from-census-tract-centroid-to-closest-tri-site.html"><i class="fa fa-check"></i><b>3</b> Distance from census tract centroid to closest TRI site</a></li>
+<li class="chapter" data-level="4" data-path="tmap4.html"><a href="tmap4.html"><i class="fa fa-check"></i><b>4</b> tmap4</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="tmap4.html"><a href="tmap4.html#simple-test"><i class="fa fa-check"></i><b>4.1</b> Simple test</a></li>
+<li class="chapter" data-level="4.2" data-path="tmap4.html"><a href="tmap4.html#visual-variables"><i class="fa fa-check"></i><b>4.2</b> Visual variables</a></li>
+<li class="chapter" data-level="4.3" data-path="tmap4.html"><a href="tmap4.html#constant-visual-variables"><i class="fa fa-check"></i><b>4.3</b> Constant visual variables</a></li>
+<li class="chapter" data-level="4.4" data-path="tmap4.html"><a href="tmap4.html#basemap"><i class="fa fa-check"></i><b>4.4</b> Basemap</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="interpolation.html"><a href="interpolation.html"><i class="fa fa-check"></i><b>5</b> Spatial Interpolation</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="interpolation.html"><a href="interpolation.html#null-model-of-the-original-data"><i class="fa fa-check"></i><b>5.1</b> Null Model of the Original Data</a></li>
+<li class="chapter" data-level="5.2" data-path="interpolation.html"><a href="interpolation.html#voronoi-polygon"><i class="fa fa-check"></i><b>5.2</b> Voronoi Polygon</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="interpolation.html"><a href="interpolation.html#cross-validation-and-relative-performance"><i class="fa fa-check"></i><b>5.2.1</b> Cross-validation and relative performance</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="interpolation.html"><a href="interpolation.html#nearest-neighbor-interpolation"><i class="fa fa-check"></i><b>5.3</b> Nearest Neighbor Interpolation</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="interpolation.html"><a href="interpolation.html#cross-validation-and-relative-performance-of-the-nearest-neighbor-model"><i class="fa fa-check"></i><b>5.3.1</b> Cross-validation and relative performance of the nearest neighbor model</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="interpolation.html"><a href="interpolation.html#inverse-distance-weighted-idw"><i class="fa fa-check"></i><b>5.4</b> Inverse Distance Weighted (IDW)</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="interpolation.html"><a href="interpolation.html#using-cross-validation-and-relative-performance-to-guide-inverse-distance-weight-choice"><i class="fa fa-check"></i><b>5.4.1</b> Using cross-validation and relative performance to guide inverse-distance weight choice</a></li>
+<li class="chapter" data-level="5.4.2" data-path="interpolation.html"><a href="interpolation.html#idw-trying-other-inverse-distance-powers"><i class="fa fa-check"></i><b>5.4.2</b> IDW: trying other inverse distance powers</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="interpolation.html"><a href="interpolation.html#polynomials-and-trend-surfaces"><i class="fa fa-check"></i><b>5.5</b> Polynomials and Trend Surfaces</a></li>
+<li class="chapter" data-level="5.6" data-path="interpolation.html"><a href="interpolation.html#kriging"><i class="fa fa-check"></i><b>5.6</b> Kriging</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="interpolation.html"><a href="interpolation.html#create-a-variogram."><i class="fa fa-check"></i><b>5.6.1</b> Create a variogram.</a></li>
+<li class="chapter" data-level="5.6.2" data-path="interpolation.html"><a href="interpolation.html#fit-the-variogram-based-on-visual-interpretation"><i class="fa fa-check"></i><b>5.6.2</b> Fit the variogram based on visual interpretation</a></li>
+<li class="chapter" data-level="5.6.3" data-path="interpolation.html"><a href="interpolation.html#ordinary-kriging"><i class="fa fa-check"></i><b>5.6.3</b> Ordinary Kriging</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="interpolation.html"><a href="interpolation.html#exercises-spatial-interpolation"><i class="fa fa-check"></i><b>5.7</b> Exercises: Spatial Interpolation</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="terrain-mapping-caves-and-water-samples-in-a-karst.html"><a href="terrain-mapping-caves-and-water-samples-in-a-karst.html"><i class="fa fa-check"></i><b>6</b> Terrain mapping, caves and water samples in a karst</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="terrain-mapping-caves-and-water-samples-in-a-karst.html"><a href="terrain-mapping-caves-and-water-samples-in-a-karst.html#creating-a-basemap-from-a-dem-using-hillshade-and-terrain-shading"><i class="fa fa-check"></i><b>6.1</b> Creating a basemap from a DEM, using hillshade and terrain shading</a></li>
+<li class="chapter" data-level="6.2" data-path="terrain-mapping-caves-and-water-samples-in-a-karst.html"><a href="terrain-mapping-caves-and-water-samples-in-a-karst.html#using-topographic-basemap-with-contours"><i class="fa fa-check"></i><b>6.2</b> Using topographic basemap with contours</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="pointblue-penguin-study.html"><a href="pointblue-penguin-study.html"><i class="fa fa-check"></i><b>7</b> PointBlue Penguin Study</a>
+<ul>
+<li class="chapter" data-level="7.0.1" data-path="pointblue-penguin-study.html"><a href="pointblue-penguin-study.html#interactive-mapping-of-individual-penguins-abstracted-from-a-big-dataset"><i class="fa fa-check"></i><b>7.0.1</b> Interactive mapping of individual penguins abstracted from a big dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="seabird-model.html"><a href="seabird-model.html"><i class="fa fa-check"></i><b>8</b> Seabird Model</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="seabird-model.html"><a href="seabird-model.html#goals-and-basic-methods-of-the-analysis"><i class="fa fa-check"></i><b>8.1</b> Goals and basic methods of the analysis</a></li>
+<li class="chapter" data-level="8.2" data-path="seabird-model.html"><a href="seabird-model.html#exploratory-data-analysis"><i class="fa fa-check"></i><b>8.2</b> Exploratory data analysis</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="seabird-model.html"><a href="seabird-model.html#identifying-the-appropriate-model-using-variance-and-mean-comparisons"><i class="fa fa-check"></i><b>8.2.1</b> Identifying the appropriate model using variance and mean comparisons</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="seabird-model.html"><a href="seabird-model.html#model-black-footed-albatross-counts-for-july-using-a-poisson-family-glm"><i class="fa fa-check"></i><b>8.3</b> Model black-footed albatross counts for July using a poisson-family glm</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="seabird-model.html"><a href="seabird-model.html#map-the-prediction"><i class="fa fa-check"></i><b>8.3.1</b> Map the prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="seabird-model.html"><a href="seabird-model.html#interpolation-1"><i class="fa fa-check"></i><b>8.4</b> Interpolation</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html"><i class="fa fa-check"></i><b>9</b> Time Series case studies</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html#loney-meadow-flux-data"><i class="fa fa-check"></i><b>9.1</b> Loney Meadow flux data</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="curve-fitting.html"><a href="curve-fitting.html"><i class="fa fa-check"></i><b>10</b> Curve fitting</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="curve-fitting.html"><a href="curve-fitting.html#carbon-flux-data-from-red-clover-valley"><i class="fa fa-check"></i><b>10.1</b> Carbon flux data from Red Clover Valley</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="curve-fitting.html"><a href="curve-fitting.html#pairs-plot"><i class="fa fa-check"></i><b>10.1.1</b> Pairs plot</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="curve-fitting.html"><a href="curve-fitting.html#polynomial-models"><i class="fa fa-check"></i><b>10.2</b> Polynomial models</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="curve-fitting.html"><a href="curve-fitting.html#poly-1"><i class="fa fa-check"></i><b>10.2.1</b> poly 1</a></li>
+<li class="chapter" data-level="10.2.2" data-path="curve-fitting.html"><a href="curve-fitting.html#poly-2"><i class="fa fa-check"></i><b>10.2.2</b> poly 2</a></li>
+<li class="chapter" data-level="10.2.3" data-path="curve-fitting.html"><a href="curve-fitting.html#poly-3"><i class="fa fa-check"></i><b>10.2.3</b> poly 3</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="curve-fitting.html"><a href="curve-fitting.html#power-law-model"><i class="fa fa-check"></i><b>10.3</b> Power law model</a></li>
+<li class="chapter" data-level="10.4" data-path="curve-fitting.html"><a href="curve-fitting.html#exponential-model"><i class="fa fa-check"></i><b>10.4</b> Exponential model</a></li>
+<li class="chapter" data-level="10.5" data-path="curve-fitting.html"><a href="curve-fitting.html#growth-and-loss-models-in-geomorphology-gully-data"><i class="fa fa-check"></i><b>10.5</b> Growth and loss models in geomorphology: Gully data</a></li>
+<li class="chapter" data-level="10.6" data-path="curve-fitting.html"><a href="curve-fitting.html#log-transformed-independent-variables"><i class="fa fa-check"></i><b>10.6</b> Log-transformed independent variables</a></li>
+<li class="chapter" data-level="10.7" data-path="curve-fitting.html"><a href="curve-fitting.html#nonlinear-models"><i class="fa fa-check"></i><b>10.7</b> Nonlinear models</a>
+<ul>
+<li class="chapter" data-level="10.7.1" data-path="curve-fitting.html"><a href="curve-fitting.html#using-nls-for-a-rectangular-hyperbola-model-using-the-michaelis-menten-equation"><i class="fa fa-check"></i><b>10.7.1</b> Using <code>nls</code> for a rectangular hyperbola model, using the Michaelis-Menten equation</a></li>
+<li class="chapter" data-level="10.7.2" data-path="curve-fitting.html"><a href="curve-fitting.html#using-the-rate-law-to-model-hillslope-erosion"><i class="fa fa-check"></i><b>10.7.2</b> Using the <em>rate law</em> to model hillslope erosion</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html"><i class="fa fa-check"></i><b>11</b> Atmospheric CO2 record from Mauna Loa, Hawaii</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#read-the-data"><i class="fa fa-check"></i><b>11.1</b> Read the data</a></li>
+<li class="chapter" data-level="11.2" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#plot-the-time-series"><i class="fa fa-check"></i><b>11.2</b> Plot the time series</a></li>
+<li class="chapter" data-level="11.3" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#generalize-the-data"><i class="fa fa-check"></i><b>11.3</b> Generalize the data</a></li>
+<li class="chapter" data-level="11.4" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#curve-fitting-and-creating-a-prediction"><i class="fa fa-check"></i><b>11.4</b> Curve Fitting and Creating a Prediction</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#exponential-model-1"><i class="fa fa-check"></i><b>11.4.1</b> Exponential model</a></li>
+<li class="chapter" data-level="11.4.2" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#power-law-model-1"><i class="fa fa-check"></i><b>11.4.2</b> Power law model</a></li>
+<li class="chapter" data-level="11.4.3" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#second-order-polynomial"><i class="fa fa-check"></i><b>11.4.3</b> Second order polynomial</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#creating-a-time-series-object"><i class="fa fa-check"></i><b>11.5</b> Creating a time series object</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html"><i class="fa fa-check"></i><b>12</b> R Markdown and Bookdown</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#r-markdown"><i class="fa fa-check"></i><b>12.1</b> R Markdown</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#markdown-editing"><i class="fa fa-check"></i><b>12.1.1</b> Markdown editing</a></li>
+<li class="chapter" data-level="12.1.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#display-options-in-code-chunks"><i class="fa fa-check"></i><b>12.1.2</b> Display options in code chunks</a></li>
+<li class="chapter" data-level="12.1.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#numbered-figures-with-text-citations"><i class="fa fa-check"></i><b>12.1.3</b> Numbered figures with text citations</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#a-template-for-multiple-output-formats"><i class="fa fa-check"></i><b>12.2</b> A template for multiple output formats</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#the-template"><i class="fa fa-check"></i><b>12.2.1</b> The template</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#building-a-book-with-bookdown-and-yaml-options"><i class="fa fa-check"></i><b>12.3</b> Building a book with bookdown and YAML options</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#building-a-book"><i class="fa fa-check"></i><b>12.3.1</b> Building a book</a></li>
+<li class="chapter" data-level="12.3.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#special-characters-and-formatting-limitations-and-challenges"><i class="fa fa-check"></i><b>12.3.2</b> Special characters and formatting limitations and challenges</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#yaml-files-used-to-configure-the-book"><i class="fa fa-check"></i><b>12.4</b> YAML files used to configure the book</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#output.yml"><i class="fa fa-check"></i><b>12.4.1</b> _output.yml</a></li>
+<li class="chapter" data-level="12.4.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#index.rmd"><i class="fa fa-check"></i><b>12.4.2</b> index.Rmd</a></li>
+<li class="chapter" data-level="12.4.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#bookdown.yml"><i class="fa fa-check"></i><b>12.4.3</b> _bookdown.yml</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="figures-and-tables.html"><a href="figures-and-tables.html"><i class="fa fa-check"></i><b>13</b> Figures and Tables</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="figures-and-tables.html"><a href="figures-and-tables.html#figures"><i class="fa fa-check"></i><b>13.1</b> Figures</a></li>
+<li class="chapter" data-level="13.2" data-path="figures-and-tables.html"><a href="figures-and-tables.html#tables"><i class="fa fa-check"></i><b>13.2</b> Tables</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="figures-and-tables.html"><a href="figures-and-tables.html#dtdatatable"><i class="fa fa-check"></i><b>13.2.1</b> <code>DT::datatable</code></a></li>
+<li class="chapter" data-level="13.2.2" data-path="figures-and-tables.html"><a href="figures-and-tables.html#knitrkable-tables"><i class="fa fa-check"></i><b>13.2.2</b> <code>knitr::kable</code> tables</a></li>
+<li class="chapter" data-level="13.2.3" data-path="figures-and-tables.html"><a href="figures-and-tables.html#gt-package"><i class="fa fa-check"></i><b>13.2.3</b> <code>gt</code> package</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="figures-and-tables.html"><a href="figures-and-tables.html#other-tricks"><i class="fa fa-check"></i><b>13.3</b> Other tricks</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html"><i class="fa fa-check"></i><b>14</b> Building a Package on GitHub for Data and Code</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#git-and-github"><i class="fa fa-check"></i><b>14.1</b> Git and GitHub</a></li>
+<li class="chapter" data-level="14.2" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#some-notes-on-the-rstudio-process"><i class="fa fa-check"></i><b>14.2</b> Some notes on the RStudio process</a></li>
+<li class="chapter" data-level="14.3" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#data-1"><i class="fa fa-check"></i><b>14.3</b> Data</a>
+<ul>
+<li class="chapter" data-level="14.3.1" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#raw-data-in-extdata"><i class="fa fa-check"></i><b>14.3.1</b> Raw data in extdata</a></li>
+<li class="chapter" data-level="14.3.2" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#binary-data-as-rda-files"><i class="fa fa-check"></i><b>14.3.2</b> Binary data as <code>rda</code> files</a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#code-functions"><i class="fa fa-check"></i><b>14.4</b> Code (functions)</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Environmental Data Science Addenda</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="interpolation" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">5</span> Spatial Interpolation<a href="interpolation.html#interpolation" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>A lot of environmental data is captured in point samples, which might be from soil properties, the atmosphere (like weather stations that capture temperature, precipitation, pressure, and winds), properties in surface water bodies or aquifers, etc. While it’s often useful to just use those point observations and evaluate spatial patterns of those measurements, we also may want to predict a “surface” of those variables over the map, and that’s where interpolation comes in.</p>
+<p>In this section, we’ll look at a few interpolators – nearest neighbor, inverse distance weighting (IDW) and kriging – but the reader should refer to more thorough coverage in Jakub Nowosad’s <em>Geostatistics in R</em> (<span class="citation">Nowosad (<a href="#ref-NowosadGeostatisticsR">n.d.</a>)</span>) or at <a href="https://rspatial.org" class="uri">https://rspatial.org</a>. For data, we’ll use the Sierra climate data and derive the annual summaries that we looked at in the last chapter.</p>
+<p>We’ll be working in the Teale Albers projection, which is good for California, in metres (Figure <a href="interpolation.html#fig:intPrecipMap">5.1</a>), so we’ll start by reprojecting Sierra data we created earlier (<a href="#GroupedSummaries"><strong>??</strong></a>) using <code>st_transform</code>.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="interpolation.html#cb27-1" tabindex="-1"></a>Teale<span class="ot">&lt;-</span><span class="fu">paste0</span>(<span class="st">&quot;+proj=aea +lat_1=34 +lat_2=40.5 +lat_0=0 +lon_0=-120 &quot;</span>,</span>
+<span id="cb27-2"><a href="interpolation.html#cb27-2" tabindex="-1"></a>              <span class="st">&quot;+x_0=0 +y_0=-4000000 +datum=WGS84 +units=m&quot;</span>)</span>
+<span id="cb27-3"><a href="interpolation.html#cb27-3" tabindex="-1"></a>sierra <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(sierraAnnual, <span class="at">crs=</span>Teale)</span>
+<span id="cb27-4"><a href="interpolation.html#cb27-4" tabindex="-1"></a>counties <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(CA_counties, <span class="at">crs=</span>Teale)</span>
+<span id="cb27-5"><a href="interpolation.html#cb27-5" tabindex="-1"></a>sierraCounties <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(sierraCounties, <span class="at">crs=</span>Teale)</span>
+<span id="cb27-6"><a href="interpolation.html#cb27-6" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb27-7"><a href="interpolation.html#cb27-7" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span>counties) <span class="sc">+</span></span>
+<span id="cb27-8"><a href="interpolation.html#cb27-8" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span>sierraCounties, <span class="at">fill=</span><span class="st">&quot;grey&quot;</span>, <span class="at">col=</span><span class="st">&quot;black&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb27-9"><a href="interpolation.html#cb27-9" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span>sierra, <span class="fu">aes</span>(<span class="at">col=</span>PRECIPITATION))</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:intPrecipMap"></span>
+<img src="EnvDataSciAddenda_files/figure-html/intPrecipMap-1.png" alt="Precipitation map in Teale Albers in Sierra counties" width="75%" />
+<p class="caption">
+FIGURE 5.1: Precipitation map in Teale Albers in Sierra counties
+</p>
+</div>
+<div id="null-model-of-the-original-data" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Null Model of the Original Data<a href="interpolation.html#null-model-of-the-original-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We’ll start by creating a “null model” of the z intercept, z being precipitation, as the root mean squared error (RMSE) of individual precipitation values as compared to the mean. (This is the same as the standard deviation if we could assume that were dealing with a population instead of a sample, so we’ll borrow that symbol <span class="math inline">\(\sigma\)</span>.) We’ll then compare this with the RMSE of our model predictions to derive <em>relative performance</em>, since the models should have lower RMSE than the overall standard deviation.</p>
+<p><span class="math display">\[
+\sigma =\sqrt{\frac{\sum_{i=1}^{n}{(z_i-\bar{z})^2}}{n}}
+\]</span></p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="interpolation.html#cb28-1" tabindex="-1"></a>RMSE <span class="ot">&lt;-</span> <span class="cf">function</span>(obs, pred) {</span>
+<span id="cb28-2"><a href="interpolation.html#cb28-2" tabindex="-1"></a>  <span class="fu">sqrt</span>(<span class="fu">mean</span>((obs<span class="sc">-</span>pred)<span class="sc">**</span><span class="dv">2</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>))</span>
+<span id="cb28-3"><a href="interpolation.html#cb28-3" tabindex="-1"></a>}</span>
+<span id="cb28-4"><a href="interpolation.html#cb28-4" tabindex="-1"></a>null <span class="ot">&lt;-</span> <span class="fu">RMSE</span>(<span class="fu">mean</span>(sierra<span class="sc">$</span>PRECIPITATION), sierra<span class="sc">$</span>PRECIPITATION)</span>
+<span id="cb28-5"><a href="interpolation.html#cb28-5" tabindex="-1"></a>null</span></code></pre></div>
+<pre><code>## [1] 460.6205</code></pre>
+<p>The term “null model” can be confusing unless you consider that it’s related to a null hypothesis of random variation about the mean. Note that it’s not exactly the same as R’s <code>sd()</code> function, which assumes you have a sample, not the population, and uses <span class="math inline">\(n-1\)</span> instead of <span class="math inline">\(n\)</span> in the equation, as we can see here …</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="interpolation.html#cb30-1" tabindex="-1"></a><span class="fu">sd</span>(sierra<span class="sc">$</span>PRECIPITATION)</span></code></pre></div>
+<pre><code>## [1] 464.6435</code></pre>
+<p>… and resolve <code>null</code> back to the sample standard deviation by multiplying by <span class="math inline">\(\sqrt{\frac{n}{n-1}}\)</span>:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="interpolation.html#cb32-1" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(sierra<span class="sc">$</span>PRECIPITATION)</span>
+<span id="cb32-2"><a href="interpolation.html#cb32-2" tabindex="-1"></a>null<span class="sc">*</span><span class="fu">sqrt</span>(n<span class="sc">/</span>(n<span class="dv">-1</span>))</span></code></pre></div>
+<pre><code>## [1] 464.6435</code></pre>
+</div>
+<div id="voronoi-polygon" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Voronoi Polygon<a href="interpolation.html#voronoi-polygon" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We’re going to develop a simple prediction using Voronoi polygons (<span class="citation">Voronoi (<a href="#ref-Voronoi">1908</a>)</span>), so we’ll create these and see what they look like with the original data points also displayed (Figure <a href="interpolation.html#fig:intVoronoi">5.2</a>). Note that we’ll need to convert to S4 objects using <code>vect()</code>:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="interpolation.html#cb34-1" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<span id="cb34-2"><a href="interpolation.html#cb34-2" tabindex="-1"></a><span class="co"># proximity (Voronoi/Thiessen) polygons</span></span>
+<span id="cb34-3"><a href="interpolation.html#cb34-3" tabindex="-1"></a>sierraV <span class="ot">&lt;-</span> <span class="fu">vect</span>(sierra)</span>
+<span id="cb34-4"><a href="interpolation.html#cb34-4" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">voronoi</span>(sierraV)</span>
+<span id="cb34-5"><a href="interpolation.html#cb34-5" tabindex="-1"></a><span class="fu">plot</span>(v)</span>
+<span id="cb34-6"><a href="interpolation.html#cb34-6" tabindex="-1"></a><span class="fu">points</span>(sierraV)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:intVoronoi"></span>
+<img src="EnvDataSciAddenda_files/figure-html/intVoronoi-1.png" alt="Voronoi polygons around Sierra stations" width="75%" />
+<p class="caption">
+FIGURE 5.2: Voronoi polygons around Sierra stations
+</p>
+</div>
+<p>Voronoi polygons keep going outward to some arbitrary limit, so for a more realistic tesselation, we’ll crop out the Sierra counties we selected earlier that contain weather stations. Note that the Voronoi polygons contain all of the attribute data from the original points, just associated with polygon geometry now.</p>
+<p>Now we can see a map that displays the original intent envisioned by the meteorologist Thiessen (<span class="citation">Thiessen (<a href="#ref-Thiessen">1911</a>)</span>) to apply observations to a polygon area surrounding the station (Figure <a href="interpolation.html#fig:intPrecipVoronoi">5.3</a>). Voronoi polygons or the raster determined from them (next) will also work with categorical data.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="interpolation.html#cb35-1" tabindex="-1"></a>vSierra <span class="ot">&lt;-</span> <span class="fu">crop</span>(v, <span class="fu">vect</span>(<span class="fu">st_union</span>(sierraCounties)))</span>
+<span id="cb35-2"><a href="interpolation.html#cb35-2" tabindex="-1"></a><span class="fu">plot</span>(vSierra, <span class="st">&quot;PRECIPITATION&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:intPrecipVoronoi"></span>
+<img src="EnvDataSciAddenda_files/figure-html/intPrecipVoronoi-1.png" alt="Precipitation mapped by Voronoi polygon" width="75%" />
+<p class="caption">
+FIGURE 5.3: Precipitation mapped by Voronoi polygon
+</p>
+</div>
+<p>Now we’ll rasterize those polygons (Figure <a href="interpolation.html#fig:intVoronoiRas">5.4</a>). We’ll start by building a blank raster of given dimensions of our selected counties, with a resolution of 1000 m.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="interpolation.html#cb36-1" tabindex="-1"></a><span class="co"># rasterize</span></span>
+<span id="cb36-2"><a href="interpolation.html#cb36-2" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">rast</span>(vSierra, <span class="at">res=</span><span class="dv">1000</span>)  <span class="co"># Builds a blank raster </span></span>
+<span id="cb36-3"><a href="interpolation.html#cb36-3" tabindex="-1"></a>vr <span class="ot">&lt;-</span> <span class="fu">rasterize</span>(vSierra, r, <span class="st">&quot;PRECIPITATION&quot;</span>)</span>
+<span id="cb36-4"><a href="interpolation.html#cb36-4" tabindex="-1"></a><span class="fu">plot</span>(vr)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:intVoronoiRas"></span>
+<img src="EnvDataSciAddenda_files/figure-html/intVoronoiRas-1.png" alt="Rasterized Voronoi polygons" width="75%" />
+<p class="caption">
+FIGURE 5.4: Rasterized Voronoi polygons
+</p>
+</div>
+<div id="cross-validation-and-relative-performance" class="section level3 hasAnchor" number="5.2.1">
+<h3><span class="header-section-number">5.2.1</span> Cross-validation and relative performance<a href="interpolation.html#cross-validation-and-relative-performance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Cross-validation</strong> is used to see how well the model works by sampling it a defined number of times (folds) to pull out sets of training and testing samples, and then comparing the model’s predictions with the (unused) testing data. Each time through, the model is built out of that fold’s training data. For each fold, a random selection <a href="#random"><strong>??</strong></a> is created by the sample function. The mean RMSE of all of the folds is the overall result, and provides an idea on how well the interpolation worked.
+<strong>Relative performance</strong> is a normalized measure of how well the model compares with the null model, and ranges from 0 (same RMSE as the null model) to 1 (zero error in our model). We’ll use <span class="math inline">\(\sigma\)</span> to represent the null model, since it’s similar to the standard deviation:</p>
+<p><span class="math display">\[perf=1-\frac{\overline{RMSE}}{\sigma}\]</span>
+The coding approach for the cross-validation process we’ll use generally follows that documented at <a href="https://rspatial.org" class="uri">https://rspatial.org</a> for use with <code>terra</code> data (<span class="citation">Hijmans (<a href="#ref-rspatial">n.d.</a>)</span>) and <code>gstat</code> (<span class="citation">Pebesma (<a href="#ref-gstat">n.d.</a>)</span>) geostatistical methods.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="interpolation.html#cb37-1" tabindex="-1"></a><span class="co"># k-fold cross-validation</span></span>
+<span id="cb37-2"><a href="interpolation.html#cb37-2" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb37-3"><a href="interpolation.html#cb37-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb37-4"><a href="interpolation.html#cb37-4" tabindex="-1"></a>kf <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span>k, <span class="at">size =</span> <span class="fu">nrow</span>(sierraV), <span class="at">replace=</span><span class="cn">TRUE</span>) <span class="co"># get random numbers </span></span>
+<span id="cb37-5"><a href="interpolation.html#cb37-5" tabindex="-1"></a>   <span class="co"># between 1 and 5 to same size as input data points SpatVector sierraV </span></span>
+<span id="cb37-6"><a href="interpolation.html#cb37-6" tabindex="-1"></a>rmse <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, k) <span class="co"># blank set of 5 NAs</span></span>
+<span id="cb37-7"><a href="interpolation.html#cb37-7" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>k) {</span>
+<span id="cb37-8"><a href="interpolation.html#cb37-8" tabindex="-1"></a>  test <span class="ot">&lt;-</span> sierraV[kf <span class="sc">==</span> i, ]  <span class="co"># split into k sets of points, </span></span>
+<span id="cb37-9"><a href="interpolation.html#cb37-9" tabindex="-1"></a>                              <span class="co"># (k-1)/k going to training set,</span></span>
+<span id="cb37-10"><a href="interpolation.html#cb37-10" tabindex="-1"></a>  train <span class="ot">&lt;-</span> sierraV[kf <span class="sc">!=</span> i, ] <span class="co"># and 1/k to test, including all of the variables</span></span>
+<span id="cb37-11"><a href="interpolation.html#cb37-11" tabindex="-1"></a>  v <span class="ot">&lt;-</span> <span class="fu">voronoi</span>(train)</span>
+<span id="cb37-12"><a href="interpolation.html#cb37-12" tabindex="-1"></a>  v</span>
+<span id="cb37-13"><a href="interpolation.html#cb37-13" tabindex="-1"></a>  test</span>
+<span id="cb37-14"><a href="interpolation.html#cb37-14" tabindex="-1"></a>  p <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">extract</span>(v, test) <span class="co"># extract values from training data at test locations</span></span>
+<span id="cb37-15"><a href="interpolation.html#cb37-15" tabindex="-1"></a>  rmse[i] <span class="ot">&lt;-</span> <span class="fu">RMSE</span>(test<span class="sc">$</span>PRECIPITATION, p<span class="sc">$</span>PRECIPITATION)</span>
+<span id="cb37-16"><a href="interpolation.html#cb37-16" tabindex="-1"></a>}</span>
+<span id="cb37-17"><a href="interpolation.html#cb37-17" tabindex="-1"></a>rmse</span></code></pre></div>
+<pre><code>## [1] 470.1564 468.7459 468.6382 203.1462 301.4839</code></pre>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="interpolation.html#cb39-1" tabindex="-1"></a><span class="fu">mean</span>(rmse)</span></code></pre></div>
+<pre><code>## [1] 382.4341</code></pre>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="interpolation.html#cb41-1" tabindex="-1"></a><span class="co"># relative model performance</span></span>
+<span id="cb41-2"><a href="interpolation.html#cb41-2" tabindex="-1"></a>perf <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> (<span class="fu">mean</span>(rmse) <span class="sc">/</span> null)</span>
+<span id="cb41-3"><a href="interpolation.html#cb41-3" tabindex="-1"></a><span class="fu">round</span>(perf, <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>## [1] 0.17</code></pre>
+</div>
+</div>
+<div id="nearest-neighbor-interpolation" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Nearest Neighbor Interpolation<a href="interpolation.html#nearest-neighbor-interpolation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The previous assignment of data to Voronoi polygons can be considered to be a nearest neighbor interpolation where only one neighbor is used, but we can instead use multiple neighbors (Figure <a href="interpolation.html#fig:intNearestNeighbor">5.5</a>). In this case we’ll use up to 5 (<code>nmax=5</code>). Presumably setting <code>idp</code> to zero makes it a nearest neighbor, along with the <code>nmax</code> setting .</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="interpolation.html#cb43-1" tabindex="-1"></a><span class="fu">library</span>(gstat)</span>
+<span id="cb43-2"><a href="interpolation.html#cb43-2" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">geom</span>(sierraV)[,<span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>)], <span class="fu">as.data.frame</span>(sierraV))</span>
+<span id="cb43-3"><a href="interpolation.html#cb43-3" tabindex="-1"></a><span class="fu">head</span>(d)</span></code></pre></div>
+<pre><code>##           x          y        STATION_NAME  LONGITUDE LATITUDE ELEVATION
+## 1 105093.88 -168859.68        ASH MOUNTAIN  -118.8253  36.4914     520.6
+## 2  43245.02 -102656.13        AUBERRY 2 NW  -119.5128  37.0919       637
+## 3  81116.40 -122688.39   BALCH POWER HOUSE -119.08833 36.90917     524.3
+## 4  67185.02  -89772.17      BIG CREEK PH 1 -119.24194 37.20639    1486.8
+## 5 145198.34  -70472.98      BISHOP AIRPORT -118.35806 37.37111    1250.3
+## 6 -61218.92  140398.66 BLUE CANYON AIRPORT  -120.7102  39.2774    1608.1
+##   PRECIPITATION TEMPERATURE
+## 1        688.59    17.02500
+## 2        666.76    16.05833
+## 3        794.02    16.70000
+## 4        860.05    11.73333
+## 5        131.58    13.61667
+## 6       1641.34    10.95000</code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="interpolation.html#cb45-1" tabindex="-1"></a>gs <span class="ot">&lt;-</span> <span class="fu">gstat</span>(<span class="at">formula=</span>PRECIPITATION<span class="sc">~</span><span class="dv">1</span>, <span class="at">locations=</span><span class="sc">~</span>x<span class="sc">+</span>y, <span class="at">data=</span>d, <span class="at">nmax=</span><span class="dv">5</span>, </span>
+<span id="cb45-2"><a href="interpolation.html#cb45-2" tabindex="-1"></a>            <span class="at">set=</span><span class="fu">list</span>(<span class="at">idp =</span> <span class="dv">0</span>))</span>
+<span id="cb45-3"><a href="interpolation.html#cb45-3" tabindex="-1"></a>nn <span class="ot">&lt;-</span> <span class="fu">interpolate</span>(r, gs, <span class="at">debug.level=</span><span class="dv">0</span>)</span>
+<span id="cb45-4"><a href="interpolation.html#cb45-4" tabindex="-1"></a>nnmsk <span class="ot">&lt;-</span> <span class="fu">mask</span>(nn, vr)</span>
+<span id="cb45-5"><a href="interpolation.html#cb45-5" tabindex="-1"></a><span class="fu">plot</span>(nnmsk, <span class="dv">1</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:intNearestNeighbor"></span>
+<img src="EnvDataSciAddenda_files/figure-html/intNearestNeighbor-1.png" alt="Nearest neighbor interpolation of precipitation" width="75%" />
+<p class="caption">
+FIGURE 5.5: Nearest neighbor interpolation of precipitation
+</p>
+</div>
+<div id="cross-validation-and-relative-performance-of-the-nearest-neighbor-model" class="section level3 hasAnchor" number="5.3.1">
+<h3><span class="header-section-number">5.3.1</span> Cross-validation and relative performance of the nearest neighbor model<a href="interpolation.html#cross-validation-and-relative-performance-of-the-nearest-neighbor-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Again using cross-validation and deriving relative performance for our nearest neighbor model, the higher RMSE and lower relative performance compared with the Voronoi model suggests that it’s not any better than that single-neighbor model, so we might just stick with that.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="interpolation.html#cb46-1" tabindex="-1"></a>rmsenn <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, k)</span>
+<span id="cb46-2"><a href="interpolation.html#cb46-2" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>k) {</span>
+<span id="cb46-3"><a href="interpolation.html#cb46-3" tabindex="-1"></a>  test <span class="ot">&lt;-</span> d[kf <span class="sc">==</span> i, ]</span>
+<span id="cb46-4"><a href="interpolation.html#cb46-4" tabindex="-1"></a>  train <span class="ot">&lt;-</span> d[kf <span class="sc">!=</span> i, ]</span>
+<span id="cb46-5"><a href="interpolation.html#cb46-5" tabindex="-1"></a>  gscv <span class="ot">&lt;-</span> <span class="fu">gstat</span>(<span class="at">formula=</span>PRECIPITATION<span class="sc">~</span><span class="dv">1</span>, <span class="at">locations=</span><span class="sc">~</span>x<span class="sc">+</span>y, <span class="at">data=</span>train, </span>
+<span id="cb46-6"><a href="interpolation.html#cb46-6" tabindex="-1"></a>                <span class="at">nmax=</span><span class="dv">5</span>, <span class="at">set=</span><span class="fu">list</span>(<span class="at">idp =</span> <span class="dv">0</span>))</span>
+<span id="cb46-7"><a href="interpolation.html#cb46-7" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">predict</span>(gscv, test, <span class="at">debug.level=</span><span class="dv">0</span>)<span class="sc">$</span>var1.pred</span>
+<span id="cb46-8"><a href="interpolation.html#cb46-8" tabindex="-1"></a>  rmsenn[i] <span class="ot">&lt;-</span> <span class="fu">RMSE</span>(test<span class="sc">$</span>PRECIPITATION, p)</span>
+<span id="cb46-9"><a href="interpolation.html#cb46-9" tabindex="-1"></a>}</span>
+<span id="cb46-10"><a href="interpolation.html#cb46-10" tabindex="-1"></a>rmsenn</span></code></pre></div>
+<pre><code>## [1] 315.4844 493.9716 583.9471 316.5636 365.5138</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="interpolation.html#cb48-1" tabindex="-1"></a><span class="fu">mean</span>(rmsenn)</span></code></pre></div>
+<pre><code>## [1] 415.0961</code></pre>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="interpolation.html#cb50-1" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> (<span class="fu">mean</span>(rmsenn) <span class="sc">/</span> null)</span></code></pre></div>
+<pre><code>## [1] 0.09883281</code></pre>
+</div>
+</div>
+<div id="inverse-distance-weighted-idw" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> Inverse Distance Weighted (IDW)<a href="interpolation.html#inverse-distance-weighted-idw" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The inverse distance weighted (IDW) interpolator is popular due to its ease of use and few statistical assumptions. Surrounding points influence the predicted value of a cell based on the inverse of their distance. The inverse distance weight has an an exponent set with <code>set=list(idp=2)</code>, and if that is 2 (so inverse distance squared), it is sometimes referred to as a “gravity model” since it’s the same as the way gravity works. For environmental variables, however, sampling locations are not like objects that create an effect but rather <em>observations of a continuous surface</em>. But we’ll go ahead and start with the gravity model, inverse distance power of 2 (Figure <a href="interpolation.html#fig:intIDW2">5.6</a>).</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="interpolation.html#cb52-1" tabindex="-1"></a><span class="fu">library</span>(gstat)</span>
+<span id="cb52-2"><a href="interpolation.html#cb52-2" tabindex="-1"></a>gs <span class="ot">&lt;-</span> <span class="fu">gstat</span>(<span class="at">formula=</span>PRECIPITATION<span class="sc">~</span><span class="dv">1</span>, <span class="at">locations=</span><span class="sc">~</span>x<span class="sc">+</span>y, <span class="at">data=</span>d, <span class="at">nmax=</span><span class="cn">Inf</span>,</span>
+<span id="cb52-3"><a href="interpolation.html#cb52-3" tabindex="-1"></a>            <span class="at">set=</span><span class="fu">list</span>(<span class="at">idp=</span><span class="dv">2</span>))</span>
+<span id="cb52-4"><a href="interpolation.html#cb52-4" tabindex="-1"></a>idw <span class="ot">&lt;-</span> <span class="fu">interpolate</span>(r, gs, <span class="at">debug.level=</span><span class="dv">0</span>)</span>
+<span id="cb52-5"><a href="interpolation.html#cb52-5" tabindex="-1"></a>idwr <span class="ot">&lt;-</span> <span class="fu">mask</span>(idw, vr)</span>
+<span id="cb52-6"><a href="interpolation.html#cb52-6" tabindex="-1"></a><span class="fu">plot</span>(idwr, <span class="dv">1</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:intIDW2"></span>
+<img src="EnvDataSciAddenda_files/figure-html/intIDW2-1.png" alt="IDW interpolation, power = 2" width="75%" />
+<p class="caption">
+FIGURE 5.6: IDW interpolation, power = 2
+</p>
+</div>
+<div id="using-cross-validation-and-relative-performance-to-guide-inverse-distance-weight-choice" class="section level3 hasAnchor" number="5.4.1">
+<h3><span class="header-section-number">5.4.1</span> Using cross-validation and relative performance to guide inverse-distance weight choice<a href="interpolation.html#using-cross-validation-and-relative-performance-to-guide-inverse-distance-weight-choice" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="interpolation.html#cb53-1" tabindex="-1"></a>rmse <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, k)</span>
+<span id="cb53-2"><a href="interpolation.html#cb53-2" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>k) {</span>
+<span id="cb53-3"><a href="interpolation.html#cb53-3" tabindex="-1"></a>  test <span class="ot">&lt;-</span> d[kf <span class="sc">==</span> i, ]</span>
+<span id="cb53-4"><a href="interpolation.html#cb53-4" tabindex="-1"></a>  train <span class="ot">&lt;-</span> d[kf <span class="sc">!=</span> i, ]</span>
+<span id="cb53-5"><a href="interpolation.html#cb53-5" tabindex="-1"></a>  gs <span class="ot">&lt;-</span> <span class="fu">gstat</span>(<span class="at">formula=</span>PRECIPITATION<span class="sc">~</span><span class="dv">1</span>, <span class="at">locations=</span><span class="sc">~</span>x<span class="sc">+</span>y, <span class="at">data=</span>train,</span>
+<span id="cb53-6"><a href="interpolation.html#cb53-6" tabindex="-1"></a>              <span class="at">set=</span><span class="fu">list</span>(<span class="at">idp=</span><span class="dv">2</span>))</span>
+<span id="cb53-7"><a href="interpolation.html#cb53-7" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">predict</span>(gs, test, <span class="at">debug.level=</span><span class="dv">0</span>)</span>
+<span id="cb53-8"><a href="interpolation.html#cb53-8" tabindex="-1"></a>  rmse[i] <span class="ot">&lt;-</span> <span class="fu">RMSE</span>(test<span class="sc">$</span>PRECIPITATION, p<span class="sc">$</span>var1.pred)</span>
+<span id="cb53-9"><a href="interpolation.html#cb53-9" tabindex="-1"></a>}</span>
+<span id="cb53-10"><a href="interpolation.html#cb53-10" tabindex="-1"></a>rmse</span></code></pre></div>
+<pre><code>## [1] 366.3199 393.9248 512.9897 240.9113 360.9724</code></pre>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="interpolation.html#cb55-1" tabindex="-1"></a><span class="fu">mean</span>(rmse)</span></code></pre></div>
+<pre><code>## [1] 375.0236</code></pre>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="interpolation.html#cb57-1" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> (<span class="fu">mean</span>(rmse) <span class="sc">/</span> null)</span></code></pre></div>
+<pre><code>## [1] 0.1858295</code></pre>
+<p>So what we can see from the above is the IDW has a bit better relative performance (from a lower mean RMSE). The IDW does come with an artifact of pits and peaks around the data points, which you can see in the map, and this effect can be decreased with a lower idp.</p>
+</div>
+<div id="idw-trying-other-inverse-distance-powers" class="section level3 hasAnchor" number="5.4.2">
+<h3><span class="header-section-number">5.4.2</span> IDW: trying other inverse distance powers<a href="interpolation.html#idw-trying-other-inverse-distance-powers" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A power of 1 might reduce the gravity-like emphasis on the sampling point, so we’ll try that <code>(idp=1)</code> (Figure <a href="interpolation.html#fig:intIDW1">5.7</a>):</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="interpolation.html#cb59-1" tabindex="-1"></a><span class="fu">library</span>(gstat)</span>
+<span id="cb59-2"><a href="interpolation.html#cb59-2" tabindex="-1"></a>gs <span class="ot">&lt;-</span> <span class="fu">gstat</span>(<span class="at">formula=</span>PRECIPITATION<span class="sc">~</span><span class="dv">1</span>, <span class="at">locations=</span><span class="sc">~</span>x<span class="sc">+</span>y, <span class="at">data=</span>d, <span class="at">nmax=</span><span class="cn">Inf</span>,</span>
+<span id="cb59-3"><a href="interpolation.html#cb59-3" tabindex="-1"></a>            <span class="at">set=</span><span class="fu">list</span>(<span class="at">idp=</span><span class="dv">1</span>))</span>
+<span id="cb59-4"><a href="interpolation.html#cb59-4" tabindex="-1"></a>idw <span class="ot">&lt;-</span> <span class="fu">interpolate</span>(r, gs, <span class="at">debug.level=</span><span class="dv">0</span>)</span>
+<span id="cb59-5"><a href="interpolation.html#cb59-5" tabindex="-1"></a>idwr <span class="ot">&lt;-</span> <span class="fu">mask</span>(idw, vr)</span>
+<span id="cb59-6"><a href="interpolation.html#cb59-6" tabindex="-1"></a><span class="fu">plot</span>(idwr, <span class="dv">1</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:intIDW1"></span>
+<img src="EnvDataSciAddenda_files/figure-html/intIDW1-1.png" alt="IDW interpolation, power = 1" width="75%" />
+<p class="caption">
+FIGURE 5.7: IDW interpolation, power = 1
+</p>
+</div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="interpolation.html#cb60-1" tabindex="-1"></a>rmse <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, k)</span>
+<span id="cb60-2"><a href="interpolation.html#cb60-2" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>k) {</span>
+<span id="cb60-3"><a href="interpolation.html#cb60-3" tabindex="-1"></a>  test <span class="ot">&lt;-</span> d[kf <span class="sc">==</span> i, ]</span>
+<span id="cb60-4"><a href="interpolation.html#cb60-4" tabindex="-1"></a>  train <span class="ot">&lt;-</span> d[kf <span class="sc">!=</span> i, ]</span>
+<span id="cb60-5"><a href="interpolation.html#cb60-5" tabindex="-1"></a>  gs <span class="ot">&lt;-</span> <span class="fu">gstat</span>(<span class="at">formula=</span>PRECIPITATION<span class="sc">~</span><span class="dv">1</span>, <span class="at">locations=</span><span class="sc">~</span>x<span class="sc">+</span>y, <span class="at">data=</span>train, <span class="at">set=</span><span class="fu">list</span>(<span class="at">idp=</span><span class="dv">1</span>))</span>
+<span id="cb60-6"><a href="interpolation.html#cb60-6" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">predict</span>(gs, test, <span class="at">debug.level=</span><span class="dv">0</span>)</span>
+<span id="cb60-7"><a href="interpolation.html#cb60-7" tabindex="-1"></a>  rmse[i] <span class="ot">&lt;-</span> <span class="fu">RMSE</span>(test<span class="sc">$</span>PRECIPITATION, p<span class="sc">$</span>var1.pred)</span>
+<span id="cb60-8"><a href="interpolation.html#cb60-8" tabindex="-1"></a>}</span>
+<span id="cb60-9"><a href="interpolation.html#cb60-9" tabindex="-1"></a>rmse</span></code></pre></div>
+<pre><code>## [1] 401.7832 412.2137 468.5602 355.0603 410.7361</code></pre>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="interpolation.html#cb62-1" tabindex="-1"></a><span class="fu">mean</span>(rmse)</span></code></pre></div>
+<pre><code>## [1] 409.6707</code></pre>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="interpolation.html#cb64-1" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> (<span class="fu">mean</span>(rmse) <span class="sc">/</span> null)</span></code></pre></div>
+<pre><code>## [1] 0.1106113</code></pre>
+<p>… but the relative performance is no better. You should continue this experiment by trying other weights (remember to set them the same for the model you’re mapping and for the cross-validation), or you could even loop it to optimize the setting for the highest relative performance, but I’ll leave you to figure that out. Note that the number of folds may also have an impact, especially for small data sets like this.</p>
+</div>
+</div>
+<div id="polynomials-and-trend-surfaces" class="section level2 hasAnchor" number="5.5">
+<h2><span class="header-section-number">5.5</span> Polynomials and Trend Surfaces<a href="interpolation.html#polynomials-and-trend-surfaces" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In the Voronoi, nearest-neighbor, and IDW methods above, predicted cell values were based on values of nearby input points, in the case of the Voronoi creating a polygon surrounding the input point to assign its value to (and the raster simply being those polygons assigned to raster cells.) Another approach is to create a polynomial model where values are assigned based on their location defined as x and y values. The simplest is first-order linear trend surface model, as the equation of a plane:</p>
+<p><span class="math display">\[
+z = b_0 + b_1x + b_2y
+\]</span></p>
+<p>where z is a variable like <code>PRECIPITATION</code>. Higher-order polynomials can model more complex surfaces, such as a fold using a second-order polynomial, which would look like:</p>
+<p><span class="math display">\[
+z = b_0 + b_1x + b_2y + b_3x^2 + b_4xy + b_5y^2
+\]</span></p>
+<p>… or a third-order polynomial which might model a dome or basin:</p>
+<p><span class="math display">\[
+z = b_0 + b_1x + b_2y + b_3x^2 + b_4xy + b_5y^2 + b_6x^3 + b_7x^2y + b_8xy^2 + b_9y^3
+\]</span></p>
+<p>To enter the first order, your formula can look like <code>z~x+y</code> but anything beyond this pretty much requires using the <code>degree</code> setting. For the first order this would include <code>z~1</code> and <code>degree=1</code>; the second order just requires changing the degree to 2, etc.</p>
+<p>We’ll use gstat with a global linear trend surface by providing this formula as <code>TEMPERATURE~x+y</code>, and use the <code>degree</code> setting (Figure <a href="interpolation.html#fig:intLinearTrend">5.8</a>).</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="interpolation.html#cb66-1" tabindex="-1"></a><span class="fu">library</span>(gstat)</span>
+<span id="cb66-2"><a href="interpolation.html#cb66-2" tabindex="-1"></a>gs <span class="ot">&lt;-</span> <span class="fu">gstat</span>(<span class="at">formula=</span>PRECIPITATION<span class="sc">~</span><span class="dv">1</span>, <span class="at">locations=</span><span class="sc">~</span>x<span class="sc">+</span>y, <span class="at">degree=</span><span class="dv">1</span>, <span class="at">data=</span>d)</span>
+<span id="cb66-3"><a href="interpolation.html#cb66-3" tabindex="-1"></a>interp <span class="ot">&lt;-</span> <span class="fu">interpolate</span>(r, gs, <span class="at">debug.level=</span><span class="dv">0</span>)</span>
+<span id="cb66-4"><a href="interpolation.html#cb66-4" tabindex="-1"></a>prc1 <span class="ot">&lt;-</span> <span class="fu">mask</span>(interp, vr)</span>
+<span id="cb66-5"><a href="interpolation.html#cb66-5" tabindex="-1"></a><span class="fu">plot</span>(prc1, <span class="dv">1</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:intLinearTrend"></span>
+<img src="EnvDataSciAddenda_files/figure-html/intLinearTrend-1.png" alt="Linear trend" width="75%" />
+<p class="caption">
+FIGURE 5.8: Linear trend
+</p>
+</div>
+<p>What we’re seeing is a map of a sloping plane showing the general trend. Not surprisingly there are areas with values lower than the minimum input temperature and higher than the maximum input temperature, which we can check with:</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="interpolation.html#cb67-1" tabindex="-1"></a><span class="fu">min</span>(d<span class="sc">$</span>PRECIPITATION)</span></code></pre></div>
+<pre><code>## [1] 125.48</code></pre>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="interpolation.html#cb69-1" tabindex="-1"></a><span class="fu">max</span>(d<span class="sc">$</span>PRECIPITATION)</span></code></pre></div>
+<pre><code>## [1] 2103.6</code></pre>
+<p>… but that’s what we should expect when defining a trend that extends beyond our input point locations.</p>
+<p>Then we’ll try a second order (Figure <a href="interpolation.html#fig:intPolynomial2">5.9</a>):</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="interpolation.html#cb71-1" tabindex="-1"></a>gs <span class="ot">&lt;-</span> <span class="fu">gstat</span>(<span class="at">formula=</span>PRECIPITATION<span class="sc">~</span><span class="dv">1</span>, <span class="at">locations=</span><span class="sc">~</span>x<span class="sc">+</span>y, <span class="at">degree=</span><span class="dv">2</span>, <span class="at">data=</span>d)</span>
+<span id="cb71-2"><a href="interpolation.html#cb71-2" tabindex="-1"></a>interp2 <span class="ot">&lt;-</span> <span class="fu">interpolate</span>(r, gs, <span class="at">debug.level=</span><span class="dv">0</span>)</span>
+<span id="cb71-3"><a href="interpolation.html#cb71-3" tabindex="-1"></a>prc2 <span class="ot">&lt;-</span> <span class="fu">mask</span>(interp2, vr)</span>
+<span id="cb71-4"><a href="interpolation.html#cb71-4" tabindex="-1"></a><span class="fu">plot</span>(prc2, <span class="dv">1</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:intPolynomial2"></span>
+<img src="EnvDataSciAddenda_files/figure-html/intPolynomial2-1.png" alt="2nd order polynomial, precipitation" width="75%" />
+<p class="caption">
+FIGURE 5.9: 2nd order polynomial, precipitation
+</p>
+</div>
+<p>… which exhibits this phenomenon all the more, though only away from our input data. Then a third order (Figure <a href="interpolation.html#fig:intPolynomial3">5.10</a>)…</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="interpolation.html#cb72-1" tabindex="-1"></a>gs <span class="ot">&lt;-</span> <span class="fu">gstat</span>(<span class="at">formula=</span>PRECIPITATION<span class="sc">~</span><span class="dv">1</span>, <span class="at">locations=</span><span class="sc">~</span>x<span class="sc">+</span>y, <span class="at">degree=</span><span class="dv">3</span>, <span class="at">data=</span>d)</span>
+<span id="cb72-2"><a href="interpolation.html#cb72-2" tabindex="-1"></a>interp3 <span class="ot">&lt;-</span> <span class="fu">interpolate</span>(r, gs, <span class="at">debug.level=</span><span class="dv">0</span>)</span>
+<span id="cb72-3"><a href="interpolation.html#cb72-3" tabindex="-1"></a>prc3 <span class="ot">&lt;-</span> <span class="fu">mask</span>(interp3, vr)</span>
+<span id="cb72-4"><a href="interpolation.html#cb72-4" tabindex="-1"></a><span class="fu">plot</span>(prc3, <span class="dv">1</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:intPolynomial3"></span>
+<img src="EnvDataSciAddenda_files/figure-html/intPolynomial3-1.png" alt="Third order polynomial, temperature" width="75%" />
+<p class="caption">
+FIGURE 5.10: Third order polynomial, temperature
+</p>
+</div>
+<p>… extends this to the extreme, though the effect is only away from our data points so it’s just a cartographic problem we could address by controlling the range of values over which to apply the color range. Or we could use map algebra to assign all cells higher than the maximum inputs to the maximum and lower than the minimum inputs to the minimum (Figure <a href="interpolation.html#fig:intPoly3flattened">5.11</a>).</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="interpolation.html#cb73-1" tabindex="-1"></a>prc3<span class="sc">$</span>var1.pred[prc3<span class="sc">$</span>var1.pred <span class="sc">&gt;</span> <span class="fu">max</span>(d<span class="sc">$</span>PRECIPITATION)] <span class="ot">&lt;-</span> <span class="fu">max</span>(d<span class="sc">$</span>PRECIPITATION)</span>
+<span id="cb73-2"><a href="interpolation.html#cb73-2" tabindex="-1"></a>prc3<span class="sc">$</span>var1.pred[prc3<span class="sc">$</span>var1.pred <span class="sc">&lt;</span> <span class="fu">min</span>(d<span class="sc">$</span>PRECIPITATION)] <span class="ot">&lt;-</span> <span class="fu">min</span>(d<span class="sc">$</span>PRECIPITATION)</span>
+<span id="cb73-3"><a href="interpolation.html#cb73-3" tabindex="-1"></a><span class="fu">plot</span>(prc3<span class="sc">$</span>var1.pred)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:intPoly3flattened"></span>
+<img src="EnvDataSciAddenda_files/figure-html/intPoly3flattened-1.png" alt="Third order polynomial with extremes flattened" width="75%" />
+<p class="caption">
+FIGURE 5.11: Third order polynomial with extremes flattened
+</p>
+</div>
+<p>Then a third order <em>local</em> polynomial (setting nmax to less than Inf), where we’ll similarly set the values outside the range to the min or max value. The nmax setting can be seen to have a significant effect on the smoothness of the result (Figure <a href="interpolation.html#fig:intLocalPoly3Precip">5.12</a>).</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="interpolation.html#cb74-1" tabindex="-1"></a>gs <span class="ot">&lt;-</span> <span class="fu">gstat</span>(<span class="at">formula=</span>PRECIPITATION<span class="sc">~</span><span class="dv">1</span>, <span class="at">locations=</span><span class="sc">~</span>x<span class="sc">+</span>y, <span class="at">degree=</span><span class="dv">3</span>, <span class="at">nmax=</span><span class="dv">30</span>, <span class="at">data=</span>d)</span>
+<span id="cb74-2"><a href="interpolation.html#cb74-2" tabindex="-1"></a>interp3loc <span class="ot">&lt;-</span> <span class="fu">interpolate</span>(r, gs, <span class="at">debug.level=</span><span class="dv">0</span>)</span>
+<span id="cb74-3"><a href="interpolation.html#cb74-3" tabindex="-1"></a>prc3loc <span class="ot">&lt;-</span> <span class="fu">mask</span>(interp3loc, vr)</span>
+<span id="cb74-4"><a href="interpolation.html#cb74-4" tabindex="-1"></a>prc3loc<span class="sc">$</span>var1.pred[prc3loc<span class="sc">$</span>var1.pred <span class="sc">&gt;</span> <span class="fu">max</span>(d<span class="sc">$</span>PRECIPITATION)] <span class="ot">&lt;-</span> <span class="fu">max</span>(d<span class="sc">$</span>PRECIPITATION)</span>
+<span id="cb74-5"><a href="interpolation.html#cb74-5" tabindex="-1"></a>prc3loc<span class="sc">$</span>var1.pred[prc3loc<span class="sc">$</span>var1.pred <span class="sc">&lt;</span> <span class="fu">min</span>(d<span class="sc">$</span>PRECIPITATION)] <span class="ot">&lt;-</span> <span class="fu">min</span>(d<span class="sc">$</span>PRECIPITATION)</span>
+<span id="cb74-6"><a href="interpolation.html#cb74-6" tabindex="-1"></a><span class="fu">plot</span>(prc3loc<span class="sc">$</span>var1.pred)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:intLocalPoly3Precip"></span>
+<img src="EnvDataSciAddenda_files/figure-html/intLocalPoly3Precip-1.png" alt="Third order local polynomial, precipitation" width="75%" />
+<p class="caption">
+FIGURE 5.12: Third order local polynomial, precipitation
+</p>
+</div>
+</div>
+<div id="kriging" class="section level2 hasAnchor" number="5.6">
+<h2><span class="header-section-number">5.6</span> Kriging<a href="interpolation.html#kriging" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Kriging is a <em>stochastic</em> geostatistical interpolator that provides advantages for considering the statistical probability of results and characteristics of the original data such as spatial autocorrelation, and has been widely applied in fields such as mining (Krige’s application) and considering environmental risk. There’s a lot more to it than we can cover here, and the reader is encouraged to see <span class="citation">Nowosad (<a href="#ref-NowosadGeostatisticsR">n.d.</a>)</span> and other works to learn more. Kriging commonly requires a lot of exploratory work with visual interpretation of data to derive the right model parameters. It starts by looking at the variogram and creating a model with parameters to see which might best approximates the distribution.</p>
+<div id="create-a-variogram." class="section level3 hasAnchor" number="5.6.1">
+<h3><span class="header-section-number">5.6.1</span> Create a variogram.<a href="interpolation.html#create-a-variogram." class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Compare every point to every other point. The width setting (20,000 m) is the subsequent distance intervals into which data point pairs are grouped for semivariance estimates (Figure <a href="interpolation.html#fig:intVariogram">5.13</a>).</p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="interpolation.html#cb75-1" tabindex="-1"></a><span class="co">#p &lt;- data.frame(geom(dtakm)[, c(&quot;x&quot;,&quot;y&quot;)], as.data.frame(dta))</span></span>
+<span id="cb75-2"><a href="interpolation.html#cb75-2" tabindex="-1"></a>gs <span class="ot">&lt;-</span> <span class="fu">gstat</span>(<span class="at">formula=</span>PRECIPITATION<span class="sc">~</span><span class="dv">1</span>, <span class="at">locations=</span><span class="sc">~</span>x<span class="sc">+</span>y, <span class="at">data=</span>d)</span>
+<span id="cb75-3"><a href="interpolation.html#cb75-3" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">variogram</span>(gs, <span class="at">width=</span><span class="fl">20e3</span>)</span>
+<span id="cb75-4"><a href="interpolation.html#cb75-4" tabindex="-1"></a>v</span></code></pre></div>
+<pre><code>##     np      dist     gamma dir.hor dir.ver   id
+## 1   23  14256.47  45143.82       0       0 var1
+## 2   60  30035.37  61133.79       0       0 var1
+## 3   93  50919.48 163622.47       0       0 var1
+## 4   97  71033.67 192267.26       0       0 var1
+## 5  126  89759.82 186047.23       0       0 var1
+## 6  109 109139.47 192847.68       0       0 var1
+## 7  109 130125.18 139241.93       0       0 var1
+## 8   91 149596.56 146620.61       0       0 var1
+## 9   94 169606.82 150855.26       0       0 var1
+## 10  90 188727.78 203683.08       0       0 var1
+## 11  57 208856.39 220665.36       0       0 var1</code></pre>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="interpolation.html#cb77-1" tabindex="-1"></a><span class="fu">plot</span>(v)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:intVariogram"></span>
+<img src="EnvDataSciAddenda_files/figure-html/intVariogram-1.png" alt="Variogram of precipitation at Sierra weather stations" width="75%" />
+<p class="caption">
+FIGURE 5.13: Variogram of precipitation at Sierra weather stations
+</p>
+</div>
+</div>
+<div id="fit-the-variogram-based-on-visual-interpretation" class="section level3 hasAnchor" number="5.6.2">
+<h3><span class="header-section-number">5.6.2</span> Fit the variogram based on visual interpretation<a href="interpolation.html#fit-the-variogram-based-on-visual-interpretation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For geostatistical analysis leading to Kriging, we often use visual interpretation of the variogram to find the best fit, employing various models, such as exponential <code>"Exp"</code> (Figure <a href="interpolation.html#fig:intFittedVariogram">5.14</a>).</p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="interpolation.html#cb78-1" tabindex="-1"></a>fve <span class="ot">&lt;-</span> <span class="fu">fit.variogram</span>(v, <span class="fu">vgm</span>(<span class="at">psill=</span><span class="fl">2e5</span>, <span class="at">model=</span><span class="st">&quot;Exp&quot;</span>, <span class="at">range=</span><span class="fl">200e3</span>, <span class="at">nugget=</span><span class="dv">0</span>)) </span>
+<span id="cb78-2"><a href="interpolation.html#cb78-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">variogramLine</span>(fve, <span class="at">maxdist=</span><span class="fl">2e5</span>), <span class="at">type=</span><span class="st">&#39;l&#39;</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">2e5</span>))</span>
+<span id="cb78-3"><a href="interpolation.html#cb78-3" tabindex="-1"></a><span class="fu">points</span>(v[,<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>], <span class="at">pch=</span><span class="dv">20</span>, <span class="at">col=</span><span class="st">&#39;red&#39;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:intFittedVariogram"></span>
+<img src="EnvDataSciAddenda_files/figure-html/intFittedVariogram-1.png" alt="Fitted variogram" width="75%" />
+<p class="caption">
+FIGURE 5.14: Fitted variogram
+</p>
+</div>
+<p>The list of twenty variogram models can be provided with <code>vgm()</code>. We’ll try spherical with <code>"Sph"</code> (Figure <a href="interpolation.html#fig:intSphericalModel">5.15</a>).</p>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="interpolation.html#cb79-1" tabindex="-1"></a><span class="fu">vgm</span>()</span></code></pre></div>
+<pre><code>##    short                                      long
+## 1    Nug                              Nug (nugget)
+## 2    Exp                         Exp (exponential)
+## 3    Sph                           Sph (spherical)
+## 4    Gau                            Gau (gaussian)
+## 5    Exc        Exclass (Exponential class/stable)
+## 6    Mat                              Mat (Matern)
+## 7    Ste Mat (Matern, M. Stein&#39;s parameterization)
+## 8    Cir                            Cir (circular)
+## 9    Lin                              Lin (linear)
+## 10   Bes                              Bes (bessel)
+## 11   Pen                      Pen (pentaspherical)
+## 12   Per                            Per (periodic)
+## 13   Wav                                Wav (wave)
+## 14   Hol                                Hol (hole)
+## 15   Log                         Log (logarithmic)
+## 16   Pow                               Pow (power)
+## 17   Spl                              Spl (spline)
+## 18   Leg                            Leg (Legendre)
+## 19   Err                   Err (Measurement error)
+## 20   Int                           Int (Intercept)</code></pre>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="interpolation.html#cb81-1" tabindex="-1"></a>fvs <span class="ot">&lt;-</span> <span class="fu">fit.variogram</span>(v, <span class="fu">vgm</span>(<span class="at">psill=</span><span class="fl">2e5</span>, <span class="at">model=</span><span class="st">&quot;Sph&quot;</span>, <span class="at">range=</span><span class="fl">20e3</span>, <span class="at">nugget=</span><span class="dv">0</span>)) </span>
+<span id="cb81-2"><a href="interpolation.html#cb81-2" tabindex="-1"></a>fvs</span></code></pre></div>
+<pre><code>##   model    psill    range
+## 1   Nug      0.0     0.00
+## 2   Sph 183011.2 90689.21</code></pre>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="interpolation.html#cb83-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">variogramLine</span>(fvs, <span class="at">maxdist=</span><span class="fl">2e5</span>), <span class="at">type=</span><span class="st">&#39;l&#39;</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">2e5</span>))</span>
+<span id="cb83-2"><a href="interpolation.html#cb83-2" tabindex="-1"></a><span class="fu">points</span>(v[,<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>], <span class="at">pch=</span><span class="dv">20</span>, <span class="at">col=</span><span class="st">&#39;red&#39;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:intSphericalModel"></span>
+<img src="EnvDataSciAddenda_files/figure-html/intSphericalModel-1.png" alt="Spherical fit" width="75%" />
+<p class="caption">
+FIGURE 5.15: Spherical fit
+</p>
+</div>
+<p>The exponential model at least visually looks like the best fit, so we’ll use the <code>fse</code> model we created first (Figure <a href="interpolation.html#fig:intExponentialModel">5.16</a>).</p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="interpolation.html#cb84-1" tabindex="-1"></a><span class="fu">plot</span>(v, fve)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:intExponentialModel"></span>
+<img src="EnvDataSciAddenda_files/figure-html/intExponentialModel-1.png" alt="Exponential model" width="75%" />
+<p class="caption">
+FIGURE 5.16: Exponential model
+</p>
+</div>
+</div>
+<div id="ordinary-kriging" class="section level3 hasAnchor" number="5.6.3">
+<h3><span class="header-section-number">5.6.3</span> Ordinary Kriging<a href="interpolation.html#ordinary-kriging" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>So we’ll go with the <code>fve</code> model derived using an exponential form to develop an ordinary Kriging prediction and variance result. The prediction is the interpolation, and the variance shows the areas near the data points where we should have more confidence in the prediction; this ability is one of the hallmarks of the Kriging method (Figure <a href="interpolation.html#fig:intOrdinaryKriging">5.17</a>).</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="interpolation.html#cb85-1" tabindex="-1"></a>kr <span class="ot">&lt;-</span> <span class="fu">gstat</span>(<span class="at">formula=</span>PRECIPITATION<span class="sc">~</span><span class="dv">1</span>, <span class="at">locations=</span><span class="sc">~</span>x<span class="sc">+</span>y, <span class="at">data=</span>d, <span class="at">model=</span>fve)</span>
+<span id="cb85-2"><a href="interpolation.html#cb85-2" tabindex="-1"></a>kp <span class="ot">&lt;-</span> <span class="fu">interpolate</span>(r, kr, <span class="at">debug.level=</span><span class="dv">0</span>)</span>
+<span id="cb85-3"><a href="interpolation.html#cb85-3" tabindex="-1"></a>ok <span class="ot">&lt;-</span> <span class="fu">mask</span>(kp, vr)</span>
+<span id="cb85-4"><a href="interpolation.html#cb85-4" tabindex="-1"></a><span class="fu">names</span>(ok) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;prediction&#39;</span>, <span class="st">&#39;variance&#39;</span>)</span>
+<span id="cb85-5"><a href="interpolation.html#cb85-5" tabindex="-1"></a><span class="fu">plot</span>(ok)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:intOrdinaryKriging"></span>
+<img src="EnvDataSciAddenda_files/figure-html/intOrdinaryKriging-1.png" alt="Ordinary Kriging" width="75%" />
+<p class="caption">
+FIGURE 5.17: Ordinary Kriging
+</p>
+</div>
+<p>Clearly the prediction provides a clear pattern of precipitation, at least for the areas with low variance. The next step would be to do a cross-validation to compare its RMSE with IDW and other models, but we’ll leave that for later.</p>
+<p>To learn more about these interpolation methods and related geostatistical methods, see <a href="http://rspatial.org/terra/analysis/4-interpolation.html" class="uri">http://rspatial.org/terra/analysis/4-interpolation.html</a>, <span class="citation">Nowosad (<a href="#ref-NowosadGeostatisticsR">n.d.</a>)</span>, and the gstat user manual at <a href="http://www.gstat.org/gstat.pdf" class="uri">http://www.gstat.org/gstat.pdf</a> .</p>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div id="exercises-spatial-interpolation" class="section level2 hasAnchor" number="5.7">
+<h2><span class="header-section-number">5.7</span> Exercises: Spatial Interpolation<a href="interpolation.html#exercises-spatial-interpolation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-1" class="exercise"><strong>Exercise 5.1  </strong></span>We’re going to create a couple of interpolations of California climate variables, so start by building <code>CAclimate</code> <code>sf</code> from the <code>908277.csv</code> file in the <code>sierra</code> folder; this csv has stations from all of California. Note that you should use <code>na.rm=T</code> for summarizations of both <code>MLY-PRCP-NORMAL</code> and <code>MLY-TAVG-NORMAL</code>, and since there are some weird extreme unrealistic negative numbers for these, also filter for <code>PRECIPITATION &gt; 0</code> and <code>TEMPERATURE &gt; -100</code> – other values don’t exist on our planet, much less California. There are also some “unknown” values in <code>LATITUDE</code>, <code>LONGITUDE</code>, and <code>ELEVATION</code>, so also filter for <code>LATITUDE != "unknown"</code>. (These low negative values plus codes like “unknown” are just other ways of saying <code>NA</code>). Create a plot of your points colored by <code>PRECIPITATION</code>. You can either use ggplot2 or tmap. Note that <code>LATITUDE</code>, <code>LONGITUDE</code> and <code>ELEVATION</code> get read in as <code>chr</code>, so you’ll want to use <code>as.numeric</code> with them in the summarize section, so code like <code>LATITUDE = first(as.numeric(LATITUDE))</code>.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-2" class="exercise"><strong>Exercise 5.2  </strong></span>Create <strong>Voronoi polygons of precipitation</strong> (Figure <a href="interpolation.html#fig:intVoronoiPrecipGoal">5.18</a>) Note that the voronoi tool is in <code>terra</code> so the data need to be converted to S4 objects with <code>vect()</code>. Then rasterize the resulting polygons, remembering that the coordinates are in decimal degrees so <code>res=0.01</code> would probably be a better setting. (Extra credit: what shape will the cells be on the map? Remember that we’re working in decimal degrees, but the map is visually projected by the plotting system since it understands geospatial coordinate systems. Experiment with the res setting to visualize this.)</p>
+</div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:intVoronoiPrecipGoal"></span>
+<img src="img/goal_intVoronoiPrecip.png" alt="Voronoi polygons of precipitation (goal)" width="50%" />
+<p class="caption">
+FIGURE 5.18: Voronoi polygons of precipitation (goal)
+</p>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-3" class="exercise"><strong>Exercise 5.3  </strong></span>Use <code>gstat</code> to create an IDW interpolation of the same data, as we did earlier for the <code>sierra</code> data, creating a data frame <code>d</code>, but now from <code>CAclimateT</code> (Figure <a href="interpolation.html#fig:IDWgoal">5.19</a>).</p>
+</div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:IDWgoal"></span>
+<img src="img/goal_intIDW.png" alt="IDW (goal)" width="50%" />
+<p class="caption">
+FIGURE 5.19: IDW (goal)
+</p>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-4" class="exercise"><strong>Exercise 5.4  </strong></span>Use the IDW interpolator from the same data, but use <code>ELEVATION</code> instead of <code>PRECIPITATION</code>. Then create a hillshade from it using the <code>terra::shade</code> function (since the interpolator will return an <code>SpatRaster</code>. Then compare it with <code>"ca_hillsh_WGS84.tif"</code> from the external data.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-5" class="exercise"><strong>Exercise 5.5  </strong></span><strong>Hillshade of Voronoi station elevations</strong>. Optionally, how about a hillshade created from a voronoi of elevation? Remember that the hillshade above is created from point data that happens to have elevation data at the stations, and the Voronoi polygons are simply flat “plateaus” surrounding the weather stations.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-6" class="exercise"><strong>Exercise 5.6  </strong></span>Create a linear trend surface of <code>PRECIPITATION</code> in California from the same data.</p>
+</div>
+
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-rspatial" class="csl-entry">
+Hijmans, Robert J. n.d. <em>Spatial Data Science</em>. <a href="https://rspatial.org">https://rspatial.org</a>.
+</div>
+<div id="ref-NowosadGeostatisticsR" class="csl-entry">
+Nowosad, Jakub. n.d. <em>Geostatistics in r</em>. <a href="https://bookdown-org.translate.goog/nowosad/geostatystyka/?_x_tr_sl=pl&amp;_x_tr_tl=en&amp;_x_tr_hl=pl">https://bookdown-org.translate.goog/nowosad/geostatystyka/?_x_tr_sl=pl&amp;_x_tr_tl=en&amp;_x_tr_hl=pl</a>.
+</div>
+<div id="ref-gstat" class="csl-entry">
+Pebesma, Edzer. n.d. <em>Gstat: Spatial and Spatio-Temporal Geostatistical Modelling, Prediction and Simulation</em>. <a href="https://cran.r-project.org/web/packages/gstat/index.html">https://cran.r-project.org/web/packages/gstat/index.html</a>.
+</div>
+<div id="ref-Thiessen" class="csl-entry">
+Thiessen, A. 1911. <span>“Precipitation Averages for Large Areas.”</span> <em>Monthly Weather Review</em> 39 (7): 1082–89.
+</div>
+<div id="ref-Voronoi" class="csl-entry">
+Voronoi, G. 1908. <span>“Nouvelles Applications Des Paramètres Continus à La Théorie de Formes Quadratiques.”</span> <em>Journal Für Die Reine Und Angewandte Mathematik</em> 134: 198–287.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="tmap4.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="terrain-mapping-caves-and-water-samples-in-a-karst.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+},
+"book_filename": "envdatasci",
+"toc_depth": 4
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

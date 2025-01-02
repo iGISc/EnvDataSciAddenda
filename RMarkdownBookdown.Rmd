@@ -74,6 +74,8 @@ places <- st_read(ex("sierra/CA_places.shp"))
 ````
 >You could of course have used that `knitr::opts_chunk$set` at the top of your code to avoid the warnings and messages, but you often want to see *results*, so hiding them is best isolated in a code chunk that isn't producing any results you want to see, and this is typically things like `st_read` I've found. 
 
+>Also, avoid setting results="hide" in a `knitr::opts_chunk$set` since it also has an impact on knitr operations like adding images. But if you want to do this for a section of the book, remember to set it back to the default `results = T`.
+
 ### Numbered figures with text citations
 
 Most of the your figures are going to be created by code in an individual code chunk, and it's a good idea to create a figure heading. You should organize your code chunk so that it only produces one figure, so you can use the code chunk header to provide the figure heading, and be able to cite the figure in text just before. *Note that the referencing capability requires bookdown output extensions to R Markdown, described below.*

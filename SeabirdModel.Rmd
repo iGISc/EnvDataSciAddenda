@@ -30,7 +30,6 @@ tm_basemap("Esri.NatGeoWorldMap") +
 ```{r eval=F}
 library(tmap)
 tmap_mode("plot")
-#oceanBase <- get_tiles(transects, provider="Esri.NatGeoWorldMap")
 transJul <- transects %>% filter(month==7)
 transJulnonegTS <- transJul %>% filter(avg_tem>0 & avg_sal>0)
 transJulnonegTSF <- transJulnonegTS %>% filter(avg_fluo>0)
@@ -103,7 +102,6 @@ We'll use the July data from multiple years (in the modeling chapter we just loo
 
 ```{r message=F, warning=F, fig.cap="July black footed albatross, temperature, salinity, fluorescence"}
 # tmap_mode("plot")
-#oceanBase <- get_tiles(transects, provider="Esri.NatGeoWorldMap")
 transJul <- transects %>% filter(month==7 & !is.na(avg_tem) & !is.na(avg_sal) & !is.na(avg_fluo))
 Jul_bfal <- tm_basemap("Esri.NatGeoWorldMap") +
   tm_shape(transJul) + tm_symbols(col="bfal", size="bfal")

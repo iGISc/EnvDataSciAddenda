@@ -180,17 +180,29 @@ tm_shape(hillsh,bbox=geol_bounds) +
 
 Using maptiles with tmap in plot mode may produce the most informative map. We could have created contours from the DEM, but it's easier to use a basemap, as long as the internet connection works. The `Esri.WorldTopoMap` in employing USGS labels works well in the US, though elevations are in feet (Figure \@ref(fig:mapTiles)).
 ```{r mapTiles, out.width="100%", fig.cap="Upper Sinking Cove static map with maptiles"}
+# library(maptiles)
+# upperSinkingCove <- get_tiles(wChem, provider="Esri.WorldTopoMap", forceDownload=T)
+
+  # tm_shape(upperSinkingCove) + tm_rgb() + 
+  tm_shape(caves) + tm_lines(lwd=2) + #
+  tm_shape(wChem) + 
+  tm_symbols(size="carbonate_ppm", col="Lithology", scale=2, shape="siteType", col_alpha=0.5) +
+  # tm_graticules(lines=F) +
+  tm_basemap(server="Esri.WorldTopoMap")
+```
+
+```{r basemapVersion, out.width="100%", fig.cap="Upper Sinking Cove online map with basemap"}
 library(maptiles)
-#upperSinkingCove <- get_tiles(wChem, provider="Esri.WorldTopoMap", forceDownload=T)
-tm_graticules(lines=F) + 
-  tm_basemap(server = "Esri.WorldTopoMap") + 
+# basemap <- get_tiles(wChem, provider="Esri.WorldTopoMap", forceDownload=T)
+tmap_mode("view")
+tm_graticules(lines=F) +
+  tm_basemap("Esri.WorldTopoMap") +
+  # tm_shape(basemap) + tm_rgb() + 
   tm_shape(caves, bbox=geol_bounds) + tm_lines(lwd=2) +
   tm_shape(wChem) + 
   tm_symbols(size="carbonate_ppm", col="Lithology", scale=2, shape="siteType", col_alpha=0.5)
 # +
 #   tm_layout(legend.position = tm_pos_in("right"c("left", "bottom"))
 ```
-
-
 
 

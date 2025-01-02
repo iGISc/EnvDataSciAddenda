@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4 tmap4 | Environmental Data Science Addenda</title>
+  <meta name="description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4 tmap4 | Environmental Data Science Addenda" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
+  <meta name="github-repo" content="iGISc/EnvDataSciAddenda" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4 tmap4 | Environmental Data Science Addenda" />
+  
+  <meta name="twitter:description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
+  
+
+<meta name="author" content="Jerry Davis, SFSU Institute for Geographic Information Science" />
+
+
+<meta name="date" content="2024-12-02" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="distance-from-census-tract-centroid-to-closest-tri-site.html"/>
+<link rel="next" href="interpolation.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><img src="img/eaRth_anna296addenda.png"></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Background, Goals and Data</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#structure-of-the-addenda"><i class="fa fa-check"></i><b>1.1</b> Structure of the Addenda</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#software-and-data"><i class="fa fa-check"></i><b>1.2</b> Software and Data</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#data"><i class="fa fa-check"></i><b>1.2.1</b> Data</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.3</b> Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="air-pollutant-emissions-trends-epa.html"><a href="air-pollutant-emissions-trends-epa.html"><i class="fa fa-check"></i><b>2</b> Air pollutant emissions trends (EPA)</a></li>
+<li class="chapter" data-level="3" data-path="distance-from-census-tract-centroid-to-closest-tri-site.html"><a href="distance-from-census-tract-centroid-to-closest-tri-site.html"><i class="fa fa-check"></i><b>3</b> Distance from census tract centroid to closest TRI site</a></li>
+<li class="chapter" data-level="4" data-path="tmap4.html"><a href="tmap4.html"><i class="fa fa-check"></i><b>4</b> tmap4</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="tmap4.html"><a href="tmap4.html#simple-test"><i class="fa fa-check"></i><b>4.1</b> Simple test</a></li>
+<li class="chapter" data-level="4.2" data-path="tmap4.html"><a href="tmap4.html#visual-variables"><i class="fa fa-check"></i><b>4.2</b> Visual variables</a></li>
+<li class="chapter" data-level="4.3" data-path="tmap4.html"><a href="tmap4.html#constant-visual-variables"><i class="fa fa-check"></i><b>4.3</b> Constant visual variables</a></li>
+<li class="chapter" data-level="4.4" data-path="tmap4.html"><a href="tmap4.html#basemap"><i class="fa fa-check"></i><b>4.4</b> Basemap</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="interpolation.html"><a href="interpolation.html"><i class="fa fa-check"></i><b>5</b> Spatial Interpolation</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="interpolation.html"><a href="interpolation.html#null-model-of-the-original-data"><i class="fa fa-check"></i><b>5.1</b> Null Model of the Original Data</a></li>
+<li class="chapter" data-level="5.2" data-path="interpolation.html"><a href="interpolation.html#voronoi-polygon"><i class="fa fa-check"></i><b>5.2</b> Voronoi Polygon</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="interpolation.html"><a href="interpolation.html#cross-validation-and-relative-performance"><i class="fa fa-check"></i><b>5.2.1</b> Cross-validation and relative performance</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="interpolation.html"><a href="interpolation.html#nearest-neighbor-interpolation"><i class="fa fa-check"></i><b>5.3</b> Nearest Neighbor Interpolation</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="interpolation.html"><a href="interpolation.html#cross-validation-and-relative-performance-of-the-nearest-neighbor-model"><i class="fa fa-check"></i><b>5.3.1</b> Cross-validation and relative performance of the nearest neighbor model</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="interpolation.html"><a href="interpolation.html#inverse-distance-weighted-idw"><i class="fa fa-check"></i><b>5.4</b> Inverse Distance Weighted (IDW)</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="interpolation.html"><a href="interpolation.html#using-cross-validation-and-relative-performance-to-guide-inverse-distance-weight-choice"><i class="fa fa-check"></i><b>5.4.1</b> Using cross-validation and relative performance to guide inverse-distance weight choice</a></li>
+<li class="chapter" data-level="5.4.2" data-path="interpolation.html"><a href="interpolation.html#idw-trying-other-inverse-distance-powers"><i class="fa fa-check"></i><b>5.4.2</b> IDW: trying other inverse distance powers</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="interpolation.html"><a href="interpolation.html#polynomials-and-trend-surfaces"><i class="fa fa-check"></i><b>5.5</b> Polynomials and Trend Surfaces</a></li>
+<li class="chapter" data-level="5.6" data-path="interpolation.html"><a href="interpolation.html#kriging"><i class="fa fa-check"></i><b>5.6</b> Kriging</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="interpolation.html"><a href="interpolation.html#create-a-variogram."><i class="fa fa-check"></i><b>5.6.1</b> Create a variogram.</a></li>
+<li class="chapter" data-level="5.6.2" data-path="interpolation.html"><a href="interpolation.html#fit-the-variogram-based-on-visual-interpretation"><i class="fa fa-check"></i><b>5.6.2</b> Fit the variogram based on visual interpretation</a></li>
+<li class="chapter" data-level="5.6.3" data-path="interpolation.html"><a href="interpolation.html#ordinary-kriging"><i class="fa fa-check"></i><b>5.6.3</b> Ordinary Kriging</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="interpolation.html"><a href="interpolation.html#exercises-spatial-interpolation"><i class="fa fa-check"></i><b>5.7</b> Exercises: Spatial Interpolation</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="terrain-mapping-caves-and-water-samples-in-a-karst.html"><a href="terrain-mapping-caves-and-water-samples-in-a-karst.html"><i class="fa fa-check"></i><b>6</b> Terrain mapping, caves and water samples in a karst</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="terrain-mapping-caves-and-water-samples-in-a-karst.html"><a href="terrain-mapping-caves-and-water-samples-in-a-karst.html#creating-a-basemap-from-a-dem-using-hillshade-and-terrain-shading"><i class="fa fa-check"></i><b>6.1</b> Creating a basemap from a DEM, using hillshade and terrain shading</a></li>
+<li class="chapter" data-level="6.2" data-path="terrain-mapping-caves-and-water-samples-in-a-karst.html"><a href="terrain-mapping-caves-and-water-samples-in-a-karst.html#using-topographic-basemap-with-contours"><i class="fa fa-check"></i><b>6.2</b> Using topographic basemap with contours</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="pointblue-penguin-study.html"><a href="pointblue-penguin-study.html"><i class="fa fa-check"></i><b>7</b> PointBlue Penguin Study</a>
+<ul>
+<li class="chapter" data-level="7.0.1" data-path="pointblue-penguin-study.html"><a href="pointblue-penguin-study.html#interactive-mapping-of-individual-penguins-abstracted-from-a-big-dataset"><i class="fa fa-check"></i><b>7.0.1</b> Interactive mapping of individual penguins abstracted from a big dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="seabird-model.html"><a href="seabird-model.html"><i class="fa fa-check"></i><b>8</b> Seabird Model</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="seabird-model.html"><a href="seabird-model.html#goals-and-basic-methods-of-the-analysis"><i class="fa fa-check"></i><b>8.1</b> Goals and basic methods of the analysis</a></li>
+<li class="chapter" data-level="8.2" data-path="seabird-model.html"><a href="seabird-model.html#exploratory-data-analysis"><i class="fa fa-check"></i><b>8.2</b> Exploratory data analysis</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="seabird-model.html"><a href="seabird-model.html#identifying-the-appropriate-model-using-variance-and-mean-comparisons"><i class="fa fa-check"></i><b>8.2.1</b> Identifying the appropriate model using variance and mean comparisons</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="seabird-model.html"><a href="seabird-model.html#model-black-footed-albatross-counts-for-july-using-a-poisson-family-glm"><i class="fa fa-check"></i><b>8.3</b> Model black-footed albatross counts for July using a poisson-family glm</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="seabird-model.html"><a href="seabird-model.html#map-the-prediction"><i class="fa fa-check"></i><b>8.3.1</b> Map the prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="seabird-model.html"><a href="seabird-model.html#interpolation-1"><i class="fa fa-check"></i><b>8.4</b> Interpolation</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html"><i class="fa fa-check"></i><b>9</b> Time Series case studies</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="time-series-case-studies.html"><a href="time-series-case-studies.html#loney-meadow-flux-data"><i class="fa fa-check"></i><b>9.1</b> Loney Meadow flux data</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="curve-fitting.html"><a href="curve-fitting.html"><i class="fa fa-check"></i><b>10</b> Curve fitting</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="curve-fitting.html"><a href="curve-fitting.html#carbon-flux-data-from-red-clover-valley"><i class="fa fa-check"></i><b>10.1</b> Carbon flux data from Red Clover Valley</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="curve-fitting.html"><a href="curve-fitting.html#pairs-plot"><i class="fa fa-check"></i><b>10.1.1</b> Pairs plot</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="curve-fitting.html"><a href="curve-fitting.html#polynomial-models"><i class="fa fa-check"></i><b>10.2</b> Polynomial models</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="curve-fitting.html"><a href="curve-fitting.html#poly-1"><i class="fa fa-check"></i><b>10.2.1</b> poly 1</a></li>
+<li class="chapter" data-level="10.2.2" data-path="curve-fitting.html"><a href="curve-fitting.html#poly-2"><i class="fa fa-check"></i><b>10.2.2</b> poly 2</a></li>
+<li class="chapter" data-level="10.2.3" data-path="curve-fitting.html"><a href="curve-fitting.html#poly-3"><i class="fa fa-check"></i><b>10.2.3</b> poly 3</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="curve-fitting.html"><a href="curve-fitting.html#power-law-model"><i class="fa fa-check"></i><b>10.3</b> Power law model</a></li>
+<li class="chapter" data-level="10.4" data-path="curve-fitting.html"><a href="curve-fitting.html#exponential-model"><i class="fa fa-check"></i><b>10.4</b> Exponential model</a></li>
+<li class="chapter" data-level="10.5" data-path="curve-fitting.html"><a href="curve-fitting.html#growth-and-loss-models-in-geomorphology-gully-data"><i class="fa fa-check"></i><b>10.5</b> Growth and loss models in geomorphology: Gully data</a></li>
+<li class="chapter" data-level="10.6" data-path="curve-fitting.html"><a href="curve-fitting.html#log-transformed-independent-variables"><i class="fa fa-check"></i><b>10.6</b> Log-transformed independent variables</a></li>
+<li class="chapter" data-level="10.7" data-path="curve-fitting.html"><a href="curve-fitting.html#nonlinear-models"><i class="fa fa-check"></i><b>10.7</b> Nonlinear models</a>
+<ul>
+<li class="chapter" data-level="10.7.1" data-path="curve-fitting.html"><a href="curve-fitting.html#using-nls-for-a-rectangular-hyperbola-model-using-the-michaelis-menten-equation"><i class="fa fa-check"></i><b>10.7.1</b> Using <code>nls</code> for a rectangular hyperbola model, using the Michaelis-Menten equation</a></li>
+<li class="chapter" data-level="10.7.2" data-path="curve-fitting.html"><a href="curve-fitting.html#using-the-rate-law-to-model-hillslope-erosion"><i class="fa fa-check"></i><b>10.7.2</b> Using the <em>rate law</em> to model hillslope erosion</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html"><i class="fa fa-check"></i><b>11</b> Atmospheric CO2 record from Mauna Loa, Hawaii</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#read-the-data"><i class="fa fa-check"></i><b>11.1</b> Read the data</a></li>
+<li class="chapter" data-level="11.2" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#plot-the-time-series"><i class="fa fa-check"></i><b>11.2</b> Plot the time series</a></li>
+<li class="chapter" data-level="11.3" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#generalize-the-data"><i class="fa fa-check"></i><b>11.3</b> Generalize the data</a></li>
+<li class="chapter" data-level="11.4" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#curve-fitting-and-creating-a-prediction"><i class="fa fa-check"></i><b>11.4</b> Curve Fitting and Creating a Prediction</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#exponential-model-1"><i class="fa fa-check"></i><b>11.4.1</b> Exponential model</a></li>
+<li class="chapter" data-level="11.4.2" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#power-law-model-1"><i class="fa fa-check"></i><b>11.4.2</b> Power law model</a></li>
+<li class="chapter" data-level="11.4.3" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#second-order-polynomial"><i class="fa fa-check"></i><b>11.4.3</b> Second order polynomial</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="atmospheric-co2-record-from-mauna-loa-hawaii.html"><a href="atmospheric-co2-record-from-mauna-loa-hawaii.html#creating-a-time-series-object"><i class="fa fa-check"></i><b>11.5</b> Creating a time series object</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html"><i class="fa fa-check"></i><b>12</b> R Markdown and Bookdown</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#r-markdown"><i class="fa fa-check"></i><b>12.1</b> R Markdown</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#markdown-editing"><i class="fa fa-check"></i><b>12.1.1</b> Markdown editing</a></li>
+<li class="chapter" data-level="12.1.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#display-options-in-code-chunks"><i class="fa fa-check"></i><b>12.1.2</b> Display options in code chunks</a></li>
+<li class="chapter" data-level="12.1.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#numbered-figures-with-text-citations"><i class="fa fa-check"></i><b>12.1.3</b> Numbered figures with text citations</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#a-template-for-multiple-output-formats"><i class="fa fa-check"></i><b>12.2</b> A template for multiple output formats</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#the-template"><i class="fa fa-check"></i><b>12.2.1</b> The template</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#building-a-book-with-bookdown-and-yaml-options"><i class="fa fa-check"></i><b>12.3</b> Building a book with bookdown and YAML options</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#building-a-book"><i class="fa fa-check"></i><b>12.3.1</b> Building a book</a></li>
+<li class="chapter" data-level="12.3.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#special-characters-and-formatting-limitations-and-challenges"><i class="fa fa-check"></i><b>12.3.2</b> Special characters and formatting limitations and challenges</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#yaml-files-used-to-configure-the-book"><i class="fa fa-check"></i><b>12.4</b> YAML files used to configure the book</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#output.yml"><i class="fa fa-check"></i><b>12.4.1</b> _output.yml</a></li>
+<li class="chapter" data-level="12.4.2" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#index.rmd"><i class="fa fa-check"></i><b>12.4.2</b> index.Rmd</a></li>
+<li class="chapter" data-level="12.4.3" data-path="r-markdown-and-bookdown.html"><a href="r-markdown-and-bookdown.html#bookdown.yml"><i class="fa fa-check"></i><b>12.4.3</b> _bookdown.yml</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="figures-and-tables.html"><a href="figures-and-tables.html"><i class="fa fa-check"></i><b>13</b> Figures and Tables</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="figures-and-tables.html"><a href="figures-and-tables.html#figures"><i class="fa fa-check"></i><b>13.1</b> Figures</a></li>
+<li class="chapter" data-level="13.2" data-path="figures-and-tables.html"><a href="figures-and-tables.html#tables"><i class="fa fa-check"></i><b>13.2</b> Tables</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="figures-and-tables.html"><a href="figures-and-tables.html#dtdatatable"><i class="fa fa-check"></i><b>13.2.1</b> <code>DT::datatable</code></a></li>
+<li class="chapter" data-level="13.2.2" data-path="figures-and-tables.html"><a href="figures-and-tables.html#knitrkable-tables"><i class="fa fa-check"></i><b>13.2.2</b> <code>knitr::kable</code> tables</a></li>
+<li class="chapter" data-level="13.2.3" data-path="figures-and-tables.html"><a href="figures-and-tables.html#gt-package"><i class="fa fa-check"></i><b>13.2.3</b> <code>gt</code> package</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="figures-and-tables.html"><a href="figures-and-tables.html#other-tricks"><i class="fa fa-check"></i><b>13.3</b> Other tricks</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html"><i class="fa fa-check"></i><b>14</b> Building a Package on GitHub for Data and Code</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#git-and-github"><i class="fa fa-check"></i><b>14.1</b> Git and GitHub</a></li>
+<li class="chapter" data-level="14.2" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#some-notes-on-the-rstudio-process"><i class="fa fa-check"></i><b>14.2</b> Some notes on the RStudio process</a></li>
+<li class="chapter" data-level="14.3" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#data-1"><i class="fa fa-check"></i><b>14.3</b> Data</a>
+<ul>
+<li class="chapter" data-level="14.3.1" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#raw-data-in-extdata"><i class="fa fa-check"></i><b>14.3.1</b> Raw data in extdata</a></li>
+<li class="chapter" data-level="14.3.2" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#binary-data-as-rda-files"><i class="fa fa-check"></i><b>14.3.2</b> Binary data as <code>rda</code> files</a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="building-a-package-on-github-for-data-and-code.html"><a href="building-a-package-on-github-for-data-and-code.html#code-functions"><i class="fa fa-check"></i><b>14.4</b> Code (functions)</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Environmental Data Science Addenda</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="tmap4" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">4</span> tmap4<a href="tmap4.html#tmap4" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This chapter explores some features of tmap4 such as visual variables and using a basemap.</p>
+<blockquote>
+<p>Note that the tmap version currently being used in this book (html version) is the development version of tmap version 4, available by using the <code>remotes</code> package to <code>install_github("r-tmap/tmaptools")</code> and <code>install_github("r-tmap/tmap")</code>. See <a href="https://github.com/r-tmap/tmap#development-major-update" class="uri">https://github.com/r-tmap/tmap#development-major-update</a>. I’d recommend knitting <code>tmap_vv.Rmd</code>, which you can download from the <code>tmap/vignettes</code> folder, for a bit of documentation on the visual variables symbology method. The chapter on Making Maps <a href="https://r.geocompx.org/adv-map" class="uri">https://r.geocompx.org/adv-map</a> in Geocomputation is probably the most comprehensive source of information.</p>
+</blockquote>
+<blockquote>
+<p>Note that there are many basemaps served you might explore at <a href="https://leaflet-extras.github.io/leaflet-providers/preview/index.html" class="uri">https://leaflet-extras.github.io/leaflet-providers/preview/index.html</a>. However, not all are supported by tm_basemap, so they may end up blank. Unfortunately, the various USGS basemaps are currently not supported, but the Esri and Open basemaps are generally reliable.</p>
+</blockquote>
+<div id="simple-test" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Simple test<a href="tmap4.html#simple-test" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We’ll start with a simple test of tmap on a basemap, with coordinates of 4 points in the NW part of Lake Tahoe provided in code.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="tmap4.html#cb1-1" tabindex="-1"></a><span class="fu">library</span>(tmap)</span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;tmap&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:datasets&#39;:
+## 
+##     rivers</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="tmap4.html#cb4-1" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">&quot;plot&quot;</span>)</span></code></pre></div>
+<pre><code>## ℹ tmap mode set to &quot;plot&quot;.</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="tmap4.html#cb6-1" tabindex="-1"></a>loc <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;nw&quot;</span>,<span class="st">&quot;ne&quot;</span>,<span class="st">&quot;sw&quot;</span>,<span class="st">&quot;se&quot;</span>)</span>
+<span id="cb6-2"><a href="tmap4.html#cb6-2" tabindex="-1"></a>lon <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">120.25</span>, <span class="sc">-</span><span class="fl">120.0</span>, <span class="sc">-</span><span class="fl">120.25</span>, <span class="sc">-</span><span class="fl">120.0</span>)</span>
+<span id="cb6-3"><a href="tmap4.html#cb6-3" tabindex="-1"></a>lat <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">39.25</span>, <span class="fl">39.25</span>, <span class="fl">39.0</span>, <span class="fl">39.0</span>)</span>
+<span id="cb6-4"><a href="tmap4.html#cb6-4" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">data.frame</span>(loc,lon,lat)</span>
+<span id="cb6-5"><a href="tmap4.html#cb6-5" tabindex="-1"></a>tahoeNW <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">st_as_sf</span>(df, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;lon&quot;</span>,<span class="st">&quot;lat&quot;</span>), <span class="at">crs=</span><span class="dv">4326</span>)</span>
+<span id="cb6-6"><a href="tmap4.html#cb6-6" tabindex="-1"></a><span class="fu">tm_basemap</span>(<span class="st">&quot;Esri.WorldTopoMap&quot;</span>) <span class="sc">+</span> <span class="co"># USGS.USTopo&quot;) + # </span></span>
+<span id="cb6-7"><a href="tmap4.html#cb6-7" tabindex="-1"></a>  <span class="fu">tm_graticules</span>() <span class="sc">+</span></span>
+<span id="cb6-8"><a href="tmap4.html#cb6-8" tabindex="-1"></a>  <span class="fu">tm_shape</span>(tahoeNW) <span class="sc">+</span> <span class="fu">tm_dots</span>()</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>Now we’ll add symbology to the points, sticking with simple tm_dots.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="tmap4.html#cb7-1" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
+<span id="cb7-2"><a href="tmap4.html#cb7-2" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">&quot;plot&quot;</span>)</span></code></pre></div>
+<pre><code>## ℹ tmap mode set to &quot;plot&quot;.</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="tmap4.html#cb9-1" tabindex="-1"></a>loc <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;nw&quot;</span>,<span class="st">&quot;ne&quot;</span>,<span class="st">&quot;sw&quot;</span>,<span class="st">&quot;se&quot;</span>)</span>
+<span id="cb9-2"><a href="tmap4.html#cb9-2" tabindex="-1"></a>lon <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">120.25</span>, <span class="sc">-</span><span class="fl">120.0</span>, <span class="sc">-</span><span class="fl">120.25</span>, <span class="sc">-</span><span class="fl">120.0</span>)</span>
+<span id="cb9-3"><a href="tmap4.html#cb9-3" tabindex="-1"></a>lat <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">39.25</span>, <span class="fl">39.25</span>, <span class="fl">39.0</span>, <span class="fl">39.0</span>)</span>
+<span id="cb9-4"><a href="tmap4.html#cb9-4" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">data.frame</span>(loc,lon,lat)</span>
+<span id="cb9-5"><a href="tmap4.html#cb9-5" tabindex="-1"></a>tahoeNW <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">st_as_sf</span>(df, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;lon&quot;</span>,<span class="st">&quot;lat&quot;</span>), <span class="at">crs=</span><span class="dv">4326</span>)</span>
+<span id="cb9-6"><a href="tmap4.html#cb9-6" tabindex="-1"></a><span class="fu">tm_basemap</span>(<span class="st">&quot;Esri.WorldTopoMap&quot;</span>) <span class="sc">+</span></span>
+<span id="cb9-7"><a href="tmap4.html#cb9-7" tabindex="-1"></a>  <span class="fu">tm_graticules</span>() <span class="sc">+</span></span>
+<span id="cb9-8"><a href="tmap4.html#cb9-8" tabindex="-1"></a>  <span class="fu">tm_shape</span>(tahoeNW) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">fill=</span><span class="st">&quot;red&quot;</span>, <span class="at">size=</span><span class="fl">0.7</span>)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>Now we’ll specify a particular point symbol, using the R shape 21 for a filled circle (google R point symbols to see the 25 shapes).</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="tmap4.html#cb10-1" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
+<span id="cb10-2"><a href="tmap4.html#cb10-2" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">&quot;plot&quot;</span>)</span></code></pre></div>
+<pre><code>## ℹ tmap mode set to &quot;plot&quot;.</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="tmap4.html#cb12-1" tabindex="-1"></a>loc <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;nw&quot;</span>,<span class="st">&quot;ne&quot;</span>,<span class="st">&quot;sw&quot;</span>,<span class="st">&quot;se&quot;</span>)</span>
+<span id="cb12-2"><a href="tmap4.html#cb12-2" tabindex="-1"></a>lon <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">120.25</span>, <span class="sc">-</span><span class="fl">120.0</span>, <span class="sc">-</span><span class="fl">120.25</span>, <span class="sc">-</span><span class="fl">120.0</span>)</span>
+<span id="cb12-3"><a href="tmap4.html#cb12-3" tabindex="-1"></a>lat <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">39.25</span>, <span class="fl">39.25</span>, <span class="fl">39.0</span>, <span class="fl">39.0</span>)</span>
+<span id="cb12-4"><a href="tmap4.html#cb12-4" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">data.frame</span>(loc,lon,lat)</span>
+<span id="cb12-5"><a href="tmap4.html#cb12-5" tabindex="-1"></a>tahoeNW <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">st_as_sf</span>(df, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;lon&quot;</span>,<span class="st">&quot;lat&quot;</span>), <span class="at">crs=</span><span class="dv">4326</span>)</span>
+<span id="cb12-6"><a href="tmap4.html#cb12-6" tabindex="-1"></a><span class="fu">tm_basemap</span>(<span class="st">&quot;Esri.WorldTopoMap&quot;</span>) <span class="sc">+</span></span>
+<span id="cb12-7"><a href="tmap4.html#cb12-7" tabindex="-1"></a>  <span class="fu">tm_graticules</span>() <span class="sc">+</span></span>
+<span id="cb12-8"><a href="tmap4.html#cb12-8" tabindex="-1"></a>  <span class="fu">tm_shape</span>(tahoeNW) <span class="sc">+</span> <span class="fu">tm_symbols</span>(<span class="at">shape=</span><span class="dv">21</span>, <span class="at">fill=</span><span class="st">&quot;red&quot;</span>, <span class="at">size=</span><span class="fl">0.7</span>, <span class="at">col=</span><span class="st">&quot;black&quot;</span>)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+<div id="visual-variables" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Visual variables<a href="tmap4.html#visual-variables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>There are two kinds of variables that tmap4 responds to – <strong>transformation</strong> variables that changes the display spatial coordinates (such as in a cartogram) and <strong>visual</strong> variables that change the symbology. Visual variables will be most useful for us, so is the main subject of this chapter.</p>
+<p>From a vignette by Martijn Tennekes, we can see the a table of visual variables supported:</p>
+<table>
+<colgroup>
+<col width="16%" />
+<col width="50%" />
+<col width="33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Map layer</th>
+<th>Visual variables</th>
+<th>Visual constant</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>tm_basemap()</code></td>
+<td>none</td>
+<td><code>alpha</code></td>
+</tr>
+<tr class="even">
+<td><code>tm_polygons()</code></td>
+<td><code>fill</code> (fill color), <code>col</code> (border color), <code>lwd</code> (border line width) <code>lty</code> (border line type), <code>fill_alpha</code> (fill transparency), <code>col_alpha</code> (border color transparency)</td>
+<td><code>linejoin</code> (line join) and <code>lineend</code> (line end)</td>
+</tr>
+<tr class="odd">
+<td><code>tm_symbols()</code></td>
+<td><code>fill</code> (fill color), <code>col</code> (border color), <code>size</code>, <code>shape</code>, <code>lwd</code> (border line width) <code>lty</code> (border line type), <code>fill_alpha</code> fill transparency, <code>col_alpha</code> border color transparency</td>
+<td><code>linejoin</code> (line join) and <code>lineend</code> (line end)</td>
+</tr>
+<tr class="even">
+<td><code>tm_lines()</code></td>
+<td><code>col</code> (color), <code>lwd</code> (line width) <code>lty</code> (line type), <code>alpha</code> transparency</td>
+<td><code>linejoin</code> (line join) and <code>lineend</code> (line end)</td>
+</tr>
+<tr class="odd">
+<td><code>tm_raster()</code></td>
+<td><code>col</code> (color), <code>alpha</code> (transparency)</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>tm_text()</code></td>
+<td><code>size</code>, <code>col</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="constant-visual-variables" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Constant visual variables<a href="tmap4.html#constant-visual-variables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="tmap4.html#cb13-1" tabindex="-1"></a><span class="fu">tm_shape</span>(tahoeNW) <span class="sc">+</span> <span class="fu">tm_symbols</span>(<span class="at">size=</span><span class="dv">1</span>, <span class="at">fill=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="tmap4.html#cb14-1" tabindex="-1"></a><span class="fu">tm_shape</span>(World) <span class="sc">+</span> <span class="fu">tm_polygons</span>(<span class="st">&quot;gray&quot;</span>)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-4-2.png" width="672" />
+## Using a visual variable for feature symbolization</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="tmap4.html#cb15-1" tabindex="-1"></a><span class="fu">tm_shape</span>(World) <span class="sc">+</span></span>
+<span id="cb15-2"><a href="tmap4.html#cb15-2" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="st">&quot;pop_est&quot;</span>)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>You can create facets by specifying multiple data variable names and scales to one visual (or transformation) variable, in this case <code>"fill"</code>. The effect will be a comparison of six symbolization methods using the same variable.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="tmap4.html#cb16-1" tabindex="-1"></a><span class="fu">data</span>(World)</span>
+<span id="cb16-2"><a href="tmap4.html#cb16-2" tabindex="-1"></a>Africa <span class="ot">=</span> World[World<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Africa&quot;</span>, ]</span>
+<span id="cb16-3"><a href="tmap4.html#cb16-3" tabindex="-1"></a>Africa<span class="sc">$</span>life_exp <span class="ot">=</span> <span class="fu">round</span>(Africa<span class="sc">$</span>life_exp)</span>
+<span id="cb16-4"><a href="tmap4.html#cb16-4" tabindex="-1"></a><span class="fu">tm_shape</span>(Africa) <span class="sc">+</span></span>
+<span id="cb16-5"><a href="tmap4.html#cb16-5" tabindex="-1"></a>    <span class="fu">tm_polygons</span>(<span class="fu">rep</span>(<span class="st">&quot;life_exp&quot;</span>, <span class="dv">6</span>), </span>
+<span id="cb16-6"><a href="tmap4.html#cb16-6" tabindex="-1"></a>                <span class="at">fill.scale =</span> <span class="fu">list</span>(<span class="fu">tm_scale_categorical</span>(),</span>
+<span id="cb16-7"><a href="tmap4.html#cb16-7" tabindex="-1"></a>                                  <span class="fu">tm_scale_ordinal</span>(),</span>
+<span id="cb16-8"><a href="tmap4.html#cb16-8" tabindex="-1"></a>                                  <span class="fu">tm_scale_intervals</span>(),</span>
+<span id="cb16-9"><a href="tmap4.html#cb16-9" tabindex="-1"></a>                                  <span class="fu">tm_scale_continuous</span>(),</span>
+<span id="cb16-10"><a href="tmap4.html#cb16-10" tabindex="-1"></a>                                  <span class="fu">tm_scale_continuous_log</span>(),</span>
+<span id="cb16-11"><a href="tmap4.html#cb16-11" tabindex="-1"></a>                                  <span class="fu">tm_scale_discrete</span>()),</span>
+<span id="cb16-12"><a href="tmap4.html#cb16-12" tabindex="-1"></a>                <span class="at">fill.legend =</span> <span class="fu">tm_legend</span>(<span class="at">title =</span> <span class="st">&quot;&quot;</span>, <span class="at">position =</span> <span class="fu">tm_pos_in</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;top&quot;</span>))) <span class="sc">+</span></span>
+<span id="cb16-13"><a href="tmap4.html#cb16-13" tabindex="-1"></a>    <span class="fu">tm_layout</span>(<span class="at">panel.labels =</span> <span class="fu">c</span>(<span class="st">&quot;tm_scale_categorical&quot;</span>, <span class="st">&quot;tm_scale_ordinal&quot;</span>, <span class="st">&quot;tm_scale_intervals&quot;</span>, <span class="st">&quot;tm_scale_continuous&quot;</span>, <span class="st">&quot;tm_scale_continuous_log&quot;</span>, <span class="st">&quot;tm_scale_discrete&quot;</span>), </span>
+<span id="cb16-14"><a href="tmap4.html#cb16-14" tabindex="-1"></a>              <span class="at">inner.margins =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.4</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>),</span>
+<span id="cb16-15"><a href="tmap4.html#cb16-15" tabindex="-1"></a>              <span class="at">legend.text.size =</span> <span class="fl">0.5</span>)</span></code></pre></div>
+<pre><code>## [plot mode] fit legend/component: Some legend items or map compoments do not
+## fit well, and are therefore rescaled.
+## ℹ Set the tmap option `component.autoscale = FALSE` to disable rescaling.</code></pre>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>
+<div id="basemap" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> Basemap<a href="tmap4.html#basemap" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Basemaps are very useful for providing context for thematic maps. The <code>tm_basemap</code> function in tmap uses a capability of leaflet interactive maps for this, and makes use of the maptiles package to provide this capability for static (plot mode) maps.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="tmap4.html#cb18-1" tabindex="-1"></a><span class="fu">tm_basemap</span>(<span class="at">server=</span><span class="st">&quot;OpenTopoMap&quot;</span>, <span class="at">zoom=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb18-2"><a href="tmap4.html#cb18-2" tabindex="-1"></a>  <span class="fu">tm_shape</span>(World, <span class="at">bbox=</span>sf<span class="sc">::</span><span class="fu">st_bbox</span>(<span class="fu">c</span>(<span class="at">xmin=</span><span class="sc">-</span><span class="dv">180</span>,<span class="at">xmax=</span><span class="dv">180</span>,<span class="at">ymin=</span><span class="sc">-</span><span class="dv">85</span>,<span class="at">ymax=</span><span class="dv">85</span>))) <span class="sc">+</span></span>
+<span id="cb18-3"><a href="tmap4.html#cb18-3" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="at">fill=</span><span class="cn">NA</span>,<span class="at">col=</span><span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
+<span id="cb18-4"><a href="tmap4.html#cb18-4" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">inner.margins=</span><span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">4</span>))</span></code></pre></div>
+<pre><code>## Warning: Current projection unknown. Long lat coordinates (wgs84) assumed.</code></pre>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="distance-from-census-tract-centroid-to-closest-tri-site.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="interpolation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+},
+"book_filename": "envdatasci",
+"toc_depth": 4
+});
+});
+</script>
+
+</body>
+
+</html>
