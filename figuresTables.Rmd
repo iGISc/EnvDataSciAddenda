@@ -6,7 +6,15 @@ Note that the methods you use will differ somewhat depending on whether you're o
 
 ## Figures
 
-You already know how to create figures in R Markdown, simply by creating graphics in code chunks. To make them more useful as a report, you can add a figure heading and cite the figure in the text. To create the figure heading, assign it in the code chunk header to `fig.cap`. To cite it in text use an inline reference like this: (Figure \@ref(fig:CAmap)). 
+You already know how to create figures in R Markdown, simply by creating graphics in code chunks. To make them more useful as a report, you can add a figure heading and cite the figure in the text. To create the figure heading, assign it in the code chunk header to `fig.cap`, similar to this:
+
+`'{r CAmap, fig.cap="California Counties"}'` (without the single quotes).
+
+Note the use of the `fig` item in the figure list, with `fig.cap` in the header specifying the figure caption. To then cite it in text use an inline reference employing that same `fig` figure list entered in markdown as:
+
+`'(Figure \@ref(fig:CAmap))'` (also without the single quotes)...
+
+... to look like this: (Figure \@ref(fig:CAmap)). 
 
 ```{r CAmap, warning=F, message=F, fig.cap="California Counties"}
 library(igisci); library(ggplot2)

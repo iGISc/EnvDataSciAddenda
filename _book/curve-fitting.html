@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>10 Curve fitting | Environmental Data Science Addenda</title>
   <meta name="description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
-  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="10 Curve fitting | Environmental Data Science Addenda" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Jerry Davis, SFSU Institute for Geographic Information Science" />
 
 
-<meta name="date" content="2024-11-28" />
+<meta name="date" content="2026-09-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,35 +52,37 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<link href="libs/htmltools-fill-0.5.9/fill.css" rel="stylesheet" />
 <script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.33/datatables.js"></script>
+<script src="libs/datatables-binding-0.34.0/datatables.js"></script>
 <link href="libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
-<link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+<link href="libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
 <link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
 <script src="libs/leaflet-1.3.1/leaflet.js"></script>
 <link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
 <script src="libs/proj4-2.6.2/proj4.min.js"></script>
 <script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
 <link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-binding-2.2.2/leaflet.js"></script>
-<script src="libs/leaflet-providers-2.0.0/leaflet-providers_2.0.0.js"></script>
-<script src="libs/leaflet-providers-plugin-2.2.2/leaflet-providers-plugin.js"></script>
+<script src="libs/leaflet-binding-2.2.3/leaflet.js"></script>
+<script src="libs/leaflet-providers-3.0.0/leaflet-providers.js"></script>
+<script src="libs/leaflet-providers-plugin-2.2.3/leaflet-providers-plugin.js"></script>
 <script src="libs/leaflet-graticule-0.1.0/L.Graticule.js"></script>
 <script src="libs/leaflet-graticule-0.1.0/Graticule-binding.js"></script>
-<script src="libs/Leaflet.glify-3.2.0/addGlifyPoints.js"></script>
-<script src="libs/Leaflet.glify-3.2.0/addGlifyPolygons.js"></script>
-<script src="libs/Leaflet.glify-3.2.0/addGlifyPolylines.js"></script>
-<script src="libs/Leaflet.glify-3.2.0/glify-browser.js"></script>
+<script src="libs/Leaflet.glify-3.3.1/GlifyUtils.js"></script>
+<script src="libs/Leaflet.glify-3.3.1/addGlifyPoints.js"></script>
+<script src="libs/Leaflet.glify-3.3.1/addGlifyPolygons.js"></script>
+<script src="libs/Leaflet.glify-3.3.1/addGlifyPolylines.js"></script>
+<script src="libs/Leaflet.glify-3.3.1/glify-browser.js"></script>
 
 
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -152,7 +154,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -203,7 +204,10 @@ div.csl-indent {
 <li class="chapter" data-level="4.1" data-path="tmap4.html"><a href="tmap4.html#simple-test"><i class="fa fa-check"></i><b>4.1</b> Simple test</a></li>
 <li class="chapter" data-level="4.2" data-path="tmap4.html"><a href="tmap4.html#visual-variables"><i class="fa fa-check"></i><b>4.2</b> Visual variables</a></li>
 <li class="chapter" data-level="4.3" data-path="tmap4.html"><a href="tmap4.html#constant-visual-variables"><i class="fa fa-check"></i><b>4.3</b> Constant visual variables</a></li>
-<li class="chapter" data-level="4.4" data-path="tmap4.html"><a href="tmap4.html#basemap"><i class="fa fa-check"></i><b>4.4</b> Basemap</a></li>
+<li class="chapter" data-level="4.4" data-path="tmap4.html"><a href="tmap4.html#basemap"><i class="fa fa-check"></i><b>4.4</b> Basemap</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="tmap4.html"><a href="tmap4.html#basemaps-with-rasters"><i class="fa fa-check"></i><b>4.4.1</b> Basemaps with rasters</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="interpolation.html"><a href="interpolation.html"><i class="fa fa-check"></i><b>5</b> Spatial Interpolation</a>
 <ul>
@@ -370,37 +374,37 @@ div.csl-indent {
 <blockquote>
 <p>Note: There’s a lot to understand about curve fitting, and this brief presentation doesn’t pretend to be comprehensive, but just provide some examples that use graphics and model results to guide the process of choosing and testing appropriate models.</p>
 </blockquote>
-<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="curve-fitting.html#cb136-1" tabindex="-1"></a><span class="fu">library</span>(readxl); <span class="fu">library</span>(tidyverse); <span class="fu">library</span>(lubridate); <span class="fu">library</span>(igisci)</span></code></pre></div>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="curve-fitting.html#cb134-1" tabindex="-1"></a><span class="fu">library</span>(readxl); <span class="fu">library</span>(tidyverse); <span class="fu">library</span>(lubridate); <span class="fu">library</span>(igisci)</span></code></pre></div>
 <div id="carbon-flux-data-from-red-clover-valley" class="section level2 hasAnchor" number="10.1">
 <h2><span class="header-section-number">10.1</span> Carbon flux data from Red Clover Valley<a href="curve-fitting.html#carbon-flux-data-from-red-clover-valley" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <blockquote>
 <p>Data are from Andrew Oliphant, used in his bioclimatology class at SFSU.</p>
 </blockquote>
 <p>First create a function to convert the first two rows into individual variables. We won’t include the units, so we’ll comment out this line from the function we’ve used before.</p>
-<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="curve-fitting.html#cb137-1" tabindex="-1"></a>read_excel2 <span class="ot">&lt;-</span> <span class="cf">function</span>(xl){</span>
-<span id="cb137-2"><a href="curve-fitting.html#cb137-2" tabindex="-1"></a>  vnames <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(xl, <span class="at">n_max=</span><span class="dv">0</span>) <span class="sc">|&gt;</span> <span class="fu">names</span>()</span>
-<span id="cb137-3"><a href="curve-fitting.html#cb137-3" tabindex="-1"></a>  <span class="co"># vunits &lt;- read_excel(xl, n_max=0, skip=1) |&gt; names()</span></span>
-<span id="cb137-4"><a href="curve-fitting.html#cb137-4" tabindex="-1"></a>  <span class="fu">read_excel</span>(xl, <span class="at">skip=</span><span class="dv">2</span>, <span class="at">col_names=</span>vnames)</span>
-<span id="cb137-5"><a href="curve-fitting.html#cb137-5" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="curve-fitting.html#cb135-1" tabindex="-1"></a>read_excel2 <span class="ot">&lt;-</span> <span class="cf">function</span>(xl){</span>
+<span id="cb135-2"><a href="curve-fitting.html#cb135-2" tabindex="-1"></a>  vnames <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(xl, <span class="at">n_max=</span><span class="dv">0</span>) <span class="sc">|&gt;</span> <span class="fu">names</span>()</span>
+<span id="cb135-3"><a href="curve-fitting.html#cb135-3" tabindex="-1"></a>  <span class="co"># vunits &lt;- read_excel(xl, n_max=0, skip=1) |&gt; names()</span></span>
+<span id="cb135-4"><a href="curve-fitting.html#cb135-4" tabindex="-1"></a>  <span class="fu">read_excel</span>(xl, <span class="at">skip=</span><span class="dv">2</span>, <span class="at">col_names=</span>vnames)</span>
+<span id="cb135-5"><a href="curve-fitting.html#cb135-5" tabindex="-1"></a>}</span></code></pre></div>
 <p>In reading the data, we’ll remove the zero GPP_sum values.</p>
-<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="curve-fitting.html#cb138-1" tabindex="-1"></a>Carbon_Flux <span class="ot">&lt;-</span> <span class="fu">read_excel2</span>(<span class="fu">ex</span>(<span class="st">&quot;meadows/RCV_carbon_flux_data.xlsx&quot;</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb138-2"><a href="curve-fitting.html#cb138-2" tabindex="-1"></a>  <span class="fu">filter</span>(GPP_sum<span class="sc">&gt;</span><span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="curve-fitting.html#cb136-1" tabindex="-1"></a>Carbon_Flux <span class="ot">&lt;-</span> <span class="fu">read_excel2</span>(<span class="fu">ex</span>(<span class="st">&quot;meadows/RCV_carbon_flux_data.xlsx&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb136-2"><a href="curve-fitting.html#cb136-2" tabindex="-1"></a>  <span class="fu">filter</span>(GPP_sum<span class="sc">&gt;</span><span class="dv">0</span>)</span></code></pre></div>
 <p>Then we’ll build a figure, using ggplot to visualize change of NEE, GPP, PAR and RE over the period of data.</p>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="curve-fitting.html#cb139-1" tabindex="-1"></a>Carbon_Flux <span class="sc">|&gt;</span></span>
-<span id="cb139-2"><a href="curve-fitting.html#cb139-2" tabindex="-1"></a>  <span class="fu">select</span>(Date<span class="sc">:</span>PAR_ave) <span class="sc">|&gt;</span></span>
-<span id="cb139-3"><a href="curve-fitting.html#cb139-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">NEE =</span> <span class="fu">round</span>(NEE_sum, <span class="at">digits =</span> <span class="dv">3</span>),</span>
-<span id="cb139-4"><a href="curve-fitting.html#cb139-4" tabindex="-1"></a>       <span class="at">GPP =</span> <span class="fu">round</span>(GPP_sum, <span class="at">digits =</span> <span class="dv">3</span>),</span>
-<span id="cb139-5"><a href="curve-fitting.html#cb139-5" tabindex="-1"></a>       <span class="at">RE =</span> <span class="fu">round</span>(RE_sum, <span class="at">digits =</span> <span class="dv">3</span>),</span>
-<span id="cb139-6"><a href="curve-fitting.html#cb139-6" tabindex="-1"></a>       <span class="at">PAR =</span> <span class="fu">round</span>(PAR_ave, <span class="at">digits =</span> <span class="dv">3</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb139-7"><a href="curve-fitting.html#cb139-7" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="st">&quot;NEE&quot;</span>, <span class="st">&quot;RE&quot;</span>, <span class="st">&quot;GPP&quot;</span>, <span class="st">&quot;PAR&quot;</span>), <span class="at">names_to =</span> <span class="st">&quot;CO2_FLUX_COMPONENTS&quot;</span>, <span class="at">values_to =</span><span class="st">&quot;value&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb139-8"><a href="curve-fitting.html#cb139-8" tabindex="-1"></a>  <span class="fu">filter</span>(GPP_sum <span class="sc">!=</span> <span class="dv">0</span>, <span class="sc">!</span><span class="fu">is.na</span>(PAR_ave)) <span class="sc">|&gt;</span> </span>
-<span id="cb139-9"><a href="curve-fitting.html#cb139-9" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Date, <span class="at">y=</span> value)) <span class="sc">+</span> <span class="co">#, color = CO2_FLUX_COMPONENTS))+</span></span>
-<span id="cb139-10"><a href="curve-fitting.html#cb139-10" tabindex="-1"></a>    <span class="fu">geom_line</span>()<span class="sc">+</span></span>
-<span id="cb139-11"><a href="curve-fitting.html#cb139-11" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">&quot;longdash&quot;</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>)<span class="sc">+</span></span>
-<span id="cb139-12"><a href="curve-fitting.html#cb139-12" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">&quot; Red Clover Valley: Components of Eddy Covariance Flux Measurements&quot;</span>) <span class="sc">+</span></span>
-<span id="cb139-13"><a href="curve-fitting.html#cb139-13" tabindex="-1"></a>    <span class="fu">facet_grid</span>(CO2_FLUX_COMPONENTS <span class="sc">~</span> ., <span class="at">scales =</span> <span class="st">&quot;free_y&quot;</span>)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-73"></span>
-<img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-73-1.png" alt="Figure 1: Components of Carbon Flux measurements collected in 30 minute intervals in 2021 and added into sum or average, from flux tower in Red Clover Valley,California. Components included NEE (Net Ecosystem Exchange), RE (Respiration Efficiency), PAR (photosynthetically active radiation), and GPP (Gross Primary Productivity) plotted against a year-day time scale with day as the unit of measure." width="75%" />
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="curve-fitting.html#cb137-1" tabindex="-1"></a>Carbon_Flux <span class="sc">|&gt;</span></span>
+<span id="cb137-2"><a href="curve-fitting.html#cb137-2" tabindex="-1"></a>  <span class="fu">select</span>(Date<span class="sc">:</span>PAR_ave) <span class="sc">|&gt;</span></span>
+<span id="cb137-3"><a href="curve-fitting.html#cb137-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">NEE =</span> <span class="fu">round</span>(NEE_sum, <span class="at">digits =</span> <span class="dv">3</span>),</span>
+<span id="cb137-4"><a href="curve-fitting.html#cb137-4" tabindex="-1"></a>       <span class="at">GPP =</span> <span class="fu">round</span>(GPP_sum, <span class="at">digits =</span> <span class="dv">3</span>),</span>
+<span id="cb137-5"><a href="curve-fitting.html#cb137-5" tabindex="-1"></a>       <span class="at">RE =</span> <span class="fu">round</span>(RE_sum, <span class="at">digits =</span> <span class="dv">3</span>),</span>
+<span id="cb137-6"><a href="curve-fitting.html#cb137-6" tabindex="-1"></a>       <span class="at">PAR =</span> <span class="fu">round</span>(PAR_ave, <span class="at">digits =</span> <span class="dv">3</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb137-7"><a href="curve-fitting.html#cb137-7" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="st">&quot;NEE&quot;</span>, <span class="st">&quot;RE&quot;</span>, <span class="st">&quot;GPP&quot;</span>, <span class="st">&quot;PAR&quot;</span>), <span class="at">names_to =</span> <span class="st">&quot;CO2_FLUX_COMPONENTS&quot;</span>, <span class="at">values_to =</span><span class="st">&quot;value&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb137-8"><a href="curve-fitting.html#cb137-8" tabindex="-1"></a>  <span class="fu">filter</span>(GPP_sum <span class="sc">!=</span> <span class="dv">0</span>, <span class="sc">!</span><span class="fu">is.na</span>(PAR_ave)) <span class="sc">|&gt;</span> </span>
+<span id="cb137-9"><a href="curve-fitting.html#cb137-9" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Date, <span class="at">y=</span> value)) <span class="sc">+</span> <span class="co">#, color = CO2_FLUX_COMPONENTS))+</span></span>
+<span id="cb137-10"><a href="curve-fitting.html#cb137-10" tabindex="-1"></a>    <span class="fu">geom_line</span>()<span class="sc">+</span></span>
+<span id="cb137-11"><a href="curve-fitting.html#cb137-11" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">&quot;longdash&quot;</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>)<span class="sc">+</span></span>
+<span id="cb137-12"><a href="curve-fitting.html#cb137-12" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">&quot; Red Clover Valley: Components of Eddy Covariance Flux Measurements&quot;</span>) <span class="sc">+</span></span>
+<span id="cb137-13"><a href="curve-fitting.html#cb137-13" tabindex="-1"></a>    <span class="fu">facet_grid</span>(CO2_FLUX_COMPONENTS <span class="sc">~</span> ., <span class="at">scales =</span> <span class="st">&quot;free_y&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-75"></span>
+<img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-75-1.png" alt="Figure 1: Components of Carbon Flux measurements collected in 30 minute intervals in 2021 and added into sum or average, from flux tower in Red Clover Valley,California. Components included NEE (Net Ecosystem Exchange), RE (Respiration Efficiency), PAR (photosynthetically active radiation), and GPP (Gross Primary Productivity) plotted against a year-day time scale with day as the unit of measure." width="75%" />
 <p class="caption">
 FIGURE 10.1: Figure 1: Components of Carbon Flux measurements collected in 30 minute intervals in 2021 and added into sum or average, from flux tower in Red Clover Valley,California. Components included NEE (Net Ecosystem Exchange), RE (Respiration Efficiency), PAR (photosynthetically active radiation), and GPP (Gross Primary Productivity) plotted against a year-day time scale with day as the unit of measure.
 </p>
@@ -408,13 +412,13 @@ FIGURE 10.1: Figure 1: Components of Carbon Flux measurements collected in 30 mi
 <div id="pairs-plot" class="section level3 hasAnchor" number="10.1.1">
 <h3><span class="header-section-number">10.1.1</span> Pairs plot<a href="curve-fitting.html#pairs-plot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>As we’ve seen elsewhere, pairs plots are useful for visualizing bivariate relationships of continuous data, all on one graph.</p>
-<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="curve-fitting.html#cb140-1" tabindex="-1"></a>Carbon_Flux <span class="sc">|&gt;</span></span>
-<span id="cb140-2"><a href="curve-fitting.html#cb140-2" tabindex="-1"></a>  <span class="fu">select</span>(GPP_sum<span class="sc">:</span>vpd_max) <span class="sc">|&gt;</span></span>
-<span id="cb140-3"><a href="curve-fitting.html#cb140-3" tabindex="-1"></a>  GGally<span class="sc">::</span><span class="fu">ggpairs</span>()</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-74-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="curve-fitting.html#cb138-1" tabindex="-1"></a>Carbon_Flux <span class="sc">|&gt;</span></span>
+<span id="cb138-2"><a href="curve-fitting.html#cb138-2" tabindex="-1"></a>  <span class="fu">select</span>(GPP_sum<span class="sc">:</span>vpd_max) <span class="sc">|&gt;</span></span>
+<span id="cb138-3"><a href="curve-fitting.html#cb138-3" tabindex="-1"></a>  GGally<span class="sc">::</span><span class="fu">ggpairs</span>()</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-76-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
 <p>We’ll look at GPP_sum~PAR_ave.</p>
-<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="curve-fitting.html#cb141-1" tabindex="-1"></a><span class="fu">plot</span>(Carbon_Flux<span class="sc">$</span>PAR_ave,Carbon_Flux<span class="sc">$</span>GPP_sum, <span class="at">xlab=</span><span class="st">&quot;PAR_ave&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;GPP_sum&quot;</span>)</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-75-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="curve-fitting.html#cb139-1" tabindex="-1"></a><span class="fu">plot</span>(Carbon_Flux<span class="sc">$</span>PAR_ave,Carbon_Flux<span class="sc">$</span>GPP_sum, <span class="at">xlab=</span><span class="st">&quot;PAR_ave&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;GPP_sum&quot;</span>)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-77-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
 <p>What we can see is a relationship that doesn’t fit a straight line but steepens with higher values in the explanatory variable. We’ll need to look at other models that aren’t simple linear.</p>
 </div>
 </div>
@@ -427,8 +431,8 @@ FIGURE 10.1: Figure 1: Components of Carbon Flux measurements collected in 30 mi
 <p><span class="math display">\[
 y = b_0 + b_1 X
 \]</span></p>
-<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="curve-fitting.html#cb142-1" tabindex="-1"></a>ord <span class="ot">=</span> <span class="dv">1</span></span>
-<span id="cb142-2"><a href="curve-fitting.html#cb142-2" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(GPP_sum <span class="sc">~</span> <span class="fu">poly</span>(PAR_ave, ord, <span class="at">raw=</span>T), <span class="at">data=</span>Carbon_Flux))</span></code></pre></div>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="curve-fitting.html#cb140-1" tabindex="-1"></a>ord <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb140-2"><a href="curve-fitting.html#cb140-2" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(GPP_sum <span class="sc">~</span> <span class="fu">poly</span>(PAR_ave, ord, <span class="at">raw=</span>T), <span class="at">data=</span>Carbon_Flux))</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = GPP_sum ~ poly(PAR_ave, ord, raw = T), data = Carbon_Flux)
@@ -449,9 +453,9 @@ y = b_0 + b_1 X
 ## Multiple R-squared:  0.5616, Adjusted R-squared:  0.5601 
 ## F-statistic: 384.3 on 1 and 300 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>… and displaying the curve using <code>stat_smooth()</code> in ggplot2:</p>
-<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="curve-fitting.html#cb144-1" tabindex="-1"></a><span class="fu">ggplot</span>(Carbon_Flux, <span class="fu">aes</span>(PAR_ave, GPP_sum)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb144-2"><a href="curve-fitting.html#cb144-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm, <span class="at">formula=</span>y<span class="sc">~</span><span class="fu">poly</span>(x,ord,<span class="at">raw=</span>T))</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-77-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="curve-fitting.html#cb142-1" tabindex="-1"></a><span class="fu">ggplot</span>(Carbon_Flux, <span class="fu">aes</span>(PAR_ave, GPP_sum)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb142-2"><a href="curve-fitting.html#cb142-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm, <span class="at">formula=</span>y<span class="sc">~</span><span class="fu">poly</span>(x,ord,<span class="at">raw=</span>T))</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-79-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="poly-2" class="section level3 hasAnchor" number="10.2.2">
 <h3><span class="header-section-number">10.2.2</span> poly 2<a href="curve-fitting.html#poly-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -459,8 +463,8 @@ y = b_0 + b_1 X
 <p><span class="math display">\[
 y = b_0 + b_1 x + b_2x^2
 \]</span></p>
-<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="curve-fitting.html#cb145-1" tabindex="-1"></a>ord <span class="ot">=</span> <span class="dv">2</span></span>
-<span id="cb145-2"><a href="curve-fitting.html#cb145-2" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(GPP_sum <span class="sc">~</span> <span class="fu">poly</span>(PAR_ave, ord, <span class="at">raw=</span>T), <span class="at">data=</span>Carbon_Flux))</span></code></pre></div>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="curve-fitting.html#cb143-1" tabindex="-1"></a>ord <span class="ot">=</span> <span class="dv">2</span></span>
+<span id="cb143-2"><a href="curve-fitting.html#cb143-2" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(GPP_sum <span class="sc">~</span> <span class="fu">poly</span>(PAR_ave, ord, <span class="at">raw=</span>T), <span class="at">data=</span>Carbon_Flux))</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = GPP_sum ~ poly(PAR_ave, ord, raw = T), data = Carbon_Flux)
@@ -481,17 +485,17 @@ y = b_0 + b_1 x + b_2x^2
 ##   (1 observation deleted due to missingness)
 ## Multiple R-squared:  0.6714, Adjusted R-squared:  0.6692 
 ## F-statistic: 305.4 on 2 and 299 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="curve-fitting.html#cb147-1" tabindex="-1"></a><span class="fu">ggplot</span>(Carbon_Flux, <span class="fu">aes</span>(PAR_ave, GPP_sum)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb147-2"><a href="curve-fitting.html#cb147-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm, <span class="at">formula=</span>y<span class="sc">~</span><span class="fu">poly</span>(x,ord,<span class="at">raw=</span>T))</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-78-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="curve-fitting.html#cb145-1" tabindex="-1"></a><span class="fu">ggplot</span>(Carbon_Flux, <span class="fu">aes</span>(PAR_ave, GPP_sum)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb145-2"><a href="curve-fitting.html#cb145-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm, <span class="at">formula=</span>y<span class="sc">~</span><span class="fu">poly</span>(x,ord,<span class="at">raw=</span>T))</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-80-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="poly-3" class="section level3 hasAnchor" number="10.2.3">
 <h3><span class="header-section-number">10.2.3</span> poly 3<a href="curve-fitting.html#poly-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><span class="math display">\[
 y = b_0 + b_1 x + b_2 x^2 + b_3 x^3
 \]</span></p>
-<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="curve-fitting.html#cb148-1" tabindex="-1"></a>ord <span class="ot">=</span> <span class="dv">3</span></span>
-<span id="cb148-2"><a href="curve-fitting.html#cb148-2" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(GPP_sum <span class="sc">~</span> <span class="fu">poly</span>(PAR_ave, ord, <span class="at">raw=</span>T), <span class="at">data=</span>Carbon_Flux))</span></code></pre></div>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="curve-fitting.html#cb146-1" tabindex="-1"></a>ord <span class="ot">=</span> <span class="dv">3</span></span>
+<span id="cb146-2"><a href="curve-fitting.html#cb146-2" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(GPP_sum <span class="sc">~</span> <span class="fu">poly</span>(PAR_ave, ord, <span class="at">raw=</span>T), <span class="at">data=</span>Carbon_Flux))</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = GPP_sum ~ poly(PAR_ave, ord, raw = T), data = Carbon_Flux)
@@ -513,9 +517,9 @@ y = b_0 + b_1 x + b_2 x^2 + b_3 x^3
 ##   (1 observation deleted due to missingness)
 ## Multiple R-squared:  0.7001, Adjusted R-squared:  0.6971 
 ## F-statistic: 231.9 on 3 and 298 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="curve-fitting.html#cb150-1" tabindex="-1"></a><span class="fu">ggplot</span>(Carbon_Flux, <span class="fu">aes</span>(PAR_ave, GPP_sum)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb150-2"><a href="curve-fitting.html#cb150-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm, <span class="at">formula=</span>y<span class="sc">~</span><span class="fu">poly</span>(x,ord,<span class="at">raw=</span>T))</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-79-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="curve-fitting.html#cb148-1" tabindex="-1"></a><span class="fu">ggplot</span>(Carbon_Flux, <span class="fu">aes</span>(PAR_ave, GPP_sum)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb148-2"><a href="curve-fitting.html#cb148-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm, <span class="at">formula=</span>y<span class="sc">~</span><span class="fu">poly</span>(x,ord,<span class="at">raw=</span>T))</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-81-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
 <p>Well, these all worked pretty well, with significant p values and <span class="math inline">\(r^2\)</span> of 70% for the 3rd order polynomial, but the patterns are difficult to interpret past the first order (a simple linear model anyway), and it allows parts of the curve to do odd things, like decrease in predicted value before increasing in the 2nd order polynomial, not surprising since it models a parabola. Polynomial models are typically poor choices, but their simple use often makes them popular.</p>
 <p>So we might want to try some methods that can be better interpreted based on known properties of natural systems. Some examples are the power law model, the exponential model, and a simple log transform of independent variables.</p>
 <p>Many of these take advantage of the use of logarithms. One common method is to just use a log transformed independent variable. This can make sense especially if a variable exhibits linearity in that transformed sense, as do many natural systems, for instance pH is the negative base 2 logarithm of the hydrogen ion activity, and sediment particle size is often given as phi values, which is the negative base 2 logarithm of particle diameter in millimeters, and the Richter scale of earthquake intensity is a log10 value.</p>
@@ -547,8 +551,8 @@ log(GPP)=log(a)+p(log(PAR))
 <blockquote>
 <p>Note that this works because <code>log()</code> in R is a natural log, that is to the base <span class="math inline">\(e\)</span>.</p>
 </blockquote>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="curve-fitting.html#cb151-1" tabindex="-1"></a>powerModel <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(GPP_sum) <span class="sc">~</span> <span class="fu">log</span>(PAR_ave), <span class="at">data=</span>Carbon_Flux)</span>
-<span id="cb151-2"><a href="curve-fitting.html#cb151-2" tabindex="-1"></a><span class="fu">summary</span>(powerModel)</span></code></pre></div>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="curve-fitting.html#cb149-1" tabindex="-1"></a>powerModel <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(GPP_sum) <span class="sc">~</span> <span class="fu">log</span>(PAR_ave), <span class="at">data=</span>Carbon_Flux)</span>
+<span id="cb149-2"><a href="curve-fitting.html#cb149-2" tabindex="-1"></a><span class="fu">summary</span>(powerModel)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = log(GPP_sum) ~ log(PAR_ave), data = Carbon_Flux)
@@ -568,23 +572,23 @@ log(GPP)=log(a)+p(log(PAR))
 ##   (1 observation deleted due to missingness)
 ## Multiple R-squared:  0.4995, Adjusted R-squared:  0.4978 
 ## F-statistic: 299.4 on 1 and 300 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="curve-fitting.html#cb153-1" tabindex="-1"></a><span class="fu">ggplot</span>(Carbon_Flux, <span class="fu">aes</span>(<span class="fu">log</span>(PAR_ave), <span class="fu">log</span>(GPP_sum))) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb153-2"><a href="curve-fitting.html#cb153-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm)</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-80-1.png" width="75%" style="display: block; margin: auto;" />
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="curve-fitting.html#cb151-1" tabindex="-1"></a><span class="fu">ggplot</span>(Carbon_Flux, <span class="fu">aes</span>(<span class="fu">log</span>(PAR_ave), <span class="fu">log</span>(GPP_sum))) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb151-2"><a href="curve-fitting.html#cb151-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-82-1.png" alt="" width="75%" style="display: block; margin: auto;" />
 Now to plot without the log transformed axes, we’ll need to create the curve with the model, using the coefficients.</p>
-<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="curve-fitting.html#cb154-1" tabindex="-1"></a>coeff <span class="ot">=</span> <span class="fu">exp</span>(powerModel<span class="sc">$</span>coefficients[<span class="dv">1</span>])</span>
-<span id="cb154-2"><a href="curve-fitting.html#cb154-2" tabindex="-1"></a>power <span class="ot">=</span> powerModel<span class="sc">$</span>coefficients[<span class="dv">2</span>]</span>
-<span id="cb154-3"><a href="curve-fitting.html#cb154-3" tabindex="-1"></a>fit_func <span class="ot">&lt;-</span> <span class="cf">function</span>(x) coeff<span class="sc">*</span>x<span class="sc">^</span>power</span>
-<span id="cb154-4"><a href="curve-fitting.html#cb154-4" tabindex="-1"></a></span>
-<span id="cb154-5"><a href="curve-fitting.html#cb154-5" tabindex="-1"></a>fluxPlot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(Carbon_Flux) <span class="sc">+</span></span>
-<span id="cb154-6"><a href="curve-fitting.html#cb154-6" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>PAR_ave,<span class="at">y=</span>GPP_sum))</span>
-<span id="cb154-7"><a href="curve-fitting.html#cb154-7" tabindex="-1"></a>fluxPlot <span class="ot">&lt;-</span> fluxPlot <span class="sc">+</span></span>
-<span id="cb154-8"><a href="curve-fitting.html#cb154-8" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span>fit_func, <span class="at">color=</span><span class="st">&quot;orange&quot;</span>,<span class="at">lwd=</span><span class="dv">2</span>, <span class="at">alpha=</span><span class="fl">0.5</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="curve-fitting.html#cb155-1" tabindex="-1"></a>fit_eq <span class="ot">=</span> <span class="fu">paste</span>(<span class="st">&quot;y = &quot;</span>, <span class="fu">round</span>(coeff,<span class="dv">6</span>), <span class="st">&quot; x^&quot;</span>, <span class="fu">round</span>(power,<span class="dv">3</span>))</span>
-<span id="cb155-2"><a href="curve-fitting.html#cb155-2" tabindex="-1"></a>fluxPlot <span class="ot">&lt;-</span> fluxPlot <span class="sc">+</span></span>
-<span id="cb155-3"><a href="curve-fitting.html#cb155-3" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>,<span class="at">x=</span><span class="dv">200</span>,<span class="at">y=</span><span class="dv">40</span>,<span class="at">label=</span>fit_eq,<span class="at">size=</span><span class="dv">4</span>)</span>
-<span id="cb155-4"><a href="curve-fitting.html#cb155-4" tabindex="-1"></a>fluxPlot</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-82-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="curve-fitting.html#cb152-1" tabindex="-1"></a>coeff <span class="ot">=</span> <span class="fu">exp</span>(powerModel<span class="sc">$</span>coefficients[<span class="dv">1</span>])</span>
+<span id="cb152-2"><a href="curve-fitting.html#cb152-2" tabindex="-1"></a>power <span class="ot">=</span> powerModel<span class="sc">$</span>coefficients[<span class="dv">2</span>]</span>
+<span id="cb152-3"><a href="curve-fitting.html#cb152-3" tabindex="-1"></a>fit_func <span class="ot">&lt;-</span> <span class="cf">function</span>(x) coeff<span class="sc">*</span>x<span class="sc">^</span>power</span>
+<span id="cb152-4"><a href="curve-fitting.html#cb152-4" tabindex="-1"></a></span>
+<span id="cb152-5"><a href="curve-fitting.html#cb152-5" tabindex="-1"></a>fluxPlot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(Carbon_Flux) <span class="sc">+</span></span>
+<span id="cb152-6"><a href="curve-fitting.html#cb152-6" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>PAR_ave,<span class="at">y=</span>GPP_sum))</span>
+<span id="cb152-7"><a href="curve-fitting.html#cb152-7" tabindex="-1"></a>fluxPlot <span class="ot">&lt;-</span> fluxPlot <span class="sc">+</span></span>
+<span id="cb152-8"><a href="curve-fitting.html#cb152-8" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span>fit_func, <span class="at">color=</span><span class="st">&quot;orange&quot;</span>,<span class="at">lwd=</span><span class="dv">2</span>, <span class="at">alpha=</span><span class="fl">0.5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="curve-fitting.html#cb153-1" tabindex="-1"></a>fit_eq <span class="ot">=</span> <span class="fu">paste</span>(<span class="st">&quot;y = &quot;</span>, <span class="fu">round</span>(coeff,<span class="dv">6</span>), <span class="st">&quot; x^&quot;</span>, <span class="fu">round</span>(power,<span class="dv">3</span>))</span>
+<span id="cb153-2"><a href="curve-fitting.html#cb153-2" tabindex="-1"></a>fluxPlot <span class="ot">&lt;-</span> fluxPlot <span class="sc">+</span></span>
+<span id="cb153-3"><a href="curve-fitting.html#cb153-3" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>,<span class="at">x=</span><span class="dv">200</span>,<span class="at">y=</span><span class="dv">40</span>,<span class="at">label=</span>fit_eq,<span class="at">size=</span><span class="dv">4</span>)</span>
+<span id="cb153-4"><a href="curve-fitting.html#cb153-4" tabindex="-1"></a>fluxPlot</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-84-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
 <p>Hmmm… not a great fit graphically, with an <span class="math inline">\(r^2\)</span> of 50%. We can do better. Let’s try an exponential model.</p>
 </div>
 <div id="exponential-model" class="section level2 hasAnchor" number="10.4">
@@ -602,8 +606,8 @@ log(y)=log(ab^x)
 log(y)=log(a)+x(log(b))
 \]</span></p>
 <p>So what can we do with this? In this case, we don’t take the <span class="math inline">\(log(PAR)\)</span> but just use PAR (in our case <code>PAR_ave</code>).</p>
-<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="curve-fitting.html#cb156-1" tabindex="-1"></a>expModel <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(GPP_sum) <span class="sc">~</span> PAR_ave, <span class="at">data=</span>Carbon_Flux)</span>
-<span id="cb156-2"><a href="curve-fitting.html#cb156-2" tabindex="-1"></a><span class="fu">summary</span>(expModel)</span></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="curve-fitting.html#cb154-1" tabindex="-1"></a>expModel <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(GPP_sum) <span class="sc">~</span> PAR_ave, <span class="at">data=</span>Carbon_Flux)</span>
+<span id="cb154-2"><a href="curve-fitting.html#cb154-2" tabindex="-1"></a><span class="fu">summary</span>(expModel)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = log(GPP_sum) ~ PAR_ave, data = Carbon_Flux)
@@ -623,53 +627,53 @@ log(y)=log(a)+x(log(b))
 ##   (1 observation deleted due to missingness)
 ## Multiple R-squared:  0.594,  Adjusted R-squared:  0.5927 
 ## F-statistic:   439 on 1 and 300 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="curve-fitting.html#cb158-1" tabindex="-1"></a><span class="fu">ggplot</span>(Carbon_Flux, <span class="fu">aes</span>(<span class="at">x=</span>PAR_ave, <span class="at">y=</span><span class="fu">log</span>(GPP_sum))) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb158-2"><a href="curve-fitting.html#cb158-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm)</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-83-1.png" width="75%" style="display: block; margin: auto;" />
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="curve-fitting.html#cb156-1" tabindex="-1"></a><span class="fu">ggplot</span>(Carbon_Flux, <span class="fu">aes</span>(<span class="at">x=</span>PAR_ave, <span class="at">y=</span><span class="fu">log</span>(GPP_sum))) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb156-2"><a href="curve-fitting.html#cb156-2" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-85-1.png" alt="" width="75%" style="display: block; margin: auto;" />
 Now plot without the log transformed axes, we’ll need to create the curve with the model, using the coefficients.</p>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="curve-fitting.html#cb159-1" tabindex="-1"></a>coeff <span class="ot">=</span> <span class="fu">exp</span>(expModel<span class="sc">$</span>coefficients[<span class="dv">1</span>])</span>
-<span id="cb159-2"><a href="curve-fitting.html#cb159-2" tabindex="-1"></a>slope <span class="ot">=</span> <span class="fu">exp</span>(expModel<span class="sc">$</span>coefficients[<span class="dv">2</span>])</span>
-<span id="cb159-3"><a href="curve-fitting.html#cb159-3" tabindex="-1"></a>fit_func <span class="ot">&lt;-</span> <span class="cf">function</span>(x) coeff<span class="sc">*</span>slope<span class="sc">^</span>x</span>
-<span id="cb159-4"><a href="curve-fitting.html#cb159-4" tabindex="-1"></a></span>
-<span id="cb159-5"><a href="curve-fitting.html#cb159-5" tabindex="-1"></a>fluxPlot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(Carbon_Flux) <span class="sc">+</span></span>
-<span id="cb159-6"><a href="curve-fitting.html#cb159-6" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>PAR_ave,<span class="at">y=</span>GPP_sum))</span>
-<span id="cb159-7"><a href="curve-fitting.html#cb159-7" tabindex="-1"></a>fluxPlot <span class="ot">&lt;-</span> fluxPlot <span class="sc">+</span></span>
-<span id="cb159-8"><a href="curve-fitting.html#cb159-8" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span>fit_func, <span class="at">color=</span><span class="st">&quot;orange&quot;</span>,<span class="at">lwd=</span><span class="dv">2</span>, <span class="at">alpha=</span><span class="fl">0.5</span>)</span>
-<span id="cb159-9"><a href="curve-fitting.html#cb159-9" tabindex="-1"></a>fit_eq <span class="ot">=</span> <span class="fu">paste</span>(<span class="st">&quot;GPP = &quot;</span>, <span class="fu">round</span>(coeff,<span class="dv">4</span>), <span class="fu">round</span>(slope,<span class="dv">5</span>), <span class="st">&quot;^PAR&quot;</span>)</span>
-<span id="cb159-10"><a href="curve-fitting.html#cb159-10" tabindex="-1"></a>fluxPlot <span class="ot">&lt;-</span> fluxPlot <span class="sc">+</span></span>
-<span id="cb159-11"><a href="curve-fitting.html#cb159-11" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>,<span class="at">x=</span><span class="dv">200</span>,<span class="at">y=</span><span class="dv">40</span>,<span class="at">label=</span>fit_eq,<span class="at">size=</span><span class="dv">4</span>)</span>
-<span id="cb159-12"><a href="curve-fitting.html#cb159-12" tabindex="-1"></a>fluxPlot</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-84-1.png" width="75%" style="display: block; margin: auto;" />
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="curve-fitting.html#cb157-1" tabindex="-1"></a>coeff <span class="ot">=</span> <span class="fu">exp</span>(expModel<span class="sc">$</span>coefficients[<span class="dv">1</span>])</span>
+<span id="cb157-2"><a href="curve-fitting.html#cb157-2" tabindex="-1"></a>slope <span class="ot">=</span> <span class="fu">exp</span>(expModel<span class="sc">$</span>coefficients[<span class="dv">2</span>])</span>
+<span id="cb157-3"><a href="curve-fitting.html#cb157-3" tabindex="-1"></a>fit_func <span class="ot">&lt;-</span> <span class="cf">function</span>(x) coeff<span class="sc">*</span>slope<span class="sc">^</span>x</span>
+<span id="cb157-4"><a href="curve-fitting.html#cb157-4" tabindex="-1"></a></span>
+<span id="cb157-5"><a href="curve-fitting.html#cb157-5" tabindex="-1"></a>fluxPlot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(Carbon_Flux) <span class="sc">+</span></span>
+<span id="cb157-6"><a href="curve-fitting.html#cb157-6" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>PAR_ave,<span class="at">y=</span>GPP_sum))</span>
+<span id="cb157-7"><a href="curve-fitting.html#cb157-7" tabindex="-1"></a>fluxPlot <span class="ot">&lt;-</span> fluxPlot <span class="sc">+</span></span>
+<span id="cb157-8"><a href="curve-fitting.html#cb157-8" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span>fit_func, <span class="at">color=</span><span class="st">&quot;orange&quot;</span>,<span class="at">lwd=</span><span class="dv">2</span>, <span class="at">alpha=</span><span class="fl">0.5</span>)</span>
+<span id="cb157-9"><a href="curve-fitting.html#cb157-9" tabindex="-1"></a>fit_eq <span class="ot">=</span> <span class="fu">paste</span>(<span class="st">&quot;GPP = &quot;</span>, <span class="fu">round</span>(coeff,<span class="dv">4</span>), <span class="fu">round</span>(slope,<span class="dv">5</span>), <span class="st">&quot;^PAR&quot;</span>)</span>
+<span id="cb157-10"><a href="curve-fitting.html#cb157-10" tabindex="-1"></a>fluxPlot <span class="ot">&lt;-</span> fluxPlot <span class="sc">+</span></span>
+<span id="cb157-11"><a href="curve-fitting.html#cb157-11" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>,<span class="at">x=</span><span class="dv">200</span>,<span class="at">y=</span><span class="dv">40</span>,<span class="at">label=</span>fit_eq,<span class="at">size=</span><span class="dv">4</span>)</span>
+<span id="cb157-12"><a href="curve-fitting.html#cb157-12" tabindex="-1"></a>fluxPlot</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-86-1.png" alt="" width="75%" style="display: block; margin: auto;" />
 This is a much better fit, as can be seen graphically above, and with an <span class="math inline">\(r^2\)</span> of 59%, as opposed to the 50% of the power model. It’s not as high as we got with the 3rd order polynomial, but an exponential relationship is more easily interpreted as there are many natural phenomena that exhibit it.</p>
 </div>
 <div id="growth-and-loss-models-in-geomorphology-gully-data" class="section level2 hasAnchor" number="10.5">
 <h2><span class="header-section-number">10.5</span> Growth and loss models in geomorphology: Gully data<a href="curve-fitting.html#growth-and-loss-models-in-geomorphology-gully-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>There are many instances where our variables can benefit from a log transformation. For an example, we’ll look at some other data that suggest that a log transform may have a benefit: data on gully growth from a paper by <span class="citation">Graf (<a href="#ref-Graf1977">1977</a>)</span>. Then, after using these data to develop a gully <em>growth</em> model, we’ll use a rate-law model similar to the one used by Graf to create a <em>loss</em> model of hillslope erosion resulting from the same gully growth. Both approaches model response to a disequilibrium produced by an event (such as intensive grazing or off-road vehicle use).</p>
-<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="curve-fitting.html#cb160-1" tabindex="-1"></a><span class="fu">library</span>(igisci); <span class="fu">library</span>(tidyverse)</span>
-<span id="cb160-2"><a href="curve-fitting.html#cb160-2" tabindex="-1"></a>gullyGrowth <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">ex</span>(<span class="st">&quot;gully/gullyGrowth.csv&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="curve-fitting.html#cb158-1" tabindex="-1"></a><span class="fu">library</span>(igisci); <span class="fu">library</span>(tidyverse)</span>
+<span id="cb158-2"><a href="curve-fitting.html#cb158-2" tabindex="-1"></a>gullyGrowth <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">ex</span>(<span class="st">&quot;gully/gullyGrowth.csv&quot;</span>))</span></code></pre></div>
 <p>First, let’s look at the original data, which comes from measured quantities, from a rural <code>gully</code> and a more urban <code>proto-gully</code>:</p>
 <ul>
 <li>distance: from the head of the gully</li>
 <li>age_yrs: ages of trees that initiated in the lower part of the gully when sufficient soil had developed; that location moves headward as the gully grows</li>
 </ul>
-<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="curve-fitting.html#cb161-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>gullyGrowth, <span class="fu">aes</span>(<span class="at">x=</span>distance, <span class="at">y=</span>age_yrs, <span class="at">col=</span>type)) <span class="sc">+</span></span>
-<span id="cb161-2"><a href="curve-fitting.html#cb161-2" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-86-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="curve-fitting.html#cb159-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>gullyGrowth, <span class="fu">aes</span>(<span class="at">x=</span>distance, <span class="at">y=</span>age_yrs, <span class="at">col=</span>type)) <span class="sc">+</span></span>
+<span id="cb159-2"><a href="curve-fitting.html#cb159-2" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-88-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
 <p>They both exhibit an asymptotic form in the original data, but we’ll need to turn things around to produce independent (time) and dependent (gully growth) variables, so we’ll add a couple of variables that will help us with that. The existing data has distance from the headcut, which is the most recent part of the gully, so we’ll add a <code>gully_length</code> variable (gullies erode <em>headward</em>) that starts at zero just below (arbitrarily 1 m past) the oldest tree, assuming that is somewhere near the initiation point; and since the variable is interval, not ratio, it doesn’t matter where zero is as long as we’re progressing forward in time. The age of trees can also be converted into <code>year</code> starting at the oldest age.</p>
-<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="curve-fitting.html#cb162-1" tabindex="-1"></a>gully <span class="ot">&lt;-</span> gullyGrowth <span class="sc">|&gt;</span> <span class="fu">filter</span>(type<span class="sc">==</span><span class="st">&quot;gully&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb162-2"><a href="curve-fitting.html#cb162-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year=</span><span class="fu">max</span>(age_yrs)<span class="sc">-</span>age_yrs, <span class="at">gully_length=</span><span class="fu">max</span>(distance)<span class="sc">-</span>distance<span class="sc">+</span><span class="dv">1</span>)</span>
-<span id="cb162-3"><a href="curve-fitting.html#cb162-3" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>gully, <span class="fu">aes</span>(<span class="at">x=</span>year,<span class="at">y=</span>gully_length)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-87-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="curve-fitting.html#cb160-1" tabindex="-1"></a>gully <span class="ot">&lt;-</span> gullyGrowth <span class="sc">|&gt;</span> <span class="fu">filter</span>(type<span class="sc">==</span><span class="st">&quot;gully&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb160-2"><a href="curve-fitting.html#cb160-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year=</span><span class="fu">max</span>(age_yrs)<span class="sc">-</span>age_yrs, <span class="at">gully_length=</span><span class="fu">max</span>(distance)<span class="sc">-</span>distance<span class="sc">+</span><span class="dv">1</span>)</span>
+<span id="cb160-3"><a href="curve-fitting.html#cb160-3" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>gully, <span class="fu">aes</span>(<span class="at">x=</span>year,<span class="at">y=</span>gully_length)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-89-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="log-transformed-independent-variables" class="section level2 hasAnchor" number="10.6">
 <h2><span class="header-section-number">10.6</span> Log-transformed independent variables<a href="curve-fitting.html#log-transformed-independent-variables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>So if we plot the log(year) and gully_length, along with a linear curve of that, we see a compelling result…</p>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="curve-fitting.html#cb163-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>gully, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">log</span>(year),<span class="at">y=</span>gully_length)) <span class="sc">+</span></span>
-<span id="cb163-2"><a href="curve-fitting.html#cb163-2" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-88-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="curve-fitting.html#cb161-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>gully, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">log</span>(year),<span class="at">y=</span>gully_length)) <span class="sc">+</span></span>
+<span id="cb161-2"><a href="curve-fitting.html#cb161-2" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-90-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
 <p>… suggesting a linear model might be appropriate. We’ll bump up the year by 0.1 to avoid problems with deriving the log of zero, and create a model…</p>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="curve-fitting.html#cb164-1" tabindex="-1"></a>gullyLogModel <span class="ot">&lt;-</span> <span class="fu">lm</span>(gully_length<span class="sc">~</span><span class="fu">log</span>(year<span class="fl">+0.1</span>),<span class="at">data=</span>gully)</span>
-<span id="cb164-2"><a href="curve-fitting.html#cb164-2" tabindex="-1"></a><span class="fu">summary</span>(gullyLogModel)</span></code></pre></div>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="curve-fitting.html#cb162-1" tabindex="-1"></a>gullyLogModel <span class="ot">&lt;-</span> <span class="fu">lm</span>(gully_length<span class="sc">~</span><span class="fu">log</span>(year<span class="fl">+0.1</span>),<span class="at">data=</span>gully)</span>
+<span id="cb162-2"><a href="curve-fitting.html#cb162-2" tabindex="-1"></a><span class="fu">summary</span>(gullyLogModel)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = gully_length ~ log(year + 0.1), data = gully)
@@ -689,13 +693,13 @@ This is a much better fit, as can be seen graphically above, and with an <span c
 ## Multiple R-squared:  0.653,  Adjusted R-squared:  0.6337 
 ## F-statistic: 33.88 on 1 and 18 DF,  p-value: 1.632e-05</code></pre>
 <p>… then display it in the original coordinate values:</p>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="curve-fitting.html#cb166-1" tabindex="-1"></a>a <span class="ot">=</span> gullyLogModel<span class="sc">$</span>coefficients[<span class="dv">1</span>]</span>
-<span id="cb166-2"><a href="curve-fitting.html#cb166-2" tabindex="-1"></a>b <span class="ot">=</span> gullyLogModel<span class="sc">$</span>coefficients[<span class="dv">2</span>]</span></code></pre></div>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="curve-fitting.html#cb167-1" tabindex="-1"></a>fit_func <span class="ot">&lt;-</span> <span class="cf">function</span>(x) a <span class="sc">+</span> b<span class="sc">*</span><span class="fu">log</span>(x)</span>
-<span id="cb167-2"><a href="curve-fitting.html#cb167-2" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>gully, <span class="fu">aes</span>(<span class="at">x=</span>year)) <span class="sc">+</span></span>
-<span id="cb167-3"><a href="curve-fitting.html#cb167-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>gully_length)) <span class="sc">+</span></span>
-<span id="cb167-4"><a href="curve-fitting.html#cb167-4" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span>fit_func, <span class="at">color=</span><span class="st">&quot;orange&quot;</span>,<span class="at">lwd=</span><span class="dv">2</span>, <span class="at">alpha=</span><span class="fl">0.5</span>)</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-91-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="curve-fitting.html#cb164-1" tabindex="-1"></a>a <span class="ot">=</span> gullyLogModel<span class="sc">$</span>coefficients[<span class="dv">1</span>]</span>
+<span id="cb164-2"><a href="curve-fitting.html#cb164-2" tabindex="-1"></a>b <span class="ot">=</span> gullyLogModel<span class="sc">$</span>coefficients[<span class="dv">2</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="curve-fitting.html#cb165-1" tabindex="-1"></a>fit_func <span class="ot">&lt;-</span> <span class="cf">function</span>(x) a <span class="sc">+</span> b<span class="sc">*</span><span class="fu">log</span>(x)</span>
+<span id="cb165-2"><a href="curve-fitting.html#cb165-2" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>gully, <span class="fu">aes</span>(<span class="at">x=</span>year)) <span class="sc">+</span></span>
+<span id="cb165-3"><a href="curve-fitting.html#cb165-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>gully_length)) <span class="sc">+</span></span>
+<span id="cb165-4"><a href="curve-fitting.html#cb165-4" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span>fit_func, <span class="at">color=</span><span class="st">&quot;orange&quot;</span>,<span class="at">lwd=</span><span class="dv">2</span>, <span class="at">alpha=</span><span class="fl">0.5</span>)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-93-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
 <p>… where it’s not very convincing. So it looks like we need to look elsewhere, and one place is the realm of nonlinear models.</p>
 </div>
 <div id="nonlinear-models" class="section level2 hasAnchor" number="10.7">
@@ -712,9 +716,9 @@ v=\frac{V_{max}S}{K_m+S}
 \]</span></p>
 <p>So we’ll use the equation to try to model gully growth from a limited supply of available slope to erode.</p>
 <p>Here’s where we apply the <code>nls</code> function, and define that Michaelis-Menten equation. Note that the <code>nls</code> function uses iteration from initial starting values, which we’ll provide with the start parameter, a list of initial <code>Vmax</code> and <code>K</code> values: we’ll get the <code>Vmax</code> as the maximum of the gully length values, and (the default) 1 for the <code>rate</code>.</p>
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="curve-fitting.html#cb168-1" tabindex="-1"></a>gullyMod <span class="ot">&lt;-</span> <span class="fu">nls</span>(gully_length<span class="sc">~</span>(Vmax)<span class="sc">*</span>year<span class="sc">/</span>(K<span class="sc">+</span>year), <span class="at">data=</span>gully, </span>
-<span id="cb168-2"><a href="curve-fitting.html#cb168-2" tabindex="-1"></a>                <span class="at">start=</span><span class="fu">list</span>(<span class="at">Vmax=</span><span class="fu">max</span>(gully<span class="sc">$</span>gully_length),<span class="at">K=</span><span class="dv">1</span>))</span>
-<span id="cb168-3"><a href="curve-fitting.html#cb168-3" tabindex="-1"></a><span class="fu">summary</span>(gullyMod)</span></code></pre></div>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="curve-fitting.html#cb166-1" tabindex="-1"></a>gullyMod <span class="ot">&lt;-</span> <span class="fu">nls</span>(gully_length<span class="sc">~</span>(Vmax)<span class="sc">*</span>year<span class="sc">/</span>(K<span class="sc">+</span>year), <span class="at">data=</span>gully, </span>
+<span id="cb166-2"><a href="curve-fitting.html#cb166-2" tabindex="-1"></a>                <span class="at">start=</span><span class="fu">list</span>(<span class="at">Vmax=</span><span class="fu">max</span>(gully<span class="sc">$</span>gully_length),<span class="at">K=</span><span class="dv">1</span>))</span>
+<span id="cb166-3"><a href="curve-fitting.html#cb166-3" tabindex="-1"></a><span class="fu">summary</span>(gullyMod)</span></code></pre></div>
 <pre><code>## 
 ## Formula: gully_length ~ (Vmax) * year/(K + year)
 ## 
@@ -729,16 +733,16 @@ v=\frac{V_{max}S}{K_m+S}
 ## 
 ## Number of iterations to convergence: 7 
 ## Achieved convergence tolerance: 1.707e-06</code></pre>
-<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="curve-fitting.html#cb170-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>gully, <span class="fu">aes</span>(<span class="at">x=</span>year)) <span class="sc">+</span></span>
-<span id="cb170-2"><a href="curve-fitting.html#cb170-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>gully_length)) <span class="sc">+</span></span>
-<span id="cb170-3"><a href="curve-fitting.html#cb170-3" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>gully, <span class="fu">aes</span>(<span class="at">x=</span>year, <span class="at">y=</span><span class="fu">predict</span>(gullyMod,gully))) </span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-94-1.png" width="75%" style="display: block; margin: auto;" />
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="curve-fitting.html#cb168-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>gully, <span class="fu">aes</span>(<span class="at">x=</span>year)) <span class="sc">+</span></span>
+<span id="cb168-2"><a href="curve-fitting.html#cb168-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>gully_length)) <span class="sc">+</span></span>
+<span id="cb168-3"><a href="curve-fitting.html#cb168-3" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>gully, <span class="fu">aes</span>(<span class="at">x=</span>year, <span class="at">y=</span><span class="fu">predict</span>(gullyMod,gully))) </span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-96-1.png" alt="" width="75%" style="display: block; margin: auto;" />
 Now we’ll do the same for the proto-gullies.</p>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="curve-fitting.html#cb171-1" tabindex="-1"></a>proto <span class="ot">&lt;-</span> gullyGrowth <span class="sc">|&gt;</span> <span class="fu">filter</span>(type<span class="sc">==</span><span class="st">&quot;proto-gully&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb171-2"><a href="curve-fitting.html#cb171-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year=</span><span class="fu">max</span>(age_yrs)<span class="sc">-</span>age_yrs, <span class="at">gully_length=</span><span class="fu">max</span>(distance)<span class="sc">-</span>distance<span class="sc">+</span><span class="dv">1</span>)</span>
-<span id="cb171-3"><a href="curve-fitting.html#cb171-3" tabindex="-1"></a>protoMod <span class="ot">&lt;-</span> <span class="fu">nls</span>(gully_length<span class="sc">~</span>(Vmax)<span class="sc">*</span>year<span class="sc">/</span>(K<span class="sc">+</span>year), <span class="at">data=</span>proto, </span>
-<span id="cb171-4"><a href="curve-fitting.html#cb171-4" tabindex="-1"></a>                <span class="at">start=</span><span class="fu">list</span>(<span class="at">Vmax=</span><span class="fu">max</span>(proto<span class="sc">$</span>gully_length),<span class="at">K=</span><span class="dv">1</span>))</span>
-<span id="cb171-5"><a href="curve-fitting.html#cb171-5" tabindex="-1"></a><span class="fu">summary</span>(protoMod)</span></code></pre></div>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="curve-fitting.html#cb169-1" tabindex="-1"></a>proto <span class="ot">&lt;-</span> gullyGrowth <span class="sc">|&gt;</span> <span class="fu">filter</span>(type<span class="sc">==</span><span class="st">&quot;proto-gully&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb169-2"><a href="curve-fitting.html#cb169-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year=</span><span class="fu">max</span>(age_yrs)<span class="sc">-</span>age_yrs, <span class="at">gully_length=</span><span class="fu">max</span>(distance)<span class="sc">-</span>distance<span class="sc">+</span><span class="dv">1</span>)</span>
+<span id="cb169-3"><a href="curve-fitting.html#cb169-3" tabindex="-1"></a>protoMod <span class="ot">&lt;-</span> <span class="fu">nls</span>(gully_length<span class="sc">~</span>(Vmax)<span class="sc">*</span>year<span class="sc">/</span>(K<span class="sc">+</span>year), <span class="at">data=</span>proto, </span>
+<span id="cb169-4"><a href="curve-fitting.html#cb169-4" tabindex="-1"></a>                <span class="at">start=</span><span class="fu">list</span>(<span class="at">Vmax=</span><span class="fu">max</span>(proto<span class="sc">$</span>gully_length),<span class="at">K=</span><span class="dv">1</span>))</span>
+<span id="cb169-5"><a href="curve-fitting.html#cb169-5" tabindex="-1"></a><span class="fu">summary</span>(protoMod)</span></code></pre></div>
 <pre><code>## 
 ## Formula: gully_length ~ (Vmax) * year/(K + year)
 ## 
@@ -753,10 +757,10 @@ Now we’ll do the same for the proto-gullies.</p>
 ## 
 ## Number of iterations to convergence: 6 
 ## Achieved convergence tolerance: 2.585e-06</code></pre>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="curve-fitting.html#cb173-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>proto, <span class="fu">aes</span>(<span class="at">x=</span>year)) <span class="sc">+</span></span>
-<span id="cb173-2"><a href="curve-fitting.html#cb173-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>gully_length)) <span class="sc">+</span></span>
-<span id="cb173-3"><a href="curve-fitting.html#cb173-3" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>proto, <span class="fu">aes</span>(<span class="at">x=</span>year, <span class="at">y=</span><span class="fu">predict</span>(protoMod,proto))) </span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-97-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="curve-fitting.html#cb171-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>proto, <span class="fu">aes</span>(<span class="at">x=</span>year)) <span class="sc">+</span></span>
+<span id="cb171-2"><a href="curve-fitting.html#cb171-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>gully_length)) <span class="sc">+</span></span>
+<span id="cb171-3"><a href="curve-fitting.html#cb171-3" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>proto, <span class="fu">aes</span>(<span class="at">x=</span>year, <span class="at">y=</span><span class="fu">predict</span>(protoMod,proto))) </span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-99-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
 <p>So we can see significant gully growth models with both gully and proto-gully data.</p>
 </div>
 <div id="using-the-rate-law-to-model-hillslope-erosion" class="section level3 hasAnchor" number="10.7.2">
@@ -777,8 +781,8 @@ where:</p>
 log(A_t)=log(A_0)-bt
 \]</span></p>
 <p>So this is able to be processed with <code>lm</code>, and we’ll use <code>year</code> instead of age, but stick with <code>distance</code> since this at least works.</p>
-<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="curve-fitting.html#cb174-1" tabindex="-1"></a>rateGully <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(distance)<span class="sc">~</span>year, <span class="at">data=</span>gully)</span>
-<span id="cb174-2"><a href="curve-fitting.html#cb174-2" tabindex="-1"></a><span class="fu">summary</span>(rateGully)</span></code></pre></div>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="curve-fitting.html#cb172-1" tabindex="-1"></a>rateGully <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(distance)<span class="sc">~</span>year, <span class="at">data=</span>gully)</span>
+<span id="cb172-2"><a href="curve-fitting.html#cb172-2" tabindex="-1"></a><span class="fu">summary</span>(rateGully)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = log(distance) ~ year, data = gully)
@@ -797,25 +801,25 @@ log(A_t)=log(A_0)-bt
 ## Residual standard error: 0.1834 on 18 degrees of freedom
 ## Multiple R-squared:  0.9616, Adjusted R-squared:  0.9595 
 ## F-statistic: 451.1 on 1 and 18 DF,  p-value: 3.401e-14</code></pre>
-<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="curve-fitting.html#cb176-1" tabindex="-1"></a>A0 <span class="ot">=</span> <span class="fu">exp</span>(rateGully<span class="sc">$</span>coefficients[<span class="dv">1</span>])</span>
-<span id="cb176-2"><a href="curve-fitting.html#cb176-2" tabindex="-1"></a>rate <span class="ot">=</span> rateGully<span class="sc">$</span>coefficients[<span class="dv">2</span>]</span>
-<span id="cb176-3"><a href="curve-fitting.html#cb176-3" tabindex="-1"></a>fit_func <span class="ot">&lt;-</span> <span class="cf">function</span>(x) A0<span class="sc">*</span><span class="fu">exp</span>(rate<span class="sc">*</span>x)</span>
-<span id="cb176-4"><a href="curve-fitting.html#cb176-4" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>gully, <span class="fu">aes</span>(<span class="at">x=</span>year)) <span class="sc">+</span></span>
-<span id="cb176-5"><a href="curve-fitting.html#cb176-5" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>distance)) <span class="sc">+</span></span>
-<span id="cb176-6"><a href="curve-fitting.html#cb176-6" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span>fit_func, <span class="at">color=</span><span class="st">&quot;orange&quot;</span>,<span class="at">lwd=</span><span class="dv">2</span>, <span class="at">alpha=</span><span class="fl">0.5</span>)</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-99-1.png" width="75%" style="display: block; margin: auto;" />
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="curve-fitting.html#cb174-1" tabindex="-1"></a>A0 <span class="ot">=</span> <span class="fu">exp</span>(rateGully<span class="sc">$</span>coefficients[<span class="dv">1</span>])</span>
+<span id="cb174-2"><a href="curve-fitting.html#cb174-2" tabindex="-1"></a>rate <span class="ot">=</span> rateGully<span class="sc">$</span>coefficients[<span class="dv">2</span>]</span>
+<span id="cb174-3"><a href="curve-fitting.html#cb174-3" tabindex="-1"></a>fit_func <span class="ot">&lt;-</span> <span class="cf">function</span>(x) A0<span class="sc">*</span><span class="fu">exp</span>(rate<span class="sc">*</span>x)</span>
+<span id="cb174-4"><a href="curve-fitting.html#cb174-4" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>gully, <span class="fu">aes</span>(<span class="at">x=</span>year)) <span class="sc">+</span></span>
+<span id="cb174-5"><a href="curve-fitting.html#cb174-5" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>distance)) <span class="sc">+</span></span>
+<span id="cb174-6"><a href="curve-fitting.html#cb174-6" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span>fit_func, <span class="at">color=</span><span class="st">&quot;orange&quot;</span>,<span class="at">lwd=</span><span class="dv">2</span>, <span class="at">alpha=</span><span class="fl">0.5</span>)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-101-1.png" alt="" width="75%" style="display: block; margin: auto;" />
 So this seems to fit the erosion of the gully pretty well. We can also derive the half life of the erosion of hillslope length as:</p>
 <p><span class="math display">\[
 T=log(2)/{-b}
 \]</span></p>
-<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="curve-fitting.html#cb177-1" tabindex="-1"></a><span class="fu">paste0</span>(<span class="st">&quot;The coefficient A0 is &quot;</span>, <span class="fu">round</span>(A0,<span class="dv">1</span>), <span class="st">&quot;, the rate (b) is &quot;</span>,<span class="fu">round</span>(rate,<span class="dv">3</span>),<span class="st">&quot; and the half life T is &quot;</span>, <span class="fu">round</span>(<span class="fu">log</span>(<span class="dv">2</span>)<span class="sc">/-</span>rate, <span class="dv">2</span>), <span class="st">&quot; years.&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="curve-fitting.html#cb175-1" tabindex="-1"></a><span class="fu">paste0</span>(<span class="st">&quot;The coefficient A0 is &quot;</span>, <span class="fu">round</span>(A0,<span class="dv">1</span>), <span class="st">&quot;, the rate (b) is &quot;</span>,<span class="fu">round</span>(rate,<span class="dv">3</span>),<span class="st">&quot; and the half life T is &quot;</span>, <span class="fu">round</span>(<span class="fu">log</span>(<span class="dv">2</span>)<span class="sc">/-</span>rate, <span class="dv">2</span>), <span class="st">&quot; years.&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;The coefficient A0 is 510.9, the rate (b) is -0.047 and the half life T is 14.6 years.&quot;</code></pre>
 
 </div>
 </div>
 </div>
 <h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-JSSv066i05" class="csl-entry">
 Baty, Florent, Christian Ritz, Sandrine Charles, Martin Brutsche, Jean-Pierre Flandrois, and Marie-Laure Delignette-Muller. 2015. <span>“A Toolbox for Nonlinear Regression in r: The Package Nlstools.”</span> <em>Journal of Statistical Software</em> 66 (5): 1–21. <a href="https://doi.org/10.18637/jss.v066.i05">https://doi.org/10.18637/jss.v066.i05</a>.
 </div>
@@ -843,44 +847,44 @@ Graf, WL. 1977. <span>“The Rate Law in Fluvial Geomorphology.”</span> <em>Am
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "section"
-},
-"book_filename": "envdatasci",
-"toc_depth": 4
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section"
+  },
+  "book_filename": "envdatasci",
+  "toc_depth": 4
 });
 });
 </script>

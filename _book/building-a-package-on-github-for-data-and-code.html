@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>14 Building a Package on GitHub for Data and Code | Environmental Data Science Addenda</title>
   <meta name="description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
-  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="14 Building a Package on GitHub for Data and Code | Environmental Data Science Addenda" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Jerry Davis, SFSU Institute for Geographic Information Science" />
 
 
-<meta name="date" content="2024-11-28" />
+<meta name="date" content="2026-09-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,35 +52,37 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<link href="libs/htmltools-fill-0.5.9/fill.css" rel="stylesheet" />
 <script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.33/datatables.js"></script>
+<script src="libs/datatables-binding-0.34.0/datatables.js"></script>
 <link href="libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
-<link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+<link href="libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
 <link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
 <script src="libs/leaflet-1.3.1/leaflet.js"></script>
 <link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
 <script src="libs/proj4-2.6.2/proj4.min.js"></script>
 <script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
 <link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-binding-2.2.2/leaflet.js"></script>
-<script src="libs/leaflet-providers-2.0.0/leaflet-providers_2.0.0.js"></script>
-<script src="libs/leaflet-providers-plugin-2.2.2/leaflet-providers-plugin.js"></script>
+<script src="libs/leaflet-binding-2.2.3/leaflet.js"></script>
+<script src="libs/leaflet-providers-3.0.0/leaflet-providers.js"></script>
+<script src="libs/leaflet-providers-plugin-2.2.3/leaflet-providers-plugin.js"></script>
 <script src="libs/leaflet-graticule-0.1.0/L.Graticule.js"></script>
 <script src="libs/leaflet-graticule-0.1.0/Graticule-binding.js"></script>
-<script src="libs/Leaflet.glify-3.2.0/addGlifyPoints.js"></script>
-<script src="libs/Leaflet.glify-3.2.0/addGlifyPolygons.js"></script>
-<script src="libs/Leaflet.glify-3.2.0/addGlifyPolylines.js"></script>
-<script src="libs/Leaflet.glify-3.2.0/glify-browser.js"></script>
+<script src="libs/Leaflet.glify-3.3.1/GlifyUtils.js"></script>
+<script src="libs/Leaflet.glify-3.3.1/addGlifyPoints.js"></script>
+<script src="libs/Leaflet.glify-3.3.1/addGlifyPolygons.js"></script>
+<script src="libs/Leaflet.glify-3.3.1/addGlifyPolylines.js"></script>
+<script src="libs/Leaflet.glify-3.3.1/glify-browser.js"></script>
 
 
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -152,7 +154,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -203,7 +204,10 @@ div.csl-indent {
 <li class="chapter" data-level="4.1" data-path="tmap4.html"><a href="tmap4.html#simple-test"><i class="fa fa-check"></i><b>4.1</b> Simple test</a></li>
 <li class="chapter" data-level="4.2" data-path="tmap4.html"><a href="tmap4.html#visual-variables"><i class="fa fa-check"></i><b>4.2</b> Visual variables</a></li>
 <li class="chapter" data-level="4.3" data-path="tmap4.html"><a href="tmap4.html#constant-visual-variables"><i class="fa fa-check"></i><b>4.3</b> Constant visual variables</a></li>
-<li class="chapter" data-level="4.4" data-path="tmap4.html"><a href="tmap4.html#basemap"><i class="fa fa-check"></i><b>4.4</b> Basemap</a></li>
+<li class="chapter" data-level="4.4" data-path="tmap4.html"><a href="tmap4.html#basemap"><i class="fa fa-check"></i><b>4.4</b> Basemap</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="tmap4.html"><a href="tmap4.html#basemaps-with-rasters"><i class="fa fa-check"></i><b>4.4.1</b> Basemaps with rasters</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="interpolation.html"><a href="interpolation.html"><i class="fa fa-check"></i><b>5</b> Spatial Interpolation</a>
 <ul>
@@ -462,11 +466,11 @@ usethis::use_data(sierraFeb)</code></pre>
 <h2><span class="header-section-number">14.4</span> Code (functions)<a href="building-a-package-on-github-for-data-and-code.html#code-functions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>You can build pretty extensive functions in a package, and you’ve been using these from a variety of packages. We’ll just look at the simple example of a function we’ll name <code>ex()</code> for making it easier to read data from the <code>extdata</code> folder of the <code>igisci</code> package. The methods shown here are based on <a href="https://r-pkgs.org/" class="uri">https://r-pkgs.org/</a> which you should refer to for more thorough documentation.</p>
 <p>Here’s the function we’ll create in the package. However, one caveat is that you want to add this after you’ve already installed the package with data, or you’ll get an error.</p>
-<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="building-a-package-on-github-for-data-and-code.html#cb227-1" tabindex="-1"></a>ex <span class="ot">&lt;-</span> <span class="cf">function</span>(dta){</span>
-<span id="cb227-2"><a href="building-a-package-on-github-for-data-and-code.html#cb227-2" tabindex="-1"></a>  <span class="fu">system.file</span>(<span class="st">&quot;extdata&quot;</span>,dta,<span class="at">package=</span><span class="st">&quot;igisci&quot;</span>)</span>
-<span id="cb227-3"><a href="building-a-package-on-github-for-data-and-code.html#cb227-3" tabindex="-1"></a>  }</span></code></pre></div>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="building-a-package-on-github-for-data-and-code.html#cb224-1" tabindex="-1"></a>ex <span class="ot">&lt;-</span> <span class="cf">function</span>(dta){</span>
+<span id="cb224-2"><a href="building-a-package-on-github-for-data-and-code.html#cb224-2" tabindex="-1"></a>  <span class="fu">system.file</span>(<span class="st">&quot;extdata&quot;</span>,dta,<span class="at">package=</span><span class="st">&quot;igisci&quot;</span>)</span>
+<span id="cb224-3"><a href="building-a-package-on-github-for-data-and-code.html#cb224-3" tabindex="-1"></a>  }</span></code></pre></div>
 <p>We want to use it where in our code we wanted to read a file from <code>extdata</code> but we want cleaner code that doesn’t take up much space in code we’re writing than just reading it from your workspace. There’s a csv file in the <code>sierra</code> folder of <code>extdata</code> named <code>Sierra2LassenData.csv</code> that we could then read with:</p>
-<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="building-a-package-on-github-for-data-and-code.html#cb228-1" tabindex="-1"></a><span class="fu">read.csv</span>(<span class="fu">ex</span>(<span class="st">&quot;sierra/sierraFebShort.csv&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="building-a-package-on-github-for-data-and-code.html#cb225-1" tabindex="-1"></a><span class="fu">read.csv</span>(<span class="fu">ex</span>(<span class="st">&quot;sierra/sierraFebShort.csv&quot;</span>))</span></code></pre></div>
 <pre><code>##        STATION    COUNTY ELEVATION LATITUDE LONGITUDE PRECIPITATION TEMPERATURE
 ## 1     OROVILLE     Butte        52    39.52   -121.55           124        10.7
 ## 2       AUBURN    Placer       394    38.91   -121.08           160         9.7
@@ -491,59 +495,59 @@ usethis::use_data(sierraFeb)</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>Add the function code to the <code>ex.R</code> script created.</li>
 </ol>
-<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="building-a-package-on-github-for-data-and-code.html#cb231-1" tabindex="-1"></a>ex <span class="ot">&lt;-</span> <span class="cf">function</span>(dta){</span>
-<span id="cb231-2"><a href="building-a-package-on-github-for-data-and-code.html#cb231-2" tabindex="-1"></a>  <span class="fu">system.file</span>(<span class="st">&quot;extdata&quot;</span>,dta,<span class="at">package=</span><span class="st">&quot;igisci&quot;</span>)</span>
-<span id="cb231-3"><a href="building-a-package-on-github-for-data-and-code.html#cb231-3" tabindex="-1"></a>  }</span></code></pre></div>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="building-a-package-on-github-for-data-and-code.html#cb228-1" tabindex="-1"></a>ex <span class="ot">&lt;-</span> <span class="cf">function</span>(dta){</span>
+<span id="cb228-2"><a href="building-a-package-on-github-for-data-and-code.html#cb228-2" tabindex="-1"></a>  <span class="fu">system.file</span>(<span class="st">&quot;extdata&quot;</span>,dta,<span class="at">package=</span><span class="st">&quot;igisci&quot;</span>)</span>
+<span id="cb228-3"><a href="building-a-package-on-github-for-data-and-code.html#cb228-3" tabindex="-1"></a>  }</span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
 <li><p>Create the documentation skeleton while editing the script by using Insert Roxygen Skeleton from the RStudio Code menu.</p></li>
 <li><p>Then fill in the various elements of the documentation (A title, parameters, what it returns and examples) which shows what you want the user to see with <code>?ex</code> or <code>?exfiles</code>, similar to this, and save the script. If you have more than one function, the documentation will go just above the function definition. See <a href="https://r-pkgs.org/man.html" class="uri">https://r-pkgs.org/man.html</a>.</p></li>
 </ol>
-<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="building-a-package-on-github-for-data-and-code.html#cb232-1" tabindex="-1"></a><span class="co">#&#39; Access external data in package</span></span>
-<span id="cb232-2"><a href="building-a-package-on-github-for-data-and-code.html#cb232-2" tabindex="-1"></a><span class="co">#&#39;</span></span>
-<span id="cb232-3"><a href="building-a-package-on-github-for-data-and-code.html#cb232-3" tabindex="-1"></a><span class="co">#&#39; @param dta filename to access from extdata, including folders</span></span>
-<span id="cb232-4"><a href="building-a-package-on-github-for-data-and-code.html#cb232-4" tabindex="-1"></a><span class="co">#&#39;</span></span>
-<span id="cb232-5"><a href="building-a-package-on-github-for-data-and-code.html#cb232-5" tabindex="-1"></a><span class="co">#&#39; @return path to the file</span></span>
-<span id="cb232-6"><a href="building-a-package-on-github-for-data-and-code.html#cb232-6" tabindex="-1"></a><span class="co">#&#39; @export</span></span>
-<span id="cb232-7"><a href="building-a-package-on-github-for-data-and-code.html#cb232-7" tabindex="-1"></a><span class="co">#&#39;</span></span>
-<span id="cb232-8"><a href="building-a-package-on-github-for-data-and-code.html#cb232-8" tabindex="-1"></a><span class="co">#&#39; @examples</span></span>
-<span id="cb232-9"><a href="building-a-package-on-github-for-data-and-code.html#cb232-9" tabindex="-1"></a><span class="co">#&#39; read.csv(ex(&quot;sierra/sierraStations.csv&quot;))</span></span>
-<span id="cb232-10"><a href="building-a-package-on-github-for-data-and-code.html#cb232-10" tabindex="-1"></a>ex <span class="ot">&lt;-</span> <span class="cf">function</span>(dta){</span>
-<span id="cb232-11"><a href="building-a-package-on-github-for-data-and-code.html#cb232-11" tabindex="-1"></a>  <span class="fu">system.file</span>(<span class="st">&quot;extdata&quot;</span>,dta,<span class="at">package=</span><span class="st">&quot;igisci&quot;</span>)</span>
-<span id="cb232-12"><a href="building-a-package-on-github-for-data-and-code.html#cb232-12" tabindex="-1"></a>}</span>
-<span id="cb232-13"><a href="building-a-package-on-github-for-data-and-code.html#cb232-13" tabindex="-1"></a><span class="co">#&#39; Listing contents of extdata from package</span></span>
-<span id="cb232-14"><a href="building-a-package-on-github-for-data-and-code.html#cb232-14" tabindex="-1"></a><span class="co">#&#39; @param NA</span></span>
-<span id="cb232-15"><a href="building-a-package-on-github-for-data-and-code.html#cb232-15" tabindex="-1"></a><span class="co">#&#39; @return tibble</span></span>
-<span id="cb232-16"><a href="building-a-package-on-github-for-data-and-code.html#cb232-16" tabindex="-1"></a><span class="co">#&#39; @export</span></span>
-<span id="cb232-17"><a href="building-a-package-on-github-for-data-and-code.html#cb232-17" tabindex="-1"></a><span class="co">#&#39;</span></span>
-<span id="cb232-18"><a href="building-a-package-on-github-for-data-and-code.html#cb232-18" tabindex="-1"></a><span class="co">#&#39; @examples</span></span>
-<span id="cb232-19"><a href="building-a-package-on-github-for-data-and-code.html#cb232-19" tabindex="-1"></a><span class="co">#&#39; view(exfiles())</span></span>
-<span id="cb232-20"><a href="building-a-package-on-github-for-data-and-code.html#cb232-20" tabindex="-1"></a>exfiles <span class="ot">&lt;-</span> <span class="cf">function</span>(){</span>
-<span id="cb232-21"><a href="building-a-package-on-github-for-data-and-code.html#cb232-21" tabindex="-1"></a>  <span class="fu">library</span>(dplyr)</span>
-<span id="cb232-22"><a href="building-a-package-on-github-for-data-and-code.html#cb232-22" tabindex="-1"></a>  exfilesDF <span class="ot">&lt;-</span> <span class="fu">tribble</span>(<span class="sc">~</span>dir,<span class="sc">~</span>file,<span class="sc">~</span>path,<span class="sc">~</span>type)</span>
-<span id="cb232-23"><a href="building-a-package-on-github-for-data-and-code.html#cb232-23" tabindex="-1"></a>  <span class="cf">for</span>(d <span class="cf">in</span> <span class="fu">list.dirs</span>(<span class="fu">ex</span>(<span class="st">&quot;&quot;</span>),<span class="at">recursive=</span>F)){</span>
-<span id="cb232-24"><a href="building-a-package-on-github-for-data-and-code.html#cb232-24" tabindex="-1"></a>    <span class="co">#print(d)</span></span>
-<span id="cb232-25"><a href="building-a-package-on-github-for-data-and-code.html#cb232-25" tabindex="-1"></a>    dsplit <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(d,<span class="st">&quot;/&quot;</span>)</span>
-<span id="cb232-26"><a href="building-a-package-on-github-for-data-and-code.html#cb232-26" tabindex="-1"></a>    len <span class="ot">&lt;-</span> <span class="fu">length</span>(dsplit[[<span class="dv">1</span>]])</span>
-<span id="cb232-27"><a href="building-a-package-on-github-for-data-and-code.html#cb232-27" tabindex="-1"></a>    dir <span class="ot">&lt;-</span> dsplit[[<span class="dv">1</span>]][len]</span>
-<span id="cb232-28"><a href="building-a-package-on-github-for-data-and-code.html#cb232-28" tabindex="-1"></a>    <span class="cf">for</span>(shp <span class="cf">in</span> <span class="fu">list.files</span>(d,<span class="at">pattern=</span><span class="st">&quot;*.shp$&quot;</span>)){</span>
-<span id="cb232-29"><a href="building-a-package-on-github-for-data-and-code.html#cb232-29" tabindex="-1"></a>      exfilesDF <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(exfilesDF,<span class="fu">tribble</span>(<span class="sc">~</span>dir,<span class="sc">~</span>file,<span class="sc">~</span>path,<span class="sc">~</span>type,dir,shp,<span class="fu">paste0</span>(<span class="st">&quot;ex(</span><span class="sc">\&#39;</span><span class="st">&quot;</span>,dir,<span class="st">&quot;/&quot;</span>,shp,<span class="st">&quot;</span><span class="sc">\&#39;</span><span class="st">)&quot;</span>),<span class="st">&quot;shapefile&quot;</span>))</span>
-<span id="cb232-30"><a href="building-a-package-on-github-for-data-and-code.html#cb232-30" tabindex="-1"></a>    }</span>
-<span id="cb232-31"><a href="building-a-package-on-github-for-data-and-code.html#cb232-31" tabindex="-1"></a>    <span class="cf">for</span>(tif <span class="cf">in</span> <span class="fu">list.files</span>(d,<span class="at">pattern=</span><span class="st">&quot;*.tif$&quot;</span>)){</span>
-<span id="cb232-32"><a href="building-a-package-on-github-for-data-and-code.html#cb232-32" tabindex="-1"></a>      exfilesDF <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(exfilesDF,<span class="fu">tribble</span>(<span class="sc">~</span>dir,<span class="sc">~</span>file,<span class="sc">~</span>path,<span class="sc">~</span>type,dir,tif,<span class="fu">paste0</span>(<span class="st">&quot;ex(</span><span class="sc">\&#39;</span><span class="st">&quot;</span>,dir,<span class="st">&quot;/&quot;</span>,tif,<span class="st">&quot;</span><span class="sc">\&#39;</span><span class="st">)&quot;</span>),<span class="st">&quot;TIFF&quot;</span>))</span>
-<span id="cb232-33"><a href="building-a-package-on-github-for-data-and-code.html#cb232-33" tabindex="-1"></a>    }</span>
-<span id="cb232-34"><a href="building-a-package-on-github-for-data-and-code.html#cb232-34" tabindex="-1"></a>    <span class="cf">for</span>(csv <span class="cf">in</span> <span class="fu">list.files</span>(d,<span class="at">pattern=</span><span class="st">&quot;*.csv&quot;</span>)){</span>
-<span id="cb232-35"><a href="building-a-package-on-github-for-data-and-code.html#cb232-35" tabindex="-1"></a>      exfilesDF <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(exfilesDF,<span class="fu">tribble</span>(<span class="sc">~</span>dir,<span class="sc">~</span>file,<span class="sc">~</span>path,<span class="sc">~</span>type,dir,csv,<span class="fu">paste0</span>(<span class="st">&quot;ex(</span><span class="sc">\&#39;</span><span class="st">&quot;</span>,dir,<span class="st">&quot;/&quot;</span>,csv,<span class="st">&quot;</span><span class="sc">\&#39;</span><span class="st">)&quot;</span>),<span class="st">&quot;CSV&quot;</span>))</span>
-<span id="cb232-36"><a href="building-a-package-on-github-for-data-and-code.html#cb232-36" tabindex="-1"></a>    }</span>
-<span id="cb232-37"><a href="building-a-package-on-github-for-data-and-code.html#cb232-37" tabindex="-1"></a>    <span class="cf">for</span>(xls <span class="cf">in</span> <span class="fu">list.files</span>(d,<span class="at">pattern=</span><span class="st">&quot;*.xls&quot;</span>)){</span>
-<span id="cb232-38"><a href="building-a-package-on-github-for-data-and-code.html#cb232-38" tabindex="-1"></a>      exfilesDF <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(exfilesDF,<span class="fu">tribble</span>(<span class="sc">~</span>dir,<span class="sc">~</span>file,<span class="sc">~</span>path,<span class="sc">~</span>type,dir,xls,<span class="fu">paste0</span>(<span class="st">&quot;ex(</span><span class="sc">\&#39;</span><span class="st">&quot;</span>,dir,<span class="st">&quot;/&quot;</span>,xls,<span class="st">&quot;</span><span class="sc">\&#39;</span><span class="st">)&quot;</span>),<span class="st">&quot;xls&quot;</span>))</span>
-<span id="cb232-39"><a href="building-a-package-on-github-for-data-and-code.html#cb232-39" tabindex="-1"></a>    }</span>
-<span id="cb232-40"><a href="building-a-package-on-github-for-data-and-code.html#cb232-40" tabindex="-1"></a>  }</span>
-<span id="cb232-41"><a href="building-a-package-on-github-for-data-and-code.html#cb232-41" tabindex="-1"></a>  exfilesDF</span>
-<span id="cb232-42"><a href="building-a-package-on-github-for-data-and-code.html#cb232-42" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="building-a-package-on-github-for-data-and-code.html#cb229-1" tabindex="-1"></a><span class="co">#&#39; Access external data in package</span></span>
+<span id="cb229-2"><a href="building-a-package-on-github-for-data-and-code.html#cb229-2" tabindex="-1"></a><span class="co">#&#39;</span></span>
+<span id="cb229-3"><a href="building-a-package-on-github-for-data-and-code.html#cb229-3" tabindex="-1"></a><span class="co">#&#39; @param dta filename to access from extdata, including folders</span></span>
+<span id="cb229-4"><a href="building-a-package-on-github-for-data-and-code.html#cb229-4" tabindex="-1"></a><span class="co">#&#39;</span></span>
+<span id="cb229-5"><a href="building-a-package-on-github-for-data-and-code.html#cb229-5" tabindex="-1"></a><span class="co">#&#39; @return path to the file</span></span>
+<span id="cb229-6"><a href="building-a-package-on-github-for-data-and-code.html#cb229-6" tabindex="-1"></a><span class="co">#&#39; @export</span></span>
+<span id="cb229-7"><a href="building-a-package-on-github-for-data-and-code.html#cb229-7" tabindex="-1"></a><span class="co">#&#39;</span></span>
+<span id="cb229-8"><a href="building-a-package-on-github-for-data-and-code.html#cb229-8" tabindex="-1"></a><span class="co">#&#39; @examples</span></span>
+<span id="cb229-9"><a href="building-a-package-on-github-for-data-and-code.html#cb229-9" tabindex="-1"></a><span class="co">#&#39; read.csv(ex(&quot;sierra/sierraStations.csv&quot;))</span></span>
+<span id="cb229-10"><a href="building-a-package-on-github-for-data-and-code.html#cb229-10" tabindex="-1"></a>ex <span class="ot">&lt;-</span> <span class="cf">function</span>(dta){</span>
+<span id="cb229-11"><a href="building-a-package-on-github-for-data-and-code.html#cb229-11" tabindex="-1"></a>  <span class="fu">system.file</span>(<span class="st">&quot;extdata&quot;</span>,dta,<span class="at">package=</span><span class="st">&quot;igisci&quot;</span>)</span>
+<span id="cb229-12"><a href="building-a-package-on-github-for-data-and-code.html#cb229-12" tabindex="-1"></a>}</span>
+<span id="cb229-13"><a href="building-a-package-on-github-for-data-and-code.html#cb229-13" tabindex="-1"></a><span class="co">#&#39; Listing contents of extdata from package</span></span>
+<span id="cb229-14"><a href="building-a-package-on-github-for-data-and-code.html#cb229-14" tabindex="-1"></a><span class="co">#&#39; @param NA</span></span>
+<span id="cb229-15"><a href="building-a-package-on-github-for-data-and-code.html#cb229-15" tabindex="-1"></a><span class="co">#&#39; @return tibble</span></span>
+<span id="cb229-16"><a href="building-a-package-on-github-for-data-and-code.html#cb229-16" tabindex="-1"></a><span class="co">#&#39; @export</span></span>
+<span id="cb229-17"><a href="building-a-package-on-github-for-data-and-code.html#cb229-17" tabindex="-1"></a><span class="co">#&#39;</span></span>
+<span id="cb229-18"><a href="building-a-package-on-github-for-data-and-code.html#cb229-18" tabindex="-1"></a><span class="co">#&#39; @examples</span></span>
+<span id="cb229-19"><a href="building-a-package-on-github-for-data-and-code.html#cb229-19" tabindex="-1"></a><span class="co">#&#39; view(exfiles())</span></span>
+<span id="cb229-20"><a href="building-a-package-on-github-for-data-and-code.html#cb229-20" tabindex="-1"></a>exfiles <span class="ot">&lt;-</span> <span class="cf">function</span>(){</span>
+<span id="cb229-21"><a href="building-a-package-on-github-for-data-and-code.html#cb229-21" tabindex="-1"></a>  <span class="fu">library</span>(dplyr)</span>
+<span id="cb229-22"><a href="building-a-package-on-github-for-data-and-code.html#cb229-22" tabindex="-1"></a>  exfilesDF <span class="ot">&lt;-</span> <span class="fu">tribble</span>(<span class="sc">~</span>dir,<span class="sc">~</span>file,<span class="sc">~</span>path,<span class="sc">~</span>type)</span>
+<span id="cb229-23"><a href="building-a-package-on-github-for-data-and-code.html#cb229-23" tabindex="-1"></a>  <span class="cf">for</span>(d <span class="cf">in</span> <span class="fu">list.dirs</span>(<span class="fu">ex</span>(<span class="st">&quot;&quot;</span>),<span class="at">recursive=</span>F)){</span>
+<span id="cb229-24"><a href="building-a-package-on-github-for-data-and-code.html#cb229-24" tabindex="-1"></a>    <span class="co">#print(d)</span></span>
+<span id="cb229-25"><a href="building-a-package-on-github-for-data-and-code.html#cb229-25" tabindex="-1"></a>    dsplit <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(d,<span class="st">&quot;/&quot;</span>)</span>
+<span id="cb229-26"><a href="building-a-package-on-github-for-data-and-code.html#cb229-26" tabindex="-1"></a>    len <span class="ot">&lt;-</span> <span class="fu">length</span>(dsplit[[<span class="dv">1</span>]])</span>
+<span id="cb229-27"><a href="building-a-package-on-github-for-data-and-code.html#cb229-27" tabindex="-1"></a>    dir <span class="ot">&lt;-</span> dsplit[[<span class="dv">1</span>]][len]</span>
+<span id="cb229-28"><a href="building-a-package-on-github-for-data-and-code.html#cb229-28" tabindex="-1"></a>    <span class="cf">for</span>(shp <span class="cf">in</span> <span class="fu">list.files</span>(d,<span class="at">pattern=</span><span class="st">&quot;*.shp$&quot;</span>)){</span>
+<span id="cb229-29"><a href="building-a-package-on-github-for-data-and-code.html#cb229-29" tabindex="-1"></a>      exfilesDF <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(exfilesDF,<span class="fu">tribble</span>(<span class="sc">~</span>dir,<span class="sc">~</span>file,<span class="sc">~</span>path,<span class="sc">~</span>type,dir,shp,<span class="fu">paste0</span>(<span class="st">&quot;ex(</span><span class="sc">\&#39;</span><span class="st">&quot;</span>,dir,<span class="st">&quot;/&quot;</span>,shp,<span class="st">&quot;</span><span class="sc">\&#39;</span><span class="st">)&quot;</span>),<span class="st">&quot;shapefile&quot;</span>))</span>
+<span id="cb229-30"><a href="building-a-package-on-github-for-data-and-code.html#cb229-30" tabindex="-1"></a>    }</span>
+<span id="cb229-31"><a href="building-a-package-on-github-for-data-and-code.html#cb229-31" tabindex="-1"></a>    <span class="cf">for</span>(tif <span class="cf">in</span> <span class="fu">list.files</span>(d,<span class="at">pattern=</span><span class="st">&quot;*.tif$&quot;</span>)){</span>
+<span id="cb229-32"><a href="building-a-package-on-github-for-data-and-code.html#cb229-32" tabindex="-1"></a>      exfilesDF <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(exfilesDF,<span class="fu">tribble</span>(<span class="sc">~</span>dir,<span class="sc">~</span>file,<span class="sc">~</span>path,<span class="sc">~</span>type,dir,tif,<span class="fu">paste0</span>(<span class="st">&quot;ex(</span><span class="sc">\&#39;</span><span class="st">&quot;</span>,dir,<span class="st">&quot;/&quot;</span>,tif,<span class="st">&quot;</span><span class="sc">\&#39;</span><span class="st">)&quot;</span>),<span class="st">&quot;TIFF&quot;</span>))</span>
+<span id="cb229-33"><a href="building-a-package-on-github-for-data-and-code.html#cb229-33" tabindex="-1"></a>    }</span>
+<span id="cb229-34"><a href="building-a-package-on-github-for-data-and-code.html#cb229-34" tabindex="-1"></a>    <span class="cf">for</span>(csv <span class="cf">in</span> <span class="fu">list.files</span>(d,<span class="at">pattern=</span><span class="st">&quot;*.csv&quot;</span>)){</span>
+<span id="cb229-35"><a href="building-a-package-on-github-for-data-and-code.html#cb229-35" tabindex="-1"></a>      exfilesDF <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(exfilesDF,<span class="fu">tribble</span>(<span class="sc">~</span>dir,<span class="sc">~</span>file,<span class="sc">~</span>path,<span class="sc">~</span>type,dir,csv,<span class="fu">paste0</span>(<span class="st">&quot;ex(</span><span class="sc">\&#39;</span><span class="st">&quot;</span>,dir,<span class="st">&quot;/&quot;</span>,csv,<span class="st">&quot;</span><span class="sc">\&#39;</span><span class="st">)&quot;</span>),<span class="st">&quot;CSV&quot;</span>))</span>
+<span id="cb229-36"><a href="building-a-package-on-github-for-data-and-code.html#cb229-36" tabindex="-1"></a>    }</span>
+<span id="cb229-37"><a href="building-a-package-on-github-for-data-and-code.html#cb229-37" tabindex="-1"></a>    <span class="cf">for</span>(xls <span class="cf">in</span> <span class="fu">list.files</span>(d,<span class="at">pattern=</span><span class="st">&quot;*.xls&quot;</span>)){</span>
+<span id="cb229-38"><a href="building-a-package-on-github-for-data-and-code.html#cb229-38" tabindex="-1"></a>      exfilesDF <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(exfilesDF,<span class="fu">tribble</span>(<span class="sc">~</span>dir,<span class="sc">~</span>file,<span class="sc">~</span>path,<span class="sc">~</span>type,dir,xls,<span class="fu">paste0</span>(<span class="st">&quot;ex(</span><span class="sc">\&#39;</span><span class="st">&quot;</span>,dir,<span class="st">&quot;/&quot;</span>,xls,<span class="st">&quot;</span><span class="sc">\&#39;</span><span class="st">)&quot;</span>),<span class="st">&quot;xls&quot;</span>))</span>
+<span id="cb229-39"><a href="building-a-package-on-github-for-data-and-code.html#cb229-39" tabindex="-1"></a>    }</span>
+<span id="cb229-40"><a href="building-a-package-on-github-for-data-and-code.html#cb229-40" tabindex="-1"></a>  }</span>
+<span id="cb229-41"><a href="building-a-package-on-github-for-data-and-code.html#cb229-41" tabindex="-1"></a>  exfilesDF</span>
+<span id="cb229-42"><a href="building-a-package-on-github-for-data-and-code.html#cb229-42" tabindex="-1"></a>}</span></code></pre></div>
 <ol start="5" style="list-style-type: decimal">
 <li>Use <code>devtools::document()</code> to convert the comments to .Rd files.</li>
 </ol>
-<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="building-a-package-on-github-for-data-and-code.html#cb233-1" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">document</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="building-a-package-on-github-for-data-and-code.html#cb230-1" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">document</span>()</span></code></pre></div>
 <ol start="6" style="list-style-type: decimal">
 <li><p>Then preview the documentation with <code>?ex</code>, and maybe use Check in the Build tab.</p></li>
 <li><p>Then when you commit these changes in GitHub, the package will contain the function, ready to use as long as the user loads the library. You should see the function as <code>ex.Rd</code> in the <code>man</code> folder of your package, similar to what you see for the data described above.</p></li>
@@ -553,7 +557,7 @@ usethis::use_data(sierraFeb)</code></pre>
 </div>
 </div>
 <h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-happygitwithr" class="csl-entry">
 Bryan, Jenny. n.d. <em>Happy Git and GitHub for the useR</em>. <a href="https://happygitwithr.com/">https://happygitwithr.com/</a>.
 </div>
@@ -581,44 +585,44 @@ Wickham, Hadley, and Jenny Bryan. n.d. <em>R Packages</em>. O’Reilly. <a href=
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "section"
-},
-"book_filename": "envdatasci",
-"toc_depth": 4
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section"
+  },
+  "book_filename": "envdatasci",
+  "toc_depth": 4
 });
 });
 </script>

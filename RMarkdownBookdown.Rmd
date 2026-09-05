@@ -317,8 +317,6 @@ language:
 
 #### Publishing
 
-To get it published at bookdown.org, you'll need an account at Posit Connect, and then replacing "myAccount" with your account name, use ...
-```
-bookdown::publish_book(account="myAccount", server="bookdown.org")
-```
-... the first time, then after that you don't need those two parameters.
+To get it published at https://connect.posit.cloud from a GitHub repo, you'll need an account. Note you'll need at least a basic paid level to do many things, including publishing from a private GitHub repo.
+
+The method I follow now is to go with static HTML document accessing the `_book/index.html` built in RStudio on my computer with bookdown followed by updating the GitHub repo with GitHub desktop.  To update after any changes, I've needed to use the 3-dot menu for the book in https://connect.posit.cloud/jerryddavis and then specify Republish.  

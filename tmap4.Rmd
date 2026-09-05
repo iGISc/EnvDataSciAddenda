@@ -3,8 +3,6 @@
 
 This chapter explores some features of tmap4 such as visual variables and using a basemap.
 
-> Note that the tmap version currently being used in this book (html version) is the development version of tmap version 4, available by using the `remotes` package to `install_github("r-tmap/tmaptools")` and `install_github("r-tmap/tmap")`. See <https://github.com/r-tmap/tmap#development-major-update>. I'd recommend knitting `tmap_vv.Rmd`, which you can download from the `tmap/vignettes` folder, for a bit of documentation on the visual variables symbology method. The chapter on Making Maps <https://r.geocompx.org/adv-map> in Geocomputation is probably the most comprehensive source of information.
-
 > Note that there are many basemaps served you might explore at <https://leaflet-extras.github.io/leaflet-providers/preview/index.html>. However, not all are supported by tm_basemap, so they may end up blank. Unfortunately, the various USGS basemaps are currently not supported, but the Esri and Open basemaps are generally reliable.
 
 ## Simple test
@@ -115,6 +113,25 @@ tm_basemap(server="OpenTopoMap", zoom=2) +
   tm_polygons(fill=NA,col="black") +
   tm_layout(inner.margins=rep(0,4))
 ```
+
+### Basemaps with rasters
+
+The tm_basemap method in the current tmap 4.0 version works fine with feature data, but to get a basemap when you want to display rasters as well requires another method, using maptiles::get_tiles and displaying that as a raster. To display rasters together requires an alpha setting, so we'll use that with the basemap since it will need to go on top to scale correctly.
+
+```{r}
+library(terra); library(igisci); library(maptiles); library(tmap)
+elev <- rast(ex("marbles/elev.tif"))
+slope <- terrain(elev, v="slope")
+steep <- slope > 30
+steep[steep==0] <- NA
+mblBase <- get_tiles(steep, provider="OpenTopoMap")
+tm_shape(steep) + 
+  tm_raster(col.scale=tm_scale_categorical(values=c("red")),
+            col.legend = tm_legend("steep", frame=F)) +
+  tm_shape(mblBase) + 
+     tm_rgb(col_alpha=0.5)
+```
+
 
 
 

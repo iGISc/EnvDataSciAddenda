@@ -7,11 +7,11 @@ concentration measured at the Mauna Loa Observatory on Hawai'i. These record rec
 
 ## Read the data
 
-We'll use R code to download and prepare the data for plotting. The source file at NOAA  ftp://aftp.cmdl.noaa.gov/products/trends/co2/co2_mm_mlo.txt can be read directly into a data frame.  We'll start by using code to download the text file into the current working directory:  
+We'll use R code to download and prepare the data for plotting. The source file at NOAA  https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_mm_mlo.txt can be read directly into a data frame.  We'll start by using code to download the text file into the current working directory:  
 
 ```{r warning=F, message=F}
 library(RCurl); library(igisci)
-filepath <- "ftp://aftp.cmdl.noaa.gov/products/trends/co2/co2_mm_mlo.txt"
+filepath = "https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_mm_mlo.txt"
 filename <- "co2_mm_mlo.txt"
 result = try(download.file(filepath, paste0(getwd(),"/",filename)))
 ```

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>4 tmap4 | Environmental Data Science Addenda</title>
   <meta name="description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
-  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="4 tmap4 | Environmental Data Science Addenda" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Jerry Davis, SFSU Institute for Geographic Information Science" />
 
 
-<meta name="date" content="2024-12-02" />
+<meta name="date" content="2026-09-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,11 +52,37 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/htmltools-fill-0.5.9/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.34.0/datatables.js"></script>
+<link href="libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.2.3/leaflet.js"></script>
+<script src="libs/leaflet-providers-3.0.0/leaflet-providers.js"></script>
+<script src="libs/leaflet-providers-plugin-2.2.3/leaflet-providers-plugin.js"></script>
+<script src="libs/leaflet-graticule-0.1.0/L.Graticule.js"></script>
+<script src="libs/leaflet-graticule-0.1.0/Graticule-binding.js"></script>
+<script src="libs/Leaflet.glify-3.3.1/GlifyUtils.js"></script>
+<script src="libs/Leaflet.glify-3.3.1/addGlifyPoints.js"></script>
+<script src="libs/Leaflet.glify-3.3.1/addGlifyPolygons.js"></script>
+<script src="libs/Leaflet.glify-3.3.1/addGlifyPolylines.js"></script>
+<script src="libs/Leaflet.glify-3.3.1/glify-browser.js"></script>
 
 
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -123,6 +149,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 </style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -156,7 +204,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.1" data-path="tmap4.html"><a href="tmap4.html#simple-test"><i class="fa fa-check"></i><b>4.1</b> Simple test</a></li>
 <li class="chapter" data-level="4.2" data-path="tmap4.html"><a href="tmap4.html#visual-variables"><i class="fa fa-check"></i><b>4.2</b> Visual variables</a></li>
 <li class="chapter" data-level="4.3" data-path="tmap4.html"><a href="tmap4.html#constant-visual-variables"><i class="fa fa-check"></i><b>4.3</b> Constant visual variables</a></li>
-<li class="chapter" data-level="4.4" data-path="tmap4.html"><a href="tmap4.html#basemap"><i class="fa fa-check"></i><b>4.4</b> Basemap</a></li>
+<li class="chapter" data-level="4.4" data-path="tmap4.html"><a href="tmap4.html#basemap"><i class="fa fa-check"></i><b>4.4</b> Basemap</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="tmap4.html"><a href="tmap4.html#basemaps-with-rasters"><i class="fa fa-check"></i><b>4.4.1</b> Basemaps with rasters</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="interpolation.html"><a href="interpolation.html"><i class="fa fa-check"></i><b>5</b> Spatial Interpolation</a>
 <ul>
@@ -315,57 +366,46 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">4</span> tmap4<a href="tmap4.html#tmap4" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>This chapter explores some features of tmap4 such as visual variables and using a basemap.</p>
 <blockquote>
-<p>Note that the tmap version currently being used in this book (html version) is the development version of tmap version 4, available by using the <code>remotes</code> package to <code>install_github("r-tmap/tmaptools")</code> and <code>install_github("r-tmap/tmap")</code>. See <a href="https://github.com/r-tmap/tmap#development-major-update" class="uri">https://github.com/r-tmap/tmap#development-major-update</a>. I’d recommend knitting <code>tmap_vv.Rmd</code>, which you can download from the <code>tmap/vignettes</code> folder, for a bit of documentation on the visual variables symbology method. The chapter on Making Maps <a href="https://r.geocompx.org/adv-map" class="uri">https://r.geocompx.org/adv-map</a> in Geocomputation is probably the most comprehensive source of information.</p>
-</blockquote>
-<blockquote>
 <p>Note that there are many basemaps served you might explore at <a href="https://leaflet-extras.github.io/leaflet-providers/preview/index.html" class="uri">https://leaflet-extras.github.io/leaflet-providers/preview/index.html</a>. However, not all are supported by tm_basemap, so they may end up blank. Unfortunately, the various USGS basemaps are currently not supported, but the Esri and Open basemaps are generally reliable.</p>
 </blockquote>
 <div id="simple-test" class="section level2 hasAnchor" number="4.1">
 <h2><span class="header-section-number">4.1</span> Simple test<a href="tmap4.html#simple-test" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We’ll start with a simple test of tmap on a basemap, with coordinates of 4 points in the NW part of Lake Tahoe provided in code.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="tmap4.html#cb1-1" tabindex="-1"></a><span class="fu">library</span>(tmap)</span></code></pre></div>
-<pre><code>## 
-## Attaching package: &#39;tmap&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:datasets&#39;:
-## 
-##     rivers</code></pre>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="tmap4.html#cb4-1" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">&quot;plot&quot;</span>)</span></code></pre></div>
-<pre><code>## ℹ tmap mode set to &quot;plot&quot;.</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="tmap4.html#cb6-1" tabindex="-1"></a>loc <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;nw&quot;</span>,<span class="st">&quot;ne&quot;</span>,<span class="st">&quot;sw&quot;</span>,<span class="st">&quot;se&quot;</span>)</span>
-<span id="cb6-2"><a href="tmap4.html#cb6-2" tabindex="-1"></a>lon <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">120.25</span>, <span class="sc">-</span><span class="fl">120.0</span>, <span class="sc">-</span><span class="fl">120.25</span>, <span class="sc">-</span><span class="fl">120.0</span>)</span>
-<span id="cb6-3"><a href="tmap4.html#cb6-3" tabindex="-1"></a>lat <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">39.25</span>, <span class="fl">39.25</span>, <span class="fl">39.0</span>, <span class="fl">39.0</span>)</span>
-<span id="cb6-4"><a href="tmap4.html#cb6-4" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">data.frame</span>(loc,lon,lat)</span>
-<span id="cb6-5"><a href="tmap4.html#cb6-5" tabindex="-1"></a>tahoeNW <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">st_as_sf</span>(df, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;lon&quot;</span>,<span class="st">&quot;lat&quot;</span>), <span class="at">crs=</span><span class="dv">4326</span>)</span>
-<span id="cb6-6"><a href="tmap4.html#cb6-6" tabindex="-1"></a><span class="fu">tm_basemap</span>(<span class="st">&quot;Esri.WorldTopoMap&quot;</span>) <span class="sc">+</span> <span class="co"># USGS.USTopo&quot;) + # </span></span>
-<span id="cb6-7"><a href="tmap4.html#cb6-7" tabindex="-1"></a>  <span class="fu">tm_graticules</span>() <span class="sc">+</span></span>
-<span id="cb6-8"><a href="tmap4.html#cb6-8" tabindex="-1"></a>  <span class="fu">tm_shape</span>(tahoeNW) <span class="sc">+</span> <span class="fu">tm_dots</span>()</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="tmap4.html#cb19-1" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
+<span id="cb19-2"><a href="tmap4.html#cb19-2" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">&quot;plot&quot;</span>)</span>
+<span id="cb19-3"><a href="tmap4.html#cb19-3" tabindex="-1"></a>loc <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;nw&quot;</span>,<span class="st">&quot;ne&quot;</span>,<span class="st">&quot;sw&quot;</span>,<span class="st">&quot;se&quot;</span>)</span>
+<span id="cb19-4"><a href="tmap4.html#cb19-4" tabindex="-1"></a>lon <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">120.25</span>, <span class="sc">-</span><span class="fl">120.0</span>, <span class="sc">-</span><span class="fl">120.25</span>, <span class="sc">-</span><span class="fl">120.0</span>)</span>
+<span id="cb19-5"><a href="tmap4.html#cb19-5" tabindex="-1"></a>lat <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">39.25</span>, <span class="fl">39.25</span>, <span class="fl">39.0</span>, <span class="fl">39.0</span>)</span>
+<span id="cb19-6"><a href="tmap4.html#cb19-6" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">data.frame</span>(loc,lon,lat)</span>
+<span id="cb19-7"><a href="tmap4.html#cb19-7" tabindex="-1"></a>tahoeNW <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">st_as_sf</span>(df, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;lon&quot;</span>,<span class="st">&quot;lat&quot;</span>), <span class="at">crs=</span><span class="dv">4326</span>)</span>
+<span id="cb19-8"><a href="tmap4.html#cb19-8" tabindex="-1"></a><span class="fu">tm_basemap</span>(<span class="st">&quot;Esri.WorldTopoMap&quot;</span>) <span class="sc">+</span> <span class="co"># USGS.USTopo&quot;) + # </span></span>
+<span id="cb19-9"><a href="tmap4.html#cb19-9" tabindex="-1"></a>  <span class="fu">tm_graticules</span>() <span class="sc">+</span></span>
+<span id="cb19-10"><a href="tmap4.html#cb19-10" tabindex="-1"></a>  <span class="fu">tm_shape</span>(tahoeNW) <span class="sc">+</span> <span class="fu">tm_dots</span>()</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-14-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
 <p>Now we’ll add symbology to the points, sticking with simple tm_dots.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="tmap4.html#cb7-1" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
-<span id="cb7-2"><a href="tmap4.html#cb7-2" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">&quot;plot&quot;</span>)</span></code></pre></div>
-<pre><code>## ℹ tmap mode set to &quot;plot&quot;.</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="tmap4.html#cb9-1" tabindex="-1"></a>loc <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;nw&quot;</span>,<span class="st">&quot;ne&quot;</span>,<span class="st">&quot;sw&quot;</span>,<span class="st">&quot;se&quot;</span>)</span>
-<span id="cb9-2"><a href="tmap4.html#cb9-2" tabindex="-1"></a>lon <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">120.25</span>, <span class="sc">-</span><span class="fl">120.0</span>, <span class="sc">-</span><span class="fl">120.25</span>, <span class="sc">-</span><span class="fl">120.0</span>)</span>
-<span id="cb9-3"><a href="tmap4.html#cb9-3" tabindex="-1"></a>lat <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">39.25</span>, <span class="fl">39.25</span>, <span class="fl">39.0</span>, <span class="fl">39.0</span>)</span>
-<span id="cb9-4"><a href="tmap4.html#cb9-4" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">data.frame</span>(loc,lon,lat)</span>
-<span id="cb9-5"><a href="tmap4.html#cb9-5" tabindex="-1"></a>tahoeNW <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">st_as_sf</span>(df, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;lon&quot;</span>,<span class="st">&quot;lat&quot;</span>), <span class="at">crs=</span><span class="dv">4326</span>)</span>
-<span id="cb9-6"><a href="tmap4.html#cb9-6" tabindex="-1"></a><span class="fu">tm_basemap</span>(<span class="st">&quot;Esri.WorldTopoMap&quot;</span>) <span class="sc">+</span></span>
-<span id="cb9-7"><a href="tmap4.html#cb9-7" tabindex="-1"></a>  <span class="fu">tm_graticules</span>() <span class="sc">+</span></span>
-<span id="cb9-8"><a href="tmap4.html#cb9-8" tabindex="-1"></a>  <span class="fu">tm_shape</span>(tahoeNW) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">fill=</span><span class="st">&quot;red&quot;</span>, <span class="at">size=</span><span class="fl">0.7</span>)</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="tmap4.html#cb20-1" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
+<span id="cb20-2"><a href="tmap4.html#cb20-2" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">&quot;plot&quot;</span>)</span>
+<span id="cb20-3"><a href="tmap4.html#cb20-3" tabindex="-1"></a>loc <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;nw&quot;</span>,<span class="st">&quot;ne&quot;</span>,<span class="st">&quot;sw&quot;</span>,<span class="st">&quot;se&quot;</span>)</span>
+<span id="cb20-4"><a href="tmap4.html#cb20-4" tabindex="-1"></a>lon <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">120.25</span>, <span class="sc">-</span><span class="fl">120.0</span>, <span class="sc">-</span><span class="fl">120.25</span>, <span class="sc">-</span><span class="fl">120.0</span>)</span>
+<span id="cb20-5"><a href="tmap4.html#cb20-5" tabindex="-1"></a>lat <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">39.25</span>, <span class="fl">39.25</span>, <span class="fl">39.0</span>, <span class="fl">39.0</span>)</span>
+<span id="cb20-6"><a href="tmap4.html#cb20-6" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">data.frame</span>(loc,lon,lat)</span>
+<span id="cb20-7"><a href="tmap4.html#cb20-7" tabindex="-1"></a>tahoeNW <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">st_as_sf</span>(df, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;lon&quot;</span>,<span class="st">&quot;lat&quot;</span>), <span class="at">crs=</span><span class="dv">4326</span>)</span>
+<span id="cb20-8"><a href="tmap4.html#cb20-8" tabindex="-1"></a><span class="fu">tm_basemap</span>(<span class="st">&quot;Esri.WorldTopoMap&quot;</span>) <span class="sc">+</span></span>
+<span id="cb20-9"><a href="tmap4.html#cb20-9" tabindex="-1"></a>  <span class="fu">tm_graticules</span>() <span class="sc">+</span></span>
+<span id="cb20-10"><a href="tmap4.html#cb20-10" tabindex="-1"></a>  <span class="fu">tm_shape</span>(tahoeNW) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">fill=</span><span class="st">&quot;red&quot;</span>, <span class="at">size=</span><span class="fl">0.7</span>)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-15-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
 <p>Now we’ll specify a particular point symbol, using the R shape 21 for a filled circle (google R point symbols to see the 25 shapes).</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="tmap4.html#cb10-1" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
-<span id="cb10-2"><a href="tmap4.html#cb10-2" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">&quot;plot&quot;</span>)</span></code></pre></div>
-<pre><code>## ℹ tmap mode set to &quot;plot&quot;.</code></pre>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="tmap4.html#cb12-1" tabindex="-1"></a>loc <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;nw&quot;</span>,<span class="st">&quot;ne&quot;</span>,<span class="st">&quot;sw&quot;</span>,<span class="st">&quot;se&quot;</span>)</span>
-<span id="cb12-2"><a href="tmap4.html#cb12-2" tabindex="-1"></a>lon <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">120.25</span>, <span class="sc">-</span><span class="fl">120.0</span>, <span class="sc">-</span><span class="fl">120.25</span>, <span class="sc">-</span><span class="fl">120.0</span>)</span>
-<span id="cb12-3"><a href="tmap4.html#cb12-3" tabindex="-1"></a>lat <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">39.25</span>, <span class="fl">39.25</span>, <span class="fl">39.0</span>, <span class="fl">39.0</span>)</span>
-<span id="cb12-4"><a href="tmap4.html#cb12-4" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">data.frame</span>(loc,lon,lat)</span>
-<span id="cb12-5"><a href="tmap4.html#cb12-5" tabindex="-1"></a>tahoeNW <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">st_as_sf</span>(df, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;lon&quot;</span>,<span class="st">&quot;lat&quot;</span>), <span class="at">crs=</span><span class="dv">4326</span>)</span>
-<span id="cb12-6"><a href="tmap4.html#cb12-6" tabindex="-1"></a><span class="fu">tm_basemap</span>(<span class="st">&quot;Esri.WorldTopoMap&quot;</span>) <span class="sc">+</span></span>
-<span id="cb12-7"><a href="tmap4.html#cb12-7" tabindex="-1"></a>  <span class="fu">tm_graticules</span>() <span class="sc">+</span></span>
-<span id="cb12-8"><a href="tmap4.html#cb12-8" tabindex="-1"></a>  <span class="fu">tm_shape</span>(tahoeNW) <span class="sc">+</span> <span class="fu">tm_symbols</span>(<span class="at">shape=</span><span class="dv">21</span>, <span class="at">fill=</span><span class="st">&quot;red&quot;</span>, <span class="at">size=</span><span class="fl">0.7</span>, <span class="at">col=</span><span class="st">&quot;black&quot;</span>)</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="tmap4.html#cb21-1" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
+<span id="cb21-2"><a href="tmap4.html#cb21-2" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">&quot;plot&quot;</span>)</span>
+<span id="cb21-3"><a href="tmap4.html#cb21-3" tabindex="-1"></a>loc <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;nw&quot;</span>,<span class="st">&quot;ne&quot;</span>,<span class="st">&quot;sw&quot;</span>,<span class="st">&quot;se&quot;</span>)</span>
+<span id="cb21-4"><a href="tmap4.html#cb21-4" tabindex="-1"></a>lon <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">120.25</span>, <span class="sc">-</span><span class="fl">120.0</span>, <span class="sc">-</span><span class="fl">120.25</span>, <span class="sc">-</span><span class="fl">120.0</span>)</span>
+<span id="cb21-5"><a href="tmap4.html#cb21-5" tabindex="-1"></a>lat <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">39.25</span>, <span class="fl">39.25</span>, <span class="fl">39.0</span>, <span class="fl">39.0</span>)</span>
+<span id="cb21-6"><a href="tmap4.html#cb21-6" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">data.frame</span>(loc,lon,lat)</span>
+<span id="cb21-7"><a href="tmap4.html#cb21-7" tabindex="-1"></a>tahoeNW <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">st_as_sf</span>(df, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;lon&quot;</span>,<span class="st">&quot;lat&quot;</span>), <span class="at">crs=</span><span class="dv">4326</span>)</span>
+<span id="cb21-8"><a href="tmap4.html#cb21-8" tabindex="-1"></a><span class="fu">tm_basemap</span>(<span class="st">&quot;Esri.WorldTopoMap&quot;</span>) <span class="sc">+</span></span>
+<span id="cb21-9"><a href="tmap4.html#cb21-9" tabindex="-1"></a>  <span class="fu">tm_graticules</span>() <span class="sc">+</span></span>
+<span id="cb21-10"><a href="tmap4.html#cb21-10" tabindex="-1"></a>  <span class="fu">tm_shape</span>(tahoeNW) <span class="sc">+</span> <span class="fu">tm_symbols</span>(<span class="at">shape=</span><span class="dv">21</span>, <span class="at">fill=</span><span class="st">&quot;red&quot;</span>, <span class="at">size=</span><span class="fl">0.7</span>, <span class="at">col=</span><span class="st">&quot;black&quot;</span>)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-16-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="visual-variables" class="section level2 hasAnchor" number="4.2">
 <h2><span class="header-section-number">4.2</span> Visual variables<a href="tmap4.html#visual-variables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -420,45 +460,57 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="constant-visual-variables" class="section level2 hasAnchor" number="4.3">
 <h2><span class="header-section-number">4.3</span> Constant visual variables<a href="tmap4.html#constant-visual-variables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="tmap4.html#cb13-1" tabindex="-1"></a><span class="fu">tm_shape</span>(tahoeNW) <span class="sc">+</span> <span class="fu">tm_symbols</span>(<span class="at">size=</span><span class="dv">1</span>, <span class="at">fill=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="tmap4.html#cb14-1" tabindex="-1"></a><span class="fu">tm_shape</span>(World) <span class="sc">+</span> <span class="fu">tm_polygons</span>(<span class="st">&quot;gray&quot;</span>)</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-4-2.png" width="672" />
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="tmap4.html#cb22-1" tabindex="-1"></a><span class="fu">tm_shape</span>(tahoeNW) <span class="sc">+</span> <span class="fu">tm_symbols</span>(<span class="at">size=</span><span class="dv">1</span>, <span class="at">fill=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-17-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="tmap4.html#cb23-1" tabindex="-1"></a><span class="fu">tm_shape</span>(World) <span class="sc">+</span> <span class="fu">tm_polygons</span>(<span class="st">&quot;gray&quot;</span>)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-17-2.png" alt="" width="75%" style="display: block; margin: auto;" />
 ## Using a visual variable for feature symbolization</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="tmap4.html#cb15-1" tabindex="-1"></a><span class="fu">tm_shape</span>(World) <span class="sc">+</span></span>
-<span id="cb15-2"><a href="tmap4.html#cb15-2" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="st">&quot;pop_est&quot;</span>)</span></code></pre></div>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="tmap4.html#cb24-1" tabindex="-1"></a><span class="fu">tm_shape</span>(World) <span class="sc">+</span></span>
+<span id="cb24-2"><a href="tmap4.html#cb24-2" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="st">&quot;pop_est&quot;</span>)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-18-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
 <p>You can create facets by specifying multiple data variable names and scales to one visual (or transformation) variable, in this case <code>"fill"</code>. The effect will be a comparison of six symbolization methods using the same variable.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="tmap4.html#cb16-1" tabindex="-1"></a><span class="fu">data</span>(World)</span>
-<span id="cb16-2"><a href="tmap4.html#cb16-2" tabindex="-1"></a>Africa <span class="ot">=</span> World[World<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Africa&quot;</span>, ]</span>
-<span id="cb16-3"><a href="tmap4.html#cb16-3" tabindex="-1"></a>Africa<span class="sc">$</span>life_exp <span class="ot">=</span> <span class="fu">round</span>(Africa<span class="sc">$</span>life_exp)</span>
-<span id="cb16-4"><a href="tmap4.html#cb16-4" tabindex="-1"></a><span class="fu">tm_shape</span>(Africa) <span class="sc">+</span></span>
-<span id="cb16-5"><a href="tmap4.html#cb16-5" tabindex="-1"></a>    <span class="fu">tm_polygons</span>(<span class="fu">rep</span>(<span class="st">&quot;life_exp&quot;</span>, <span class="dv">6</span>), </span>
-<span id="cb16-6"><a href="tmap4.html#cb16-6" tabindex="-1"></a>                <span class="at">fill.scale =</span> <span class="fu">list</span>(<span class="fu">tm_scale_categorical</span>(),</span>
-<span id="cb16-7"><a href="tmap4.html#cb16-7" tabindex="-1"></a>                                  <span class="fu">tm_scale_ordinal</span>(),</span>
-<span id="cb16-8"><a href="tmap4.html#cb16-8" tabindex="-1"></a>                                  <span class="fu">tm_scale_intervals</span>(),</span>
-<span id="cb16-9"><a href="tmap4.html#cb16-9" tabindex="-1"></a>                                  <span class="fu">tm_scale_continuous</span>(),</span>
-<span id="cb16-10"><a href="tmap4.html#cb16-10" tabindex="-1"></a>                                  <span class="fu">tm_scale_continuous_log</span>(),</span>
-<span id="cb16-11"><a href="tmap4.html#cb16-11" tabindex="-1"></a>                                  <span class="fu">tm_scale_discrete</span>()),</span>
-<span id="cb16-12"><a href="tmap4.html#cb16-12" tabindex="-1"></a>                <span class="at">fill.legend =</span> <span class="fu">tm_legend</span>(<span class="at">title =</span> <span class="st">&quot;&quot;</span>, <span class="at">position =</span> <span class="fu">tm_pos_in</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;top&quot;</span>))) <span class="sc">+</span></span>
-<span id="cb16-13"><a href="tmap4.html#cb16-13" tabindex="-1"></a>    <span class="fu">tm_layout</span>(<span class="at">panel.labels =</span> <span class="fu">c</span>(<span class="st">&quot;tm_scale_categorical&quot;</span>, <span class="st">&quot;tm_scale_ordinal&quot;</span>, <span class="st">&quot;tm_scale_intervals&quot;</span>, <span class="st">&quot;tm_scale_continuous&quot;</span>, <span class="st">&quot;tm_scale_continuous_log&quot;</span>, <span class="st">&quot;tm_scale_discrete&quot;</span>), </span>
-<span id="cb16-14"><a href="tmap4.html#cb16-14" tabindex="-1"></a>              <span class="at">inner.margins =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.4</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>),</span>
-<span id="cb16-15"><a href="tmap4.html#cb16-15" tabindex="-1"></a>              <span class="at">legend.text.size =</span> <span class="fl">0.5</span>)</span></code></pre></div>
-<pre><code>## [plot mode] fit legend/component: Some legend items or map compoments do not
-## fit well, and are therefore rescaled.
-## ℹ Set the tmap option `component.autoscale = FALSE` to disable rescaling.</code></pre>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="tmap4.html#cb25-1" tabindex="-1"></a><span class="fu">data</span>(World)</span>
+<span id="cb25-2"><a href="tmap4.html#cb25-2" tabindex="-1"></a>Africa <span class="ot">=</span> World[World<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Africa&quot;</span>, ]</span>
+<span id="cb25-3"><a href="tmap4.html#cb25-3" tabindex="-1"></a>Africa<span class="sc">$</span>life_exp <span class="ot">=</span> <span class="fu">round</span>(Africa<span class="sc">$</span>life_exp)</span>
+<span id="cb25-4"><a href="tmap4.html#cb25-4" tabindex="-1"></a><span class="fu">tm_shape</span>(Africa) <span class="sc">+</span></span>
+<span id="cb25-5"><a href="tmap4.html#cb25-5" tabindex="-1"></a>    <span class="fu">tm_polygons</span>(<span class="fu">rep</span>(<span class="st">&quot;life_exp&quot;</span>, <span class="dv">6</span>), </span>
+<span id="cb25-6"><a href="tmap4.html#cb25-6" tabindex="-1"></a>                <span class="at">fill.scale =</span> <span class="fu">list</span>(<span class="fu">tm_scale_categorical</span>(),</span>
+<span id="cb25-7"><a href="tmap4.html#cb25-7" tabindex="-1"></a>                                  <span class="fu">tm_scale_ordinal</span>(),</span>
+<span id="cb25-8"><a href="tmap4.html#cb25-8" tabindex="-1"></a>                                  <span class="fu">tm_scale_intervals</span>(),</span>
+<span id="cb25-9"><a href="tmap4.html#cb25-9" tabindex="-1"></a>                                  <span class="fu">tm_scale_continuous</span>(),</span>
+<span id="cb25-10"><a href="tmap4.html#cb25-10" tabindex="-1"></a>                                  <span class="fu">tm_scale_continuous_log</span>(),</span>
+<span id="cb25-11"><a href="tmap4.html#cb25-11" tabindex="-1"></a>                                  <span class="fu">tm_scale_discrete</span>()),</span>
+<span id="cb25-12"><a href="tmap4.html#cb25-12" tabindex="-1"></a>                <span class="at">fill.legend =</span> <span class="fu">tm_legend</span>(<span class="at">title =</span> <span class="st">&quot;&quot;</span>, <span class="at">position =</span> <span class="fu">tm_pos_in</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;top&quot;</span>))) <span class="sc">+</span></span>
+<span id="cb25-13"><a href="tmap4.html#cb25-13" tabindex="-1"></a>    <span class="fu">tm_layout</span>(<span class="at">panel.labels =</span> <span class="fu">c</span>(<span class="st">&quot;tm_scale_categorical&quot;</span>, <span class="st">&quot;tm_scale_ordinal&quot;</span>, <span class="st">&quot;tm_scale_intervals&quot;</span>, <span class="st">&quot;tm_scale_continuous&quot;</span>, <span class="st">&quot;tm_scale_continuous_log&quot;</span>, <span class="st">&quot;tm_scale_discrete&quot;</span>), </span>
+<span id="cb25-14"><a href="tmap4.html#cb25-14" tabindex="-1"></a>              <span class="at">inner.margins =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.4</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>),</span>
+<span id="cb25-15"><a href="tmap4.html#cb25-15" tabindex="-1"></a>              <span class="at">legend.text.size =</span> <span class="fl">0.5</span>)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-19-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="basemap" class="section level2 hasAnchor" number="4.4">
 <h2><span class="header-section-number">4.4</span> Basemap<a href="tmap4.html#basemap" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Basemaps are very useful for providing context for thematic maps. The <code>tm_basemap</code> function in tmap uses a capability of leaflet interactive maps for this, and makes use of the maptiles package to provide this capability for static (plot mode) maps.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="tmap4.html#cb18-1" tabindex="-1"></a><span class="fu">tm_basemap</span>(<span class="at">server=</span><span class="st">&quot;OpenTopoMap&quot;</span>, <span class="at">zoom=</span><span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb18-2"><a href="tmap4.html#cb18-2" tabindex="-1"></a>  <span class="fu">tm_shape</span>(World, <span class="at">bbox=</span>sf<span class="sc">::</span><span class="fu">st_bbox</span>(<span class="fu">c</span>(<span class="at">xmin=</span><span class="sc">-</span><span class="dv">180</span>,<span class="at">xmax=</span><span class="dv">180</span>,<span class="at">ymin=</span><span class="sc">-</span><span class="dv">85</span>,<span class="at">ymax=</span><span class="dv">85</span>))) <span class="sc">+</span></span>
-<span id="cb18-3"><a href="tmap4.html#cb18-3" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="at">fill=</span><span class="cn">NA</span>,<span class="at">col=</span><span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
-<span id="cb18-4"><a href="tmap4.html#cb18-4" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">inner.margins=</span><span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">4</span>))</span></code></pre></div>
-<pre><code>## Warning: Current projection unknown. Long lat coordinates (wgs84) assumed.</code></pre>
-<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="tmap4.html#cb26-1" tabindex="-1"></a><span class="fu">tm_basemap</span>(<span class="at">server=</span><span class="st">&quot;OpenTopoMap&quot;</span>, <span class="at">zoom=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb26-2"><a href="tmap4.html#cb26-2" tabindex="-1"></a>  <span class="fu">tm_shape</span>(World, <span class="at">bbox=</span>sf<span class="sc">::</span><span class="fu">st_bbox</span>(<span class="fu">c</span>(<span class="at">xmin=</span><span class="sc">-</span><span class="dv">180</span>,<span class="at">xmax=</span><span class="dv">180</span>,<span class="at">ymin=</span><span class="sc">-</span><span class="dv">85</span>,<span class="at">ymax=</span><span class="dv">85</span>))) <span class="sc">+</span></span>
+<span id="cb26-3"><a href="tmap4.html#cb26-3" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="at">fill=</span><span class="cn">NA</span>,<span class="at">col=</span><span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
+<span id="cb26-4"><a href="tmap4.html#cb26-4" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">inner.margins=</span><span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">4</span>))</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-20-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
+<div id="basemaps-with-rasters" class="section level3 hasAnchor" number="4.4.1">
+<h3><span class="header-section-number">4.4.1</span> Basemaps with rasters<a href="tmap4.html#basemaps-with-rasters" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The tm_basemap method in the current tmap 4.0 version works fine with feature data, but to get a basemap when you want to display rasters as well requires another method, using maptiles::get_tiles and displaying that as a raster. To display rasters together requires an alpha setting, so we’ll use that with the basemap since it will need to go on top to scale correctly.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="tmap4.html#cb27-1" tabindex="-1"></a><span class="fu">library</span>(terra); <span class="fu">library</span>(igisci); <span class="fu">library</span>(maptiles); <span class="fu">library</span>(tmap)</span>
+<span id="cb27-2"><a href="tmap4.html#cb27-2" tabindex="-1"></a>elev <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="fu">ex</span>(<span class="st">&quot;marbles/elev.tif&quot;</span>))</span>
+<span id="cb27-3"><a href="tmap4.html#cb27-3" tabindex="-1"></a>slope <span class="ot">&lt;-</span> <span class="fu">terrain</span>(elev, <span class="at">v=</span><span class="st">&quot;slope&quot;</span>)</span>
+<span id="cb27-4"><a href="tmap4.html#cb27-4" tabindex="-1"></a>steep <span class="ot">&lt;-</span> slope <span class="sc">&gt;</span> <span class="dv">30</span></span>
+<span id="cb27-5"><a href="tmap4.html#cb27-5" tabindex="-1"></a>steep[steep<span class="sc">==</span><span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb27-6"><a href="tmap4.html#cb27-6" tabindex="-1"></a>mblBase <span class="ot">&lt;-</span> <span class="fu">get_tiles</span>(steep, <span class="at">provider=</span><span class="st">&quot;OpenTopoMap&quot;</span>)</span>
+<span id="cb27-7"><a href="tmap4.html#cb27-7" tabindex="-1"></a><span class="fu">tm_shape</span>(steep) <span class="sc">+</span> </span>
+<span id="cb27-8"><a href="tmap4.html#cb27-8" tabindex="-1"></a>  <span class="fu">tm_raster</span>(<span class="at">col.scale=</span><span class="fu">tm_scale_categorical</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">&quot;red&quot;</span>)),</span>
+<span id="cb27-9"><a href="tmap4.html#cb27-9" tabindex="-1"></a>            <span class="at">col.legend =</span> <span class="fu">tm_legend</span>(<span class="st">&quot;steep&quot;</span>, <span class="at">frame=</span>F)) <span class="sc">+</span></span>
+<span id="cb27-10"><a href="tmap4.html#cb27-10" tabindex="-1"></a>  <span class="fu">tm_shape</span>(mblBase) <span class="sc">+</span> </span>
+<span id="cb27-11"><a href="tmap4.html#cb27-11" tabindex="-1"></a>     <span class="fu">tm_rgb</span>(<span class="at">col_alpha=</span><span class="fl">0.5</span>)</span></code></pre></div>
+<p><img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-21-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
 
+</div>
 </div>
 </div>
             </section>
@@ -481,48 +533,62 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "section"
-},
-"book_filename": "envdatasci",
-"toc_depth": 4
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section"
+  },
+  "book_filename": "envdatasci",
+  "toc_depth": 4
 });
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

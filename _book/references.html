@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>References | Environmental Data Science Addenda</title>
   <meta name="description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
-  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="References | Environmental Data Science Addenda" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Jerry Davis, SFSU Institute for Geographic Information Science" />
 
 
-<meta name="date" content="2024-11-28" />
+<meta name="date" content="2026-09-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,35 +52,37 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<link href="libs/htmltools-fill-0.5.9/fill.css" rel="stylesheet" />
 <script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.33/datatables.js"></script>
+<script src="libs/datatables-binding-0.34.0/datatables.js"></script>
 <link href="libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
-<link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+<link href="libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
 <link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
 <script src="libs/leaflet-1.3.1/leaflet.js"></script>
 <link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
 <script src="libs/proj4-2.6.2/proj4.min.js"></script>
 <script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
 <link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-binding-2.2.2/leaflet.js"></script>
-<script src="libs/leaflet-providers-2.0.0/leaflet-providers_2.0.0.js"></script>
-<script src="libs/leaflet-providers-plugin-2.2.2/leaflet-providers-plugin.js"></script>
+<script src="libs/leaflet-binding-2.2.3/leaflet.js"></script>
+<script src="libs/leaflet-providers-3.0.0/leaflet-providers.js"></script>
+<script src="libs/leaflet-providers-plugin-2.2.3/leaflet-providers-plugin.js"></script>
 <script src="libs/leaflet-graticule-0.1.0/L.Graticule.js"></script>
 <script src="libs/leaflet-graticule-0.1.0/Graticule-binding.js"></script>
-<script src="libs/Leaflet.glify-3.2.0/addGlifyPoints.js"></script>
-<script src="libs/Leaflet.glify-3.2.0/addGlifyPolygons.js"></script>
-<script src="libs/Leaflet.glify-3.2.0/addGlifyPolylines.js"></script>
-<script src="libs/Leaflet.glify-3.2.0/glify-browser.js"></script>
+<script src="libs/Leaflet.glify-3.3.1/GlifyUtils.js"></script>
+<script src="libs/Leaflet.glify-3.3.1/addGlifyPoints.js"></script>
+<script src="libs/Leaflet.glify-3.3.1/addGlifyPolygons.js"></script>
+<script src="libs/Leaflet.glify-3.3.1/addGlifyPolylines.js"></script>
+<script src="libs/Leaflet.glify-3.3.1/glify-browser.js"></script>
 
 
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -152,7 +154,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -203,7 +204,10 @@ div.csl-indent {
 <li class="chapter" data-level="4.1" data-path="tmap4.html"><a href="tmap4.html#simple-test"><i class="fa fa-check"></i><b>4.1</b> Simple test</a></li>
 <li class="chapter" data-level="4.2" data-path="tmap4.html"><a href="tmap4.html#visual-variables"><i class="fa fa-check"></i><b>4.2</b> Visual variables</a></li>
 <li class="chapter" data-level="4.3" data-path="tmap4.html"><a href="tmap4.html#constant-visual-variables"><i class="fa fa-check"></i><b>4.3</b> Constant visual variables</a></li>
-<li class="chapter" data-level="4.4" data-path="tmap4.html"><a href="tmap4.html#basemap"><i class="fa fa-check"></i><b>4.4</b> Basemap</a></li>
+<li class="chapter" data-level="4.4" data-path="tmap4.html"><a href="tmap4.html#basemap"><i class="fa fa-check"></i><b>4.4</b> Basemap</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="tmap4.html"><a href="tmap4.html#basemaps-with-rasters"><i class="fa fa-check"></i><b>4.4.1</b> Basemaps with rasters</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="interpolation.html"><a href="interpolation.html"><i class="fa fa-check"></i><b>5</b> Spatial Interpolation</a>
 <ul>
@@ -361,12 +365,12 @@ div.csl-indent {
 <div id="references" class="section level1 unnumbered hasAnchor">
 <h1>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div class="csl-entry">
 <em>Applied California Current Ecosystem Studies</em>. n.d. <a href="https://pointblue.org">https://pointblue.org</a>.
 </div>
 <div class="csl-entry">
-Ballard, Grant, Annie E Schmidt, Viola Toniolo, Sam Veloz, Dennis Jongsomjit, Kevin R Arrigo, and David G Ainley. 2019. <span>“Fine-Scale Oceanographic Features Characterizing Successful Adélie Penguin Foraging in the SW Ross Sea.”</span> <em>Marine Ecology Progress Series</em>. <a href="https://doi.org/10.3354/meps12801">https://doi.org/10.3354/meps12801</a>.
+Ballard, Grant, Annie E Schmidt, Viola Toniolo, et al. 2019. <span>“Fine-Scale Oceanographic Features Characterizing Successful Adélie Penguin Foraging in the SW Ross Sea.”</span> <em>Marine Ecology Progress Series</em>. <a href="https://doi.org/10.3354/meps12801">https://doi.org/10.3354/meps12801</a>.
 </div>
 <div class="csl-entry">
 Baty, Florent, Christian Ritz, Sandrine Charles, Martin Brutsche, Jean-Pierre Flandrois, and Marie-Laure Delignette-Muller. 2015. <span>“A Toolbox for Nonlinear Regression in r: The Package Nlstools.”</span> <em>Journal of Statistical Software</em> 66 (5): 1–21. <a href="https://doi.org/10.18637/jss.v066.i05">https://doi.org/10.18637/jss.v066.i05</a>.
@@ -393,7 +397,7 @@ Nowosad, Jakub. n.d. <em>Geostatistics in r</em>. <a href="https://bookdown-org.
 Pebesma, Edzer. n.d. <em>Gstat: Spatial and Spatio-Temporal Geostatistical Modelling, Prediction and Simulation</em>. <a href="https://cran.r-project.org/web/packages/gstat/index.html">https://cran.r-project.org/web/packages/gstat/index.html</a>.
 </div>
 <div class="csl-entry">
-Studwell, Anna, Ellen Hines, Meredith L Elliott, Julie Howar, Barbara Holzman, Nadav Nur, and Jaime Jahncke. 2017. <span>“Modeling Nonresident Seabird Foraging Distributions to Inform Ocean Zoning in Central California.”</span> <em>PLoS ONE</em>. <a href="https://doi.org/10.1371/journal.pone.0169517">https://doi.org/10.1371/journal.pone.0169517</a>.
+Studwell, Anna, Ellen Hines, Meredith L Elliott, et al. 2017. <span>“Modeling Nonresident Seabird Foraging Distributions to Inform Ocean Zoning in Central California.”</span> <em>PLoS ONE</em>. <a href="https://doi.org/10.1371/journal.pone.0169517">https://doi.org/10.1371/journal.pone.0169517</a>.
 </div>
 <div class="csl-entry">
 Thiessen, A. 1911. <span>“Precipitation Averages for Large Areas.”</span> <em>Monthly Weather Review</em> 39 (7): 1082–89.
@@ -405,10 +409,10 @@ Voronoi, G. 1908. <span>“Nouvelles Applications Des Paramètres Continus à La
 Wickham, Hadley, and Jenny Bryan. n.d. <em>R Packages</em>. O’Reilly. <a href="https://r-pkgs.org">https://r-pkgs.org</a>.
 </div>
 <div class="csl-entry">
-Xie, Yihui. 2021. <em>Bookdown: Authoring Books and Technical Documents with r Markdown</em>. Boca Raton, Florida: Chapman; Hall/CRC. <a href="https://bookdown.org/yihui/bookdown/">https://bookdown.org/yihui/bookdown/</a>.
+Xie, Yihui. 2021. <em>Bookdown: Authoring Books and Technical Documents with r Markdown</em>. Chapman; Hall/CRC. <a href="https://bookdown.org/yihui/bookdown/">https://bookdown.org/yihui/bookdown/</a>.
 </div>
 <div class="csl-entry">
-Xie, Yihui, JJ Allaire, and Garrett Grolemund. 2019. <em>R Markdown: The Definitive Guide</em>. 1st ed. Boca Raton, Florida: Chapman; Hall/CRC. <a href="https://bookdown.org/yihui/rmarkdown/">https://bookdown.org/yihui/rmarkdown/</a>.
+Xie, Yihui, JJ Allaire, and Garrett Grolemund. 2019. <em>R Markdown: The Definitive Guide</em>. 1st ed. Chapman; Hall/CRC. <a href="https://bookdown.org/yihui/rmarkdown/">https://bookdown.org/yihui/rmarkdown/</a>.
 </div>
 </div>
 </div>
@@ -438,44 +442,44 @@ Xie, Yihui, JJ Allaire, and Garrett Grolemund. 2019. <em>R Markdown: The Definit
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "section"
-},
-"book_filename": "envdatasci",
-"toc_depth": 4
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section"
+  },
+  "book_filename": "envdatasci",
+  "toc_depth": 4
 });
 });
 </script>

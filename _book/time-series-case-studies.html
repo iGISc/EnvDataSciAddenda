@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>9 Time Series case studies | Environmental Data Science Addenda</title>
   <meta name="description" content="Addenda to Introduction to Environmental Data Science, including case studies, extending methods into more experimental areas, and guides for building packages and RMarkdown documents (essentials based on experience and methods from various sources)." />
-  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="9 Time Series case studies | Environmental Data Science Addenda" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Jerry Davis, SFSU Institute for Geographic Information Science" />
 
 
-<meta name="date" content="2024-11-28" />
+<meta name="date" content="2026-09-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,35 +52,37 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<link href="libs/htmltools-fill-0.5.9/fill.css" rel="stylesheet" />
 <script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.33/datatables.js"></script>
+<script src="libs/datatables-binding-0.34.0/datatables.js"></script>
 <link href="libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
-<link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+<link href="libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
 <link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
 <script src="libs/leaflet-1.3.1/leaflet.js"></script>
 <link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
 <script src="libs/proj4-2.6.2/proj4.min.js"></script>
 <script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
 <link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-binding-2.2.2/leaflet.js"></script>
-<script src="libs/leaflet-providers-2.0.0/leaflet-providers_2.0.0.js"></script>
-<script src="libs/leaflet-providers-plugin-2.2.2/leaflet-providers-plugin.js"></script>
+<script src="libs/leaflet-binding-2.2.3/leaflet.js"></script>
+<script src="libs/leaflet-providers-3.0.0/leaflet-providers.js"></script>
+<script src="libs/leaflet-providers-plugin-2.2.3/leaflet-providers-plugin.js"></script>
 <script src="libs/leaflet-graticule-0.1.0/L.Graticule.js"></script>
 <script src="libs/leaflet-graticule-0.1.0/Graticule-binding.js"></script>
-<script src="libs/Leaflet.glify-3.2.0/addGlifyPoints.js"></script>
-<script src="libs/Leaflet.glify-3.2.0/addGlifyPolygons.js"></script>
-<script src="libs/Leaflet.glify-3.2.0/addGlifyPolylines.js"></script>
-<script src="libs/Leaflet.glify-3.2.0/glify-browser.js"></script>
+<script src="libs/Leaflet.glify-3.3.1/GlifyUtils.js"></script>
+<script src="libs/Leaflet.glify-3.3.1/addGlifyPoints.js"></script>
+<script src="libs/Leaflet.glify-3.3.1/addGlifyPolygons.js"></script>
+<script src="libs/Leaflet.glify-3.3.1/addGlifyPolylines.js"></script>
+<script src="libs/Leaflet.glify-3.3.1/glify-browser.js"></script>
 
 
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -152,7 +154,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -203,7 +204,10 @@ div.csl-indent {
 <li class="chapter" data-level="4.1" data-path="tmap4.html"><a href="tmap4.html#simple-test"><i class="fa fa-check"></i><b>4.1</b> Simple test</a></li>
 <li class="chapter" data-level="4.2" data-path="tmap4.html"><a href="tmap4.html#visual-variables"><i class="fa fa-check"></i><b>4.2</b> Visual variables</a></li>
 <li class="chapter" data-level="4.3" data-path="tmap4.html"><a href="tmap4.html#constant-visual-variables"><i class="fa fa-check"></i><b>4.3</b> Constant visual variables</a></li>
-<li class="chapter" data-level="4.4" data-path="tmap4.html"><a href="tmap4.html#basemap"><i class="fa fa-check"></i><b>4.4</b> Basemap</a></li>
+<li class="chapter" data-level="4.4" data-path="tmap4.html"><a href="tmap4.html#basemap"><i class="fa fa-check"></i><b>4.4</b> Basemap</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="tmap4.html"><a href="tmap4.html#basemaps-with-rasters"><i class="fa fa-check"></i><b>4.4.1</b> Basemaps with rasters</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="interpolation.html"><a href="interpolation.html"><i class="fa fa-check"></i><b>5</b> Spatial Interpolation</a>
 <ul>
@@ -362,24 +366,24 @@ div.csl-indent {
 <h1><span class="header-section-number">9</span> Time Series case studies<a href="time-series-case-studies.html#time-series-case-studies" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="loney-meadow-flux-data" class="section level2 hasAnchor" number="9.1">
 <h2><span class="header-section-number">9.1</span> Loney Meadow flux data<a href="time-series-case-studies.html#loney-meadow-flux-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>At the beginning of this chapter, we looked at an example of a time series in flux tower measurements of northern Sierra meadows, such as in Loney Meadow where during the 2016 season a flux tower was used to capture CO<sub>2</sub> flux and related micrometeorological data.</p>
+<p>In the book, we looked at an example of a time series in flux tower measurements of northern Sierra meadows, such as in Loney Meadow where during the 2016 season a flux tower was used to capture CO<sub>2</sub> flux and related micrometeorological data.</p>
 <p>We also captured multispectral imagery using a drone, allowing for creating high-resolution (5-cm pixel) imagery of the meadow in false color (with NIR as red, red as green, green as blue), useful for showing healthy vegetation (as red) and water bodies (as black).</p>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-63"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-65"></span>
 <img src="img/LoneyMapFalseColor.png" alt="Loney Meadow False Color image from drone-mounted multispectral camera, 2017" width="75%" />
 <p class="caption">
 FIGURE 9.1: Loney Meadow False Color image from drone-mounted multispectral camera, 2017
 </p>
 </div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-64"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-66"></span>
 <img src="img/LoneyFluxTowerWide.png" alt="Flux tower installed at Loney Meadow, 2016. Photo credit: Darren Blackburn" width="75%" />
 <p class="caption">
 FIGURE 9.2: Flux tower installed at Loney Meadow, 2016. Photo credit: Darren Blackburn
 </p>
 </div>
 <p>The flux tower data were collected at a high frequency for eddy covariance processing where 3D wind speed data are used to model the movement of atmospheric gases, including CO<sub>2</sub> flux driven by photosynthesis and respiration processes. Note that the sign convention of CO<sub>2</sub> flux is that positive flux is release to the atmosphere, which might happen when less photosynthesis is happening but respiration and other CO<sub>2</sub> releases continue, while a negative flux might happen when more photosynthesis is capturing more CO<sub>2</sub>.</p>
-<p>A spreadsheet of 30-minute summaries from 17 May to 6 September can be found in the <code>igisci</code> extdata folder as <code>"meadows/LoneyMeadow_30minCO2fluxes_Geog604.xls"</code>, and includes data on photosynthetically active radiation (PAR), net radiation (Qnet), air temperature, relative humidity, soil temperature at 2 and 10 cm depth, wind direction, wind speed, rainfall, and soil volumetric water content (VWC). There’s clearly a lot more we can do with these data (see <span class="citation">Blackburn, Oliphant, and Davis (<a href="#ref-blackburn2021carbon">2021</a>)</span>), but we’ll look at CO<sub>2</sub> flux and PAR using some of the same methods we’ve just explored.</p>
+<p>A spreadsheet of 30-minute summaries from 17 May to 6 September can be found in the <code>igisci</code> extdata folder as <code>"meadows/LoneyMeadow_30minCO2fluxes_Geog604.xls"</code>, and includes data on photosynthetically active radiation (PAR), net radiation (Qnet), air temperature, relative humidity, soil temperature at 2 and 10 cm depth, wind direction, wind speed, rainfall, and soil volumetric water content (VWC). There’s clearly a lot more we can do with these data (see <span class="citation">Blackburn et al. (<a href="#ref-blackburn2021carbon">2021</a>)</span>), but we’ll look at CO<sub>2</sub> flux and PAR using some of the same methods we’ve just explored.</p>
 <p>First we’ll test read in the data (I’d encourage you to also look at the spreadsheet in Excel [but don’t change it] to see how it’s organized) …</p>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="time-series-case-studies.html#cb129-1" tabindex="-1"></a><span class="fu">read_xls</span>(<span class="fu">ex</span>(<span class="st">&quot;meadows/LoneyMeadow_30minCO2fluxes_Geog604.xls&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="time-series-case-studies.html#cb127-1" tabindex="-1"></a><span class="fu">read_xls</span>(<span class="fu">ex</span>(<span class="st">&quot;meadows/LoneyMeadow_30minCO2fluxes_Geog604.xls&quot;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 5,398 × 14
 ##    `Decimal time` `Day of Year` `Hour of Day` `CO2 Flux` PAR   Qnet  Tair  RH   
 ##             &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
@@ -397,102 +401,102 @@ FIGURE 9.2: Flux tower installed at Loney Meadow, 2016. Photo credit: Darren Bla
 ## # ℹ 6 more variables: `Tsoil 2cm` &lt;chr&gt;, `Tsoil 10cm` &lt;chr&gt;, wdir &lt;chr&gt;,
 ## #   wspd &lt;chr&gt;, Rain &lt;chr&gt;, VWC &lt;chr&gt;</code></pre>
 <p>… and see that just as with the Bugac and Hungary data, it has half-hour readings and the second line of the file has measurement units. There are multiple ways of dealing with that, but this time we’ll capture the variable names then add them back after removing the first two rows:</p>
-<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="time-series-case-studies.html#cb131-1" tabindex="-1"></a><span class="fu">library</span>(igisci)</span>
-<span id="cb131-2"><a href="time-series-case-studies.html#cb131-2" tabindex="-1"></a><span class="fu">library</span>(readxl); <span class="fu">library</span>(tidyverse); <span class="fu">library</span>(lubridate)</span>
-<span id="cb131-3"><a href="time-series-case-studies.html#cb131-3" tabindex="-1"></a>vnames <span class="ot">&lt;-</span> <span class="fu">read_xls</span>(<span class="fu">ex</span>(<span class="st">&quot;meadows/LoneyMeadow_30minCO2fluxes_Geog604.xls&quot;</span>), <span class="at">n_max=</span><span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb131-4"><a href="time-series-case-studies.html#cb131-4" tabindex="-1"></a>    <span class="fu">names</span>()</span>
-<span id="cb131-5"><a href="time-series-case-studies.html#cb131-5" tabindex="-1"></a>vunits <span class="ot">&lt;-</span> <span class="fu">read_xls</span>(<span class="fu">ex</span>(<span class="st">&quot;meadows/LoneyMeadow_30minCO2fluxes_Geog604.xls&quot;</span>), <span class="at">n_max=</span><span class="dv">0</span>, <span class="at">skip=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb131-6"><a href="time-series-case-studies.html#cb131-6" tabindex="-1"></a>    <span class="fu">names</span>()</span>
-<span id="cb131-7"><a href="time-series-case-studies.html#cb131-7" tabindex="-1"></a>Loney <span class="ot">&lt;-</span> <span class="fu">read_xls</span>(<span class="fu">ex</span>(<span class="st">&quot;meadows/LoneyMeadow_30minCO2fluxes_Geog604.xls&quot;</span>), <span class="at">skip=</span><span class="dv">2</span>, <span class="at">col_names=</span>vnames) <span class="sc">%&gt;%</span></span>
-<span id="cb131-8"><a href="time-series-case-studies.html#cb131-8" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">DecimalDay =</span> <span class="st">`</span><span class="at">Decimal time</span><span class="st">`</span>,</span>
-<span id="cb131-9"><a href="time-series-case-studies.html#cb131-9" tabindex="-1"></a>         <span class="at">YDay =</span> <span class="st">`</span><span class="at">Day of Year</span><span class="st">`</span>,</span>
-<span id="cb131-10"><a href="time-series-case-studies.html#cb131-10" tabindex="-1"></a>         <span class="at">Hour =</span> <span class="st">`</span><span class="at">Hour of Day</span><span class="st">`</span>,</span>
-<span id="cb131-11"><a href="time-series-case-studies.html#cb131-11" tabindex="-1"></a>         <span class="at">CO2flux =</span> <span class="st">`</span><span class="at">CO2 Flux</span><span class="st">`</span>,</span>
-<span id="cb131-12"><a href="time-series-case-studies.html#cb131-12" tabindex="-1"></a>         <span class="at">Tsoil2cm =</span> <span class="st">`</span><span class="at">Tsoil 2cm</span><span class="st">`</span>,</span>
-<span id="cb131-13"><a href="time-series-case-studies.html#cb131-13" tabindex="-1"></a>         <span class="at">Tsoil10cm =</span> <span class="st">`</span><span class="at">Tsoil 10cm</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb131-14"><a href="time-series-case-studies.html#cb131-14" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">datetime =</span> <span class="fu">as_date</span>(DecimalDay, <span class="at">origin=</span><span class="st">&quot;2015-12-31&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="time-series-case-studies.html#cb129-1" tabindex="-1"></a><span class="fu">library</span>(igisci)</span>
+<span id="cb129-2"><a href="time-series-case-studies.html#cb129-2" tabindex="-1"></a><span class="fu">library</span>(readxl); <span class="fu">library</span>(tidyverse); <span class="fu">library</span>(lubridate)</span>
+<span id="cb129-3"><a href="time-series-case-studies.html#cb129-3" tabindex="-1"></a>vnames <span class="ot">&lt;-</span> <span class="fu">read_xls</span>(<span class="fu">ex</span>(<span class="st">&quot;meadows/LoneyMeadow_30minCO2fluxes_Geog604.xls&quot;</span>), <span class="at">n_max=</span><span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb129-4"><a href="time-series-case-studies.html#cb129-4" tabindex="-1"></a>    <span class="fu">names</span>()</span>
+<span id="cb129-5"><a href="time-series-case-studies.html#cb129-5" tabindex="-1"></a>vunits <span class="ot">&lt;-</span> <span class="fu">read_xls</span>(<span class="fu">ex</span>(<span class="st">&quot;meadows/LoneyMeadow_30minCO2fluxes_Geog604.xls&quot;</span>), <span class="at">n_max=</span><span class="dv">0</span>, <span class="at">skip=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb129-6"><a href="time-series-case-studies.html#cb129-6" tabindex="-1"></a>    <span class="fu">names</span>()</span>
+<span id="cb129-7"><a href="time-series-case-studies.html#cb129-7" tabindex="-1"></a>Loney <span class="ot">&lt;-</span> <span class="fu">read_xls</span>(<span class="fu">ex</span>(<span class="st">&quot;meadows/LoneyMeadow_30minCO2fluxes_Geog604.xls&quot;</span>), <span class="at">skip=</span><span class="dv">2</span>, <span class="at">col_names=</span>vnames) <span class="sc">%&gt;%</span></span>
+<span id="cb129-8"><a href="time-series-case-studies.html#cb129-8" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">DecimalDay =</span> <span class="st">`</span><span class="at">Decimal time</span><span class="st">`</span>,</span>
+<span id="cb129-9"><a href="time-series-case-studies.html#cb129-9" tabindex="-1"></a>         <span class="at">YDay =</span> <span class="st">`</span><span class="at">Day of Year</span><span class="st">`</span>,</span>
+<span id="cb129-10"><a href="time-series-case-studies.html#cb129-10" tabindex="-1"></a>         <span class="at">Hour =</span> <span class="st">`</span><span class="at">Hour of Day</span><span class="st">`</span>,</span>
+<span id="cb129-11"><a href="time-series-case-studies.html#cb129-11" tabindex="-1"></a>         <span class="at">CO2flux =</span> <span class="st">`</span><span class="at">CO2 Flux</span><span class="st">`</span>,</span>
+<span id="cb129-12"><a href="time-series-case-studies.html#cb129-12" tabindex="-1"></a>         <span class="at">Tsoil2cm =</span> <span class="st">`</span><span class="at">Tsoil 2cm</span><span class="st">`</span>,</span>
+<span id="cb129-13"><a href="time-series-case-studies.html#cb129-13" tabindex="-1"></a>         <span class="at">Tsoil10cm =</span> <span class="st">`</span><span class="at">Tsoil 10cm</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb129-14"><a href="time-series-case-studies.html#cb129-14" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">datetime =</span> <span class="fu">as_date</span>(DecimalDay, <span class="at">origin=</span><span class="st">&quot;2015-12-31&quot;</span>))</span></code></pre></div>
 <p>The time unit we’ll want to use for time series is going to be days, and we can also then look at the data over time, and a group_by-summarize process by days will give us a generalized picture of changes over the collection period reflecting phenological changes from first exposure after snowmelt through the maximum growth period and through the major senescence period of late summer. We’ll look at a faceted graph from a pivot_long table.</p>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="time-series-case-studies.html#cb132-1" tabindex="-1"></a>LoneyDaily <span class="ot">&lt;-</span> Loney <span class="sc">%&gt;%</span></span>
-<span id="cb132-2"><a href="time-series-case-studies.html#cb132-2" tabindex="-1"></a>  <span class="fu">group_by</span>(YDay) <span class="sc">%&gt;%</span></span>
-<span id="cb132-3"><a href="time-series-case-studies.html#cb132-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">CO2flux =</span> <span class="fu">mean</span>(CO2flux),</span>
-<span id="cb132-4"><a href="time-series-case-studies.html#cb132-4" tabindex="-1"></a>            <span class="at">PAR =</span> <span class="fu">mean</span>(PAR),</span>
-<span id="cb132-5"><a href="time-series-case-studies.html#cb132-5" tabindex="-1"></a>            <span class="at">Qnet =</span> <span class="fu">mean</span>(Qnet),</span>
-<span id="cb132-6"><a href="time-series-case-studies.html#cb132-6" tabindex="-1"></a>            <span class="at">Tair =</span> <span class="fu">mean</span>(Tair),</span>
-<span id="cb132-7"><a href="time-series-case-studies.html#cb132-7" tabindex="-1"></a>            <span class="at">RH =</span> <span class="fu">mean</span>(RH),</span>
-<span id="cb132-8"><a href="time-series-case-studies.html#cb132-8" tabindex="-1"></a>            <span class="at">Tsoil2cm =</span> <span class="fu">mean</span>(Tsoil2cm),</span>
-<span id="cb132-9"><a href="time-series-case-studies.html#cb132-9" tabindex="-1"></a>            <span class="at">Tsoil10cm =</span> <span class="fu">mean</span>(Tsoil10cm),</span>
-<span id="cb132-10"><a href="time-series-case-studies.html#cb132-10" tabindex="-1"></a>            <span class="at">wdir =</span> <span class="fu">mean</span>(wdir),</span>
-<span id="cb132-11"><a href="time-series-case-studies.html#cb132-11" tabindex="-1"></a>            <span class="at">wspd =</span> <span class="fu">mean</span>(wspd),</span>
-<span id="cb132-12"><a href="time-series-case-studies.html#cb132-12" tabindex="-1"></a>            <span class="at">Rain =</span> <span class="fu">mean</span>(Rain),</span>
-<span id="cb132-13"><a href="time-series-case-studies.html#cb132-13" tabindex="-1"></a>            <span class="at">VWC =</span> <span class="fu">mean</span>(VWC))</span>
-<span id="cb132-14"><a href="time-series-case-studies.html#cb132-14" tabindex="-1"></a>LoneyDailyLong <span class="ot">&lt;-</span> LoneyDaily <span class="sc">%&gt;%</span></span>
-<span id="cb132-15"><a href="time-series-case-studies.html#cb132-15" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> CO2flux<span class="sc">:</span>VWC,</span>
-<span id="cb132-16"><a href="time-series-case-studies.html#cb132-16" tabindex="-1"></a>               <span class="at">names_to=</span><span class="st">&quot;parameter&quot;</span>,</span>
-<span id="cb132-17"><a href="time-series-case-studies.html#cb132-17" tabindex="-1"></a>               <span class="at">values_to=</span><span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb132-18"><a href="time-series-case-studies.html#cb132-18" tabindex="-1"></a>  <span class="fu">filter</span>(parameter <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;CO2flux&quot;</span>, <span class="st">&quot;Qnet&quot;</span>, <span class="st">&quot;Tair&quot;</span>, <span class="st">&quot;RH&quot;</span>, <span class="st">&quot;Tsoil10cm&quot;</span>, <span class="st">&quot;VWC&quot;</span>))</span>
-<span id="cb132-19"><a href="time-series-case-studies.html#cb132-19" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> LoneyDailyLong, <span class="fu">aes</span>(<span class="at">x=</span>YDay, <span class="at">y=</span>value)) <span class="sc">+</span> </span>
-<span id="cb132-20"><a href="time-series-case-studies.html#cb132-20" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span>
-<span id="cb132-21"><a href="time-series-case-studies.html#cb132-21" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">facet_grid</span>(parameter <span class="sc">~</span> ., <span class="at">scales =</span> <span class="st">&quot;free_y&quot;</span>)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-66"></span>
-<img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-66-1.png" alt="Facet plot with free y scale of Loney flux tower parameters" width="75%" />
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="time-series-case-studies.html#cb130-1" tabindex="-1"></a>LoneyDaily <span class="ot">&lt;-</span> Loney <span class="sc">%&gt;%</span></span>
+<span id="cb130-2"><a href="time-series-case-studies.html#cb130-2" tabindex="-1"></a>  <span class="fu">group_by</span>(YDay) <span class="sc">%&gt;%</span></span>
+<span id="cb130-3"><a href="time-series-case-studies.html#cb130-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">CO2flux =</span> <span class="fu">mean</span>(CO2flux),</span>
+<span id="cb130-4"><a href="time-series-case-studies.html#cb130-4" tabindex="-1"></a>            <span class="at">PAR =</span> <span class="fu">mean</span>(PAR),</span>
+<span id="cb130-5"><a href="time-series-case-studies.html#cb130-5" tabindex="-1"></a>            <span class="at">Qnet =</span> <span class="fu">mean</span>(Qnet),</span>
+<span id="cb130-6"><a href="time-series-case-studies.html#cb130-6" tabindex="-1"></a>            <span class="at">Tair =</span> <span class="fu">mean</span>(Tair),</span>
+<span id="cb130-7"><a href="time-series-case-studies.html#cb130-7" tabindex="-1"></a>            <span class="at">RH =</span> <span class="fu">mean</span>(RH),</span>
+<span id="cb130-8"><a href="time-series-case-studies.html#cb130-8" tabindex="-1"></a>            <span class="at">Tsoil2cm =</span> <span class="fu">mean</span>(Tsoil2cm),</span>
+<span id="cb130-9"><a href="time-series-case-studies.html#cb130-9" tabindex="-1"></a>            <span class="at">Tsoil10cm =</span> <span class="fu">mean</span>(Tsoil10cm),</span>
+<span id="cb130-10"><a href="time-series-case-studies.html#cb130-10" tabindex="-1"></a>            <span class="at">wdir =</span> <span class="fu">mean</span>(wdir),</span>
+<span id="cb130-11"><a href="time-series-case-studies.html#cb130-11" tabindex="-1"></a>            <span class="at">wspd =</span> <span class="fu">mean</span>(wspd),</span>
+<span id="cb130-12"><a href="time-series-case-studies.html#cb130-12" tabindex="-1"></a>            <span class="at">Rain =</span> <span class="fu">mean</span>(Rain),</span>
+<span id="cb130-13"><a href="time-series-case-studies.html#cb130-13" tabindex="-1"></a>            <span class="at">VWC =</span> <span class="fu">mean</span>(VWC))</span>
+<span id="cb130-14"><a href="time-series-case-studies.html#cb130-14" tabindex="-1"></a>LoneyDailyLong <span class="ot">&lt;-</span> LoneyDaily <span class="sc">%&gt;%</span></span>
+<span id="cb130-15"><a href="time-series-case-studies.html#cb130-15" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> CO2flux<span class="sc">:</span>VWC,</span>
+<span id="cb130-16"><a href="time-series-case-studies.html#cb130-16" tabindex="-1"></a>               <span class="at">names_to=</span><span class="st">&quot;parameter&quot;</span>,</span>
+<span id="cb130-17"><a href="time-series-case-studies.html#cb130-17" tabindex="-1"></a>               <span class="at">values_to=</span><span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb130-18"><a href="time-series-case-studies.html#cb130-18" tabindex="-1"></a>  <span class="fu">filter</span>(parameter <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;CO2flux&quot;</span>, <span class="st">&quot;Qnet&quot;</span>, <span class="st">&quot;Tair&quot;</span>, <span class="st">&quot;RH&quot;</span>, <span class="st">&quot;Tsoil10cm&quot;</span>, <span class="st">&quot;VWC&quot;</span>))</span>
+<span id="cb130-19"><a href="time-series-case-studies.html#cb130-19" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> LoneyDailyLong, <span class="fu">aes</span>(<span class="at">x=</span>YDay, <span class="at">y=</span>value)) <span class="sc">+</span> </span>
+<span id="cb130-20"><a href="time-series-case-studies.html#cb130-20" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span>
+<span id="cb130-21"><a href="time-series-case-studies.html#cb130-21" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">facet_grid</span>(parameter <span class="sc">~</span> ., <span class="at">scales =</span> <span class="st">&quot;free_y&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-68"></span>
+<img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-68-1.png" alt="Facet plot with free y scale of Loney flux tower parameters" width="75%" />
 <p class="caption">
 FIGURE 9.3: Facet plot with free y scale of Loney flux tower parameters
 </p>
 </div>
 <p>Now we’ll build a time series for CO<sub>2</sub> for an 8-day period over the summer solstice, using the start time and frequency (there’s also a time stamp, but this was easier, since I knew the data had no gaps):</p>
-<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="time-series-case-studies.html#cb133-1" tabindex="-1"></a>LoneyCO2 <span class="ot">&lt;-</span> Loney <span class="sc">%&gt;%</span></span>
-<span id="cb133-2"><a href="time-series-case-studies.html#cb133-2" tabindex="-1"></a>  <span class="fu">filter</span>(YDay <span class="sc">&gt;</span> <span class="dv">167</span> <span class="sc">&amp;</span> YDay <span class="sc">&lt;</span> <span class="dv">176</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb133-3"><a href="time-series-case-studies.html#cb133-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(CO2flux) <span class="sc">%&gt;%</span></span>
-<span id="cb133-4"><a href="time-series-case-studies.html#cb133-4" tabindex="-1"></a>  <span class="fu">ts</span>(<span class="at">start=</span><span class="dv">138</span>,<span class="at">frequency=</span><span class="dv">48</span>)</span>
-<span id="cb133-5"><a href="time-series-case-studies.html#cb133-5" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">decompose</span>(LoneyCO2))</span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-67"></span>
-<img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-67-1.png" alt="Loney CO~2~ decomposition by day, 8-day period at summer solstice" width="75%" />
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="time-series-case-studies.html#cb131-1" tabindex="-1"></a>LoneyCO2 <span class="ot">&lt;-</span> Loney <span class="sc">%&gt;%</span></span>
+<span id="cb131-2"><a href="time-series-case-studies.html#cb131-2" tabindex="-1"></a>  <span class="fu">filter</span>(YDay <span class="sc">&gt;</span> <span class="dv">167</span> <span class="sc">&amp;</span> YDay <span class="sc">&lt;</span> <span class="dv">176</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb131-3"><a href="time-series-case-studies.html#cb131-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(CO2flux) <span class="sc">%&gt;%</span></span>
+<span id="cb131-4"><a href="time-series-case-studies.html#cb131-4" tabindex="-1"></a>  <span class="fu">ts</span>(<span class="at">start=</span><span class="dv">138</span>,<span class="at">frequency=</span><span class="dv">48</span>)</span>
+<span id="cb131-5"><a href="time-series-case-studies.html#cb131-5" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">decompose</span>(LoneyCO2))</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-69"></span>
+<img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-69-1.png" alt="Loney CO~2~ decomposition by day, 8-day period at summer solstice" width="75%" />
 <p class="caption">
 FIGURE 9.4: Loney CO<sub>2</sub> decomposition by day, 8-day period at summer solstice
 </p>
 </div>
 <p>Finally, we’ll create a couple ensemble average plots from all of the data, with sd error bars similar to what we did for Manaus, and with cowplot used again to compare two ensemble plots:</p>
-<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="time-series-case-studies.html#cb134-1" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span>
-<span id="cb134-2"><a href="time-series-case-studies.html#cb134-2" tabindex="-1"></a>LoneyCO2sum <span class="ot">&lt;-</span> Loney <span class="sc">%&gt;%</span></span>
-<span id="cb134-3"><a href="time-series-case-studies.html#cb134-3" tabindex="-1"></a>  <span class="fu">group_by</span>(Hour) <span class="sc">%&gt;%</span></span>
-<span id="cb134-4"><a href="time-series-case-studies.html#cb134-4" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">meanCO2 =</span> <span class="fu">mean</span>(CO2flux), <span class="at">sdCO2 =</span> <span class="fu">sd</span>(CO2flux))</span>
-<span id="cb134-5"><a href="time-series-case-studies.html#cb134-5" tabindex="-1"></a>LoneyPARsum <span class="ot">&lt;-</span> Loney <span class="sc">%&gt;%</span></span>
-<span id="cb134-6"><a href="time-series-case-studies.html#cb134-6" tabindex="-1"></a>  <span class="fu">group_by</span>(Hour) <span class="sc">%&gt;%</span></span>
-<span id="cb134-7"><a href="time-series-case-studies.html#cb134-7" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">meanPAR =</span> <span class="fu">mean</span>(PAR), <span class="at">sdPAR =</span> <span class="fu">sd</span>(PAR))</span>
-<span id="cb134-8"><a href="time-series-case-studies.html#cb134-8" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> LoneyCO2sum <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Hour)) <span class="sc">+</span> <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">24</span>,<span class="dv">3</span>)) <span class="sc">+</span></span>
-<span id="cb134-9"><a href="time-series-case-studies.html#cb134-9" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>meanCO2), <span class="at">col=</span><span class="st">&quot;blue&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb134-10"><a href="time-series-case-studies.html#cb134-10" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymax =</span> meanCO2 <span class="sc">+</span> sdCO2, <span class="at">ymin =</span> meanCO2 <span class="sc">-</span> sdCO2)) <span class="sc">+</span></span>
-<span id="cb134-11"><a href="time-series-case-studies.html#cb134-11" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Loney ensemble CO2 flux&quot;</span>)</span>
-<span id="cb134-12"><a href="time-series-case-studies.html#cb134-12" tabindex="-1"></a>p2 <span class="ot">&lt;-</span>  LoneyPARsum <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Hour)) <span class="sc">+</span> <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">24</span>,<span class="dv">3</span>)) <span class="sc">+</span></span>
-<span id="cb134-13"><a href="time-series-case-studies.html#cb134-13" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>meanPAR), <span class="at">col=</span><span class="st">&quot;red&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb134-14"><a href="time-series-case-studies.html#cb134-14" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymax =</span> meanPAR <span class="sc">+</span> sdPAR, <span class="at">ymin =</span> meanPAR <span class="sc">-</span> sdPAR)) <span class="sc">+</span></span>
-<span id="cb134-15"><a href="time-series-case-studies.html#cb134-15" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Loney ensemble PAR&quot;</span>)</span>
-<span id="cb134-16"><a href="time-series-case-studies.html#cb134-16" tabindex="-1"></a><span class="fu">plot_grid</span>(<span class="at">plotlist=</span><span class="fu">list</span>(p1,p2), <span class="at">ncol=</span><span class="dv">1</span>, <span class="at">align=</span><span class="st">&#39;v&#39;</span>) <span class="co"># from cowplot</span></span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-68"></span>
-<img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-68-1.png" alt="Loney meadow CO~2~ and PAR ensemble averages" width="75%" />
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="time-series-case-studies.html#cb132-1" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span>
+<span id="cb132-2"><a href="time-series-case-studies.html#cb132-2" tabindex="-1"></a>LoneyCO2sum <span class="ot">&lt;-</span> Loney <span class="sc">%&gt;%</span></span>
+<span id="cb132-3"><a href="time-series-case-studies.html#cb132-3" tabindex="-1"></a>  <span class="fu">group_by</span>(Hour) <span class="sc">%&gt;%</span></span>
+<span id="cb132-4"><a href="time-series-case-studies.html#cb132-4" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">meanCO2 =</span> <span class="fu">mean</span>(CO2flux), <span class="at">sdCO2 =</span> <span class="fu">sd</span>(CO2flux))</span>
+<span id="cb132-5"><a href="time-series-case-studies.html#cb132-5" tabindex="-1"></a>LoneyPARsum <span class="ot">&lt;-</span> Loney <span class="sc">%&gt;%</span></span>
+<span id="cb132-6"><a href="time-series-case-studies.html#cb132-6" tabindex="-1"></a>  <span class="fu">group_by</span>(Hour) <span class="sc">%&gt;%</span></span>
+<span id="cb132-7"><a href="time-series-case-studies.html#cb132-7" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">meanPAR =</span> <span class="fu">mean</span>(PAR), <span class="at">sdPAR =</span> <span class="fu">sd</span>(PAR))</span>
+<span id="cb132-8"><a href="time-series-case-studies.html#cb132-8" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> LoneyCO2sum <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Hour)) <span class="sc">+</span> <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">24</span>,<span class="dv">3</span>)) <span class="sc">+</span></span>
+<span id="cb132-9"><a href="time-series-case-studies.html#cb132-9" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>meanCO2), <span class="at">col=</span><span class="st">&quot;blue&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb132-10"><a href="time-series-case-studies.html#cb132-10" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymax =</span> meanCO2 <span class="sc">+</span> sdCO2, <span class="at">ymin =</span> meanCO2 <span class="sc">-</span> sdCO2)) <span class="sc">+</span></span>
+<span id="cb132-11"><a href="time-series-case-studies.html#cb132-11" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Loney ensemble CO2 flux&quot;</span>)</span>
+<span id="cb132-12"><a href="time-series-case-studies.html#cb132-12" tabindex="-1"></a>p2 <span class="ot">&lt;-</span>  LoneyPARsum <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Hour)) <span class="sc">+</span> <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">24</span>,<span class="dv">3</span>)) <span class="sc">+</span></span>
+<span id="cb132-13"><a href="time-series-case-studies.html#cb132-13" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>meanPAR), <span class="at">col=</span><span class="st">&quot;red&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb132-14"><a href="time-series-case-studies.html#cb132-14" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymax =</span> meanPAR <span class="sc">+</span> sdPAR, <span class="at">ymin =</span> meanPAR <span class="sc">-</span> sdPAR)) <span class="sc">+</span></span>
+<span id="cb132-15"><a href="time-series-case-studies.html#cb132-15" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Loney ensemble PAR&quot;</span>)</span>
+<span id="cb132-16"><a href="time-series-case-studies.html#cb132-16" tabindex="-1"></a><span class="fu">plot_grid</span>(<span class="at">plotlist=</span><span class="fu">list</span>(p1,p2), <span class="at">ncol=</span><span class="dv">1</span>, <span class="at">align=</span><span class="st">&#39;v&#39;</span>) <span class="co"># from cowplot</span></span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-70"></span>
+<img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-70-1.png" alt="Loney meadow CO~2~ and PAR ensemble averages" width="75%" />
 <p class="caption">
 FIGURE 9.5: Loney meadow CO<sub>2</sub> and PAR ensemble averages
 </p>
 </div>
 <p>We can explore the Loney meadow data further, maybe comparing multiple ensemble averages, relating variables (like the example here):</p>
-<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="time-series-case-studies.html#cb135-1" tabindex="-1"></a><span class="fu">library</span>(igisci)</span>
-<span id="cb135-2"><a href="time-series-case-studies.html#cb135-2" tabindex="-1"></a><span class="fu">library</span>(readxl); <span class="fu">library</span>(tidyverse); <span class="fu">library</span>(lubridate)</span>
-<span id="cb135-3"><a href="time-series-case-studies.html#cb135-3" tabindex="-1"></a>vnames <span class="ot">&lt;-</span> <span class="fu">read_xls</span>(<span class="fu">ex</span>(<span class="st">&quot;meadows/LoneyMeadow_30minCO2fluxes_Geog604.xls&quot;</span>), <span class="at">n_max=</span><span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb135-4"><a href="time-series-case-studies.html#cb135-4" tabindex="-1"></a>    <span class="fu">names</span>()</span>
-<span id="cb135-5"><a href="time-series-case-studies.html#cb135-5" tabindex="-1"></a>vunits <span class="ot">&lt;-</span> <span class="fu">read_xls</span>(<span class="fu">ex</span>(<span class="st">&quot;meadows/LoneyMeadow_30minCO2fluxes_Geog604.xls&quot;</span>), <span class="at">n_max=</span><span class="dv">0</span>, <span class="at">skip=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb135-6"><a href="time-series-case-studies.html#cb135-6" tabindex="-1"></a>    <span class="fu">names</span>()</span>
-<span id="cb135-7"><a href="time-series-case-studies.html#cb135-7" tabindex="-1"></a>Loney <span class="ot">&lt;-</span> <span class="fu">read_xls</span>(<span class="fu">ex</span>(<span class="st">&quot;meadows/LoneyMeadow_30minCO2fluxes_Geog604.xls&quot;</span>), <span class="at">skip=</span><span class="dv">2</span>, <span class="at">col_names=</span>vnames) <span class="sc">%&gt;%</span></span>
-<span id="cb135-8"><a href="time-series-case-studies.html#cb135-8" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">DecimalDay =</span> <span class="st">`</span><span class="at">Decimal time</span><span class="st">`</span>,</span>
-<span id="cb135-9"><a href="time-series-case-studies.html#cb135-9" tabindex="-1"></a>         <span class="at">YDay =</span> <span class="st">`</span><span class="at">Day of Year</span><span class="st">`</span>,</span>
-<span id="cb135-10"><a href="time-series-case-studies.html#cb135-10" tabindex="-1"></a>         <span class="at">Hour =</span> <span class="st">`</span><span class="at">Hour of Day</span><span class="st">`</span>,</span>
-<span id="cb135-11"><a href="time-series-case-studies.html#cb135-11" tabindex="-1"></a>         <span class="at">CO2flux =</span> <span class="st">`</span><span class="at">CO2 Flux</span><span class="st">`</span>,</span>
-<span id="cb135-12"><a href="time-series-case-studies.html#cb135-12" tabindex="-1"></a>         <span class="at">Tsoil2cm =</span> <span class="st">`</span><span class="at">Tsoil 2cm</span><span class="st">`</span>,</span>
-<span id="cb135-13"><a href="time-series-case-studies.html#cb135-13" tabindex="-1"></a>         <span class="at">Tsoil10cm =</span> <span class="st">`</span><span class="at">Tsoil 10cm</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb135-14"><a href="time-series-case-studies.html#cb135-14" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">datetime =</span> <span class="fu">as_date</span>(DecimalDay, <span class="at">origin=</span><span class="st">&quot;2015-12-31&quot;</span>))</span>
-<span id="cb135-15"><a href="time-series-case-studies.html#cb135-15" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>Loney) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>Qnet, <span class="at">y=</span>CO2flux, <span class="at">col=</span>YDay), <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span>  </span>
-<span id="cb135-16"><a href="time-series-case-studies.html#cb135-16" tabindex="-1"></a>   <span class="fu">scale_color_gradient2</span>(<span class="at">low=</span><span class="st">&quot;blue&quot;</span>, <span class="at">high=</span><span class="st">&quot;red&quot;</span>, <span class="at">mid=</span><span class="st">&quot;green&quot;</span>, <span class="at">midpoint=</span><span class="dv">200</span>) </span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-69"></span>
-<img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-69-1.png" alt="Loney CO2 flux vs Qnet" width="75%" />
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="time-series-case-studies.html#cb133-1" tabindex="-1"></a><span class="fu">library</span>(igisci)</span>
+<span id="cb133-2"><a href="time-series-case-studies.html#cb133-2" tabindex="-1"></a><span class="fu">library</span>(readxl); <span class="fu">library</span>(tidyverse); <span class="fu">library</span>(lubridate)</span>
+<span id="cb133-3"><a href="time-series-case-studies.html#cb133-3" tabindex="-1"></a>vnames <span class="ot">&lt;-</span> <span class="fu">read_xls</span>(<span class="fu">ex</span>(<span class="st">&quot;meadows/LoneyMeadow_30minCO2fluxes_Geog604.xls&quot;</span>), <span class="at">n_max=</span><span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb133-4"><a href="time-series-case-studies.html#cb133-4" tabindex="-1"></a>    <span class="fu">names</span>()</span>
+<span id="cb133-5"><a href="time-series-case-studies.html#cb133-5" tabindex="-1"></a>vunits <span class="ot">&lt;-</span> <span class="fu">read_xls</span>(<span class="fu">ex</span>(<span class="st">&quot;meadows/LoneyMeadow_30minCO2fluxes_Geog604.xls&quot;</span>), <span class="at">n_max=</span><span class="dv">0</span>, <span class="at">skip=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb133-6"><a href="time-series-case-studies.html#cb133-6" tabindex="-1"></a>    <span class="fu">names</span>()</span>
+<span id="cb133-7"><a href="time-series-case-studies.html#cb133-7" tabindex="-1"></a>Loney <span class="ot">&lt;-</span> <span class="fu">read_xls</span>(<span class="fu">ex</span>(<span class="st">&quot;meadows/LoneyMeadow_30minCO2fluxes_Geog604.xls&quot;</span>), <span class="at">skip=</span><span class="dv">2</span>, <span class="at">col_names=</span>vnames) <span class="sc">%&gt;%</span></span>
+<span id="cb133-8"><a href="time-series-case-studies.html#cb133-8" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">DecimalDay =</span> <span class="st">`</span><span class="at">Decimal time</span><span class="st">`</span>,</span>
+<span id="cb133-9"><a href="time-series-case-studies.html#cb133-9" tabindex="-1"></a>         <span class="at">YDay =</span> <span class="st">`</span><span class="at">Day of Year</span><span class="st">`</span>,</span>
+<span id="cb133-10"><a href="time-series-case-studies.html#cb133-10" tabindex="-1"></a>         <span class="at">Hour =</span> <span class="st">`</span><span class="at">Hour of Day</span><span class="st">`</span>,</span>
+<span id="cb133-11"><a href="time-series-case-studies.html#cb133-11" tabindex="-1"></a>         <span class="at">CO2flux =</span> <span class="st">`</span><span class="at">CO2 Flux</span><span class="st">`</span>,</span>
+<span id="cb133-12"><a href="time-series-case-studies.html#cb133-12" tabindex="-1"></a>         <span class="at">Tsoil2cm =</span> <span class="st">`</span><span class="at">Tsoil 2cm</span><span class="st">`</span>,</span>
+<span id="cb133-13"><a href="time-series-case-studies.html#cb133-13" tabindex="-1"></a>         <span class="at">Tsoil10cm =</span> <span class="st">`</span><span class="at">Tsoil 10cm</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb133-14"><a href="time-series-case-studies.html#cb133-14" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">datetime =</span> <span class="fu">as_date</span>(DecimalDay, <span class="at">origin=</span><span class="st">&quot;2015-12-31&quot;</span>))</span>
+<span id="cb133-15"><a href="time-series-case-studies.html#cb133-15" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>Loney) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>Qnet, <span class="at">y=</span>CO2flux, <span class="at">col=</span>YDay), <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span>  </span>
+<span id="cb133-16"><a href="time-series-case-studies.html#cb133-16" tabindex="-1"></a>   <span class="fu">scale_color_gradient2</span>(<span class="at">low=</span><span class="st">&quot;blue&quot;</span>, <span class="at">high=</span><span class="st">&quot;red&quot;</span>, <span class="at">mid=</span><span class="st">&quot;green&quot;</span>, <span class="at">midpoint=</span><span class="dv">200</span>) </span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-71"></span>
+<img src="EnvDataSciAddenda_files/figure-html/unnamed-chunk-71-1.png" alt="Loney CO2 flux vs Qnet" width="75%" />
 <p class="caption">
 FIGURE 9.6: Loney CO2 flux vs Qnet
 </p>
@@ -501,7 +505,7 @@ FIGURE 9.6: Loney CO2 flux vs Qnet
 </div>
 </div>
 <h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-blackburn2021carbon" class="csl-entry">
 Blackburn, Darren A, Andrew J Oliphant, and Jerry D Davis. 2021. <span>“Carbon and Water Exchanges in a Mountain Meadow Ecosystem, Sierra Nevada, California.”</span> <em>Wetlands</em> 41 (3): 1–17. <a href="https://doi.org/10.1007/s13157-021-01437-2">https://doi.org/10.1007/s13157-021-01437-2</a>.
 </div>
@@ -526,44 +530,44 @@ Blackburn, Darren A, Andrew J Oliphant, and Jerry D Davis. 2021. <span>“Carbon
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "section"
-},
-"book_filename": "envdatasci",
-"toc_depth": 4
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section"
+  },
+  "book_filename": "envdatasci",
+  "toc_depth": 4
 });
 });
 </script>
